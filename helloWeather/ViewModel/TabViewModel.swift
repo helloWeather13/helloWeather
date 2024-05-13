@@ -24,6 +24,7 @@ class TabViewModel{
         tab.vc.view.backgroundColor = .systemBackground
         let nav = UINavigationController(rootViewController: tab.vc)
         nav.tabBarItem.title = tab.title
+        nav.tabBarItem.image = tab.image
         nav.viewControllers.first?.navigationItem.title = tab.title
         nav.navigationBar.isTranslucent = true
         return nav
