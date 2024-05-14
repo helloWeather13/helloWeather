@@ -22,6 +22,8 @@
 		146580F52BF1EB3E0093AA81 /* SnapKit-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 146580F42BF1EB3E0093AA81 /* SnapKit-Dynamic */; };
 		146580F82BF1EB4D0093AA81 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 146580F72BF1EB4D0093AA81 /* Alamofire */; };
 		146580FA2BF1EB4D0093AA81 /* AlamofireDynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 146580F92BF1EB4D0093AA81 /* AlamofireDynamic */; };
+		9ABC1E212BF34BDC006A626C /* FineDustView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABC1E202BF34BDC006A626C /* FineDustView.swift */; };
+		9ABC1E232BF34BE8006A626C /* FineDustViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABC1E222BF34BE8006A626C /* FineDustViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +40,8 @@
 		146580E92BF1E8B00093AA81 /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
 		146580EC2BF1E8D10093AA81 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		146580EE2BF1E8EF0093AA81 /* AlarmViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmViewController.swift; sourceTree = "<group>"; };
+		9ABC1E202BF34BDC006A626C /* FineDustView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FineDustView.swift; sourceTree = "<group>"; };
+		9ABC1E222BF34BE8006A626C /* FineDustViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FineDustViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +78,7 @@
 		146580C92BF1E7EA0093AA81 /* helloWeather */ = {
 			isa = PBXGroup;
 			children = (
+				9ABC1E1F2BF34BCF006A626C /* FineDust */,
 				146580F02BF1E9BF0093AA81 /* Util */,
 				146580E22BF1E83B0093AA81 /* View */,
 				146580E12BF1E8330093AA81 /* Model */,
@@ -120,6 +125,15 @@
 				146580D32BF1E7EB0093AA81 /* Assets.xcassets */,
 			);
 			path = Util;
+			sourceTree = "<group>";
+		};
+		9ABC1E1F2BF34BCF006A626C /* FineDust */ = {
+			isa = PBXGroup;
+			children = (
+				9ABC1E202BF34BDC006A626C /* FineDustView.swift */,
+				9ABC1E222BF34BE8006A626C /* FineDustViewModel.swift */,
+			);
+			path = FineDust;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -207,7 +221,9 @@
 				146580CB2BF1E7EA0093AA81 /* AppDelegate.swift in Sources */,
 				146580ED2BF1E8D10093AA81 /* SearchViewController.swift in Sources */,
 				146580E62BF1E8740093AA81 /* TabModel.swift in Sources */,
+				9ABC1E232BF34BE8006A626C /* FineDustViewModel.swift in Sources */,
 				146580CD2BF1E7EA0093AA81 /* SceneDelegate.swift in Sources */,
+				9ABC1E212BF34BDC006A626C /* FineDustView.swift in Sources */,
 				146580E82BF1E8960093AA81 /* HomeViewController.swift in Sources */,
 				146580EA2BF1E8B00093AA81 /* ListViewController.swift in Sources */,
 				146580E42BF1E8590093AA81 /* TabViewModel.swift in Sources */,
