@@ -25,7 +25,7 @@ enum LineChartType: String, CaseIterable, Plottable {
     var backgroudnColor: Color {
         switch self {
         case .optimal: return .green
-        case .outside: return .blue
+        case .outside: return Color(red: 15/255, green: 206/255, blue: 235/255)
         case .white: return .white
         }
     }
@@ -58,16 +58,17 @@ struct LineChartView: View {
         let formatter = createTimeFormatter()
         
         VStack(alignment: .leading) {
+            
             HStack{
                 Text("시간대별 미세먼지")
                     .font(.system(size: 16, weight: .medium))
-                    //.frame(maxWidth: .infinity)
+                //.frame(maxWidth: .infinity)
                 Spacer()
                 Text("☑︎  등급 기준 안내       ")
                     .font(.system(size: 10, weight: .medium))
                     .foregroundColor(.gray)
             }
-            
+            .border(Color.gray, width: 1)
             Chart {
                 ForEach(Array(data.enumerated()), id: \.element.id) { index ,item in
                     LineMark(
@@ -93,17 +94,18 @@ struct LineChartView: View {
                                         .fill(item.type.color)
                                         .frame(width: 6, height: 6, alignment: .center)
                                 }
-                        
-                                //Text("\(Int(item.value))")
-                                //.frame(width: 20)
-                                //.font(.system(size: 8, weight: .medium))
-                                //.offset(y: -15)
+                            
+                            //Text("\(Int(item.value))")
+                            //.frame(width: 20)
+                            //.font(.system(size: 8, weight: .medium))
+                            //.offset(y: -15)
                         }else{
                             EmptyView()
                         }
                     }
                 }
             }
+            
             .chartXAxis(.hidden)
             .chartYAxis(.hidden)
             .background(Color.clear)
@@ -123,7 +125,7 @@ struct LineChartView: View {
                         }
                     }
                 }
-            
+                
             }
             .padding(.top, 20)
             .padding(.bottom, 30)
@@ -146,7 +148,7 @@ struct LineChartView: View {
             HStack{
                 Spacer()
             }
-            
+            //.border(Color.gray, width: 1)
             .chartXAxis {
                 AxisMarks(preset: .extended, values: .stride (by: .hour, count: 3)) { value in
                     AxisValueLabel(format: .dateTime.hour())
@@ -155,10 +157,17 @@ struct LineChartView: View {
             .chartYAxis {
             }
             .padding(.leading, 60)
-      
+            
         }
         .frame(height: 300)
+        Label("Welcome to SwiftUI", systemImage: "star.fill")
+            .padding() // 패딩을 추가하여 라벨 주변에 공간을 만듭니다.
+            .background(Color.blue) // 배경색을 파란색으로 설정합니다.
+            .foregroundColor(.white) // 전경색을 흰색으로 설정합니다.
+            .cornerRadius(10)
+            .border(Color.gray, width: 1)
     }
+    
     
     //    func getLineGradient() -> LinearGradient {
     //        return LinearGradient(
@@ -182,19 +191,19 @@ struct LineChartView: View {
     }
     
     func generateTimeData() -> [TimeData] {
-           var results = [TimeData]()
-           let now = Date()
-           let calendar = Calendar.current
-
-           for hourOffset in stride(from: 0, to: 24, by: 3) {
-               if let date = calendar.date(byAdding: .hour, value: hourOffset, to: now) {
-                   results.append(TimeData(time: date, value: Double.random(in: 0...100)))
-               }
-           }
-
-           return results
-       }
-
+        var results = [TimeData]()
+        let now = Date()
+        let calendar = Calendar.current
+        
+        for hourOffset in stride(from: 0, to: 24, by: 3) {
+            if let date = calendar.date(byAdding: .hour, value: hourOffset, to: now) {
+                results.append(TimeData(time: date, value: Double.random(in: 0...100)))
+            }
+        }
+        
+        return results
+    }
+    
 }
 
 var chartData : [LineChartData] = {
