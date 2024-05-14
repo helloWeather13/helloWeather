@@ -54,9 +54,15 @@ struct LineChartView: View {
         let formatter = createTimeFormatter()
         
         VStack(alignment: .leading) {
-            Text("시간대별 미세먼지")
-                .font(.system(size: 16, weight: .medium))
-            
+            HStack{
+                Text("시간대별 미세먼지")
+                    .font(.system(size: 16, weight: .medium))
+                    //.frame(maxWidth: .infinity)
+                Spacer()
+                Text("☑︎  등급 기준 안내       ")
+                    .font(.system(size: 10, weight: .medium))
+                    .foregroundColor(.gray)
+            }
             Chart {
                 ForEach(data, id: \.id) { item in
                     LineMark(
@@ -116,18 +122,21 @@ struct LineChartView: View {
                     }
                 }
                 .padding(.top, 20)
+                .padding(.bottom, 50)
                 .padding(.leading, -20)
             }
             .chartXAxis {
-                AxisMarks(preset: .extended, values: .stride (by: .month)) { value in
-                    AxisValueLabel(format: .dateTime.month())
-                }
             }
             .chartYAxis {
-                
-            }.padding(.leading, 50)
+            }
+            .padding(.leading, 50)
+            Text("매우나쁨 \n\n나쁨 \n\n보통 \n\n좋음")
+                .font(.system(size: 10, weight: .medium))
+                .foregroundColor(.gray)
+
+            
         }
-        .frame(height: 360)
+        .frame(height: 200)
     }
     
     //    func getLineGradient() -> LinearGradient {
@@ -201,7 +210,6 @@ var chartData : [LineChartData] = {
 
 #Preview {
     VStack {
-        Spacer()
         LineChartView(data: chartData)
             .padding()
         Spacer()
