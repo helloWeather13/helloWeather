@@ -12,11 +12,13 @@ import Charts
 enum LineChartType: String, CaseIterable, Plottable {
     case optimal = "  미세 보통 42  "
     case outside = "  초미세 좋음 15  "
+    case white = ""
     
     var color: Color {
         switch self {
         case .optimal: return .white
         case .outside: return .white
+        case .white: return .white
         }
     }
     
@@ -24,6 +26,7 @@ enum LineChartType: String, CaseIterable, Plottable {
         switch self {
         case .optimal: return .green
         case .outside: return .blue
+        case .white: return .white
         }
     }
     
@@ -49,6 +52,7 @@ struct TimeData {
 struct LineChartView: View {
     
     let data: [LineChartData]
+    var start = 1
     
     var body: some View {
         let formatter = createTimeFormatter()
@@ -63,8 +67,9 @@ struct LineChartView: View {
                     .font(.system(size: 10, weight: .medium))
                     .foregroundColor(.gray)
             }
+            
             Chart {
-                ForEach(data, id: \.id) { item in
+                ForEach(Array(data.enumerated()), id: \.element.id) { index ,item in
                     LineMark(
                         x: .value("Weekday", formatter.string(from: item.date)),
                         y: .value("Value", item.value)
@@ -72,25 +77,57 @@ struct LineChartView: View {
                     
                     .foregroundStyle(item.type.backgroudnColor)
                     //.foregroundStyle(getLineGradient())
+                    //.clipShape(Shape)
                     .foregroundStyle(by: .value("Plot", item.type))
-                    .interpolationMethod(.catmullRom)
-                    .lineStyle(.init(lineWidth: 2))
+                    .interpolationMethod(.linear)
+                    .lineStyle(index > 1 ? StrokeStyle(lineWidth: 2, dash: [5, 3]) : StrokeStyle(lineWidth: 2))
+                    //.lineStyle(.init(lineWidth: 1))
+                    //.lineStyle(.init(.Stride))
                     .symbol {
-                        Circle()
-                            .fill(item.type.backgroudnColor)
-                            .frame(width: 10, height: 10)
-                            .overlay {
-                                Circle()
-                                    .fill(item.type.color)
-                                    .frame(width: 6, height: 6, alignment: .center)
+                        if index == 1 || index == 9 {
+                            Circle()
+                                .fill(item.type.backgroudnColor)
+                                .frame(width: 8, height: 8)
+                                .overlay {
+                                    Circle()
+                                        .fill(item.type.color)
+                                        .frame(width: 6, height: 6, alignment: .center)
+                                }
+                        
                                 //Text("\(Int(item.value))")
                                 //.frame(width: 20)
                                 //.font(.system(size: 8, weight: .medium))
                                 //.offset(y: -15)
-                            }
+                        }else{
+                            EmptyView()
+                        }
                     }
                 }
             }
+            .chartXAxis(.hidden)
+            .chartYAxis(.hidden)
+            .background(Color.clear)
+            //.border(Color.gray, width: 1)
+            .chartLegend(position: .top, alignment: .leading, spacing: -60){
+                VStack(spacing: 2) {
+                    ForEach(LineChartType.allCases, id: \.self) { type in
+                        HStack{
+                            Text(type.rawValue)
+                                .foregroundStyle(type.color)
+                                .padding(.top, 4)
+                                .padding(.bottom, 4)
+                                .font(.system(size: 13, weight: .medium))
+                                .background(type.backgroudnColor)
+                                .clipShape(RoundedRectangle(cornerRadius: 20))
+                            Spacer()
+                        }
+                    }
+                }
+            
+            }
+            .padding(.top, 20)
+            .padding(.bottom, 30)
+            .padding(.leading, 50)
             /*
              처음시작은 이제 uikit 를하려고 했는데 이쁜게 없음 1,
              그런데도 uikit하려고함 ... 사용 uikit package를 사용햇습니다.
@@ -106,37 +143,21 @@ struct LineChartView: View {
              그래서 억까 packageManger => 이런 전번 있었다.
              M3이슈 swift ui밖에없다.
              */
-            .chartLegend(position: .top, alignment: .leading, spacing: 0){
-                VStack(spacing: 2) {
-                    ForEach(LineChartType.allCases, id: \.self) { type in
-                        HStack{
-                            Text(type.rawValue)
-                                .foregroundStyle(type.color)
-                                .padding(.top, 4)
-                                .padding(.bottom, 4)
-                                .font(.system(size: 13, weight: .medium))
-                                .background(type.backgroudnColor)
-                                .clipShape(RoundedRectangle(cornerRadius: 20))
-                            Spacer()
-                        }
-                    }
-                }
-                .padding(.top, 20)
-                .padding(.bottom, 50)
-                .padding(.leading, -20)
+            HStack{
+                Spacer()
             }
+            
             .chartXAxis {
+                AxisMarks(preset: .extended, values: .stride (by: .hour, count: 3)) { value in
+                    AxisValueLabel(format: .dateTime.hour())
+                }
             }
             .chartYAxis {
             }
-            .padding(.leading, 50)
-            Text("매우나쁨 \n\n나쁨 \n\n보통 \n\n좋음")
-                .font(.system(size: 10, weight: .medium))
-                .foregroundColor(.gray)
-
-            
+            .padding(.leading, 60)
+      
         }
-        .frame(height: 200)
+        .frame(height: 300)
     }
     
     //    func getLineGradient() -> LinearGradient {
@@ -155,7 +176,7 @@ struct LineChartView: View {
     //    }
     func createTimeFormatter() -> DateFormatter {
         let formatter = DateFormatter()
-        formatter.dateFormat = "HH:mm"
+        formatter.dateFormat = "HH시"
         formatter.timeZone = TimeZone(identifier: "Asia/Seoul")
         return formatter
     }
@@ -177,12 +198,14 @@ struct LineChartView: View {
 }
 
 var chartData : [LineChartData] = {
-    let sampleDate = Date().startOfDay.adding(.month, value: -10)!
+    let now = Date()
+    let calendar = Calendar.current
+    let sampleDate = calendar.date(byAdding: .hour, value: 0, to: now)!
     var temp = [LineChartData]()
     
     // Line 1
     for i in 0..<8 {
-        let value = Double.random(in: 3...4)
+        let value = Double.random(in: 0.5...1)
         temp.append(
             LineChartData(
                 date: sampleDate.adding(.hour, value: i)!,
@@ -194,12 +217,25 @@ var chartData : [LineChartData] = {
     
     // Line 2
     for i in 0..<8 {
-        let value = Double.random(in: 3...4)
+        let value = Double.random(in: 0.5...1)
         temp.append(
             LineChartData(
                 date: sampleDate.adding(.hour, value: i)!,
                 value: value,
                 type: .optimal
+            )
+        )
+    }
+    
+    
+    // Line 3
+    for i in 0..<8 {
+        let value = Double.random(in: 0...1)
+        temp.append(
+            LineChartData(
+                date: sampleDate.adding(.hour, value: i)!,
+                value: 3,
+                type: .white
             )
         )
     }
