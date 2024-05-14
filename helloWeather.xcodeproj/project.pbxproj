@@ -74,7 +74,6 @@
 		146580C92BF1E7EA0093AA81 /* helloWeather */ = {
 			isa = PBXGroup;
 			children = (
-				9AD3DB352BF307B300068D88 /* FineDustController */,
 				146580F02BF1E9BF0093AA81 /* Util */,
 				146580E22BF1E83B0093AA81 /* View */,
 				146580E12BF1E8330093AA81 /* Model */,
@@ -121,13 +120,6 @@
 				146580D32BF1E7EB0093AA81 /* Assets.xcassets */,
 			);
 			path = Util;
-			sourceTree = "<group>";
-		};
-		9AD3DB352BF307B300068D88 /* FineDustController */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = FineDustController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
