@@ -211,7 +211,8 @@ extension ListView: UICollectionViewDelegate {
         }) { _ in
             // 애니메이션 완료 후 원래 크기로 되돌리기
             UIView.animate(withDuration: 0.15) {
-                if let cell = collectionView.cellForItem(at: indexPath) {
+                if let cell 
+                    = collectionView.cellForItem(at: indexPath) {
                     cell.transform = .identity // withDuration 시간에 걸쳐 원래 크기로 되돌리기
                 }
             }
