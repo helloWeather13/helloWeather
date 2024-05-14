@@ -10,7 +10,7 @@ class TabViewModel{
     ]
     var navs : [UINavigationController] = []
     
-    init(){
+    init() {
         setupTabs()
     }
     

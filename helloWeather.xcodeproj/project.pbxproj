@@ -15,13 +15,15 @@
 		146580E42BF1E8590093AA81 /* TabViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146580E32BF1E8590093AA81 /* TabViewModel.swift */; };
 		146580E62BF1E8740093AA81 /* TabModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146580E52BF1E8740093AA81 /* TabModel.swift */; };
 		146580E82BF1E8960093AA81 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146580E72BF1E8960093AA81 /* HomeViewController.swift */; };
-		146580EA2BF1E8B00093AA81 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146580E92BF1E8B00093AA81 /* ListViewController.swift */; };
 		146580ED2BF1E8D10093AA81 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146580EC2BF1E8D10093AA81 /* SearchViewController.swift */; };
 		146580EF2BF1E8EF0093AA81 /* AlarmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146580EE2BF1E8EF0093AA81 /* AlarmViewController.swift */; };
 		146580F32BF1EB3E0093AA81 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 146580F22BF1EB3E0093AA81 /* SnapKit */; };
 		146580F52BF1EB3E0093AA81 /* SnapKit-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 146580F42BF1EB3E0093AA81 /* SnapKit-Dynamic */; };
 		146580F82BF1EB4D0093AA81 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 146580F72BF1EB4D0093AA81 /* Alamofire */; };
 		146580FA2BF1EB4D0093AA81 /* AlamofireDynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 146580F92BF1EB4D0093AA81 /* AlamofireDynamic */; };
+		52A7342C2BF2354500F335FE /* ListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A7342B2BF2354500F335FE /* ListModel.swift */; };
+		52A7342E2BF2355000F335FE /* ListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A7342D2BF2355000F335FE /* ListViewModel.swift */; };
+		52A734302BF2363000F335FE /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A7342F2BF2363000F335FE /* ListViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,9 +37,11 @@
 		146580E32BF1E8590093AA81 /* TabViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabViewModel.swift; sourceTree = "<group>"; };
 		146580E52BF1E8740093AA81 /* TabModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabModel.swift; sourceTree = "<group>"; };
 		146580E72BF1E8960093AA81 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
-		146580E92BF1E8B00093AA81 /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
 		146580EC2BF1E8D10093AA81 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		146580EE2BF1E8EF0093AA81 /* AlarmViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmViewController.swift; sourceTree = "<group>"; };
+		52A7342B2BF2354500F335FE /* ListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListModel.swift; sourceTree = "<group>"; };
+		52A7342D2BF2355000F335FE /* ListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewModel.swift; sourceTree = "<group>"; };
+		52A7342F2BF2363000F335FE /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,6 +91,7 @@
 			isa = PBXGroup;
 			children = (
 				146580E32BF1E8590093AA81 /* TabViewModel.swift */,
+				52A7342D2BF2355000F335FE /* ListViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -95,6 +100,7 @@
 			isa = PBXGroup;
 			children = (
 				146580E52BF1E8740093AA81 /* TabModel.swift */,
+				52A7342B2BF2354500F335FE /* ListModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -105,7 +111,7 @@
 				146580D52BF1E7EB0093AA81 /* LaunchScreen.storyboard */,
 				146580DE2BF1E8160093AA81 /* TabViewController.swift */,
 				146580E72BF1E8960093AA81 /* HomeViewController.swift */,
-				146580E92BF1E8B00093AA81 /* ListViewController.swift */,
+				52A7342F2BF2363000F335FE /* ListViewController.swift */,
 				146580EC2BF1E8D10093AA81 /* SearchViewController.swift */,
 				146580EE2BF1E8EF0093AA81 /* AlarmViewController.swift */,
 			);
@@ -204,12 +210,14 @@
 			files = (
 				146580EF2BF1E8EF0093AA81 /* AlarmViewController.swift in Sources */,
 				146580DF2BF1E8160093AA81 /* TabViewController.swift in Sources */,
+				52A7342E2BF2355000F335FE /* ListViewModel.swift in Sources */,
 				146580CB2BF1E7EA0093AA81 /* AppDelegate.swift in Sources */,
 				146580ED2BF1E8D10093AA81 /* SearchViewController.swift in Sources */,
+				52A734302BF2363000F335FE /* ListViewController.swift in Sources */,
 				146580E62BF1E8740093AA81 /* TabModel.swift in Sources */,
 				146580CD2BF1E7EA0093AA81 /* SceneDelegate.swift in Sources */,
 				146580E82BF1E8960093AA81 /* HomeViewController.swift in Sources */,
-				146580EA2BF1E8B00093AA81 /* ListViewController.swift in Sources */,
+				52A7342C2BF2354500F335FE /* ListModel.swift in Sources */,
 				146580E42BF1E8590093AA81 /* TabViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
