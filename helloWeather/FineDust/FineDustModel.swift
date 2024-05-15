@@ -28,7 +28,7 @@ struct LineChartView: View {
             HStack{
                 Text("\t\(local) ")
                     .font(.system(size: 16, weight: .medium))
-                Text(formattedDateWithWeekdays)
+                Text(formattedDate)
                     .font(.system(size: 10, weight: .medium))
                     .foregroundColor(.gray)
                 Spacer()
@@ -46,6 +46,34 @@ struct LineChartView: View {
                     .font(.system(size: 10, weight: .medium))
                     .foregroundColor(.gray)
             }
+            HStack{
+                VStack(alignment: .trailing)  {
+                    Text("매우나쁨")
+                        .font(.system(size: 15, weight: .medium))
+                        .foregroundColor(.gray)
+                        .padding(.bottom, 6)
+                    Text("나쁨")
+                        .font(.system(size: 15, weight: .medium))
+                        .foregroundColor(.gray)
+                        .padding(.bottom, 6)
+                    Text("보통")
+                        .font(.system(size: 15, weight: .medium))
+                        .foregroundColor(.gray)
+                        .padding(.bottom, 6)
+                    Text("좋음")
+                        .font(.system(size: 15, weight: .medium))
+                        .foregroundColor(.gray)
+                }
+                .padding(.top, 10)
+                .padding(.leading, 10)
+                .padding(.trailing, 20)
+              
+                //.frame(maxWidth: .infinity)
+                Spacer()
+                //스크롤뷰 삽입
+                ChartView(data: chartDatas)
+            }
+            
             
         }
         .frame(height: 300)
@@ -56,37 +84,36 @@ struct LineChartView: View {
     }
     
     private var formattedDateWithWeekdays: String {
-        let formatter = createTimeFormatter()
-        let formattedDate = formatter.string(from: now)
+        //let formatter = createTimeFormatter()
+        //let formattedDate = formatter.string(from: now)
         let calendar = Calendar(identifier: .gregorian)
         let components = calendar.dateComponents([.weekday], from: now)
         
         if let weekday = components.weekday {
             switch weekday {
             case 1:
-                return formattedDate + "(일)"
+                return "(일)"
             case 2:
-                return formattedDate + "(월)"
+                return "(월)"
             case 3:
-                return formattedDate + "(화)"
+                return "(화)"
             case 4:
-                return formattedDate + "(수)"
+                return "(수)"
             case 5:
-                return formattedDate + "(목)"
+                return "(목)"
             case 6:
-                return formattedDate + "(금)"
-            case 7:
-                return formattedDate + "(토)"
+                return "(금)"
             default:
-                break
+                return "(토)"
             }
         }
-        return formattedDate
+        return ""
     }
     
     private func createTimeFormatter() -> DateFormatter {
         let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd HH시"
+        formatter.dateFormat = "MM. dd \(formattedDateWithWeekdays) HH:mm a" // 'a' for AM/PM indicator
+        //formatter.locale = Locale(identifier: "ko_KR") // Sets the locale to Korean
         formatter.timeZone = TimeZone(identifier: "Asia/Seoul")
         return formatter
     }
@@ -96,5 +123,6 @@ struct LineChartView: View {
 #Preview {
     VStack {
         LineChartView()
+        Spacer()
     }
 }
