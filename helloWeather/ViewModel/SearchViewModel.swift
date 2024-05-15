@@ -7,13 +7,18 @@
 
 import Foundation
 import Alamofire
+import UIKit
 
 class SearchViewModel {
+    var state : State = .beforeSearch
+    var relatedSearch : [RelatedSearchModel] = []
+    var dataSource: UITableViewDiffableDataSource<SearchViewSection, SearchViewSectionItem>?
+    
     
     var kakaoAddress = ApiModel(
         url: "https://dapi.kakao.com/v2/local/search/address.json",
         header: ["Authorization" : "KakaoAK 9f7d574ec38f35d53233f50e7bd2a13e"],
-        parameter : [ "query" : "경기도 광명시"]
+        parameter : [ "query" : "경기도 광명시", "analyze_type" :"exact"]
     )
     
     
@@ -27,8 +32,27 @@ class SearchViewModel {
             "lang" : "ko"
         ])
     
-    func getResult<T: Codable>(apiModel : ApiModel, expecting: T.Type ){
-        WebServiceManager.shared.requestAPI(url: apiModel.url, expecting: expecting, headers: apiModel.header, parameters: apiModel.parameter){  result in
+    
+    
+    func getKakaoAddressResult(address : String){
+        relatedSearch = []
+        self.kakaoAddress.parameter?["query"] = address
+        WebServiceManager.shared.requestAPI(url: self.kakaoAddress.url, expecting: KakaoAddressModel.self, headers: self.kakaoAddress.header, parameters: self.kakaoAddress.parameter){  result in
+            switch result{
+            case .success(let data):
+                self.convertDataToRelatedModel(data: data, address: address)
+                self.applySnapshot()
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    
+    func getWeather(lat : String, lon: String){
+        let q = lat + "," + lon
+        self.newWeather.parameter!["q"] = q
+        
+        WebServiceManager.shared.requestAPI(url: self.newWeather.url, expecting: WeatherAPIModel.self, headers: self.newWeather.header, parameters: self.newWeather.parameter){  result in
             switch result{
             case .success(let data):
                 print(data)
@@ -37,4 +61,32 @@ class SearchViewModel {
             }
         }
     }
+    func convertDataToRelatedModel(data: KakaoAddressModel, address : String){
+        data.documents.forEach{
+            var fullName = $0.address.regionNameFirst + " "
+            + $0.address.regionNameSecond + " "
+            if $0.address.regionNameThirdH != "" {
+                fullName += $0.address.regionNameThirdH
+            }else{
+                fullName += $0.address.regionNameThird
+            }
+            relatedSearch.append(RelatedSearchModel(keyWord: address, fullAddress: fullName, lat: Double($0.address.lat) ?? 0, lon: Double($0.address.lat) ?? 0))
+        }
+    }
+    func applySnapshot() {
+        var snapshot = NSDiffableDataSourceSnapshot<SearchViewSection, SearchViewSectionItem>()
+        switch state {
+        case .beforeSearch:
+            snapshot.appendSections([.recentSearch])
+        case .searching:
+            snapshot.appendSections([.relatedSearch])
+            let items:[SearchViewSectionItem] = relatedSearch.map({
+                .relatedSearch($0)
+            })
+            snapshot.appendItems(items)
+        }
+        dataSource?.apply(snapshot, animatingDifferences: false)
+    }
+    
+    
 }

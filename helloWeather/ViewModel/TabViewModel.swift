@@ -1,11 +1,12 @@
 import UIKit
+import RAMAnimatedTabBarController
 
 class TabViewModel{
     
     var tabs : [TabModel] = [
-        TabModel(title: "검색", image: UIImage(systemName: "magnifyingglass")!, vc: HomeViewController()),
-        TabModel(title: "알람", image: UIImage(systemName: "basket.fill")!, vc: SearchViewController()),
-//        TabModel(title: "검색", image: UIImage(systemName: "magnifyingglass")!, vc: SearchViewController()),
+        TabModel(title: "홈", image: UIImage(systemName: "location")!,selectedImage: UIImage(systemName: "location.fill")!, vc: HomeViewController()),
+        TabModel(title: "알람", image: UIImage(systemName: "alarm")!,selectedImage: UIImage(systemName: "alarm.fill")!, vc: AlarmViewController()),
+        TabModel(title: "검색", image: UIImage(systemName: "magnifyingglass.circle")!,selectedImage:UIImage(systemName: "magnifyingglass.circle.fill")!, vc: SearchViewController()),
     ]
     var navs : [UINavigationController] = []
     
@@ -22,8 +23,12 @@ class TabViewModel{
     private func createNav(with tab: TabModel) -> UINavigationController{
         tab.vc.view.backgroundColor = .systemBackground
         let nav = UINavigationController(rootViewController: tab.vc)
-//        nav.tabBarItem.title = tab.title
-        nav.tabBarItem.image = tab.image
+        let item = RAMAnimatedTabBarItem(title: "", image: tab.image, selectedImage: tab.selectedImage)
+        item.animation = CustomBounceAnimation(selectedImage: tab.selectedImage, deSelectedImage: tab.image )
+        item.textFontSize = 3
+        item.iconColor = .label
+        item.playAnimation()
+        nav.tabBarItem = item
         nav.viewControllers.first?.navigationItem.title = tab.title
         nav.navigationBar.isTranslucent = true
         return nav

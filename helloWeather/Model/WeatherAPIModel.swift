@@ -7,15 +7,16 @@ struct WeatherAPIModel: Codable {
 }
 
 // MARK: - Current
-struct Current: Codable {
-    let lastUpdated: String
-    let tempC, tempF: Double
-    let condition: Condition
-    let windMph,windKph : Double
-    let humidity, cloud: Int
-    let feelslikeC, feelslikeF: Double
-    let airQuality: AirQuality
-    let uv: Double
+struct Current: Codable { // 현재 시간 기준
+    let lastUpdated: String // 업데이트 시간 (String)
+    let tempC, tempF: Double // 현재 온도 C 섭씨, F 화씨
+    let condition: Condition // Condition -> 맑음, 등등 정보
+    let windMph,windKph : Double // 풍속 Mph 마일, Kph 키로
+    let humidity : Int // 습도 0 - 100
+    let cloud: Int // 구름 0 - 100
+    let feelslikeC, feelslikeF: Double // 현재 체감온도 온도 C 섭씨, F 화씨
+    let airQuality: AirQuality // 현재 공기 오염도, 미세먼지 + 초미세먼지만 나옴
+    let uv: Double // 자외선
 
     enum CodingKeys: String, CodingKey {
         case lastUpdated = "last_updated"
@@ -34,42 +35,38 @@ struct Current: Codable {
 
 // MARK: - Condition
 struct Condition: Codable {
-    let text: String
+    let text: String // 날씨 컨디션 : 맑음, 등등
 }
 
 // MARK: - Forecast
-struct Forecast: Codable {
+struct Forecast: Codable { // 미리 7일간의 데이터 저장용
     let forecastday: [Forecastday]
 }
 
 // MARK: - Forecastday
-struct Forecastday: Codable {
-    let date: String
-    let dateEpoch: Int
-    let day: Day
-    let astro: Astro
-    let hour: [Hour]
-    
+struct Forecastday: Codable { // 하루 기준으로 나오는 정보
+    let date: String // 날짜 String
+    let day: Day // 하루 날씨 정보
+    let astro: Astro // 일출 정보 용
+    let hour: [Hour] // 하루를 24시간으로 쪼개서 각각의 날씨 정보
     enum CodingKeys: String, CodingKey {
-        case date
-        case dateEpoch = "date_epoch"
-        case day, astro, hour
-        
+        case date, day, astro, hour
+       
     }
 }
 
 // MARK: - Astro
 struct Astro: Codable {
-    let sunrise, sunset: String
+    let sunrise, sunset: String // 일몰, 일출 시간 String
 
     enum CodingKeys: String, CodingKey {
         case sunrise, sunset
     }
 }
 
-struct AirQuality : Codable {
-    let micro : Double
-    let fine : Double
+struct AirQuality : Codable { //
+    let micro : Double? // 초미세먼지 정도
+    let fine : Double? // 미세먼지 정도
     enum CodingKeys: String, CodingKey {
         case micro = "pm10"
         case fine = "pm2_5"
@@ -78,12 +75,14 @@ struct AirQuality : Codable {
 }
 // MARK: - Day
 struct Day: Codable {
-    let maxtempC, maxtempF, mintempC, mintempF: Double
-    let avgtempC, avgtempF, maxwindMph, maxwindKph: Double
-    let totalsnowCM, avghumidity: Int
-    let dailyWillItRain, dailyChanceOfRain, dailyWillItSnow, dailyChanceOfSnow: Int
-    let condition: Condition
-    let uv: Int
+    let maxtempC, maxtempF, mintempC, mintempF: Double // 최고 최저 온도 C 섭씨, F 화씨
+    let avgtempC, avgtempF, maxwindMph, maxwindKph: Double // 평균 온도 온도 C 섭씨, F 화씨, 최대 풍속
+    let totalsnowCM, avghumidity: Int // 눈 오는 양 CM, 평균 습도
+    let dailyWillItRain, dailyChanceOfRain : Int // 강수 확률 chance -> 퍼센트로, willitRain는 0 Or 1
+    let dailyWillItSnow, dailyChanceOfSnow: Int //  눈올 확률 chance -> 퍼센트로, willitSnow는 0 Or 1
+    let condition: Condition // 날씨 컨디션 : 맑음, 등등
+    let airQuality: AirQuality // 공기 오염도, 미세먼지 + 초미세먼지만 나옴
+    let uv: Int // 자외선 수치
 
     enum CodingKeys: String, CodingKey {
         case maxtempC = "maxtemp_c"
@@ -101,17 +100,19 @@ struct Day: Codable {
         case dailyWillItSnow = "daily_will_it_snow"
         case dailyChanceOfSnow = "daily_chance_of_snow"
         case condition, uv
+        case airQuality = "air_quality"
     }
 }
 
 // MARK: - Hour
 struct Hour: Codable {
-    let time: String
-    let tempC, tempF: Double
-    let condition: Condition
-    let windMph, windKph: Double
-    let snowCM, humidity, cloud: Int
-    let feelslikeC, feelslikeF: Double
+    let time: String // 관측 시간 String
+    let tempC, tempF: Double // 온도 C 섭씨, F 화씨
+    let condition: Condition // 날씨 컨디션 : 맑음, 등등
+    let windMph, windKph: Double // 풍속 Mph 마일, Kph 키로
+    let snowCM : Int // 눈 CM
+    let humidity, cloud: Int // 습도 구름 0-100
+    let feelslikeC, feelslikeF: Double // 체감온도 온도 C 섭씨, F 화씨
     let willItRain, chanceOfRain, willItSnow, chanceOfSnow: Int
     let uv: Int
 
