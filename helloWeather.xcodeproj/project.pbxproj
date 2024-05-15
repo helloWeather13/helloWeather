@@ -25,6 +25,7 @@
 		9ABC1E212BF34BDC006A626C /* FineDustView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABC1E202BF34BDC006A626C /* FineDustView.swift */; };
 		9ABC1E232BF34BE8006A626C /* FineDustViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABC1E222BF34BE8006A626C /* FineDustViewModel.swift */; };
 		9ABC1E262BF35C34006A626C /* FineDustModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABC1E252BF35C34006A626C /* FineDustModel.swift */; };
+		9ABC1E292BF4BAD2006A626C /* ChartModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABC1E282BF4BAD2006A626C /* ChartModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +45,7 @@
 		9ABC1E202BF34BDC006A626C /* FineDustView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FineDustView.swift; sourceTree = "<group>"; };
 		9ABC1E222BF34BE8006A626C /* FineDustViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FineDustViewModel.swift; sourceTree = "<group>"; };
 		9ABC1E252BF35C34006A626C /* FineDustModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FineDustModel.swift; sourceTree = "<group>"; };
+		9ABC1E282BF4BAD2006A626C /* ChartModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -132,11 +134,20 @@
 		9ABC1E1F2BF34BCF006A626C /* FineDust */ = {
 			isa = PBXGroup;
 			children = (
+				9ABC1E272BF4BAAF006A626C /* Chart */,
 				9ABC1E252BF35C34006A626C /* FineDustModel.swift */,
 				9ABC1E202BF34BDC006A626C /* FineDustView.swift */,
 				9ABC1E222BF34BE8006A626C /* FineDustViewModel.swift */,
 			);
 			path = FineDust;
+			sourceTree = "<group>";
+		};
+		9ABC1E272BF4BAAF006A626C /* Chart */ = {
+			isa = PBXGroup;
+			children = (
+				9ABC1E282BF4BAD2006A626C /* ChartModel.swift */,
+			);
+			path = Chart;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -229,6 +240,7 @@
 				146580CD2BF1E7EA0093AA81 /* SceneDelegate.swift in Sources */,
 				9ABC1E212BF34BDC006A626C /* FineDustView.swift in Sources */,
 				146580E82BF1E8960093AA81 /* HomeViewController.swift in Sources */,
+				9ABC1E292BF4BAD2006A626C /* ChartModel.swift in Sources */,
 				146580EA2BF1E8B00093AA81 /* ListViewController.swift in Sources */,
 				146580E42BF1E8590093AA81 /* TabViewModel.swift in Sources */,
 			);
