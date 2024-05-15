@@ -23,6 +23,20 @@
 		146580F82BF1EB4D0093AA81 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 146580F72BF1EB4D0093AA81 /* Alamofire */; };
 		146580FA2BF1EB4D0093AA81 /* AlamofireDynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 146580F92BF1EB4D0093AA81 /* AlamofireDynamic */; };
 		45D70DBD2BF3145C00942DC1 /* WeatherDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D70DBC2BF3145C00942DC1 /* WeatherDetailViewController.swift */; };
+		45D70DC02BF3262300942DC1 /* SwiftUICharts in Frameworks */ = {isa = PBXBuildFile; productRef = 45D70DBF2BF3262300942DC1 /* SwiftUICharts */; };
+		45D70DC22BF3325400942DC1 /* WeatherDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D70DC12BF3325400942DC1 /* WeatherDetailView.swift */; };
+		45D70DC62BF3342000942DC1 /* SecondLeftCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D70DC52BF3342000942DC1 /* SecondLeftCollectionViewCell.swift */; };
+		45D70DC82BF3342E00942DC1 /* SecondRightCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D70DC72BF3342E00942DC1 /* SecondRightCollectionViewCell.swift */; };
+		45D70DCA2BF3344000942DC1 /* WeekCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D70DC92BF3344000942DC1 /* WeekCollectionViewCell.swift */; };
+		45D70DCD2BF3401D00942DC1 /* FirstLeftCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D70DCC2BF3401D00942DC1 /* FirstLeftCollectionViewCell.swift */; };
+		45D70DCF2BF3402A00942DC1 /* FirstRightCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D70DCE2BF3402A00942DC1 /* FirstRightCollectionViewCell.swift */; };
+		45D70DD92BF3557E00942DC1 /* TodayTimeCelsiusCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D70DD82BF3557E00942DC1 /* TodayTimeCelsiusCollectionView.swift */; };
+		45D70DDB2BF4DBFD00942DC1 /* TomorrowTimeCelsiusCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D70DDA2BF4DBFD00942DC1 /* TomorrowTimeCelsiusCollectionView.swift */; };
+		45D70DDD2BF50F8400942DC1 /* TodayTimeWeatherCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D70DDC2BF50F8400942DC1 /* TodayTimeWeatherCollectionView.swift */; };
+		45D70DDF2BF50F9700942DC1 /* TomorrowTimeWeatherCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D70DDE2BF50F9700942DC1 /* TomorrowTimeWeatherCollectionView.swift */; };
+		45D70DE12BF515A000942DC1 /* WeekCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D70DE02BF515A000942DC1 /* WeekCollectionView.swift */; };
+		45D70DE52BF5460500942DC1 /* HumidityCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D70DE42BF5460500942DC1 /* HumidityCollectionView.swift */; };
+		45D70DE72BF5469700942DC1 /* HumidityCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D70DE62BF5469700942DC1 /* HumidityCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +54,19 @@
 		146580EC2BF1E8D10093AA81 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		146580EE2BF1E8EF0093AA81 /* AlarmViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmViewController.swift; sourceTree = "<group>"; };
 		45D70DBC2BF3145C00942DC1 /* WeatherDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDetailViewController.swift; sourceTree = "<group>"; };
+		45D70DC12BF3325400942DC1 /* WeatherDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDetailView.swift; sourceTree = "<group>"; };
+		45D70DC52BF3342000942DC1 /* SecondLeftCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondLeftCollectionViewCell.swift; sourceTree = "<group>"; };
+		45D70DC72BF3342E00942DC1 /* SecondRightCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondRightCollectionViewCell.swift; sourceTree = "<group>"; };
+		45D70DC92BF3344000942DC1 /* WeekCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekCollectionViewCell.swift; sourceTree = "<group>"; };
+		45D70DCC2BF3401D00942DC1 /* FirstLeftCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstLeftCollectionViewCell.swift; sourceTree = "<group>"; };
+		45D70DCE2BF3402A00942DC1 /* FirstRightCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstRightCollectionViewCell.swift; sourceTree = "<group>"; };
+		45D70DD82BF3557E00942DC1 /* TodayTimeCelsiusCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayTimeCelsiusCollectionView.swift; sourceTree = "<group>"; };
+		45D70DDA2BF4DBFD00942DC1 /* TomorrowTimeCelsiusCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TomorrowTimeCelsiusCollectionView.swift; sourceTree = "<group>"; };
+		45D70DDC2BF50F8400942DC1 /* TodayTimeWeatherCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayTimeWeatherCollectionView.swift; sourceTree = "<group>"; };
+		45D70DDE2BF50F9700942DC1 /* TomorrowTimeWeatherCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TomorrowTimeWeatherCollectionView.swift; sourceTree = "<group>"; };
+		45D70DE02BF515A000942DC1 /* WeekCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekCollectionView.swift; sourceTree = "<group>"; };
+		45D70DE42BF5460500942DC1 /* HumidityCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HumidityCollectionView.swift; sourceTree = "<group>"; };
+		45D70DE62BF5469700942DC1 /* HumidityCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HumidityCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,6 +78,7 @@
 				146580FA2BF1EB4D0093AA81 /* AlamofireDynamic in Frameworks */,
 				146580F32BF1EB3E0093AA81 /* SnapKit in Frameworks */,
 				146580F52BF1EB3E0093AA81 /* SnapKit-Dynamic in Frameworks */,
+				45D70DC02BF3262300942DC1 /* SwiftUICharts in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -97,6 +125,7 @@
 			isa = PBXGroup;
 			children = (
 				146580E52BF1E8740093AA81 /* TabModel.swift */,
+				45D70DCB2BF3344500942DC1 /* WeatherDetailView */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -125,6 +154,58 @@
 			path = Util;
 			sourceTree = "<group>";
 		};
+		45D70DCB2BF3344500942DC1 /* WeatherDetailView */ = {
+			isa = PBXGroup;
+			children = (
+				45D70DC12BF3325400942DC1 /* WeatherDetailView.swift */,
+				45D70DD32BF350AF00942DC1 /* TimeCelsiusCollectionView */,
+				45D70DD22BF3509D00942DC1 /* TimeWeatherCollectionView */,
+				45D70DD42BF350E100942DC1 /* WeekCollectionView */,
+				45D70DD52BF3513A00942DC1 /* HumidityCollectionView */,
+			);
+			path = WeatherDetailView;
+			sourceTree = "<group>";
+		};
+		45D70DD22BF3509D00942DC1 /* TimeWeatherCollectionView */ = {
+			isa = PBXGroup;
+			children = (
+				45D70DC52BF3342000942DC1 /* SecondLeftCollectionViewCell.swift */,
+				45D70DC72BF3342E00942DC1 /* SecondRightCollectionViewCell.swift */,
+				45D70DDC2BF50F8400942DC1 /* TodayTimeWeatherCollectionView.swift */,
+				45D70DDE2BF50F9700942DC1 /* TomorrowTimeWeatherCollectionView.swift */,
+			);
+			path = TimeWeatherCollectionView;
+			sourceTree = "<group>";
+		};
+		45D70DD32BF350AF00942DC1 /* TimeCelsiusCollectionView */ = {
+			isa = PBXGroup;
+			children = (
+				45D70DCC2BF3401D00942DC1 /* FirstLeftCollectionViewCell.swift */,
+				45D70DCE2BF3402A00942DC1 /* FirstRightCollectionViewCell.swift */,
+				45D70DD82BF3557E00942DC1 /* TodayTimeCelsiusCollectionView.swift */,
+				45D70DDA2BF4DBFD00942DC1 /* TomorrowTimeCelsiusCollectionView.swift */,
+			);
+			path = TimeCelsiusCollectionView;
+			sourceTree = "<group>";
+		};
+		45D70DD42BF350E100942DC1 /* WeekCollectionView */ = {
+			isa = PBXGroup;
+			children = (
+				45D70DC92BF3344000942DC1 /* WeekCollectionViewCell.swift */,
+				45D70DE02BF515A000942DC1 /* WeekCollectionView.swift */,
+			);
+			path = WeekCollectionView;
+			sourceTree = "<group>";
+		};
+		45D70DD52BF3513A00942DC1 /* HumidityCollectionView */ = {
+			isa = PBXGroup;
+			children = (
+				45D70DE42BF5460500942DC1 /* HumidityCollectionView.swift */,
+				45D70DE62BF5469700942DC1 /* HumidityCollectionViewCell.swift */,
+			);
+			path = HumidityCollectionView;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -146,6 +227,7 @@
 				146580F42BF1EB3E0093AA81 /* SnapKit-Dynamic */,
 				146580F72BF1EB4D0093AA81 /* Alamofire */,
 				146580F92BF1EB4D0093AA81 /* AlamofireDynamic */,
+				45D70DBF2BF3262300942DC1 /* SwiftUICharts */,
 			);
 			productName = helloWeather;
 			productReference = 146580C72BF1E7EA0093AA81 /* helloWeather.app */;
@@ -178,6 +260,7 @@
 			packageReferences = (
 				146580F12BF1EB3E0093AA81 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				146580F62BF1EB4D0093AA81 /* XCRemoteSwiftPackageReference "Alamofire" */,
+				45D70DBE2BF3262300942DC1 /* XCRemoteSwiftPackageReference "ChartView" */,
 			);
 			productRefGroup = 146580C82BF1E7EA0093AA81 /* Products */;
 			projectDirPath = "";
@@ -206,13 +289,26 @@
 			buildActionMask = 2147483647;
 			files = (
 				146580EF2BF1E8EF0093AA81 /* AlarmViewController.swift in Sources */,
+				45D70DE52BF5460500942DC1 /* HumidityCollectionView.swift in Sources */,
+				45D70DE72BF5469700942DC1 /* HumidityCollectionViewCell.swift in Sources */,
+				45D70DC82BF3342E00942DC1 /* SecondRightCollectionViewCell.swift in Sources */,
+				45D70DCF2BF3402A00942DC1 /* FirstRightCollectionViewCell.swift in Sources */,
 				146580DF2BF1E8160093AA81 /* TabViewController.swift in Sources */,
+				45D70DDB2BF4DBFD00942DC1 /* TomorrowTimeCelsiusCollectionView.swift in Sources */,
+				45D70DCA2BF3344000942DC1 /* WeekCollectionViewCell.swift in Sources */,
+				45D70DD92BF3557E00942DC1 /* TodayTimeCelsiusCollectionView.swift in Sources */,
 				146580CB2BF1E7EA0093AA81 /* AppDelegate.swift in Sources */,
 				146580ED2BF1E8D10093AA81 /* SearchViewController.swift in Sources */,
+				45D70DC22BF3325400942DC1 /* WeatherDetailView.swift in Sources */,
 				146580E62BF1E8740093AA81 /* TabModel.swift in Sources */,
 				146580CD2BF1E7EA0093AA81 /* SceneDelegate.swift in Sources */,
+				45D70DCD2BF3401D00942DC1 /* FirstLeftCollectionViewCell.swift in Sources */,
+				45D70DDF2BF50F9700942DC1 /* TomorrowTimeWeatherCollectionView.swift in Sources */,
+				45D70DDD2BF50F8400942DC1 /* TodayTimeWeatherCollectionView.swift in Sources */,
+				45D70DE12BF515A000942DC1 /* WeekCollectionView.swift in Sources */,
 				146580E82BF1E8960093AA81 /* HomeViewController.swift in Sources */,
 				146580EA2BF1E8B00093AA81 /* ListViewController.swift in Sources */,
+				45D70DC62BF3342000942DC1 /* SecondLeftCollectionViewCell.swift in Sources */,
 				45D70DBD2BF3145C00942DC1 /* WeatherDetailViewController.swift in Sources */,
 				146580E42BF1E8590093AA81 /* TabViewModel.swift in Sources */,
 			);
@@ -445,6 +541,14 @@
 				minimumVersion = 5.9.1;
 			};
 		};
+		45D70DBE2BF3262300942DC1 /* XCRemoteSwiftPackageReference "ChartView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/AppPear/ChartView.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.5.5;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -467,6 +571,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 146580F62BF1EB4D0093AA81 /* XCRemoteSwiftPackageReference "Alamofire" */;
 			productName = AlamofireDynamic;
+		};
+		45D70DBF2BF3262300942DC1 /* SwiftUICharts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 45D70DBE2BF3262300942DC1 /* XCRemoteSwiftPackageReference "ChartView" */;
+			productName = SwiftUICharts;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
