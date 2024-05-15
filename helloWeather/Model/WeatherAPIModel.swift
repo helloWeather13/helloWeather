@@ -2,7 +2,7 @@ import Foundation
 
 // MARK: - Welcome
 struct WeatherAPIModel: Codable {
-    let current: Current // 현재 기상 정보
+    let current: Current? // 현재 기상 정보
     let forecast: Forecast // 미래 (7일 24시간 정보)
 }
 
@@ -81,7 +81,7 @@ struct Day: Codable {
     let dailyWillItRain, dailyChanceOfRain : Int // 강수 확률 chance -> 퍼센트로, willitRain는 0 Or 1
     let dailyWillItSnow, dailyChanceOfSnow: Int //  눈올 확률 chance -> 퍼센트로, willitSnow는 0 Or 1
     let condition: Condition // 날씨 컨디션 : 맑음, 등등
-    let airQuality: AirQuality // 공기 오염도, 미세먼지 + 초미세먼지만 나옴
+    let airQuality: AirQuality? // 공기 오염도, 미세먼지 + 초미세먼지만 나옴
     let uv: Int // 자외선 수치
 
     enum CodingKeys: String, CodingKey {

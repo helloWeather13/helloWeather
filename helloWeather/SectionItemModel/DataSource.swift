@@ -6,6 +6,6 @@ enum SearchViewSection : String{
 }
 
 enum SearchViewSectionItem : Hashable{
-    case recentSearch(String)
-    case relatedSearch(RelatedSearchModel)
+    case recentSearch(SearchModel)
+    case relatedSearch(SearchModel)
 }

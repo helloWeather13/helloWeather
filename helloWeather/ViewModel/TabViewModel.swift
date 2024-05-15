@@ -4,9 +4,10 @@ import RAMAnimatedTabBarController
 class TabViewModel{
     
     var tabs : [TabModel] = [
+        TabModel(title: "검색", image: UIImage(systemName: "magnifyingglass.circle")!,selectedImage:UIImage(systemName: "magnifyingglass.circle.fill")!, vc: SearchViewController()),
         TabModel(title: "홈", image: UIImage(systemName: "location")!,selectedImage: UIImage(systemName: "location.fill")!, vc: HomeViewController()),
         TabModel(title: "알람", image: UIImage(systemName: "alarm")!,selectedImage: UIImage(systemName: "alarm.fill")!, vc: AlarmViewController()),
-        TabModel(title: "검색", image: UIImage(systemName: "magnifyingglass.circle")!,selectedImage:UIImage(systemName: "magnifyingglass.circle.fill")!, vc: SearchViewController()),
+        
     ]
     var navs : [UINavigationController] = []
     

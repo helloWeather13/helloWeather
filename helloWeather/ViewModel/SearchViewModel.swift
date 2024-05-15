@@ -11,57 +11,71 @@ import UIKit
 
 class SearchViewModel {
     var state : State = .beforeSearch
-    var relatedSearch : [RelatedSearchModel] = []
+    var relatedSearch : [SearchModel] = []
+    var recentSearch : [SearchModel] = []
     var dataSource: UITableViewDiffableDataSource<SearchViewSection, SearchViewSectionItem>?
     
+    init(){
+        loadRecentSearch()
+    }
     
-    var kakaoAddress = ApiModel(
-        url: "https://dapi.kakao.com/v2/local/search/address.json",
-        header: ["Authorization" : "KakaoAK 9f7d574ec38f35d53233f50e7bd2a13e"],
-        parameter : [ "query" : "경기도 광명시", "analyze_type" :"exact"]
-    )
+    // MARK: - appendRecentSearch 검색하고 클릭한 주소를 최근 검색 결과에 저장
+    func appendRecentSearch(data : SearchModel){
+        if !self.recentSearch.contains(where:{
+            $0.fullAddress == data.fullAddress
+        }){
+            self.recentSearch.append(data)
+            saveRecentSearch()
+        }
+    }
     
+    // MARK: - saveRecentSearch UserDefault에 최근 검색 결과 저장
+    func saveRecentSearch() {
+        let encoder = JSONEncoder()
+        if let encoded = try? encoder.encode(self.recentSearch){
+            UserDefaults.standard.setValue(encoded, forKey: "recentSearch")
+        }
+    }
     
-    var newWeather = ApiModel(
-        url: "https://api.weatherapi.com/v1/forecast.json",
-        header: ["key" : "c9b70526c91341798a493546241305"],
-        parameter: [
-            "q" : "37.490749226867,126.867941213494",
-            "days" : "7",
-            "aqi" : "yes",
-            "lang" : "ko"
-        ])
-    
-    
-    
-    func getKakaoAddressResult(address : String){
-        relatedSearch = []
-        self.kakaoAddress.parameter?["query"] = address
-        WebServiceManager.shared.requestAPI(url: self.kakaoAddress.url, expecting: KakaoAddressModel.self, headers: self.kakaoAddress.header, parameters: self.kakaoAddress.parameter){  result in
-            switch result{
-            case .success(let data):
-                self.convertDataToRelatedModel(data: data, address: address)
-                self.applySnapshot()
-            case .failure(let error):
-                print(error)
+    // MARK: - loadRecentSearch UserDefault에 최근 검색 결과 로드
+    func loadRecentSearch(){
+        if let savedData = UserDefaults.standard.object(forKey: "recentSearch") as? Data {
+            let decoder = JSONDecoder()
+            if let savedObject = try? decoder.decode([SearchModel].self, from: savedData) {
+                self.recentSearch = savedObject
             }
         }
     }
     
-    func getWeather(lat : String, lon: String){
-        let q = lat + "," + lon
-        self.newWeather.parameter!["q"] = q
+    // MARK: - deleteRecentSearch UserDefault에서 최근 결과 삭제
+    func deleteRecentSearch(){
+        recentSearch.removeAll()
+        UserDefaults.standard.removeObject(forKey: "recentSearch")
+        self.applySnapshot()
+    }
+    
+    // MARK: - getWeatherResult WebSeriveManager로 날씨데이터 받아오고, SearchModel 즉 주소 정보 포함된 변수로 호출
+    func getWeatherResult(searchModel : SearchModel){
+        WebServiceManager.shared.getForecastWeather(searchModel: searchModel, completion: { weatherData in
+            print("99")
+        })
+        WebServiceManager.shared.getHistoryWeather(searchModel: searchModel, completion: { weatherData in
+            print(weatherData)
+        })
         
-        WebServiceManager.shared.requestAPI(url: self.newWeather.url, expecting: WeatherAPIModel.self, headers: self.newWeather.header, parameters: self.newWeather.parameter){  result in
-            switch result{
-            case .success(let data):
-                print(data)
-            case .failure(let error):
-                print(error)
-            }
-        }
     }
+    
+    // MARK: - getSearchResult WebSeriveManager로 주소 데이터 받아오고, SearchBar Text로 호출
+    func getSearchResult(address : String){
+        WebServiceManager.shared.getKakaoAddressResult(address: address, completion:{ addressModel in
+            self.convertDataToRelatedModel(data: addressModel, address: address)
+            self.applySnapshot()
+        })
+    }
+    
+    // MARK: - convertDataToRelatedModel WebSeriveManager로 받아온 주소 데이터를 사용할 수 있게끔 SearchModel로 변환
     func convertDataToRelatedModel(data: KakaoAddressModel, address : String){
+        relatedSearch = []
         data.documents.forEach{
             var fullName = $0.address.regionNameFirst + " "
             + $0.address.regionNameSecond + " "
@@ -70,14 +84,19 @@ class SearchViewModel {
             }else{
                 fullName += $0.address.regionNameThird
             }
-            relatedSearch.append(RelatedSearchModel(keyWord: address, fullAddress: fullName, lat: Double($0.address.lat) ?? 0, lon: Double($0.address.lat) ?? 0))
+            relatedSearch.append(SearchModel(keyWord: address, fullAddress: fullName, lat: Double($0.address.lat) ?? 0, lon: Double($0.address.lat) ?? 0))
         }
     }
+    // MARK: - applySnapshot 데이터로 최근검색 / 연관 검색 TableView SnapShot 적용
     func applySnapshot() {
         var snapshot = NSDiffableDataSourceSnapshot<SearchViewSection, SearchViewSectionItem>()
         switch state {
         case .beforeSearch:
             snapshot.appendSections([.recentSearch])
+            let items:[SearchViewSectionItem] = recentSearch.map({
+                .recentSearch($0)
+            })
+            snapshot.appendItems(items)
         case .searching:
             snapshot.appendSections([.relatedSearch])
             let items:[SearchViewSectionItem] = relatedSearch.map({

@@ -7,13 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		14450E9F2BF45381006A02F7 /* RecentSearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14450E9E2BF45381006A02F7 /* RecentSearchTableViewCell.swift */; };
+		14450EA12BF45962006A02F7 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14450EA02BF45962006A02F7 /* Extension.swift */; };
+		14450EA32BF474FC006A02F7 /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14450EA22BF474FC006A02F7 /* PaddingLabel.swift */; };
 		1445AF532BF2F0630018AE3F /* RAMAnimatedTabBarController in Frameworks */ = {isa = PBXBuildFile; productRef = 1445AF522BF2F0630018AE3F /* RAMAnimatedTabBarController */; };
 		1445AF552BF2F5D40018AE3F /* CustomBounceAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1445AF542BF2F5D40018AE3F /* CustomBounceAnimation.swift */; };
 		1445AF582BF3203E0018AE3F /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 1445AF572BF3203E0018AE3F /* RxCocoa */; };
 		1445AF5A2BF3203E0018AE3F /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 1445AF592BF3203E0018AE3F /* RxSwift */; };
 		1445AF5D2BF32C5A0018AE3F /* RelatedSearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1445AF5C2BF32C5A0018AE3F /* RelatedSearchTableViewCell.swift */; };
 		1445AF602BF32F7E0018AE3F /* DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1445AF5F2BF32F7E0018AE3F /* DataSource.swift */; };
-		1445AF652BF350CA0018AE3F /* RelatedSearchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1445AF642BF350CA0018AE3F /* RelatedSearchModel.swift */; };
+		1445AF652BF350CA0018AE3F /* SearchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1445AF642BF350CA0018AE3F /* SearchModel.swift */; };
 		1445AF672BF3631D0018AE3F /* SectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1445AF662BF3631D0018AE3F /* SectionHeaderView.swift */; };
 		1445AF692BF3784E0018AE3F /* State.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1445AF682BF3784E0018AE3F /* State.swift */; };
 		146580CB2BF1E7EA0093AA81 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146580CA2BF1E7EA0093AA81 /* AppDelegate.swift */; };
@@ -39,10 +42,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		14450E9E2BF45381006A02F7 /* RecentSearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentSearchTableViewCell.swift; sourceTree = "<group>"; };
+		14450EA02BF45962006A02F7 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
+		14450EA22BF474FC006A02F7 /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
 		1445AF542BF2F5D40018AE3F /* CustomBounceAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBounceAnimation.swift; sourceTree = "<group>"; };
 		1445AF5C2BF32C5A0018AE3F /* RelatedSearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelatedSearchTableViewCell.swift; sourceTree = "<group>"; };
 		1445AF5F2BF32F7E0018AE3F /* DataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataSource.swift; sourceTree = "<group>"; };
-		1445AF642BF350CA0018AE3F /* RelatedSearchModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelatedSearchModel.swift; sourceTree = "<group>"; };
+		1445AF642BF350CA0018AE3F /* SearchModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchModel.swift; sourceTree = "<group>"; };
 		1445AF662BF3631D0018AE3F /* SectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeaderView.swift; sourceTree = "<group>"; };
 		1445AF682BF3784E0018AE3F /* State.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = State.swift; sourceTree = "<group>"; };
 		146580C72BF1E7EA0093AA81 /* helloWeather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = helloWeather.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -88,6 +94,7 @@
 			children = (
 				1445AF5C2BF32C5A0018AE3F /* RelatedSearchTableViewCell.swift */,
 				1445AF662BF3631D0018AE3F /* SectionHeaderView.swift */,
+				14450E9E2BF45381006A02F7 /* RecentSearchTableViewCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -147,7 +154,7 @@
 				146580FE2BF1F1C30093AA81 /* ApiModel.swift */,
 				146581042BF21EC40093AA81 /* WeatherAPIModel.swift */,
 				146581062BF240AF0093AA81 /* KakaoAddressModel.swift */,
-				1445AF642BF350CA0018AE3F /* RelatedSearchModel.swift */,
+				1445AF642BF350CA0018AE3F /* SearchModel.swift */,
 				1445AF682BF3784E0018AE3F /* State.swift */,
 			);
 			path = Model;
@@ -173,6 +180,8 @@
 				146580CC2BF1E7EA0093AA81 /* SceneDelegate.swift */,
 				146580D32BF1E7EB0093AA81 /* Assets.xcassets */,
 				1445AF542BF2F5D40018AE3F /* CustomBounceAnimation.swift */,
+				14450EA02BF45962006A02F7 /* Extension.swift */,
+				14450EA22BF474FC006A02F7 /* PaddingLabel.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -272,7 +281,7 @@
 			files = (
 				146580FD2BF1F1770093AA81 /* WebServiceManager.swift in Sources */,
 				146580EF2BF1E8EF0093AA81 /* AlarmViewController.swift in Sources */,
-				1445AF652BF350CA0018AE3F /* RelatedSearchModel.swift in Sources */,
+				1445AF652BF350CA0018AE3F /* SearchModel.swift in Sources */,
 				1445AF692BF3784E0018AE3F /* State.swift in Sources */,
 				146580DF2BF1E8160093AA81 /* TabViewController.swift in Sources */,
 				1445AF672BF3631D0018AE3F /* SectionHeaderView.swift in Sources */,
@@ -284,6 +293,9 @@
 				146580FF2BF1F1C30093AA81 /* ApiModel.swift in Sources */,
 				146580E62BF1E8740093AA81 /* TabModel.swift in Sources */,
 				146580CD2BF1E7EA0093AA81 /* SceneDelegate.swift in Sources */,
+				14450E9F2BF45381006A02F7 /* RecentSearchTableViewCell.swift in Sources */,
+				14450EA12BF45962006A02F7 /* Extension.swift in Sources */,
+				14450EA32BF474FC006A02F7 /* PaddingLabel.swift in Sources */,
 				146580E82BF1E8960093AA81 /* HomeViewController.swift in Sources */,
 				1445AF602BF32F7E0018AE3F /* DataSource.swift in Sources */,
 				146580EA2BF1E8B00093AA81 /* ListViewController.swift in Sources */,
