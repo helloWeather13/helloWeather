@@ -31,15 +31,33 @@
 		146580ED2BF1E8D10093AA81 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146580EC2BF1E8D10093AA81 /* SearchViewController.swift */; };
 		146580EF2BF1E8EF0093AA81 /* AlarmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146580EE2BF1E8EF0093AA81 /* AlarmViewController.swift */; };
 		146580F32BF1EB3E0093AA81 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 146580F22BF1EB3E0093AA81 /* SnapKit */; };
-		146580F52BF1EB3E0093AA81 /* SnapKit-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 146580F42BF1EB3E0093AA81 /* SnapKit-Dynamic */; };
 		146580F82BF1EB4D0093AA81 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 146580F72BF1EB4D0093AA81 /* Alamofire */; };
-		146580FA2BF1EB4D0093AA81 /* AlamofireDynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 146580F92BF1EB4D0093AA81 /* AlamofireDynamic */; };
 		146580FD2BF1F1770093AA81 /* WebServiceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146580FC2BF1F1770093AA81 /* WebServiceManager.swift */; };
 		146580FF2BF1F1C30093AA81 /* ApiModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146580FE2BF1F1C30093AA81 /* ApiModel.swift */; };
 		146581032BF1FB8B0093AA81 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146581022BF1FB8B0093AA81 /* SearchViewModel.swift */; };
 		146581052BF21EC40093AA81 /* WeatherAPIModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146581042BF21EC40093AA81 /* WeatherAPIModel.swift */; };
 		146581072BF240AF0093AA81 /* KakaoAddressModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146581062BF240AF0093AA81 /* KakaoAddressModel.swift */; };
+		B64E88172BF544180070C3EF /* AlamofireDynamic in Frameworks */ = {isa = PBXBuildFile; productRef = B64E88162BF544180070C3EF /* AlamofireDynamic */; };
+		B64E88192BF544180070C3EF /* AlamofireDynamic in Embed Frameworks */ = {isa = PBXBuildFile; productRef = B64E88162BF544180070C3EF /* AlamofireDynamic */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		B64E881B2BF5441C0070C3EF /* SnapKit-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = B64E881A2BF5441C0070C3EF /* SnapKit-Dynamic */; };
+		B64E881C2BF5441C0070C3EF /* SnapKit-Dynamic in Embed Frameworks */ = {isa = PBXBuildFile; productRef = B64E881A2BF5441C0070C3EF /* SnapKit-Dynamic */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		B687F6862BF4CC6000623F1D /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B687F6852BF4CC6000623F1D /* HomeViewModel.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		B64E88182BF544180070C3EF /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				B64E88192BF544180070C3EF /* AlamofireDynamic in Embed Frameworks */,
+				B64E881C2BF5441C0070C3EF /* SnapKit-Dynamic in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		14450E9E2BF45381006A02F7 /* RecentSearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentSearchTableViewCell.swift; sourceTree = "<group>"; };
@@ -69,6 +87,7 @@
 		146581022BF1FB8B0093AA81 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		146581042BF21EC40093AA81 /* WeatherAPIModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherAPIModel.swift; sourceTree = "<group>"; };
 		146581062BF240AF0093AA81 /* KakaoAddressModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoAddressModel.swift; sourceTree = "<group>"; };
+		B687F6852BF4CC6000623F1D /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,11 +96,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				1445AF582BF3203E0018AE3F /* RxCocoa in Frameworks */,
+				B64E88172BF544180070C3EF /* AlamofireDynamic in Frameworks */,
 				1445AF532BF2F0630018AE3F /* RAMAnimatedTabBarController in Frameworks */,
 				146580F82BF1EB4D0093AA81 /* Alamofire in Frameworks */,
-				146580FA2BF1EB4D0093AA81 /* AlamofireDynamic in Frameworks */,
 				146580F32BF1EB3E0093AA81 /* SnapKit in Frameworks */,
-				146580F52BF1EB3E0093AA81 /* SnapKit-Dynamic in Frameworks */,
+				B64E881B2BF5441C0070C3EF /* SnapKit-Dynamic in Frameworks */,
 				1445AF5A2BF3203E0018AE3F /* RxSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -112,6 +131,7 @@
 			children = (
 				146580C92BF1E7EA0093AA81 /* helloWeather */,
 				146580C82BF1E7EA0093AA81 /* Products */,
+				B64E88152BF544180070C3EF /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -142,6 +162,7 @@
 			isa = PBXGroup;
 			children = (
 				146580E32BF1E8590093AA81 /* TabViewModel.swift */,
+				B687F6852BF4CC6000623F1D /* HomeViewModel.swift */,
 				146581022BF1FB8B0093AA81 /* SearchViewModel.swift */,
 			);
 			path = ViewModel;
@@ -194,6 +215,13 @@
 			path = Manager;
 			sourceTree = "<group>";
 		};
+		B64E88152BF544180070C3EF /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -204,6 +232,7 @@
 				146580C32BF1E7EA0093AA81 /* Sources */,
 				146580C42BF1E7EA0093AA81 /* Frameworks */,
 				146580C52BF1E7EA0093AA81 /* Resources */,
+				B64E88182BF544180070C3EF /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -212,12 +241,12 @@
 			name = helloWeather;
 			packageProductDependencies = (
 				146580F22BF1EB3E0093AA81 /* SnapKit */,
-				146580F42BF1EB3E0093AA81 /* SnapKit-Dynamic */,
 				146580F72BF1EB4D0093AA81 /* Alamofire */,
-				146580F92BF1EB4D0093AA81 /* AlamofireDynamic */,
 				1445AF522BF2F0630018AE3F /* RAMAnimatedTabBarController */,
 				1445AF572BF3203E0018AE3F /* RxCocoa */,
 				1445AF592BF3203E0018AE3F /* RxSwift */,
+				B64E88162BF544180070C3EF /* AlamofireDynamic */,
+				B64E881A2BF5441C0070C3EF /* SnapKit-Dynamic */,
 			);
 			productName = helloWeather;
 			productReference = 146580C72BF1E7EA0093AA81 /* helloWeather.app */;
@@ -298,6 +327,7 @@
 				14450EA32BF474FC006A02F7 /* PaddingLabel.swift in Sources */,
 				146580E82BF1E8960093AA81 /* HomeViewController.swift in Sources */,
 				1445AF602BF32F7E0018AE3F /* DataSource.swift in Sources */,
+				B687F6862BF4CC6000623F1D /* HomeViewModel.swift in Sources */,
 				146580EA2BF1E8B00093AA81 /* ListViewController.swift in Sources */,
 				1445AF552BF2F5D40018AE3F /* CustomBounceAnimation.swift in Sources */,
 				146580E42BF1E8590093AA81 /* TabViewModel.swift in Sources */,
@@ -445,7 +475,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 27X8924SNC;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = helloWeather/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -472,7 +502,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 27X8924SNC;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = helloWeather/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -571,20 +601,20 @@
 			package = 146580F12BF1EB3E0093AA81 /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
 		};
-		146580F42BF1EB3E0093AA81 /* SnapKit-Dynamic */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 146580F12BF1EB3E0093AA81 /* XCRemoteSwiftPackageReference "SnapKit" */;
-			productName = "SnapKit-Dynamic";
-		};
 		146580F72BF1EB4D0093AA81 /* Alamofire */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 146580F62BF1EB4D0093AA81 /* XCRemoteSwiftPackageReference "Alamofire" */;
 			productName = Alamofire;
 		};
-		146580F92BF1EB4D0093AA81 /* AlamofireDynamic */ = {
+		B64E88162BF544180070C3EF /* AlamofireDynamic */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 146580F62BF1EB4D0093AA81 /* XCRemoteSwiftPackageReference "Alamofire" */;
 			productName = AlamofireDynamic;
+		};
+		B64E881A2BF5441C0070C3EF /* SnapKit-Dynamic */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 146580F12BF1EB3E0093AA81 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = "SnapKit-Dynamic";
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
