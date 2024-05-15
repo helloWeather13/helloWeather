@@ -6,8 +6,9 @@
 //
 
 import UIKit
+import RAMAnimatedTabBarController
 
-class TabViewController: UITabBarController {
+class TabViewController: RAMAnimatedTabBarController {
 
     let tabViewModel = TabViewModel()
     
