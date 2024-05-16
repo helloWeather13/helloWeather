@@ -9,21 +9,18 @@ import UIKit
 import CoreLocation
 
 enum ConditionText: String {
-    case rain = "비"
-    case snow = "눈"
-    case typhoon = "태풍"
-    case none = "해"
+    case rain = "비 소식"
+    case snow = "눈 소식"
+    case none = "맑은 날"
     
     var detail: (icon: UIImage, verb: String) {
         switch self {
         case .rain:
-            return (UIImage(systemName: "umbrella")!, "가 올거에요")
+            return (UIImage(systemName: "sun.min")!, "이 있어요")
         case .snow:
-            return (UIImage(systemName: "umbrella")!, "이 올거에요")
-        case .typhoon:
-            return (UIImage(systemName: "umbrella")!, "이 불거에요")
+            return (UIImage(systemName: "sun.min")!, "이 있어요")
         case .none:
-            return (UIImage(systemName: "umbrella")!, "가 떠있어요")
+            return (UIImage(systemName: "sun.min")!, "이에요")
         }
     }
     
@@ -41,31 +38,100 @@ class HomeViewModel: NSObject, CLLocationManagerDelegate {
     let webServiceManager = WebServiceManager.shared
     let userLocationManager = CLLocationManager()
     
-    var userLocationString: String = "dd"
+    var isBookmarked = false
+    
+    var userLocationAddress: String = "" {
+        didSet {
+            addressOnCompleted(userLocationAddress)
+        }
+    }
+    
+    var addressOnCompleted: ((String) -> ()) = { _ in }
+    
+    var userLocationPoint: (Double, Double) = (0, 0) {
+        didSet {
+            let dispatchGroup = DispatchGroup()
+            let currentTime = DateFormatter()
+            currentTime.dateFormat = "HH"
+            let currentHour = Int(currentTime.string(from: Date()))!
+            
+            dispatchGroup.enter()
+            webServiceManager.getForecastWeather(searchModel: SearchModel(keyWord: "", fullAddress: "", lat: userLocationPoint.0, lon: userLocationPoint.1)) { [unowned self] data in
+                if let currentData = data.current {
+                    todayFeelsLike = currentData.feelslikeC
+                }
+                
+                if data.forecast.forecastday[0].hour[currentHour].willItRain == 1 {
+                    condition = .rain
+                } else if data.forecast.forecastday[0].hour[currentHour].willItSnow == 1 {
+                    condition = .snow
+                } else {
+                    condition = .none
+                }
+                dispatchGroup.leave()
+            }
+            
+            dispatchGroup.enter()
+            webServiceManager.getHistoryWeather(searchModel: SearchModel(keyWord: "", fullAddress: "", lat: userLocationPoint.0, lon: userLocationPoint.1)) { [unowned self] data in
+                let currentData = data.forecast.forecastday[0].hour[currentHour]
+                yesterdayFeelsLike = currentData.feelslikeC
+                dispatchGroup.leave()
+            }
+            
+            dispatchGroup.notify(queue: .main) { [unowned self] in
+                difference = todayFeelsLike - yesterdayFeelsLike
+            }
+        }
+    }
+    
+    var todayFeelsLike: Double = 0
+    var yesterdayFeelsLike: Double = 0
+    
+    var difference: Double = 0 {
+        didSet {
+            differenceOnCompleted(difference)
+        }
+    }
+    
+    var differenceOnCompleted: ((Double) -> ()) = { _ in }
     
     var yesterdayString: String {
         switch difference {
         case 0:
-            return "어제와"
+            return "어제와 "
         default:
-            return "어제보다"
+            return "어제보다 "
         }
     }
     
-    var difference: Int = 0   // 오늘 - 어제
-    
-    var lessMoreString: String {
+    var compareDescription: (String, UIImage) {
         switch difference {
         case ..<0:
-            return "도 낮고"
+            switch todayFeelsLike {
+            case ..<10:
+                return ("춥고", UIImage(systemName: "thermometer.sun")!)
+            default:
+                return ("선선하고", UIImage(systemName: "thermometer.sun")!)
+            }
         case 0:
-            return "비슷하고"
+            return ("비슷하고", UIImage(systemName: "thermometer.sun")!)
         default:
-            return "도 높고"
+            switch todayFeelsLike {
+            case ..<24:
+                return ("따뜻하고", UIImage(systemName: "thermometer.sun")!)
+            default:
+                return ("덥고", UIImage(systemName: "thermometer.sun")!)
+            }
         }
     }
     
-    var condition: ConditionText?
+    var condition: ConditionText = .none {
+        didSet {
+            conditionOnCompleted()
+        }
+    }
+    
+    var conditionOnCompleted: (() -> ()) = { }
     
     override init() {
         super.init()
@@ -74,43 +140,45 @@ class HomeViewModel: NSObject, CLLocationManagerDelegate {
         userLocationManager.desiredAccuracy = kCLLocationAccuracyBest
         userLocationManager.requestWhenInUseAuthorization()
         userLocationManager.startUpdatingLocation()
-        getUserLocation { address in
-            self.userLocationString = address
-        }
+        getUserLocation()
         userLocationManager.stopUpdatingLocation()
     }
     
-    func getUserLocation(completion: @escaping (String) -> ()) {
+    func getUserLocation() {
         let geocoder = CLGeocoder()
         
         let location = self.userLocationManager.location
         
         if let location = location {
-            geocoder.reverseGeocodeLocation(location) { (placemarks, error) in
+            geocoder.reverseGeocodeLocation(location) { [unowned self] (placemarks, error) in
                 if error != nil { return }
                 
                 if let placemark = placemarks?.first {
-                    var address = ""
+    
+                    let x = placemark.location?.coordinate.latitude ?? 0
+                    let y = placemark.location?.coordinate.longitude ?? 0
+                    print(x, y)
+                    userLocationPoint = (x, y)
                     
-                    if let administrativeArea = placemark.administrativeArea{
+                    var address = ""
+
+                    if let administrativeArea = placemark.administrativeArea {
                         address += "\(administrativeArea) "
-                        print(administrativeArea)
                     }
                     
                     if let subAdministrativeArea = placemark.subAdministrativeArea {
                         address += "\(subAdministrativeArea) "
-                        print(subAdministrativeArea)
                     }
                     
                     if let subLocality = placemark.subLocality {
                         address += "\(subLocality)"
-                        print(subLocality)
                     }
+                    
                     print(address)
-                    completion(address)
+                    userLocationAddress = address
+                    
                 } else {
                     print("No location")
-                    completion("")
                 }
             }
         }

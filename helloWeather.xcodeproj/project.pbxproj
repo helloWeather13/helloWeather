@@ -37,9 +37,7 @@
 		146581032BF1FB8B0093AA81 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146581022BF1FB8B0093AA81 /* SearchViewModel.swift */; };
 		146581052BF21EC40093AA81 /* WeatherAPIModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146581042BF21EC40093AA81 /* WeatherAPIModel.swift */; };
 		146581072BF240AF0093AA81 /* KakaoAddressModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146581062BF240AF0093AA81 /* KakaoAddressModel.swift */; };
-		B64E88172BF544180070C3EF /* AlamofireDynamic in Frameworks */ = {isa = PBXBuildFile; productRef = B64E88162BF544180070C3EF /* AlamofireDynamic */; };
 		B64E88192BF544180070C3EF /* AlamofireDynamic in Embed Frameworks */ = {isa = PBXBuildFile; productRef = B64E88162BF544180070C3EF /* AlamofireDynamic */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		B64E881B2BF5441C0070C3EF /* SnapKit-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = B64E881A2BF5441C0070C3EF /* SnapKit-Dynamic */; };
 		B64E881C2BF5441C0070C3EF /* SnapKit-Dynamic in Embed Frameworks */ = {isa = PBXBuildFile; productRef = B64E881A2BF5441C0070C3EF /* SnapKit-Dynamic */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		B687F6862BF4CC6000623F1D /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B687F6852BF4CC6000623F1D /* HomeViewModel.swift */; };
 /* End PBXBuildFile section */
@@ -96,11 +94,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				1445AF582BF3203E0018AE3F /* RxCocoa in Frameworks */,
-				B64E88172BF544180070C3EF /* AlamofireDynamic in Frameworks */,
 				1445AF532BF2F0630018AE3F /* RAMAnimatedTabBarController in Frameworks */,
 				146580F82BF1EB4D0093AA81 /* Alamofire in Frameworks */,
 				146580F32BF1EB3E0093AA81 /* SnapKit in Frameworks */,
-				B64E881B2BF5441C0070C3EF /* SnapKit-Dynamic in Frameworks */,
 				1445AF5A2BF3203E0018AE3F /* RxSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
