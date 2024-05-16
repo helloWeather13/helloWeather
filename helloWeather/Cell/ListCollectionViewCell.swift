@@ -23,15 +23,16 @@ class ListTableViewCell: UITableViewCell {
             make.top.equalToSuperview().offset(10)
             make.leading.equalToSuperview().offset(10)
             make.trailing.equalToSuperview().offset(-10)
+            make.width.equalTo(50)
         }
         
         // 현재기온 레이블의 생성 및 설정
         nowTemperatureLabel = UILabel()
         contentView.addSubview(nowTemperatureLabel)
         nowTemperatureLabel.snp.makeConstraints { make in
-            make.top.equalTo(capitalLabel.snp.bottom).offset(5)
+            make.top.equalTo(capitalLabel.snp.bottom).offset(20)
             make.leading.equalToSuperview().offset(10)
-            make.width.equalTo(20)
+            make.width.equalTo(70)
         }
         
         // 최고온도 레이블의 생성 및 설정
@@ -39,8 +40,8 @@ class ListTableViewCell: UITableViewCell {
         contentView.addSubview(highTemperatureLabel)
         highTemperatureLabel.snp.makeConstraints { make in
             make.top.equalTo(nowTemperatureLabel.snp.top)
-            make.leading.equalTo(nowTemperatureLabel.snp.trailing).offset(5)
-            make.width.equalTo(20)
+            make.leading.equalTo(nowTemperatureLabel.snp.trailing).offset(20)
+            make.width.equalTo(70)
         }
         
         // 최저온도 레이블의 생성 및 설정
@@ -48,17 +49,19 @@ class ListTableViewCell: UITableViewCell {
         contentView.addSubview(lowTemperatureLabel)
         lowTemperatureLabel.snp.makeConstraints { make in
             make.top.equalTo(highTemperatureLabel.snp.top)
-            make.leading.equalTo(highTemperatureLabel.snp.trailing).offset(5)
+            make.leading.equalTo(highTemperatureLabel.snp.trailing).offset(20)
             make.trailing.equalToSuperview().offset(-10)
+            make.width.equalTo(70)
         }
         
         // 기상상태 레이블의 생성 및 설정
         conditionLabel = UILabel()
-        contentView.addSubview(lowTemperatureLabel)
-        lowTemperatureLabel.snp.makeConstraints { make in
-            make.top.equalTo(highTemperatureLabel.snp.top)
-            make.leading.equalTo(highTemperatureLabel.snp.trailing).offset(5)
+        contentView.addSubview(conditionLabel)
+        conditionLabel.snp.makeConstraints { make in
+            make.top.equalTo(lowTemperatureLabel.snp.top)
+            make.leading.equalTo(lowTemperatureLabel.snp.trailing).offset(20)
             make.trailing.equalToSuperview().offset(-10)
+            make.width.equalTo(70)
         }
         
         alarmButton = UIButton(type: .custom)
@@ -87,9 +90,26 @@ class ListTableViewCell: UITableViewCell {
     
     func configure(with searchModel: SearchModel, weatherModel: WeatherAPIModel) {
         capitalLabel.text = searchModel.keyWord
-//        nowTemperatureLabel.text = 
-//        highTemperatureLabel.text =
-//        lowTemperatureLabel.text =
+        // 현재 기온 설정
+        if let currentTemperature = weatherModel.current?.tempC {
+            nowTemperatureLabel.text = "\(currentTemperature)°C"
+        }
+        
+        // 최고 온도 설정
+        if let maxTemperature = weatherModel.forecast.forecastday.first?.day.maxtempC {
+            highTemperatureLabel.text = "\(maxTemperature)°C"
+        }
+        
+        // 최저 온도 설정
+        if let minTemperature = weatherModel.forecast.forecastday.first?.day.mintempC {
+            lowTemperatureLabel.text = "\(minTemperature)°C"
+        }
+        
+        // 기상 상황 설정
+        if let conditionText = weatherModel.current?.condition.text {
+            conditionLabel.text = "\(conditionText)"
+        }
+        
         
         // 다른 레이블에 필요한 정보 설정
     }

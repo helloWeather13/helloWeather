@@ -113,7 +113,7 @@ extension ListViewController: UITableViewDelegate {
                let tabBarController = windowScene.windows.first(where: { $0.isKeyWindow })?.rootViewController as? UITabBarController {
                 
                 UIView.transition(with: tabBarController.view, duration: 0.2, options: .transitionCrossDissolve, animations: {
-                    tabBarController.selectedIndex = 0
+                    tabBarController.selectedIndex = 1
                 }, completion: nil)
             }
         }
@@ -138,18 +138,13 @@ extension ListViewController: UITableViewDelegate {
         return 80 // 셀의 높이를 80으로 지정
     }
     
-    // 간격주고싶어서 만들어본 푸터 (근데안됨)
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 20 // 각 셀 사이의 간격을 20으로 설정
+    }
+    
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-            // footer를 생성하여 반환
-            let footerView = UIView()
-            footerView.backgroundColor = .clear
-            return footerView
-        }
-        
-        func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-            // 각 섹션의 footer 높이를 설정하여 간격 조절
-            return 50
-        }
+        return UIView()
+    }
     
     // 테이블 뷰 삭제
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
