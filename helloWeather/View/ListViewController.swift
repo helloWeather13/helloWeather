@@ -10,7 +10,7 @@ import SnapKit
 import Combine
 
 class ListViewController: UIViewController {
-    private var tableView: UITableView!
+    private var collectionView: UICollectionView!
     private var listViewModel = ListViewModel()
     private var cancellables = Set<AnyCancellable>()
     
@@ -22,33 +22,44 @@ class ListViewController: UIViewController {
         
         let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(gesture:)))
         longPressGesture.minimumPressDuration = 0.3
-        tableView.addGestureRecognizer(longPressGesture)
+        collectionView.addGestureRecognizer(longPressGesture)
         
-        longPressGesture.require(toFail: tableView.panGestureRecognizer)
+        longPressGesture.require(toFail: collectionView.panGestureRecognizer)
     }
     
     func configureUI() {
-        tableView = UITableView()
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.register(ListTableViewCell.self, forCellReuseIdentifier: ListTableViewCell.cellIdentifier)
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(tableView)
+        let layout = UICollectionViewFlowLayout()
+        collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: layout)
+        layout.scrollDirection = .vertical
+        layout.minimumLineSpacing = 10
+        let cellWidth: CGFloat = {
+            let deviceWidth = UIScreen.main.bounds.width
+            let inset: CGFloat = 20
+            let numberOfLine: CGFloat = 1
+            let width: CGFloat = (deviceWidth - inset * 2 - 1) / numberOfLine
+            return width
+        }()
+        layout.itemSize = .init(width: cellWidth, height: cellWidth/5)
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        collectionView.register(ListCollectionViewCell.self, forCellWithReuseIdentifier: ListCollectionViewCell.cellIdentifier)
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(collectionView)
         
-        tableView.snp.makeConstraints { make in
+        collectionView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
     }
     
     private func setupBindings() {
         listViewModel.$items.receive(on: DispatchQueue.main).sink { [weak self] _ in
-            self?.tableView.reloadData()
+            self?.collectionView.reloadData()
         }.store(in: &cancellables)
     }
     
     @objc func handleLongPress(gesture: UILongPressGestureRecognizer) {
-        let point = gesture.location(in: tableView)
-        guard let indexPath = tableView.indexPathForRow(at: point) else {
+        let point = gesture.location(in: collectionView)
+        guard let indexPath = collectionView.indexPathForItem(at: point) else {
             return
         }
         if gesture.state == .began {
@@ -71,17 +82,18 @@ class ListViewController: UIViewController {
     
     func deleteItem(at indexPath: IndexPath) {
         listViewModel.items.remove(at: indexPath.row)
-        tableView.deleteRows(at: [indexPath], with: .automatic)
+        collectionView.deleteItems(at: [indexPath])
     }
 }
 
-extension ListViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+extension ListViewController: UICollectionViewDataSource {
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return listViewModel.items.count
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: ListTableViewCell.cellIdentifier, for: indexPath) as! ListTableViewCell
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ListCollectionViewCell.cellIdentifier, for: indexPath) as! ListCollectionViewCell
         let item = listViewModel.items[indexPath.row]
         let searchModel = item.0
         let weatherModel = item.1
@@ -90,17 +102,17 @@ extension ListViewController: UITableViewDataSource {
     }
 }
 
-extension ListViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
+extension ListViewController: UICollectionViewDelegate {
+    internal func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.deselectItem(at: indexPath, animated: true)
         
         UIView.animate(withDuration: 0.15, animations: {
-            if let cell = tableView.cellForRow(at: indexPath) {
+            if let cell = collectionView.cellForItem(at: indexPath) {
                 cell.transform = CGAffineTransform(scaleX: 1.05, y: 1.05)
             }
         }) { _ in
             UIView.animate(withDuration: 0.15) {
-                if let cell = tableView.cellForRow(at: indexPath) {
+                if let cell = collectionView.cellForItem(at: indexPath) {
                     cell.transform = .identity
                 }
             }
@@ -119,41 +131,20 @@ extension ListViewController: UITableViewDelegate {
         }
     }
     
-    func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
-        if let cell = tableView.cellForRow(at: indexPath) {
+    func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
+        if let cell = collectionView.cellForItem(at: indexPath) {
             UIView.animate(withDuration: 0.15) {
                 cell.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
             }
         }
     }
     
-    func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
-        if let cell = tableView.cellForRow(at: indexPath) {
+    func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
+        if let cell = collectionView.cellForItem(at: indexPath) {
             UIView.animate(withDuration: 0.15) {
                 cell.transform = .identity
             }
         }
     }
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 80 // 셀의 높이를 80으로 지정
-    }
-    
-    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 20 // 각 셀 사이의 간격을 20으로 설정
-    }
-    
-    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        return UIView()
-    }
-    
-    // 테이블 뷰 삭제
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-            if editingStyle == .delete {
-                // 데이터 모델에서 해당 항목을 삭제합니다.
-                listViewModel.items.remove(at: indexPath.row)
-                
-                // 테이블 뷰에서 해당 행을 삭제합니다.
-                tableView.deleteRows(at: [indexPath], with: .automatic)
-            }
-        }
+
 }

@@ -1,7 +1,7 @@
 import UIKit
 import SnapKit
 
-class ListTableViewCell: UITableViewCell {
+class ListCollectionViewCell: UICollectionViewCell {
     
     static let cellIdentifier = "ListCellIdentifier"
     
@@ -13,8 +13,8 @@ class ListTableViewCell: UITableViewCell {
     var alarmButton: UIButton! // 알람 버튼의 선언
     var indexPath: IndexPath? // 셀의 indexPath를 저장하는 프로퍼티
     
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         
         // 도시 이름 레이블의 생성 및 설정
         capitalLabel = UILabel()
@@ -117,7 +117,7 @@ class ListTableViewCell: UITableViewCell {
 }
 
 // ListTableViewCell 클래스에 버튼 액션에 대한 함수 추가
-extension ListTableViewCell {
+extension ListCollectionViewCell {
     // 버튼 액션 처리를 위한 함수
     @objc func alarmButtonTapped(_ sender: UIButton) {
         // 현재 버튼의 상태 확인
