@@ -10,13 +10,25 @@ import SnapKit
 
 class WeatherDetailView: UIView {
     
+    let scrollView: UIScrollView = {
+        let scroll = UIScrollView()
+        scroll.isScrollEnabled = true
+        return scroll
+    }()
+    
     // MARK: - SubtitleLabels
+    let addressLabel: UILabel = {
+        let label = UILabel()
+        label.text = "서울시 강남구 역삼동"
+        label.font = UIFont.systemFont(ofSize: 18, weight: .bold)
+        label.textAlignment = .center
+        return label
+    }()
     
     // 체감온도 stack
     let firstStackView: UIStackView = {
         let stack = UIStackView()
         stack.axis = .horizontal
-        stack.spacing = 4
         return stack
     }()
     let timeCelsiusLabel: UILabel = {
@@ -34,7 +46,6 @@ class WeatherDetailView: UIView {
     let secondStackView: UIStackView = {
         let stack = UIStackView()
         stack.axis = .horizontal
-        stack.spacing = 4
         return stack
     }()
     let timeWeather: UILabel = {
@@ -52,7 +63,6 @@ class WeatherDetailView: UIView {
     let thirdStackView: UIStackView = {
         let stack = UIStackView()
         stack.axis = .horizontal
-        stack.spacing = 4
         return stack
     }()
     let weekWeatherLabel: UILabel = {
@@ -69,8 +79,6 @@ class WeatherDetailView: UIView {
     // 습도 stack
     let fourthStackView: UIStackView = {
         let stack = UIStackView()
-        stack.axis = .horizontal
-        stack.spacing = 4
         return stack
     }()
     let humidityLabel: UILabel = {
@@ -88,7 +96,6 @@ class WeatherDetailView: UIView {
     let fifthStackView: UIStackView = {
         let stack = UIStackView()
         stack.axis = .horizontal
-        stack.spacing = 4
         return stack
     }()
     let sunLabel: UILabel = {
@@ -102,22 +109,16 @@ class WeatherDetailView: UIView {
         return image
     }()
     
-    
     // MARK: - CollectionView
-    
     // 체감온도 stack
     let firstOuterStackView: UIStackView = {
         let stack = UIStackView()
         stack.axis = .horizontal
-        stack.spacing = 24
+        stack.spacing = 20
         return stack
     }()
     let firstLeftCollectionView = TodayTimeCelsiusCollectionView()
     let firstRightCollectionView = TomorrowTimeCelsiusCollectionView()
-    let topLineImageView: UIImageView = {
-        let image = UIImageView()
-        return image
-    }()
     
     // 날씨 stack
     let secondOuterStackView: UIStackView = {
@@ -128,10 +129,6 @@ class WeatherDetailView: UIView {
     }()
     let secondLeftCollectionView = TodayTimeWeatherCollectionView()
     let secondRightCollectionView = TomorrowTimeWeatherCollectionView()
-    let bottomLineImageView: UIImageView = {
-        let image = UIImageView()
-        return image
-    }()
     
     // 주간 날씨
     let weekCollectionView = WeekCollectionView()
@@ -143,93 +140,110 @@ class WeatherDetailView: UIView {
         super.init(frame: frame)
         
         self.backgroundColor = .white
+        configureScrollView()
         configureConstraints()
-        
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    private func configureScrollView() {
+        self.addSubview(addressLabel)
+        self.addSubview(scrollView)
+        
+        [firstStackView, secondStackView, thirdStackView, fourthStackView, fifthStackView, firstOuterStackView, secondOuterStackView, weekCollectionView, humidityCollectionView].forEach {
+            scrollView.addSubview($0)
+        }
+    }
     
     private func configureConstraints() {
+        addressLabel.snp.makeConstraints { make in
+            make.top.equalTo(self).offset(68)
+            make.centerX.equalTo(self)
+        }
         
-        // MARK: - addSubView,addArrangedSubView
+        scrollView.snp.makeConstraints { make in
+            make.top.equalTo(addressLabel.snp.bottom).offset(76)
+            make.leading.trailing.bottom.equalToSuperview()
+        }
+        
         // Subtitles Stack
-        [firstStackView, secondStackView, thirdStackView, fourthStackView, fifthStackView].forEach {
-            self.addSubview($0)
-        }
+        firstStackView.addArrangedSubview(timeCelsiusLabel)
+        firstStackView.addArrangedSubview(timeCelsiusIcon)
         
-        [timeCelsiusLabel, timeCelsiusIcon].forEach {
-            firstStackView.addArrangedSubview($0)
-        }
-        [timeWeather, timeWeatherIcon].forEach {
-            secondStackView.addArrangedSubview($0)
-        }
-        [weekWeatherLabel, weekWeatherIcon].forEach {
-            thirdStackView.addArrangedSubview($0)
-        }
-        [humidityLabel, humidityIcon].forEach {
-            fourthStackView.addArrangedSubview($0)
-        }
-        [sunLabel, sunIcon].forEach {
-            fifthStackView.addArrangedSubview($0)
-        }
+        secondStackView.addArrangedSubview(timeWeather)
+        secondStackView.addArrangedSubview(timeWeatherIcon)
+        
+        thirdStackView.addArrangedSubview(weekWeatherLabel)
+        thirdStackView.addArrangedSubview(weekWeatherIcon)
+        
+        fourthStackView.addArrangedSubview(humidityLabel)
+        fourthStackView.addArrangedSubview(humidityIcon)
+        
+        fifthStackView.addArrangedSubview(sunLabel)
+        fifthStackView.addArrangedSubview(sunIcon)
         
         // CollectionView
-        [firstOuterStackView, secondOuterStackView, weekCollectionView, humidityCollectionView].forEach {
-            self.addSubview($0)
-        }
+        firstOuterStackView.addArrangedSubview(firstLeftCollectionView)
+        firstOuterStackView.addArrangedSubview(firstRightCollectionView)
         
-        [firstLeftCollectionView, firstRightCollectionView, topLineImageView].forEach {
-            firstOuterStackView.addArrangedSubview($0)
-        }
-        [secondLeftCollectionView, secondRightCollectionView, bottomLineImageView].forEach {
-            secondOuterStackView.addArrangedSubview($0)
-        }
+        secondOuterStackView.addArrangedSubview(secondLeftCollectionView)
+        secondOuterStackView.addArrangedSubview(secondRightCollectionView)
         
-        // MARK: - Constraints
-        // 시간대별 체감온도
+        // Constraints
         firstStackView.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(36)
-            make.leading.equalToSuperview().offset(20)
-            make.trailing.equalToSuperview().inset(208)
+            make.top.equalTo(scrollView).offset(20)
+            make.leading.equalTo(scrollView).offset(20)
+            make.trailing.equalTo(scrollView).inset(20)
         }
         firstOuterStackView.snp.makeConstraints { make in
             make.top.equalTo(firstStackView.snp.bottom).offset(20)
-            make.leading.equalToSuperview().offset(32)
+            make.leading.equalTo(scrollView).offset(32)
+            make.trailing.equalTo(scrollView).inset(32)
+            make.height.equalTo(146)
+            make.width.equalTo(361)
         }
         
-        // 시간대별 날씨
         secondStackView.snp.makeConstraints { make in
-            make.top.equalTo(firstOuterStackView.snp.bottom).offset(102.5)
-            make.leading.equalToSuperview().offset(20)
+            make.top.equalTo(firstOuterStackView.snp.bottom).offset(20)
+            make.leading.equalTo(scrollView).offset(20)
+            make.trailing.equalTo(scrollView).inset(20)
         }
         secondOuterStackView.snp.makeConstraints { make in
             make.top.equalTo(secondStackView.snp.bottom).offset(20)
-            make.leading.equalToSuperview().offset(32)
+            make.leading.equalTo(scrollView).offset(32)
+            make.trailing.equalTo(scrollView).inset(32)
+            make.height.equalTo(146)
+            make.width.equalTo(361)
         }
         
-        // 주간날씨 예보
         thirdStackView.snp.makeConstraints { make in
-            make.top.equalTo(secondOuterStackView.snp.bottom).offset(102.5)
-            make.leading.equalToSuperview().offset(20)
+            make.top.equalTo(secondOuterStackView.snp.bottom).offset(20)
+            make.leading.equalTo(scrollView).offset(20)
+            make.trailing.equalTo(scrollView).inset(20)
         }
         weekCollectionView.snp.makeConstraints { make in
             make.top.equalTo(thirdStackView.snp.bottom).offset(20)
-            make.leading.equalToSuperview().offset(32)
+            make.leading.equalTo(scrollView).offset(32)
+            make.trailing.equalTo(scrollView).inset(32)
+            make.height.equalTo(173)
+            make.width.equalTo(361)
         }
         
-        // 시간대별 습도
         fourthStackView.snp.makeConstraints { make in
-            make.top.equalTo(weekCollectionView.snp.bottom).offset(102.5)
-            make.leading.equalToSuperview().offset(20)
+            make.top.equalTo(weekCollectionView.snp.bottom).offset(20)
+            make.leading.equalTo(scrollView).offset(20)
+            make.trailing.equalTo(scrollView).inset(20)
         }
         humidityCollectionView.snp.makeConstraints { make in
-            make.top.equalTo(thirdStackView.snp.bottom).offset(20)
-            make.leading.equalToSuperview().offset(32)
+            make.top.equalTo(fourthStackView.snp.bottom).offset(20)
+            make.leading.equalTo(scrollView).offset(32)
+            make.trailing.equalTo(scrollView).inset(32)
+            make.height.equalTo(146)
+            make.width.equalTo(361)
+            make.bottom.equalTo(scrollView).offset(-20)
         }
-        
     }
- 
 }
+

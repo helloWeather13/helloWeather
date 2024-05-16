@@ -15,20 +15,22 @@ class FirstLeftCollectionViewCell: UICollectionViewCell {
     lazy var stackView: UIStackView = {
         let stack = UIStackView()
         stack.axis = .vertical
-        stack.spacing = 78
+        stack.spacing = 100
         return stack
     }()
     
     lazy var celsiusLabel: UILabel = {
         let label = UILabel()
-        label.text = ""
-        label.font = UIFont.systemFont(ofSize: 20, weight: .regular)
+        label.text = "17"
+        label.font = UIFont.systemFont(ofSize: 15, weight: .regular)
+        label.textAlignment = .center
         return label
     }()
     lazy var timeLabel: UILabel = {
         let label = UILabel()
-        label.text = ""
+        label.text = "3시"
         label.font = UIFont.systemFont(ofSize: 11, weight: .regular)
+        label.textAlignment = .center
         return label
     }()
     
@@ -44,14 +46,17 @@ class FirstLeftCollectionViewCell: UICollectionViewCell {
     
     private func configureConstraints() {
         
+        contentView.addSubview(stackView)
         [celsiusLabel, timeLabel].forEach {
             stackView.addArrangedSubview($0)
         }
-        contentView.addSubview(stackView)
         
         stackView.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(4)
-            make.leading.equalToSuperview().offset(32)
+            make.edges.equalToSuperview()
+        }
+        
+        celsiusLabel.snp.makeConstraints { make in
+            make.height.equalTo(celsiusLabel.font.pointSize)
         }
         
     }

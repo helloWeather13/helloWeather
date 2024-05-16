@@ -20,12 +20,14 @@ class HumidityCollectionViewCell: UICollectionViewCell {
     
     let percentLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 20, weight: .regular)
+        label.font = UIFont.systemFont(ofSize: 15, weight: .regular)
+        label.textAlignment = .center
         return label
     }()
     let timeLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 11, weight: .regular)
+        label.textAlignment = .center
         return label
     }()
     
@@ -42,13 +44,18 @@ class HumidityCollectionViewCell: UICollectionViewCell {
     private func configureConstraints() {
         
         contentView.addSubview(stackView)
-        [percentLabel, timeLabel].forEach {
-            stackView.addArrangedSubview($0)
-        }
+        stackView.addArrangedSubview(percentLabel)
+        stackView.addArrangedSubview(timeLabel)
         
         stackView.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(4)
-            make.leading.equalToSuperview().offset(32)
+            make.edges.equalToSuperview()
+        }
+        
+        percentLabel.snp.makeConstraints { make in
+            make.height.equalTo(percentLabel.font.pointSize)
+        }
+        timeLabel.snp.makeConstraints { make in
+            make.height.equalTo(timeLabel.font.pointSize)
         }
         
     }

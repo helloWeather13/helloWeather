@@ -10,12 +10,13 @@ import UIKit
 class WeatherDetailViewController: UIViewController {
     
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let weatherDetailView = WeatherDetailView(frame: self.view.bounds)
+        self.view.backgroundColor = .white
         
-        // WeatherDetailView를 WeatherDetailViewController의 뷰로 설정
+        let weatherDetailView = WeatherDetailView(frame: self.view.bounds)
         self.view = weatherDetailView
     }
     

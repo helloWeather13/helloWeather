@@ -200,8 +200,8 @@
 		45D70DD52BF3513A00942DC1 /* HumidityCollectionView */ = {
 			isa = PBXGroup;
 			children = (
-				45D70DE42BF5460500942DC1 /* HumidityCollectionView.swift */,
 				45D70DE62BF5469700942DC1 /* HumidityCollectionViewCell.swift */,
+				45D70DE42BF5460500942DC1 /* HumidityCollectionView.swift */,
 			);
 			path = HumidityCollectionView;
 			sourceTree = "<group>";

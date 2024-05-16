@@ -9,9 +9,6 @@ import UIKit
 
 class TodayTimeCelsiusCollectionView: UICollectionView, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
-    var celsiusTest: [String] = ["17", "21", "22", "21", "20"]
-    var timeTest: [String] = ["지금", "3시", "6시", "9시", "12시"]
-    
     init() {
            let layout = UICollectionViewFlowLayout()
            layout.scrollDirection = .horizontal
@@ -20,6 +17,7 @@ class TodayTimeCelsiusCollectionView: UICollectionView, UICollectionViewDelegate
            self.delegate = self
            self.dataSource = self
            self.register(FirstLeftCollectionViewCell.self, forCellWithReuseIdentifier: FirstLeftCollectionViewCell.identifier)
+            self.showsHorizontalScrollIndicator = false
        }
        
        required init?(coder: NSCoder) {
@@ -28,23 +26,22 @@ class TodayTimeCelsiusCollectionView: UICollectionView, UICollectionViewDelegate
     
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return celsiusTest.count
+        return 8
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell  = collectionView.dequeueReusableCell(withReuseIdentifier: FirstLeftCollectionViewCell.identifier, for: indexPath) as! FirstLeftCollectionViewCell
         
-        let celsiusTestData = celsiusTest[indexPath.item]
-        cell.celsiusLabel.text = celsiusTestData
+        cell.celsiusLabel.text = "\(indexPath.item * 5)°C"
         
-        let timeTestData = timeTest[indexPath.item]
-        cell.timeLabel.text = timeTestData
+        let hour = (indexPath.item * 3) % 24
+            cell.timeLabel.text = "\(hour)시"
         
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize{
-        let width: CGFloat = 36
+        let width: CGFloat = 40
         let height: CGFloat = 146
         return CGSize(width: width, height: height)
     }

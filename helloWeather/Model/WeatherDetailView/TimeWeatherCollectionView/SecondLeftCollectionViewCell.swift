@@ -27,7 +27,8 @@ class SecondLeftCollectionViewCell: UICollectionViewCell {
     
     lazy var celsiusLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 20, weight: .regular)
+        label.font = UIFont.systemFont(ofSize: 15, weight: .regular)
+        label.textAlignment = .center
         return label
     }()
     lazy var weatherIcon: UIImageView = {
@@ -38,6 +39,7 @@ class SecondLeftCollectionViewCell: UICollectionViewCell {
         let label = UILabel()
         label.text = ""
         label.font = UIFont.systemFont(ofSize: 11, weight: .regular)
+        label.textAlignment = .center
         return label
     }()
     
@@ -63,8 +65,7 @@ class SecondLeftCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(secondStackView)
         
         secondStackView.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(4)
-            make.leading.equalToSuperview().offset(32)
+            make.edges.equalToSuperview()
         }
         
     }
