@@ -30,9 +30,9 @@ class ListCollectionViewCell: UICollectionViewCell {
         nowTemperatureLabel = UILabel()
         contentView.addSubview(nowTemperatureLabel)
         nowTemperatureLabel.snp.makeConstraints { make in
-            make.top.equalTo(capitalLabel.snp.bottom).offset(20)
+            make.top.equalTo(capitalLabel.snp.bottom).offset(10)
             make.leading.equalToSuperview().offset(10)
-            make.width.equalTo(70)
+            make.width.equalTo(60)
         }
         
         // 최고온도 레이블의 생성 및 설정
@@ -40,8 +40,8 @@ class ListCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(highTemperatureLabel)
         highTemperatureLabel.snp.makeConstraints { make in
             make.top.equalTo(nowTemperatureLabel.snp.top)
-            make.leading.equalTo(nowTemperatureLabel.snp.trailing).offset(20)
-            make.width.equalTo(70)
+            make.leading.equalTo(nowTemperatureLabel.snp.trailing).offset(10)
+            make.width.equalTo(60)
         }
         
         // 최저온도 레이블의 생성 및 설정
@@ -49,9 +49,9 @@ class ListCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(lowTemperatureLabel)
         lowTemperatureLabel.snp.makeConstraints { make in
             make.top.equalTo(highTemperatureLabel.snp.top)
-            make.leading.equalTo(highTemperatureLabel.snp.trailing).offset(20)
+            make.leading.equalTo(highTemperatureLabel.snp.trailing).offset(10)
             make.trailing.equalToSuperview().offset(-10)
-            make.width.equalTo(70)
+            make.width.equalTo(60)
         }
         
         // 기상상태 레이블의 생성 및 설정
@@ -59,9 +59,9 @@ class ListCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(conditionLabel)
         conditionLabel.snp.makeConstraints { make in
             make.top.equalTo(lowTemperatureLabel.snp.top)
-            make.leading.equalTo(lowTemperatureLabel.snp.trailing).offset(20)
-            make.trailing.equalToSuperview().offset(-10)
-            make.width.equalTo(70)
+            make.leading.equalTo(lowTemperatureLabel.snp.trailing).offset(10)
+            make.trailing.equalToSuperview().offset(-20)
+            make.width.equalTo(100)
         }
         
         alarmButton = UIButton(type: .custom)

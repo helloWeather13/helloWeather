@@ -29,27 +29,33 @@ class ListViewController: UIViewController {
     
     func configureUI() {
         let layout = UICollectionViewFlowLayout()
-        collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: layout)
+        collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         layout.scrollDirection = .vertical
         layout.minimumLineSpacing = 10
         let cellWidth: CGFloat = {
             let deviceWidth = UIScreen.main.bounds.width
-            let inset: CGFloat = 20
+            let inset: CGFloat = 28 // 좌우 inset을 28로 설정
             let numberOfLine: CGFloat = 1
             let width: CGFloat = (deviceWidth - inset * 2 - 1) / numberOfLine
             return width
         }()
-        layout.itemSize = .init(width: cellWidth, height: cellWidth/5)
+        layout.itemSize = CGSize(width: cellWidth, height: 80) // 높이를 80으로 설정
+        
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.register(ListCollectionViewCell.self, forCellWithReuseIdentifier: ListCollectionViewCell.cellIdentifier)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(collectionView)
         
+        // SnapKit 제약 조건 설정
         collectionView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(200) // 상단을 safeArea로부터 270 포인트 띄움
+            make.leading.equalTo(view.snp.leading).offset(28) // 좌측을 28 포인트 띄움
+            make.trailing.equalTo(view.snp.trailing).offset(-28) // 우측을 28 포인트 띄움
+            make.bottom.equalTo(view.snp.bottom) // 하단을 부모 뷰의 하단에 맞춤 (제거해도 됨)
         }
     }
+
     
     private func setupBindings() {
         listViewModel.$items.receive(on: DispatchQueue.main).sink { [weak self] _ in
