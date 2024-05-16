@@ -9,12 +9,14 @@ import UIKit
 import SnapKit
 import Combine
 
-class ListViewController: UIViewController {
+class ListViewController: UIViewController, UICollectionViewDragDelegate, UICollectionViewDropDelegate {
     private var mainView: UIView!
     private var spacingView: UIView!
     private var collectionView: UICollectionView!
     private var listViewModel = ListViewModel()
     private var cancellables = Set<AnyCancellable>()
+    
+    var destinationIndexPath: IndexPath?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,6 +29,14 @@ class ListViewController: UIViewController {
         collectionView.addGestureRecognizer(longPressGesture)
         
         longPressGesture.require(toFail: collectionView.panGestureRecognizer)
+        
+        // 드래그 앤 드롭을 위한 delegate 설정
+        collectionView.dragInteractionEnabled = true
+        collectionView.dragDelegate = self
+        collectionView.dropDelegate = self
+        
+        // destinationIndexPath 초기화
+                destinationIndexPath = IndexPath()
     }
     
     func configureUI() {
@@ -200,3 +210,53 @@ extension ListViewController: UICollectionViewDelegate {
     }
 
 }
+
+extension ListViewController {
+    // MARK: - UICollectionViewDragDelegate
+    
+    // 셀을 드래그하기 시작할 때 호출됩니다.
+    func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
+        // 드래그할 아이템을 생성하고 반환합니다.
+        let itemProvider = NSItemProvider(object: "\(indexPath.section)-\(indexPath.item)" as NSString)
+        let dragItem = UIDragItem(itemProvider: itemProvider)
+        return [dragItem]
+    }
+    
+    // MARK: - UICollectionViewDropDelegate
+    
+    // 드롭 가능한 영역인지 여부를 반환합니다.
+    func collectionView(_ collectionView: UICollectionView, canHandle session: UIDropSession) -> Bool {
+        return session.canLoadObjects(ofClass: NSString.self)
+    }
+    
+    // 셀을 드롭할 때 호출됩니다.
+    func collectionView(_ collectionView: UICollectionView, performDropWith coordinator: UICollectionViewDropCoordinator) {
+        // 드롭한 위치에 대한 처리를 수행합니다.
+        // 드롭한 위치가 셀 내부에 있는 경우
+            if let indexPath = coordinator.destinationIndexPath {
+                destinationIndexPath = indexPath
+            } else {
+                // 드롭한 위치가 셀 외부에 있는 경우
+                let section = collectionView.numberOfSections - 1
+                let row = collectionView.numberOfItems(inSection: section)
+                destinationIndexPath = IndexPath(row: row, section: section)
+            }
+            
+            // 아이템을 이동할 때 필요한 데이터를 가져옵니다.
+            guard let item = coordinator.items.first,
+                  let sourceIndexPath = item.sourceIndexPath else {
+                return
+            }
+            
+            // 아이템의 위치를 변경합니다.
+            collectionView.performBatchUpdates({
+                // 셀을 이동합니다.
+                listViewModel.moveItem(from: sourceIndexPath.row, to: destinationIndexPath!.row)
+                collectionView.moveItem(at: sourceIndexPath, to: destinationIndexPath!)
+            }, completion: nil)
+            
+            // 해당 아이템의 드래그 상태를 완료합니다.
+        coordinator.drop(item.dragItem, toItemAt: destinationIndexPath!)
+    }
+}
+
