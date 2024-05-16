@@ -1,20 +1,20 @@
 import UIKit
 import SnapKit
 
-class ListCollectionViewCell: UICollectionViewCell {
+class ListTableViewCell: UITableViewCell {
     
     static let cellIdentifier = "ListCellIdentifier"
     
     var capitalLabel: UILabel! // 도시 이름 레이블의 선언.
-    var nowTemperatureLabel: UILabel! // 현재기온 레이블의 선언.
-    var highTemperatureLabel: UILabel! // 최고온도 레이블의 선언
-    var lowTemperatureLabel: UILabel! // 최저온도 레이블의 선언
-    //    var switchButton: UISwitch! // 스위치 버튼의 선언.
+    var nowTemperatureLabel: UILabel! // 현재기온 레이블의 선언. ex 25도
+    var highTemperatureLabel: UILabel! // 최고온도 레이블의 선언 ex 28도
+    var lowTemperatureLabel: UILabel! // 최저온도 레이블의 선언 ex 23도
+    var conditionLabel: UILabel! // 현재 기상상태 레이블의 선언 ex 흐림
     var alarmButton: UIButton! // 알람 버튼의 선언
     var indexPath: IndexPath? // 셀의 indexPath를 저장하는 프로퍼티
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         // 도시 이름 레이블의 생성 및 설정
         capitalLabel = UILabel()
@@ -52,6 +52,15 @@ class ListCollectionViewCell: UICollectionViewCell {
             make.trailing.equalToSuperview().offset(-10)
         }
         
+        // 기상상태 레이블의 생성 및 설정
+        conditionLabel = UILabel()
+        contentView.addSubview(lowTemperatureLabel)
+        lowTemperatureLabel.snp.makeConstraints { make in
+            make.top.equalTo(highTemperatureLabel.snp.top)
+            make.leading.equalTo(highTemperatureLabel.snp.trailing).offset(5)
+            make.trailing.equalToSuperview().offset(-10)
+        }
+        
         alarmButton = UIButton(type: .custom)
         alarmButton.setTitle("B", for: .normal)
         alarmButton.setTitleColor(.black, for: .normal)
@@ -68,39 +77,27 @@ class ListCollectionViewCell: UICollectionViewCell {
         contentView.backgroundColor = UIColor(red: 238/255, green: 238/255, blue: 238/255, alpha: 1.0)
         contentView.layer.cornerRadius = 10
         contentView.layer.masksToBounds = true
-        
-        //        // 스위치 버튼의 생성 및 설정 (스위치 미사용)
-        //        switchButton = UISwitch()
-        //        contentView.addSubview(switchButton)
-        //        switchButton.addTarget(self, action: #selector(switchToggled(_:)), for: .valueChanged) // 스위치의 valueChanged 이벤트에 스위치 토글 함수(하단 익스텐션에 있음) 연결
-        //        switchButton.snp.makeConstraints { make in
-        //            // Y축 설정
-        //            make.centerY.equalToSuperview().offset(0)
-        //            // X축에 대하여 우측 끝부터 얼만큼 떨어질지
-        //            make.trailing.equalToSuperview().offset(-10)
-        //        }
-        
-        // 배경색 변경 (밝은 회색)
-        contentView.backgroundColor = UIColor(red: 238/255, green: 238/255, blue: 238/255, alpha: 1.0)
-        // 셀 코너깎음 정도.
-        contentView.layer.cornerRadius = 10
-        // 셀 경계에 masksToBounds (코너깎음이랑 세트로 써야한대서 그냥 썼습니다)
-        contentView.layer.masksToBounds = true
-        // 스위치가 On 되었을 때의 색상 설정
-        //        switchButton.onTintColor = UIColor.black
-        
-        // 테두리 두께 1로 설정하고 테두리 색상을 검정으로 설정. (안할거임)
-        //        contentView.layer.borderWidth = 1
-        //        contentView.layer.borderColor = UIColor.black.cgColor
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init 미구현")
+        fatalError("init(coder:) has not been implemented")
     }
+    
+    
+    
+    func configure(with searchModel: SearchModel, weatherModel: WeatherAPIModel) {
+        capitalLabel.text = searchModel.keyWord
+//        nowTemperatureLabel.text = 
+//        highTemperatureLabel.text =
+//        lowTemperatureLabel.text =
+        
+        // 다른 레이블에 필요한 정보 설정
+    }
+
 }
 
-// ListViewCell 클래스에 버튼 액션에 대한 함수 추가
-extension ListCollectionViewCell {
+// ListTableViewCell 클래스에 버튼 액션에 대한 함수 추가
+extension ListTableViewCell {
     // 버튼 액션 처리를 위한 함수
     @objc func alarmButtonTapped(_ sender: UIButton) {
         // 현재 버튼의 상태 확인
