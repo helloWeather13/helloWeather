@@ -12,6 +12,7 @@ class RelatedSearchTableViewCell: UITableViewCell {
     static var identifier = "RelatedSearchTableViewCell"
     
     let wordsLabel = PaddingLabel()
+    let line = UIView()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -23,6 +24,8 @@ class RelatedSearchTableViewCell: UITableViewCell {
 
     func configureUI(text: String, keyword: String){
         self.addSubview(wordsLabel)
+        self.addSubview(line)
+        
         wordsLabel.translatesAutoresizingMaskIntoConstraints = false
         wordsLabel.topInset = -20
         let attributedString = NSMutableAttributedString(string: text)
@@ -34,6 +37,12 @@ class RelatedSearchTableViewCell: UITableViewCell {
             make.leading.trailing.equalToSuperview().offset(4)
             make.height.equalTo(42)
         }
+        line.snp.makeConstraints{
+            $0.bottom.equalToSuperview().inset(5)
+            $0.height.equalTo(1)
+            $0.leading.trailing.equalToSuperview().offset(4)
+        }
+        line.backgroundColor = .black
     }
 
 }

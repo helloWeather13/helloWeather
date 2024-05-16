@@ -31,7 +31,7 @@ class ListCollectionViewCell: UICollectionViewCell {
         nowTemperatureLabel.snp.makeConstraints { make in
             make.top.equalTo(capitalLabel.snp.bottom).offset(5)
             make.leading.equalToSuperview().offset(10)
-            make.width.equalTo(20)
+            make.width.equalTo(30)
         }
         
         // 최고온도 레이블의 생성 및 설정
@@ -40,7 +40,7 @@ class ListCollectionViewCell: UICollectionViewCell {
         highTemperatureLabel.snp.makeConstraints { make in
             make.top.equalTo(nowTemperatureLabel.snp.top)
             make.leading.equalTo(nowTemperatureLabel.snp.trailing).offset(5)
-            make.width.equalTo(20)
+            make.width.equalTo(30)
         }
         
         // 최저온도 레이블의 생성 및 설정

@@ -15,7 +15,6 @@ class CustomBounceAnimation : RAMItemAnimation {
         playBounceAnimation(icon)
         icon.tintColor = .label
         icon.image = selectedImage
-
     }
     
     override func deselectAnimation(_ icon: UIImageView, textLabel: UILabel, defaultTextColor: UIColor, defaultIconColor: UIColor) {
@@ -26,9 +25,12 @@ class CustomBounceAnimation : RAMItemAnimation {
     override func selectedState(_ icon: UIImageView, textLabel: UILabel) {
         icon.tintColor = .label
         icon.image = selectedImage
-        
     }
     
+    override func deselectedState(_ icon: UIImageView,textLabel: UILabel) {
+        icon.image = deSelectedImage
+        
+    }
     func playBounceAnimation(_ icon : UIImageView) {
         
         let bounceAnimation = CAKeyframeAnimation(keyPath: "transform.scale")
