@@ -10,6 +10,8 @@ import SnapKit
 import Combine
 
 class ListViewController: UIViewController {
+    private var mainView: UIView!
+    private var spacingView: UIView!
     private var collectionView: UICollectionView!
     private var listViewModel = ListViewModel()
     private var cancellables = Set<AnyCancellable>()
@@ -28,6 +30,35 @@ class ListViewController: UIViewController {
     }
     
     func configureUI() {
+        // Main View 설정
+        mainView = UIView()
+        mainView.backgroundColor = UIColor(red: 238/255, green: 238/255, blue: 238/255, alpha: 1.0) // 기본 배경색 설정
+        mainView.layer.cornerRadius = 10 // 코너 라디우스 설정
+        mainView.layer.masksToBounds = true // bounds 내부만 보이도록 설정
+        mainView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(mainView)
+        
+        // SnapKit 제약 조건 설정
+        mainView.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide) // 상단을 safeArea로부터 0 포인트 띄움
+            make.leading.equalToSuperview().offset(28) // 좌측을 28 포인트 띄움
+            make.trailing.equalToSuperview().offset(-28) // 우측을 28 포인트 띄움
+            make.height.equalTo(120) // 높이 120
+        }
+        
+        // Label 설정 (주현님 현위치 날씨정보 받아오는 코드가 필요함...?)
+        let label = UILabel()
+        label.text = "메인 뷰입니다"
+        label.textAlignment = .center
+        label.translatesAutoresizingMaskIntoConstraints = false
+        mainView.addSubview(label)
+        
+        // SnapKit 제약 조건 설정
+        label.snp.makeConstraints { make in
+            make.edges.equalToSuperview() // mainView에 꽉 차게 설정
+        }
+        
+        // Collection View 설정 (기존 코드와 동일)
         let layout = UICollectionViewFlowLayout()
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         layout.scrollDirection = .vertical
@@ -47,14 +78,29 @@ class ListViewController: UIViewController {
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(collectionView)
         
+        // Spacing View 설정
+        spacingView = UIView()
+        spacingView.backgroundColor = .red // 빨간색 배경 설정
+        spacingView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(spacingView)
+        
+        // SnapKit 제약 조건 설정
+        spacingView.snp.makeConstraints { make in
+            make.top.equalTo(mainView.snp.bottom).offset(20)
+            make.centerX.equalToSuperview() // 수평 중앙에 위치
+            make.width.equalToSuperview().offset(-100) // 좌우 여백 50 포인트씩
+            make.height.equalTo(2) // 높이 2
+        }
+        
         // SnapKit 제약 조건 설정
         collectionView.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(200) // 상단을 safeArea로부터 270 포인트 띄움
-            make.leading.equalTo(view.snp.leading).offset(28) // 좌측을 28 포인트 띄움
-            make.trailing.equalTo(view.snp.trailing).offset(-28) // 우측을 28 포인트 띄움
-            make.bottom.equalTo(view.snp.bottom) // 하단을 부모 뷰의 하단에 맞춤 (제거해도 됨)
+            make.top.equalTo(spacingView.snp.bottom).offset(20) // spacingView 아래에 20 포인트 간격
+            make.leading.trailing.equalTo(mainView) // 좌우를 mainView에 맞춤
+            make.bottom.equalTo(view.safeAreaLayoutGuide) // 하단을 safe area의 하단에 맞춤
         }
     }
+
+
 
     
     private func setupBindings() {
@@ -74,7 +120,7 @@ class ListViewController: UIViewController {
     }
     
     func presentDeletionAlert(for indexPath: IndexPath) {
-        let alertController = UIAlertController(title: "담은 도시를 삭제합니다", message: "정말 삭제 하시겠어요?", preferredStyle: .alert)
+        let alertController = UIAlertController(title: "해당 도시의 날씨 정보를 삭제합니다", message: "정말 삭제하시겠습니까?", preferredStyle: .alert)
         let deleteAction = UIAlertAction(title: "삭제", style: .destructive) { [weak self] _ in
             guard let self = self else {return}
             self.deleteItem(at: indexPath)
@@ -131,7 +177,7 @@ extension ListViewController: UICollectionViewDelegate {
                let tabBarController = windowScene.windows.first(where: { $0.isKeyWindow })?.rootViewController as? UITabBarController {
                 
                 UIView.transition(with: tabBarController.view, duration: 0.2, options: .transitionCrossDissolve, animations: {
-                    tabBarController.selectedIndex = 1
+                    tabBarController.selectedIndex = 0
                 }, completion: nil)
             }
         }

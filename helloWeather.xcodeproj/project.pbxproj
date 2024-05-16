@@ -108,6 +108,7 @@
 			isa = PBXGroup;
 			children = (
 				1445AF5F2BF32F7E0018AE3F /* DataSource.swift */,
+				1445AF5B2BF32C2F0018AE3F /* Cell */,
 			);
 			path = SectionItemModel;
 			sourceTree = "<group>";
@@ -132,7 +133,6 @@
 			isa = PBXGroup;
 			children = (
 				1445AF5E2BF32F720018AE3F /* SectionItemModel */,
-				1445AF5B2BF32C2F0018AE3F /* Cell */,
 				146580FB2BF1F1560093AA81 /* Manager */,
 				146580F02BF1E9BF0093AA81 /* Util */,
 				146580E22BF1E83B0093AA81 /* View */,
