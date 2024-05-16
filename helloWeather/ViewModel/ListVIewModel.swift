@@ -29,11 +29,15 @@ class ListViewModel {
     
     private var cancellables = Set<AnyCancellable>()
     
-    init() {
+    init(){
+        configureData()
+    }
+    func configureData(){
         loadRecentSearch()
         callAPI()
     }
     func fetchItems() {
+        items = []
         for index in 0..<searchModel.count {
             let item = (searchModel[index], weatherAPIModel[index])
             self.items.append(item)

@@ -130,7 +130,7 @@ extension SearchViewController : UITableViewDelegate {
         case .relatedSearch(let relatedSearch):
             self.searchBar.resignFirstResponder()
             self.viewModel.appendRecentSearch(data: relatedSearch)
-            self.viewModel.getWeatherResult(searchModel: relatedSearch)
+//            self.viewModel.getWeatherResult(searchModel: relatedSearch)
         }
     }
     

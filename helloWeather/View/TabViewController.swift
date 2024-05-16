@@ -15,7 +15,7 @@ class TabViewController: RAMAnimatedTabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configure()
-        deleteRecentSearch()
+//        deleteRecentSearch()
     }
 
     func configure(){

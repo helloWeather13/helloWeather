@@ -20,7 +20,10 @@ class ListViewController: UIViewController {
     private var listViewModel = ListViewModel()
     private var cancellables = Set<AnyCancellable>()
     
-    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.listViewModel.configureData()
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         
