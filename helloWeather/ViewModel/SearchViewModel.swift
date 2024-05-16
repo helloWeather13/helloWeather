@@ -77,14 +77,28 @@ class SearchViewModel {
     func convertDataToRelatedModel(data: KakaoAddressModel, address : String){
         relatedSearch = []
         data.documents.forEach{
+            var city = ""
             var fullName = $0.address.regionNameFirst + " "
-            + $0.address.regionNameSecond + " "
-            if $0.address.regionNameThirdH != "" {
-                fullName += $0.address.regionNameThirdH
+            
+            if $0.address.regionNameSecond == "" {
+                city = $0.address.regionNameFirst
             }else{
-                fullName += $0.address.regionNameThird
+                fullName += $0.address.regionNameSecond + " "
+                
+                if $0.address.regionNameThirdH != "" {
+                    fullName += $0.address.regionNameThirdH
+                    city = $0.address.regionNameThirdH
+                }else{
+                    if $0.address.regionNameThird == "" {
+                        city = $0.address.regionNameSecond
+                    }else{
+                        fullName += $0.address.regionNameThird
+                        city = $0.address.regionNameThird
+                    }
+                }
             }
-            relatedSearch.append(SearchModel(keyWord: address, fullAddress: fullName, lat: Double($0.address.lat) ?? 0, lon: Double($0.address.lat) ?? 0))
+            
+            relatedSearch.append(SearchModel(keyWord: address, fullAddress: fullName, lat: Double($0.address.lat) ?? 0, lon: Double($0.address.lat) ?? 0, city: city))
         }
     }
     // MARK: - applySnapshot 데이터로 최근검색 / 연관 검색 TableView SnapShot 적용

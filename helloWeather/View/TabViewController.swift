@@ -15,10 +15,17 @@ class TabViewController: RAMAnimatedTabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configure()
+        deleteRecentSearch()
     }
 
     func configure(){
         self.setViewControllers(tabViewModel.navs, animated: true)
+    }
+    
+    func deleteRecentSearch(){
+//        recentSearch.removeAll()
+        UserDefaults.standard.removeObject(forKey: "recentSearch")
+//        self.applySnapshot()
     }
 
 }

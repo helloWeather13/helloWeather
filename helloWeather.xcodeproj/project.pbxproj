@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		143B0AF62BF59EBC0028D919 /* ListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143B0AF52BF59EBC0028D919 /* ListCollectionViewCell.swift */; };
+		143B0AF82BF59F830028D919 /* ListVIewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143B0AF72BF59F830028D919 /* ListVIewModel.swift */; };
 		14450E9F2BF45381006A02F7 /* RecentSearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14450E9E2BF45381006A02F7 /* RecentSearchTableViewCell.swift */; };
 		14450EA12BF45962006A02F7 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14450EA02BF45962006A02F7 /* Extension.swift */; };
 		14450EA32BF474FC006A02F7 /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14450EA22BF474FC006A02F7 /* PaddingLabel.swift */; };
@@ -42,6 +44,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		143B0AF52BF59EBC0028D919 /* ListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCollectionViewCell.swift; sourceTree = "<group>"; };
+		143B0AF72BF59F830028D919 /* ListVIewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListVIewModel.swift; sourceTree = "<group>"; };
 		14450E9E2BF45381006A02F7 /* RecentSearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentSearchTableViewCell.swift; sourceTree = "<group>"; };
 		14450EA02BF45962006A02F7 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		14450EA22BF474FC006A02F7 /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
@@ -95,6 +99,7 @@
 				1445AF5C2BF32C5A0018AE3F /* RelatedSearchTableViewCell.swift */,
 				1445AF662BF3631D0018AE3F /* SectionHeaderView.swift */,
 				14450E9E2BF45381006A02F7 /* RecentSearchTableViewCell.swift */,
+				143B0AF52BF59EBC0028D919 /* ListCollectionViewCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -143,6 +148,7 @@
 			children = (
 				146580E32BF1E8590093AA81 /* TabViewModel.swift */,
 				146581022BF1FB8B0093AA81 /* SearchViewModel.swift */,
+				143B0AF72BF59F830028D919 /* ListVIewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -291,12 +297,14 @@
 				146580ED2BF1E8D10093AA81 /* SearchViewController.swift in Sources */,
 				146581032BF1FB8B0093AA81 /* SearchViewModel.swift in Sources */,
 				146580FF2BF1F1C30093AA81 /* ApiModel.swift in Sources */,
+				143B0AF82BF59F830028D919 /* ListVIewModel.swift in Sources */,
 				146580E62BF1E8740093AA81 /* TabModel.swift in Sources */,
 				146580CD2BF1E7EA0093AA81 /* SceneDelegate.swift in Sources */,
 				14450E9F2BF45381006A02F7 /* RecentSearchTableViewCell.swift in Sources */,
 				14450EA12BF45962006A02F7 /* Extension.swift in Sources */,
 				14450EA32BF474FC006A02F7 /* PaddingLabel.swift in Sources */,
 				146580E82BF1E8960093AA81 /* HomeViewController.swift in Sources */,
+				143B0AF62BF59EBC0028D919 /* ListCollectionViewCell.swift in Sources */,
 				1445AF602BF32F7E0018AE3F /* DataSource.swift in Sources */,
 				146580EA2BF1E8B00093AA81 /* ListViewController.swift in Sources */,
 				1445AF552BF2F5D40018AE3F /* CustomBounceAnimation.swift in Sources */,
