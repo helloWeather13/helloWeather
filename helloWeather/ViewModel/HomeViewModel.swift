@@ -56,7 +56,7 @@ class HomeViewModel: NSObject, CLLocationManagerDelegate {
             let currentHour = Int(currentTime.string(from: Date()))!
             
             dispatchGroup.enter()
-            webServiceManager.getForecastWeather(searchModel: SearchModel(keyWord: "", fullAddress: "", lat: userLocationPoint.0, lon: userLocationPoint.1)) { [unowned self] data in
+            webServiceManager.getForecastWeather(searchModel: SearchModel(keyWord: "", fullAddress: "", lat: userLocationPoint.0, lon: userLocationPoint.1, city: "")) { [unowned self] data in
                 if let currentData = data.current {
                     todayFeelsLike = currentData.feelslikeC
                 }
@@ -72,7 +72,7 @@ class HomeViewModel: NSObject, CLLocationManagerDelegate {
             }
             
             dispatchGroup.enter()
-            webServiceManager.getHistoryWeather(searchModel: SearchModel(keyWord: "", fullAddress: "", lat: userLocationPoint.0, lon: userLocationPoint.1)) { [unowned self] data in
+            webServiceManager.getHistoryWeather(searchModel: SearchModel(keyWord: "", fullAddress: "", lat: userLocationPoint.0, lon: userLocationPoint.1, city: "")) { [unowned self] data in
                 let currentData = data.forecast.forecastday[0].hour[currentHour]
                 yesterdayFeelsLike = currentData.feelslikeC
                 dispatchGroup.leave()

@@ -4,6 +4,7 @@ import RAMAnimatedTabBarController
 class TabViewModel{
     
     var tabs : [TabModel] = [
+        TabModel(title: "메인", image: UIImage(named: "bookmark_off")!,selectedImage:UIImage(named: "bookmark_on")!, vc: HomeViewController()),
         TabModel(title: "검색", image: UIImage(named: "bookmark_off")!,selectedImage:UIImage(named: "bookmark_on")!, vc: SearchViewController()),
         TabModel(title: "알람", image: UIImage(named: "location_off")!,selectedImage: UIImage(named: "location_on")!, vc: TempListViewController()),
         
