@@ -64,25 +64,6 @@ struct LineChartView: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            ZStack{
-                HStack{
-                    Spacer()
-                    Text("\(local) ")
-                        .font(.system(size: CGFloat(titleFontSize), weight: .medium))
-                    Spacer()
-                }
-                HStack{
-                    ForEach(0..<9) { _ in
-                        Spacer()
-                    }
-                    Image("search_1")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: CGFloat(titleFontSize) ,height: CGFloat(titleFontSize))
-                    
-                    Spacer()
-                }
-            }
             // tabbar자리
             Text(" ")
                 .font(.system(size: 40, weight: .medium))
@@ -169,7 +150,10 @@ struct LineChartView: View {
                 }
             }
             //그래프
-           
+            Text("")
+                .frame(height: 100)
+            //
+            FineList()
             
             
         }
@@ -181,6 +165,5 @@ struct LineChartView: View {
 #Preview {
     VStack {
         LineChartView()
-        Spacer()
     }
 }

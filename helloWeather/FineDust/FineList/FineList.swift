@@ -9,20 +9,36 @@ import Foundation
 import SwiftUI
 import Charts
 
+
+enum Facetype: String {
+    case happy = "아주 좋음"
+    case smile = "좋음"
+    case umm = "보통"
+    case bad = "나쁨"
+    
+    var image : Image{
+        switch self {
+        case .happy: return Image("happy")
+        case .smile: return Image("smile")
+        case .umm: return Image("umm")
+        case .bad: return Image("bad")
+        }
+    }
+}
+
+
 struct FineList: View {
     
     @State private var isToggleOn = false
     var titleFontSize = 18
-    let now = Date()
-   
-    private var formattedDate: String {
-        createTimeFormatter().string(from: now)
-    }
-    private var formattedDateWithWeekdays: String {
-        //let formatter = createTimeFormatter()
-        //let formattedDate = formatter.string(from: now)
+    let day1 = Date()
+    let day2: Date? = Calendar.current.date(byAdding: .day, value: 1, to: Date())
+    let day3: Date? = Calendar.current.date(byAdding: .day, value: 2, to: Date())
+    let day4: Date? = Calendar.current.date(byAdding: .day, value: 3, to: Date())
+    
+    private func formattedDateWithWeekdays(date: Date) -> String {
         let calendar = Calendar(identifier: .gregorian)
-        let components = calendar.dateComponents([.weekday], from: now)
+        let components = calendar.dateComponents([.weekday], from: date)
         
         if let weekday = components.weekday {
             switch weekday {
@@ -46,10 +62,21 @@ struct FineList: View {
     }
     private func createTimeFormatter() -> DateFormatter {
         let formatter = DateFormatter()
-        formatter.dateFormat = "\(formattedDateWithWeekdays)\n MM.dd" // 'a' for AM/PM indicator
+        formatter.dateFormat = "MM. dd"
+        // 'a' for AM/PM indicator
         //formatter.locale = Locale(identifier: "ko_KR") // Sets the locale to Korean
         formatter.timeZone = TimeZone(identifier: "Asia/Seoul")
         return formatter
+    }
+    
+    private func isWeekend(date: Date) -> Bool {
+        let calendar = Calendar(identifier: .gregorian)
+        let components = calendar.dateComponents([.weekday], from: date)
+        
+        if let weekday = components.weekday {
+            return weekday == 1 || weekday == 7
+        }
+        return false
     }
     
     var body: some View {
@@ -68,7 +95,55 @@ struct FineList: View {
             })
             
             HStack{
-                Text()
+                Spacer()
+                VStack{
+                    Text(formattedDateWithWeekdays(date: day1))
+                        .foregroundColor(isWeekend(date: day1) ? .red : .black)
+                    Text(createTimeFormatter().string(from: day1))
+                    Image("smile")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: CGFloat(titleFontSize*2) ,height: CGFloat(titleFontSize*2))
+                    
+                    
+                }
+                Spacer()
+                VStack{
+                    Text(formattedDateWithWeekdays(date: day2!))
+                        .foregroundColor(isWeekend(date: day2!) ? .red : .black)
+                    Text(createTimeFormatter().string(from: day2!))
+                    Image("happy")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: CGFloat(titleFontSize*2) ,height: CGFloat(titleFontSize*2))
+                    
+                }
+                Spacer()
+                VStack{
+                    Text(formattedDateWithWeekdays(date: day3!))
+                        .foregroundColor(isWeekend(date: day3!) ? .red : .black)
+                    Text(createTimeFormatter().string(from: day3!))
+                    Image("umm")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: CGFloat(titleFontSize*2) ,height: CGFloat(titleFontSize*2))
+                    
+                }
+                Spacer()
+                VStack{
+                    Text(formattedDateWithWeekdays(date: day4!))
+                        .foregroundColor(isWeekend(date: day4!) ? .red : .black)
+                    Text(createTimeFormatter().string(from: day4!))
+                    Image("sad")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: CGFloat(titleFontSize*2) ,height: CGFloat(titleFontSize*2))
+                    
+                }
+                Spacer()
+                
+                
+                
             }
         })
     }
