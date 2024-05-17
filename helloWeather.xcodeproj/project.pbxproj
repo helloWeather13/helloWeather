@@ -304,6 +304,8 @@
 				45D70DE42BF5460500942DC1 /* HumidityCollectionView.swift */,
 			);
 			path = HumidityCollectionView;
+            sourceTree = "<group>";
+        };
 		146580FB2BF1F1560093AA81 /* Manager */ = {
 			isa = PBXGroup;
 			children = (
@@ -312,13 +314,13 @@
 			path = Manager;
 			sourceTree = "<group>";
 		};
-		B64E88152BF544180070C3EF /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
+          B64E88152BF544180070C3EF /* Frameworks */ = {
+            isa = PBXGroup;
+            children = (
+            );
+            name = Frameworks;
+            sourceTree = "<group>";
+        };
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */

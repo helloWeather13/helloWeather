@@ -1,5 +1,5 @@
 {
-  "originHash" : "dd3285e933f2ba3ae9375c1fc1852b363396fa7797276f830cc5d461c29aafb4",
+  "originHash" : "f68b2fa6ea44aba141e6e2d8fda9b4e403b0207cd09e2256cb9263a5d49d9efc",
   "pins" : [
     {
       "identity" : "alamofire",
@@ -11,18 +11,21 @@
       }
     },
     {
-      "identity" : "chartview",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/AppPear/ChartView.git",
-      "state" : {
-        "revision" : "9115a992c91fa19cbb4f2241084240d38654a1fc",
-        "version" : "1.5.5"
       "identity" : "animated-tab-bar",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Ramotion/animated-tab-bar.git",
       "state" : {
         "revision" : "52174249fa7b296c0fce1114be8f34081b85ffc3",
         "version" : "5.2.0"
+      }
+    },
+    {
+      "identity" : "chartview",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/AppPear/ChartView.git",
+      "state" : {
+        "revision" : "9115a992c91fa19cbb4f2241084240d38654a1fc",
+        "version" : "1.5.5"
       }
     },
     {
