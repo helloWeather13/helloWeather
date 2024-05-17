@@ -10,11 +10,14 @@ import SnapKit
 
 class WeatherDetailView: UIView {
     
+    // MARK: - Scroll
     let scrollView: UIScrollView = {
         let scroll = UIScrollView()
         scroll.isScrollEnabled = true
+        scroll.showsVerticalScrollIndicator = false
         return scroll
     }()
+    let contentView = UIView()
     
     // MARK: - SubtitleLabels
     let addressLabel: UILabel = {
@@ -111,21 +114,33 @@ class WeatherDetailView: UIView {
     
     // MARK: - CollectionView
     // 체감온도 stack
-    let firstOuterStackView: UIStackView = {
-        let stack = UIStackView()
-        stack.axis = .horizontal
-        stack.spacing = 20
-        return stack
+    let topScrollView: UIScrollView = {
+            let scroll = UIScrollView()
+            scroll.isScrollEnabled = true
+            scroll.showsHorizontalScrollIndicator = false
+            scroll.alwaysBounceHorizontal = true
+            return scroll
+        }()
+    let topTomorrowImageView: UIImageView = {
+        let image = UIImageView()
+        image.image =  UIImage(named: "tomorrow")
+        return image
     }()
     let firstLeftCollectionView = TodayTimeCelsiusCollectionView()
     let firstRightCollectionView = TomorrowTimeCelsiusCollectionView()
     
     // 날씨 stack
-    let secondOuterStackView: UIStackView = {
-        let stack = UIStackView()
-        stack.axis = .horizontal
-        stack.spacing = 24
-        return stack
+    let bottomScrollView: UIScrollView = {
+            let scroll = UIScrollView()
+            scroll.isScrollEnabled = true
+            scroll.showsHorizontalScrollIndicator = false
+            scroll.alwaysBounceHorizontal = true
+            return scroll
+        }()
+    let bottomTomorrowImageView: UIImageView = {
+        let image = UIImageView()
+        image.image =  UIImage(named: "bottomTomorrow")
+        return image
     }()
     let secondLeftCollectionView = TodayTimeWeatherCollectionView()
     let secondRightCollectionView = TomorrowTimeWeatherCollectionView()
@@ -133,9 +148,9 @@ class WeatherDetailView: UIView {
     // 주간 날씨
     let weekCollectionView = WeekCollectionView()
     
+    // 습도
     let humidityCollectionView = HumidityCollectionView()
     
-    let contentView = UIView()
     
     // MARK: - override
     override init(frame: CGRect) {
@@ -150,15 +165,18 @@ class WeatherDetailView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // ScrollView 설정
     private func configureScrollView() {
         self.addSubview(addressLabel)
         self.addSubview(scrollView)
         
         scrollView.addSubview(contentView)
         
-        [firstStackView, secondStackView, thirdStackView, fourthStackView, fifthStackView, firstOuterStackView, secondOuterStackView, weekCollectionView, humidityCollectionView].forEach {
+        [firstStackView, secondStackView, thirdStackView, fourthStackView, fifthStackView, topScrollView, bottomScrollView, weekCollectionView, humidityCollectionView].forEach {
             contentView.addSubview($0)
         }
+        
+//        topScrollView.addRightFadeEffect()
     }
     
     private func configureConstraints() {
@@ -170,8 +188,9 @@ class WeatherDetailView: UIView {
         
         scrollView.snp.makeConstraints { make in
             make.top.equalTo(addressLabel.snp.bottom).offset(76)
-            make.leading.trailing.bottom.equalToSuperview()
-            make.width.equalToSuperview()
+            make.leading.equalToSuperview().offset(20)
+                make.trailing.equalToSuperview().inset(20)
+                make.bottom.equalToSuperview()
         }
         
         contentView.snp.makeConstraints { make in
@@ -197,65 +216,107 @@ class WeatherDetailView: UIView {
         fifthStackView.addArrangedSubview(sunIcon)
         
         // CollectionView
-        firstOuterStackView.addArrangedSubview(firstLeftCollectionView)
-        firstOuterStackView.addArrangedSubview(firstRightCollectionView)
+        topScrollView.addSubview(firstLeftCollectionView)
+        topScrollView.addSubview(topTomorrowImageView)
+        topScrollView.addSubview(firstRightCollectionView)
         
-        secondOuterStackView.addArrangedSubview(secondLeftCollectionView)
-        secondOuterStackView.addArrangedSubview(secondRightCollectionView)
+        bottomScrollView.addSubview(secondLeftCollectionView)
+        bottomScrollView.addSubview(bottomTomorrowImageView)
+        bottomScrollView.addSubview(secondRightCollectionView)
         
         // Constraints
         firstStackView.snp.makeConstraints { make in
-            make.top.equalTo(scrollView).offset(20)
-            make.leading.equalTo(scrollView).offset(20)
-            make.trailing.equalTo(scrollView).inset(20)
+            make.top.equalToSuperview()
+            make.leading.equalToSuperview()
         }
-        firstOuterStackView.snp.makeConstraints { make in
-            make.top.equalTo(firstStackView.snp.bottom).offset(20)
-            make.leading.equalTo(scrollView).offset(32)
-            make.trailing.equalTo(scrollView).inset(10)
-            make.height.equalTo(146)
-            make.width.equalTo(361)
+
+        topScrollView.snp.makeConstraints { make in
+            make.top.equalTo(firstStackView.snp.bottom).offset(40)
+            make.leading.equalToSuperview().offset(12)
+            make.trailing.equalToSuperview().inset(5)
+            make.height.equalTo(119)
+        }
+        firstLeftCollectionView.snp.makeConstraints { make in
+            make.top.leading.bottom.equalToSuperview()
+            make.height.equalTo(119)
+            make.width.equalTo(393)
+        }
+        topTomorrowImageView.snp.makeConstraints { make in
+            make.top.bottom.equalToSuperview()
+            make.width.equalTo(28)
+            make.leading.equalTo(firstLeftCollectionView.snp.trailing).offset(24)
+        }
+        firstRightCollectionView.snp.makeConstraints { make in
+            make.top.bottom.trailing.equalToSuperview()
+            make.height.equalTo(119)
+            make.width.equalTo(393)
+            make.leading.equalTo(topTomorrowImageView.snp.trailing).offset(24)
         }
         
         secondStackView.snp.makeConstraints { make in
-            make.top.equalTo(firstOuterStackView.snp.bottom).offset(20)
-            make.leading.equalTo(scrollView).offset(20)
-            make.trailing.equalTo(scrollView).inset(20)
+            make.top.equalTo(topScrollView.snp.bottom).offset(70)
+            make.leading.equalToSuperview()
         }
-        secondOuterStackView.snp.makeConstraints { make in
-            make.top.equalTo(secondStackView.snp.bottom).offset(20)
-            make.leading.equalTo(scrollView).offset(32)
-            make.trailing.equalTo(scrollView).inset(10)
-            make.height.equalTo(146)
-            make.width.equalTo(361)
+        bottomScrollView.snp.makeConstraints { make in
+            make.top.equalTo(secondStackView.snp.bottom).offset(40)
+            make.leading.equalToSuperview().offset(12)
+            make.trailing.equalToSuperview().inset(5)
+            make.height.equalTo(152)
+        }
+        secondLeftCollectionView.snp.makeConstraints { make in
+            make.top.leading.bottom.equalToSuperview()
+            make.height.equalTo(152)
+            make.width.equalTo(393)
+        }
+        bottomTomorrowImageView.snp.makeConstraints { make in
+            make.top.bottom.equalToSuperview()
+            make.width.equalTo(29)
+            make.leading.equalTo(secondLeftCollectionView.snp.trailing).offset(24)
+        }
+        secondRightCollectionView.snp.makeConstraints { make in
+            make.top.bottom.trailing.equalToSuperview()
+            make.leading.equalTo(bottomTomorrowImageView.snp.trailing).offset(24)
+            make.height.equalTo(152)
+            make.width.equalTo(393)
         }
         
         thirdStackView.snp.makeConstraints { make in
-            make.top.equalTo(secondOuterStackView.snp.bottom).offset(20)
-            make.leading.equalTo(scrollView).offset(20)
-            make.trailing.equalTo(scrollView).inset(20)
+            make.top.equalTo(bottomScrollView.snp.bottom).offset(70)
+            make.leading.equalToSuperview()
         }
         weekCollectionView.snp.makeConstraints { make in
-            make.top.equalTo(thirdStackView.snp.bottom).offset(20)
-            make.leading.equalTo(scrollView).offset(32)
-            make.trailing.equalTo(scrollView).inset(32)
+            make.top.equalTo(thirdStackView.snp.bottom).offset(40)
+            make.leading.equalToSuperview().offset(12)
+            make.trailing.equalToSuperview().inset(12)
             make.height.equalTo(173)
-            make.width.equalTo(361)
         }
         
         fourthStackView.snp.makeConstraints { make in
-            make.top.equalTo(weekCollectionView.snp.bottom).offset(20)
-            make.leading.equalTo(scrollView).offset(20)
-            make.trailing.equalTo(scrollView).inset(20)
+            make.top.equalTo(weekCollectionView.snp.bottom).offset(70)
+            make.leading.equalToSuperview()
         }
         humidityCollectionView.snp.makeConstraints { make in
-            make.top.equalTo(fourthStackView.snp.bottom).offset(20)
-            make.leading.equalTo(scrollView).offset(32)
-            make.trailing.equalTo(scrollView).inset(32)
+            make.top.equalTo(fourthStackView.snp.bottom).offset(40)
+            make.leading.equalToSuperview().offset(12)
+            make.trailing.equalToSuperview().inset(12)
             make.height.equalTo(146)
-            make.width.equalTo(361)
-            make.bottom.equalTo(scrollView).offset(-20)
+            make.bottom.equalToSuperview().offset(-20)
         }
     }
 }
+
+//extension UIView {
+//    func addRightFadeEffect(percentage: Double = 0.2) {
+//        let gradient = CAGradientLayer()
+//        gradient.frame = CGRect(x: 0, y: 0, width: 600, height: 119)
+//        gradient.colors = [
+//            UIColor.white.cgColor,
+//            UIColor.clear.cgColor
+//        ]
+//        gradient.startPoint = CGPoint(x: 0.5, y: 0.5)
+//        gradient.endPoint = CGPoint(x: 1.0, y: 0.5)
+//        layer.mask = gradient
+//    }
+//}
+
 

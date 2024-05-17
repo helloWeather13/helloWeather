@@ -31,17 +31,19 @@ class TomorrowTimeCelsiusCollectionView: UICollectionView, UICollectionViewDeleg
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell  = collectionView.dequeueReusableCell(withReuseIdentifier: FirstRightCollectionViewCell.identifier, for: indexPath) as! FirstRightCollectionViewCell
         
-        cell.celsiusLabel.text = "\(indexPath.item * 5)°C"
+        cell.celsiusLabel.text = "\(indexPath.item * 5)°"
+        cell.celsiusLabel.textColor = .mygray
         
         let hour = (indexPath.item * 3) % 24
         cell.timeLabel.text = "\(hour)시"
+        cell.timeLabel.textColor = .mygray
         
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize{
         let width: CGFloat = 40
-        let height: CGFloat = 146
+        let height: CGFloat = 119
         return CGSize(width: width, height: height)
     }
 

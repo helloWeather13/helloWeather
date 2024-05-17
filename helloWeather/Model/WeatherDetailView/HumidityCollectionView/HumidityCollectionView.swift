@@ -36,9 +36,11 @@ class HumidityCollectionView: UICollectionView, UICollectionViewDelegate, UIColl
         
         let celsiusTestData = percentTest[indexPath.item]
         cell.percentLabel.text = celsiusTestData
+        cell.percentLabel.textColor = .mygray
         
         let timeTestData = timeTest[indexPath.item]
         cell.timeLabel.text = timeTestData
+        cell.timeLabel.textColor = .mygray
         
         return cell
     }

@@ -50,23 +50,24 @@ class WeekCollectionView: UICollectionView, UICollectionViewDelegate, UICollecti
         
         if indexPath.item < weatherIconTestData.count {
             cell.weatherIcon.image = weatherIconTestData[indexPath.item]
+            cell.weatherIcon.contentMode = .scaleAspectFit
         }
         
         if indexPath.item == 0 {
-            cell.weekLabel.textColor = .black
+            cell.weekLabel.textColor = .myblack
             cell.weekLabel.font = UIFont.systemFont(ofSize: 11, weight: .medium)
-            cell.dateLabel.textColor = .black
+            cell.dateLabel.textColor = .myblack
             cell.dateLabel.font = UIFont.systemFont(ofSize: 10, weight: .medium)
             cell.minCelsiusLabel.font = UIFont.systemFont(ofSize: 10, weight: .medium)
             cell.maxCelsiusLabel.font = UIFont.systemFont(ofSize: 10, weight: .medium)
         } else {
-            cell.weekLabel.textColor = .darkGray
+            cell.weekLabel.textColor = .mygray
             cell.weekLabel.font = UIFont.systemFont(ofSize: 11, weight: .regular)
-            cell.dateLabel.textColor = .darkGray
+            cell.dateLabel.textColor = .mygray
             cell.dateLabel.font = UIFont.systemFont(ofSize: 10, weight: .regular)
-            cell.minCelsiusLabel.textColor = .darkGray
+            cell.minCelsiusLabel.textColor = .mygray
             cell.minCelsiusLabel.font = UIFont.systemFont(ofSize: 10, weight: .regular)
-            cell.maxCelsiusLabel.textColor = .darkGray
+            cell.maxCelsiusLabel.textColor = .mygray
             cell.maxCelsiusLabel.font = UIFont.systemFont(ofSize: 10, weight: .regular)
         }
         

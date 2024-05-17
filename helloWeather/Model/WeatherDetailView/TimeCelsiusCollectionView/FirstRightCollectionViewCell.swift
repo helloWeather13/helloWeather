@@ -54,6 +54,10 @@ class FirstRightCollectionViewCell: UICollectionViewCell {
             make.edges.equalToSuperview()
         }
         
+        celsiusLabel.snp.makeConstraints { make in
+            make.height.equalTo(celsiusLabel.font.pointSize)
+        }
+        
     }
     
 }

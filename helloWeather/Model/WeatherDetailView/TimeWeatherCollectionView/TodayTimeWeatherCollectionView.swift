@@ -9,13 +9,16 @@ import UIKit
 
 class TodayTimeWeatherCollectionView: UICollectionView, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
-    private let gradientLayer: CAGradientLayer = {
-        let layer = CAGradientLayer()
-        layer.colors = [UIColor.white.cgColor, UIColor.clear.cgColor]
-        layer.startPoint = CGPoint(x: 0.5, y: 0.5)
-        layer.endPoint = CGPoint(x: 1.0, y: 0.5)
-        return layer
-    }()
+    var weatherIconTestNames: [String] = ["rainy"]
+    var weatherIconTestData: [UIImage] = []
+    
+//    private let gradientLayer: CAGradientLayer = {
+//        let layer = CAGradientLayer()
+//        layer.colors = [UIColor.white.cgColor, UIColor.clear.cgColor]
+//        layer.startPoint = CGPoint(x: 0.5, y: 0.5)
+//        layer.endPoint = CGPoint(x: 1.0, y: 0.5)
+//        return layer
+//    }()
     
     init() {
         let layout = UICollectionViewFlowLayout()
@@ -27,14 +30,18 @@ class TodayTimeWeatherCollectionView: UICollectionView, UICollectionViewDelegate
         self.register(SecondLeftCollectionViewCell.self, forCellWithReuseIdentifier: SecondLeftCollectionViewCell.identifier)
         self.showsHorizontalScrollIndicator = false
         
-        self.layer.mask = gradientLayer
+        if let rainyImage = UIImage(named: "rainy") {
+            weatherIconTestData = Array(repeating: rainyImage, count: 8)
+        }
+        
+//        self.layer.mask = gradientLayer
         
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        gradientLayer.frame = CGRect(x: 0, y: 0, width: 393, height: self.bounds.height)
-    }
+//    override func layoutSubviews() {
+//        super.layoutSubviews()
+//        gradientLayer.frame = CGRect(x: 0, y: 0, width: 393, height: self.bounds.height)
+//    }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -48,19 +55,24 @@ class TodayTimeWeatherCollectionView: UICollectionView, UICollectionViewDelegate
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell  = collectionView.dequeueReusableCell(withReuseIdentifier: SecondLeftCollectionViewCell.identifier, for: indexPath) as! SecondLeftCollectionViewCell
         
-        cell.celsiusLabel.text = "\(indexPath.item * 5)°C"
+        cell.celsiusLabel.text = "\(indexPath.item * 5)°"
         
         let hour = (indexPath.item * 3) % 24
         cell.timeLabel.text = "\(hour)시"
         
+        if indexPath.item < weatherIconTestData.count {
+            cell.weatherIcon.image = weatherIconTestData[indexPath.item]
+            cell.weatherIcon.contentMode = .scaleAspectFit
+        }
+        
         if indexPath.item == 0 {
             cell.timeLabel.text = "오늘"
-            cell.timeLabel.textColor = .black
+            cell.timeLabel.textColor = .myblack
             cell.timeLabel.font = UIFont.systemFont(ofSize: 12, weight: .regular)
             cell.celsiusLabel.font = UIFont.systemFont(ofSize: 20, weight: .regular)
         } else {
-            cell.timeLabel.textColor = .darkGray
-            cell.celsiusLabel.textColor = .darkGray
+            cell.timeLabel.textColor = .mygray
+            cell.celsiusLabel.textColor = .mygray
         }
         
         
@@ -69,7 +81,7 @@ class TodayTimeWeatherCollectionView: UICollectionView, UICollectionViewDelegate
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize{
         let width: CGFloat = 40
-        let height: CGFloat = 146
+        let height: CGFloat = 152
         return CGSize(width: width, height: height)
     }
     
