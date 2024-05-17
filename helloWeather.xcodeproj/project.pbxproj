@@ -24,6 +24,7 @@
 		146580FA2BF1EB4D0093AA81 /* AlamofireDynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 146580F92BF1EB4D0093AA81 /* AlamofireDynamic */; };
 		9A8DF86C2BF6C4A3009F0DAB /* ChatModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8DF86B2BF6C4A3009F0DAB /* ChatModel.swift */; };
 		9A8DF86E2BF6CB26009F0DAB /* ChatModel2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8DF86D2BF6CB26009F0DAB /* ChatModel2.swift */; };
+		9A8DF8712BF6E51E009F0DAB /* FineList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8DF8702BF6E51E009F0DAB /* FineList.swift */; };
 		9ABC1E212BF34BDC006A626C /* FineDustView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABC1E202BF34BDC006A626C /* FineDustView.swift */; };
 		9ABC1E232BF34BE8006A626C /* FineDustViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABC1E222BF34BE8006A626C /* FineDustViewModel.swift */; };
 		9ABC1E262BF35C34006A626C /* FineDustModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABC1E252BF35C34006A626C /* FineDustModel.swift */; };
@@ -46,6 +47,7 @@
 		146580EE2BF1E8EF0093AA81 /* AlarmViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmViewController.swift; sourceTree = "<group>"; };
 		9A8DF86B2BF6C4A3009F0DAB /* ChatModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatModel.swift; sourceTree = "<group>"; };
 		9A8DF86D2BF6CB26009F0DAB /* ChatModel2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatModel2.swift; sourceTree = "<group>"; };
+		9A8DF8702BF6E51E009F0DAB /* FineList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FineList.swift; sourceTree = "<group>"; };
 		9ABC1E202BF34BDC006A626C /* FineDustView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FineDustView.swift; sourceTree = "<group>"; };
 		9ABC1E222BF34BE8006A626C /* FineDustViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FineDustViewModel.swift; sourceTree = "<group>"; };
 		9ABC1E252BF35C34006A626C /* FineDustModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FineDustModel.swift; sourceTree = "<group>"; };
@@ -144,9 +146,18 @@
 			path = Chat;
 			sourceTree = "<group>";
 		};
+		9A8DF86F2BF6E4D2009F0DAB /* FineList */ = {
+			isa = PBXGroup;
+			children = (
+				9A8DF8702BF6E51E009F0DAB /* FineList.swift */,
+			);
+			path = FineList;
+			sourceTree = "<group>";
+		};
 		9ABC1E1F2BF34BCF006A626C /* FineDust */ = {
 			isa = PBXGroup;
 			children = (
+				9A8DF86F2BF6E4D2009F0DAB /* FineList */,
 				9A8DF86A2BF6C48E009F0DAB /* Chat */,
 				9ABC1E272BF4BAAF006A626C /* Chart */,
 				9ABC1E252BF35C34006A626C /* FineDustModel.swift */,
@@ -249,6 +260,7 @@
 				146580CB2BF1E7EA0093AA81 /* AppDelegate.swift in Sources */,
 				146580ED2BF1E8D10093AA81 /* SearchViewController.swift in Sources */,
 				146580E62BF1E8740093AA81 /* TabModel.swift in Sources */,
+				9A8DF8712BF6E51E009F0DAB /* FineList.swift in Sources */,
 				9ABC1E262BF35C34006A626C /* FineDustModel.swift in Sources */,
 				9ABC1E232BF34BE8006A626C /* FineDustViewModel.swift in Sources */,
 				9A8DF86E2BF6CB26009F0DAB /* ChatModel2.swift in Sources */,

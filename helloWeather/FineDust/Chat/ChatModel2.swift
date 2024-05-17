@@ -35,7 +35,7 @@ struct ChatView2: View {
                     .cornerRadius(20)
             }
             .padding(.leading, 100+CGFloat(text.count)*5)
-            .padding(.bottom, 0)
+            .padding(.bottom, 5)
             VStack(alignment: .leading) {
                 Text(text)
                     .padding()
