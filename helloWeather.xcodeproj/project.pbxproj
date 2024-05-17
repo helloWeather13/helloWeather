@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		143B0AF62BF59EBC0028D919 /* ListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143B0AF52BF59EBC0028D919 /* ListCollectionViewCell.swift */; };
+		143B0AF82BF59F830028D919 /* ListVIewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143B0AF72BF59F830028D919 /* ListVIewModel.swift */; };
 		14450E9F2BF45381006A02F7 /* RecentSearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14450E9E2BF45381006A02F7 /* RecentSearchTableViewCell.swift */; };
 		14450EA12BF45962006A02F7 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14450EA02BF45962006A02F7 /* Extension.swift */; };
 		14450EA32BF474FC006A02F7 /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14450EA22BF474FC006A02F7 /* PaddingLabel.swift */; };
@@ -40,6 +42,11 @@
 		B64E88192BF544180070C3EF /* AlamofireDynamic in Embed Frameworks */ = {isa = PBXBuildFile; productRef = B64E88162BF544180070C3EF /* AlamofireDynamic */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		B64E881C2BF5441C0070C3EF /* SnapKit-Dynamic in Embed Frameworks */ = {isa = PBXBuildFile; productRef = B64E881A2BF5441C0070C3EF /* SnapKit-Dynamic */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		B687F6862BF4CC6000623F1D /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B687F6852BF4CC6000623F1D /* HomeViewModel.swift */; };
+		1475CFB62BF7015900D0F920 /* CurrentWeatherTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1475CFB52BF7015900D0F920 /* CurrentWeatherTableViewCell.swift */; };
+		147EF86C2BF62AE4000DC8A8 /* TempListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147EF86B2BF62AE4000DC8A8 /* TempListViewController.swift */; };
+		147EF86E2BF62AF4000DC8A8 /* TempListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147EF86D2BF62AF4000DC8A8 /* TempListViewModel.swift */; };
+		147EF8702BF62F1B000DC8A8 /* ListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147EF86F2BF62F1B000DC8A8 /* ListTableViewCell.swift */; };
+		147EF8722BF63685000DC8A8 /* SpaceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147EF8712BF63685000DC8A8 /* SpaceTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -58,6 +65,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		143B0AF52BF59EBC0028D919 /* ListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCollectionViewCell.swift; sourceTree = "<group>"; };
+		143B0AF72BF59F830028D919 /* ListVIewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListVIewModel.swift; sourceTree = "<group>"; };
 		14450E9E2BF45381006A02F7 /* RecentSearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentSearchTableViewCell.swift; sourceTree = "<group>"; };
 		14450EA02BF45962006A02F7 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		14450EA22BF474FC006A02F7 /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
@@ -86,6 +95,11 @@
 		146581042BF21EC40093AA81 /* WeatherAPIModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherAPIModel.swift; sourceTree = "<group>"; };
 		146581062BF240AF0093AA81 /* KakaoAddressModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoAddressModel.swift; sourceTree = "<group>"; };
 		B687F6852BF4CC6000623F1D /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		1475CFB52BF7015900D0F920 /* CurrentWeatherTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentWeatherTableViewCell.swift; sourceTree = "<group>"; };
+		147EF86B2BF62AE4000DC8A8 /* TempListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempListViewController.swift; sourceTree = "<group>"; };
+		147EF86D2BF62AF4000DC8A8 /* TempListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempListViewModel.swift; sourceTree = "<group>"; };
+		147EF86F2BF62F1B000DC8A8 /* ListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTableViewCell.swift; sourceTree = "<group>"; };
+		147EF8712BF63685000DC8A8 /* SpaceTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpaceTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,6 +124,10 @@
 				1445AF5C2BF32C5A0018AE3F /* RelatedSearchTableViewCell.swift */,
 				1445AF662BF3631D0018AE3F /* SectionHeaderView.swift */,
 				14450E9E2BF45381006A02F7 /* RecentSearchTableViewCell.swift */,
+				143B0AF52BF59EBC0028D919 /* ListCollectionViewCell.swift */,
+				147EF86F2BF62F1B000DC8A8 /* ListTableViewCell.swift */,
+				147EF8712BF63685000DC8A8 /* SpaceTableViewCell.swift */,
+				1475CFB52BF7015900D0F920 /* CurrentWeatherTableViewCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -160,6 +178,8 @@
 				146580E32BF1E8590093AA81 /* TabViewModel.swift */,
 				B687F6852BF4CC6000623F1D /* HomeViewModel.swift */,
 				146581022BF1FB8B0093AA81 /* SearchViewModel.swift */,
+				143B0AF72BF59F830028D919 /* ListVIewModel.swift */,
+				147EF86D2BF62AF4000DC8A8 /* TempListViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -186,6 +206,7 @@
 				146580E92BF1E8B00093AA81 /* ListViewController.swift */,
 				146580EC2BF1E8D10093AA81 /* SearchViewController.swift */,
 				146580EE2BF1E8EF0093AA81 /* AlarmViewController.swift */,
+				147EF86B2BF62AE4000DC8A8 /* TempListViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -305,9 +326,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				146580FD2BF1F1770093AA81 /* WebServiceManager.swift in Sources */,
+				147EF86E2BF62AF4000DC8A8 /* TempListViewModel.swift in Sources */,
 				146580EF2BF1E8EF0093AA81 /* AlarmViewController.swift in Sources */,
+				147EF8722BF63685000DC8A8 /* SpaceTableViewCell.swift in Sources */,
 				1445AF652BF350CA0018AE3F /* SearchModel.swift in Sources */,
 				1445AF692BF3784E0018AE3F /* State.swift in Sources */,
+				1475CFB62BF7015900D0F920 /* CurrentWeatherTableViewCell.swift in Sources */,
 				146580DF2BF1E8160093AA81 /* TabViewController.swift in Sources */,
 				1445AF672BF3631D0018AE3F /* SectionHeaderView.swift in Sources */,
 				146581052BF21EC40093AA81 /* WeatherAPIModel.swift in Sources */,
@@ -316,17 +340,21 @@
 				146580ED2BF1E8D10093AA81 /* SearchViewController.swift in Sources */,
 				146581032BF1FB8B0093AA81 /* SearchViewModel.swift in Sources */,
 				146580FF2BF1F1C30093AA81 /* ApiModel.swift in Sources */,
+				143B0AF82BF59F830028D919 /* ListVIewModel.swift in Sources */,
 				146580E62BF1E8740093AA81 /* TabModel.swift in Sources */,
 				146580CD2BF1E7EA0093AA81 /* SceneDelegate.swift in Sources */,
 				14450E9F2BF45381006A02F7 /* RecentSearchTableViewCell.swift in Sources */,
 				14450EA12BF45962006A02F7 /* Extension.swift in Sources */,
 				14450EA32BF474FC006A02F7 /* PaddingLabel.swift in Sources */,
 				146580E82BF1E8960093AA81 /* HomeViewController.swift in Sources */,
+				143B0AF62BF59EBC0028D919 /* ListCollectionViewCell.swift in Sources */,
+				147EF8702BF62F1B000DC8A8 /* ListTableViewCell.swift in Sources */,
 				1445AF602BF32F7E0018AE3F /* DataSource.swift in Sources */,
 				B687F6862BF4CC6000623F1D /* HomeViewModel.swift in Sources */,
 				146580EA2BF1E8B00093AA81 /* ListViewController.swift in Sources */,
 				1445AF552BF2F5D40018AE3F /* CustomBounceAnimation.swift in Sources */,
 				146580E42BF1E8590093AA81 /* TabViewModel.swift in Sources */,
+				147EF86C2BF62AE4000DC8A8 /* TempListViewController.swift in Sources */,
 				146581072BF240AF0093AA81 /* KakaoAddressModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
