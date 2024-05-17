@@ -38,7 +38,7 @@ class CurrentWeatherTableViewCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))
+        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 22, left: 0, bottom: 0, right: 0))
         contentView.layer.cornerRadius = 8
         contentView.layer.borderWidth = 1
         contentView.layer.borderColor = UIColor(red: 0.93, green: 0.93, blue: 0.93, alpha: 1.00).cgColor
@@ -74,7 +74,7 @@ class CurrentWeatherTableViewCell: UITableViewCell {
         temperatureLabel.text = String(Int(weatherAPIModel.current?.feelslikeC ?? 0)) + "°"
         temperatureLabel.font = .boldSystemFont(ofSize: 42)
         temperatureLabel.sizeToFit()
-        weatherImage.image = UIImage(systemName: "cloud.sun.rain.fill")
+        weatherImage.image = UIImage(named: "rainy")
         minMaxTempLabel.text = String(Int(weatherAPIModel.forecast.forecastday[0].day.maxtempC)) + "°" + " " + String(Int(weatherAPIModel.forecast.forecastday[0].day.mintempC)) + "°"
         minMaxTempLabel.textColor = .secondaryLabel
         minMaxTempLabel.font = .systemFont(ofSize: 12)
@@ -100,7 +100,7 @@ class CurrentWeatherTableViewCell: UITableViewCell {
     func makeConstraints() {
         
 //        guard let superview = self.superview else { return }
-//        
+//
 //        viewContainer.snp.makeConstraints {
 //            $0.top.equalTo(superview.safeAreaLayoutGuide.snp.top).offset(20)
 //            $0.bottom.equalTo(superview.safeAreaLayoutGuide.snp.bottom).offset(-20)
@@ -119,9 +119,9 @@ class CurrentWeatherTableViewCell: UITableViewCell {
         // 너비는 14, 높이는 16 포인트로 고정됩니다.
         currentLocationImageView.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(16)
-            $0.top.equalTo(viewContainer).offset(16)
-            $0.width.equalTo(14)
-            $0.height.equalTo(16)
+            $0.top.equalTo(viewContainer).offset(18.5)
+            $0.width.equalTo(12)
+            $0.height.equalTo(12)
         }
 
         // cityLabel은 currentLocationImageView의 오른쪽에서 3포인트 떨어져 있고,
@@ -141,9 +141,9 @@ class CurrentWeatherTableViewCell: UITableViewCell {
         // temperatureLabel은 viewContainer의 수직 중앙에 맞춰져 있고,
         // viewContainer의 왼쪽에서 20포인트 떨어져 있습니다.
         temperatureLabel.snp.makeConstraints {
-            $0.centerY.equalTo(viewContainer)
             $0.leading.equalTo(currentLocationImageView)
-            $0.top.equalTo(cityLabel.snp.bottom)
+            $0.top.equalTo(cityLabel.snp.bottom).offset(8)
+            $0.height.equalTo(42)
             // $0.bottom.equalTo(viewContainer).inset(19) // 일단 뺌
         }
 
@@ -152,7 +152,7 @@ class CurrentWeatherTableViewCell: UITableViewCell {
         temperatureTextLabel.snp.makeConstraints {
 //            $0.top.equalTo(temperatureLabel.snp.bottom).inset(3)
             $0.leading.equalTo(currentLocationImageView)
-            $0.top.equalTo(temperatureLabel.snp.bottom).offset(3)
+            $0.top.equalTo(temperatureLabel.snp.bottom).offset(8)
         }
 
         // dustLabel은 temperatureTextLabel의 아래쪽에 위치하며,
@@ -161,7 +161,6 @@ class CurrentWeatherTableViewCell: UITableViewCell {
         dustLabel.snp.makeConstraints {
             $0.top.equalTo(temperatureTextLabel.snp.bottom)
             $0.leading.equalTo(currentLocationImageView)
-            $0.bottom.equalTo(viewContainer).inset(16)
         }
 
         
@@ -171,7 +170,7 @@ class CurrentWeatherTableViewCell: UITableViewCell {
         alarmImageView.snp.makeConstraints {
             $0.width.height.equalTo(16)
             $0.trailing.equalTo(viewContainer).offset(-16)
-            $0.top.equalTo(conditionLabel)
+            $0.top.equalTo(viewContainer.snp.top).offset(16)
         }
 
         
@@ -188,7 +187,7 @@ class CurrentWeatherTableViewCell: UITableViewCell {
             //            $0.top.equalTo(viewContainer).offset(32)
             $0.width.height.equalTo(53)
             $0.trailing.equalTo(viewContainer).offset(-16)
-            $0.top.equalTo(viewContainer).offset(51)
+            $0.top.equalTo(alarmImageView.snp.bottom).offset(19)
         }
 
         // minMaxTempLabel은 weatherImage의 아래쪽에서 5포인트 떨어져 있고,

@@ -86,11 +86,12 @@ class ListTableViewCell: UITableViewCell {
         
         contentView.addSubview(viewContainer)
         
-        [cityLabel, conditionLabel,temperatureLabel,weatherImage,minMaxTempLabel,alarmImageView, deleteView].forEach{
+        [cityLabel, conditionLabel,temperatureLabel,weatherImage,minMaxTempLabel,alarmImageView].forEach{
             viewContainer.addSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
             $0.tintColor = .label
         }
+        contentView.addSubview(deleteView)
         deleteView.addSubview(deleteButton)
         deleteButton.setImage(UIImage(systemName: "trash.fill"), for: .normal)
         deleteButton.isHidden = true
@@ -104,7 +105,7 @@ class ListTableViewCell: UITableViewCell {
         temperatureLabel.text = String(Int(weatherAPIModel.current?.feelslikeC ?? 0)) + "°"
         temperatureLabel.font = .boldSystemFont(ofSize: 42)
         temperatureLabel.sizeToFit()
-        weatherImage.image = UIImage(systemName: "cloud.sun.rain.fill")
+        weatherImage.image = UIImage(named: "rainy")
         weatherImage.contentMode = .scaleAspectFit
         minMaxTempLabel.text = String(Int(weatherAPIModel.forecast.forecastday[0].day.maxtempC)) + "°" + " " + String(Int(weatherAPIModel.forecast.forecastday[0].day.mintempC)) + "°"
         minMaxTempLabel.textColor = .secondaryLabel
@@ -141,7 +142,7 @@ class ListTableViewCell: UITableViewCell {
         cityLabel.snp.makeConstraints{
             $0.leading.equalTo(superview.snp.trailing).offset(16)
             $0.top.equalTo(viewContainer).offset(16)
-            cityLabel.font = UIFont.boldSystemFont(ofSize: 13)
+            
         }
         conditionLabel.snp.makeConstraints{
             $0.leading.equalTo(cityLabel.snp.trailing).offset(5)
@@ -151,13 +152,14 @@ class ListTableViewCell: UITableViewCell {
             //$0.top.equalTo(cityLabel.snp.bottom)
             //            $0.leading.equalTo(currentLocationImageView)
 //            $0.centerY.equalTo(viewContainer)
-            $0.top.equalTo(cityLabel.snp.bottom)
+            $0.top.equalTo(cityLabel.snp.bottom).offset(8)
+            $0.height.equalTo(42)
             $0.leading.equalTo(viewContainer).offset(16)
         }
         alarmImageView.snp.makeConstraints{
             $0.width.height.equalTo(16)
-            $0.trailing.equalTo(viewContainer).offset(-16)
-            $0.top.equalTo(viewContainer).offset(16)
+            $0.trailing.equalTo(viewContainer.snp.trailing).offset(-16)
+            $0.top.equalTo(viewContainer.snp.top).offset(16)
 //            $0.width.height.equalTo(16)
 //            $0.trailing.equalTo(viewContainer).offset(-10)
 //            $0.top.equalTo(conditionLabel).offset(-10)
@@ -167,12 +169,12 @@ class ListTableViewCell: UITableViewCell {
         weatherImage.snp.makeConstraints{
             $0.width.height.equalTo(53)
             $0.trailing.equalTo(viewContainer).offset(-16)
-            $0.top.equalTo(alarmImageView.snp.bottom).offset(19)
+//            $0.top.equalTo(alarmImageView.snp.bottom).inset(-19)
             $0.bottom.equalTo(viewContainer).offset(-16)
             
         }
         minMaxTempLabel.snp.makeConstraints{
-            $0.top.equalTo(temperatureLabel.snp.bottom)
+            $0.top.equalTo(temperatureLabel.snp.bottom).offset(8)
             $0.leading.equalTo(viewContainer).offset(16)
         }
         deleteView.snp.makeConstraints{

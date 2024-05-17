@@ -16,6 +16,7 @@ class TempListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         tableViewConfigure()
+        self.title = "TNEPO"
     }
     
     func tableViewConfigure() {
@@ -85,11 +86,11 @@ extension TempListViewController: UITableViewDelegate {
         guard let item = self.viewModel.dataSource?.itemIdentifier(for: indexPath) else { return 0 }
         switch item {
         case .currentWeather(_):
-            return 138
+            return 159
         case .space:
             return 61
         case .listWeather(_):
-            return 120
+            return 136
         }
     }
     
