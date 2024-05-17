@@ -12,7 +12,7 @@ class TodayTimeCelsiusCollectionView: UICollectionView, UICollectionViewDelegate
     private let gradientLayer: CAGradientLayer = {
             let layer = CAGradientLayer()
             layer.colors = [UIColor.white.cgColor, UIColor.clear.cgColor]
-            layer.startPoint = CGPoint(x: 0.9, y: 0.5)
+            layer.startPoint = CGPoint(x: 0.5, y: 0.5)
             layer.endPoint = CGPoint(x: 1.0, y: 0.5)
             return layer
         }()
@@ -33,7 +33,7 @@ class TodayTimeCelsiusCollectionView: UICollectionView, UICollectionViewDelegate
     
     override func layoutSubviews() {
             super.layoutSubviews()
-            gradientLayer.frame = self.bounds
+            gradientLayer.frame = CGRect(x: 0, y: 0, width: 393, height: self.bounds.height)
         }
        
        required init?(coder: NSCoder) {

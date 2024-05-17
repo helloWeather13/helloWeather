@@ -135,6 +135,8 @@ class WeatherDetailView: UIView {
     
     let humidityCollectionView = HumidityCollectionView()
     
+    let contentView = UIView()
+    
     // MARK: - override
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -152,12 +154,15 @@ class WeatherDetailView: UIView {
         self.addSubview(addressLabel)
         self.addSubview(scrollView)
         
+        scrollView.addSubview(contentView)
+        
         [firstStackView, secondStackView, thirdStackView, fourthStackView, fifthStackView, firstOuterStackView, secondOuterStackView, weekCollectionView, humidityCollectionView].forEach {
-            scrollView.addSubview($0)
+            contentView.addSubview($0)
         }
     }
     
     private func configureConstraints() {
+        
         addressLabel.snp.makeConstraints { make in
             make.top.equalTo(self).offset(68)
             make.centerX.equalTo(self)
@@ -166,7 +171,14 @@ class WeatherDetailView: UIView {
         scrollView.snp.makeConstraints { make in
             make.top.equalTo(addressLabel.snp.bottom).offset(76)
             make.leading.trailing.bottom.equalToSuperview()
+            make.width.equalToSuperview()
         }
+        
+        contentView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+            make.width.equalToSuperview()
+        }
+        
         
         // Subtitles Stack
         firstStackView.addArrangedSubview(timeCelsiusLabel)
@@ -200,7 +212,7 @@ class WeatherDetailView: UIView {
         firstOuterStackView.snp.makeConstraints { make in
             make.top.equalTo(firstStackView.snp.bottom).offset(20)
             make.leading.equalTo(scrollView).offset(32)
-            make.trailing.equalTo(scrollView).inset(32)
+            make.trailing.equalTo(scrollView).inset(10)
             make.height.equalTo(146)
             make.width.equalTo(361)
         }
@@ -213,7 +225,7 @@ class WeatherDetailView: UIView {
         secondOuterStackView.snp.makeConstraints { make in
             make.top.equalTo(secondStackView.snp.bottom).offset(20)
             make.leading.equalTo(scrollView).offset(32)
-            make.trailing.equalTo(scrollView).inset(32)
+            make.trailing.equalTo(scrollView).inset(10)
             make.height.equalTo(146)
             make.width.equalTo(361)
         }

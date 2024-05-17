@@ -8,37 +8,37 @@
 import UIKit
 
 class TodayTimeWeatherCollectionView: UICollectionView, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-
+    
     private let gradientLayer: CAGradientLayer = {
-            let layer = CAGradientLayer()
-            layer.colors = [UIColor.white.cgColor, UIColor.clear.cgColor]
-            layer.startPoint = CGPoint(x: 0.9, y: 0.5)
-            layer.endPoint = CGPoint(x: 1.0, y: 0.5)
-            return layer
-        }()
+        let layer = CAGradientLayer()
+        layer.colors = [UIColor.white.cgColor, UIColor.clear.cgColor]
+        layer.startPoint = CGPoint(x: 0.5, y: 0.5)
+        layer.endPoint = CGPoint(x: 1.0, y: 0.5)
+        return layer
+    }()
     
     init() {
-           let layout = UICollectionViewFlowLayout()
-           layout.scrollDirection = .horizontal
-           super.init(frame: .zero, collectionViewLayout: layout)
-           
-           self.delegate = self
-           self.dataSource = self
-           self.register(SecondLeftCollectionViewCell.self, forCellWithReuseIdentifier: SecondLeftCollectionViewCell.identifier)
-            self.showsHorizontalScrollIndicator = false
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        super.init(frame: .zero, collectionViewLayout: layout)
+        
+        self.delegate = self
+        self.dataSource = self
+        self.register(SecondLeftCollectionViewCell.self, forCellWithReuseIdentifier: SecondLeftCollectionViewCell.identifier)
+        self.showsHorizontalScrollIndicator = false
         
         self.layer.mask = gradientLayer
         
-       }
+    }
     
     override func layoutSubviews() {
-            super.layoutSubviews()
-            gradientLayer.frame = self.bounds
-        }
-       
-       required init?(coder: NSCoder) {
-           fatalError("init(coder:) has not been implemented")
-       }
+        super.layoutSubviews()
+        gradientLayer.frame = CGRect(x: 0, y: 0, width: 393, height: self.bounds.height)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -62,7 +62,7 @@ class TodayTimeWeatherCollectionView: UICollectionView, UICollectionViewDelegate
             cell.timeLabel.textColor = .darkGray
             cell.celsiusLabel.textColor = .darkGray
         }
-    
+        
         
         return cell
     }
@@ -72,5 +72,5 @@ class TodayTimeWeatherCollectionView: UICollectionView, UICollectionViewDelegate
         let height: CGFloat = 146
         return CGSize(width: width, height: height)
     }
-
+    
 }
