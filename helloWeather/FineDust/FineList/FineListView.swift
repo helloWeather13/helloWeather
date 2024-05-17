@@ -1,31 +1,18 @@
-//
-//  File.swift
-//  helloWeather
-//
-//  Created by 김태담 on 5/17/24.
-//
-
-import Foundation
 import SwiftUI
-import Charts
 
-struct FineList: View {
+struct FineListView: View {
+    @ObservedObject var viewModel: FineListViewModel
+    @SwiftUI.State private var isToggleOn = false
     
-    //가져와야하는 데이터
-    //데이터가 어떻게 들어오는지 확인한 후 결정
-    //helloWeather.AirQuality(micro: Optional(36.1), fine: Optional(22.9))
-    
-    // 텍스트 포튼 크기
     var titleFontSize = 18
     let day1 = Date()
     let day2: Date? = Calendar.current.date(byAdding: .day, value: 1, to: Date())
     let day3: Date? = Calendar.current.date(byAdding: .day, value: 2, to: Date())
     let day4: Date? = Calendar.current.date(byAdding: .day, value: 3, to: Date())
-    @SwiftUI.State private var isToggleOn = false
     
     var body: some View {
-        VStack(content: {
-            HStack(content: {
+        VStack {
+            HStack {
                 Spacer()
                 Text("주간 미세먼지")
                     .font(.system(size: CGFloat(titleFontSize), weight: .bold))
@@ -33,63 +20,63 @@ struct FineList: View {
                     Spacer()
                 }
                 Toggle("", isOn: $isToggleOn)
-                    .toggleStyle(CustomToggleStyle())
+                    .toggleStyle(CustomToggleStyle(viewModel: viewModel))
                     .opacity(0.7)
-            })
+            }
             
-            HStack{
+            HStack {
                 Spacer()
-                VStack{
+                VStack {
                     Text(formattedDateWithWeekdays(date: day1))
                         .foregroundColor(isWeekend(date: day1) ? .red : .black)
                     Text(createTimeFormatter().string(from: day1))
-                    Image("smile")
+                    viewModel.faceType1.image
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .frame(width: CGFloat(titleFontSize*2) ,height: CGFloat(titleFontSize*2))
-                    
-                    
+                        .frame(width: CGFloat(titleFontSize * 2), height: CGFloat(titleFontSize * 2))
                 }
                 Spacer()
-                VStack{
+                VStack {
                     Text(formattedDateWithWeekdays(date: day2!))
                         .foregroundColor(isWeekend(date: day2!) ? .red : .black)
                     Text(createTimeFormatter().string(from: day2!))
-                    Image("happy")
+                    viewModel.faceType2.image
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .frame(width: CGFloat(titleFontSize*2) ,height: CGFloat(titleFontSize*2))
-                    
+                        .frame(width: CGFloat(titleFontSize * 2), height: CGFloat(titleFontSize * 2))
                 }
                 Spacer()
-                VStack{
+                VStack {
                     Text(formattedDateWithWeekdays(date: day3!))
                         .foregroundColor(isWeekend(date: day3!) ? .red : .black)
                     Text(createTimeFormatter().string(from: day3!))
-                    Image("umm")
+                    viewModel.faceType3.image
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .frame(width: CGFloat(titleFontSize*2) ,height: CGFloat(titleFontSize*2))
-                    
+                        .frame(width: CGFloat(titleFontSize * 2), height: CGFloat(titleFontSize * 2))
                 }
                 Spacer()
-                VStack{
+                VStack {
                     Text(formattedDateWithWeekdays(date: day4!))
                         .foregroundColor(isWeekend(date: day4!) ? .red : .black)
                     Text(createTimeFormatter().string(from: day4!))
-                    Image("sad")
+                    viewModel.faceType4.image
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .frame(width: CGFloat(titleFontSize*2) ,height: CGFloat(titleFontSize*2))
-                    
+                        .frame(width: CGFloat(titleFontSize * 2), height: CGFloat(titleFontSize * 2))
                 }
                 Spacer()
             }
-        })
+
+        }
+        .onAppear {
+            viewModel.fineListTrigger.onNext(())
+        }
     }
 }
 
 struct CustomToggleStyle: ToggleStyle {
+    @ObservedObject var viewModel: FineListViewModel
     func makeBody(configuration: Configuration) -> some View {
         HStack {
             ZStack {
@@ -121,19 +108,12 @@ struct CustomToggleStyle: ToggleStyle {
             }
             .onTapGesture {
                 configuration.isOn.toggle()
+                viewModel.changeToggle()
             }
         }
         .padding()
-        
     }
 }
 
 
-#Preview {
-    VStack {
-        Spacer()
-        FineList()
-            .padding()
-        Spacer()
-    }
-}
+

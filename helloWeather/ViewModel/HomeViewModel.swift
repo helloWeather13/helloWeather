@@ -57,8 +57,6 @@ class HomeViewModel: NSObject, CLLocationManagerDelegate {
             dispatchGroup.enter()
             webServiceManager.getForecastWeather(searchModel: SearchModel(keyWord: "", fullAddress: "", lat: userLocationPoint.0, lon: userLocationPoint.1, city: "")) { [unowned self] data in
                 if let currentData = data.current {
-                    print("getForecastWeather")
-                    print(currentData)
                     todayFeelsLike = currentData.feelslikeC
                 }
                 if data.forecast.forecastday[0].hour[currentHour].willItRain == 1 {

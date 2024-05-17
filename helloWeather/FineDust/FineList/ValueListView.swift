@@ -9,38 +9,25 @@ import SwiftUI
 import Charts
 
 
-enum Valuetype: String {
-    case happy = "아주 좋음"
-    case smile = "좋음"
-    case umm = "보통"
-    case bad = "나쁨"
-    
-    var color : Color{
-        switch self {
-        case .happy: return .blue
-        case .smile: return .green
-        case .umm: return .orange
-        case .bad: return .red
-        }
-    }
-}
 
 struct ValueList: View {
-    @ObservedObject var weatherData: ValueListViewModel
     
-    var test: [Valuetype] = [
-        .happy,
-        .smile,
-        .umm,
-        .bad
-    ]
+    @ObservedObject var viewModel: FineListViewModel
     
     var body: some View {
-    
-        let testvalue = ["0.063", "0.009", "0.300", "0.003"]
+        
+        let testvalue = [viewModel.o3, viewModel.no2, viewModel.co, viewModel.so2]
+        var test: [Valuetype2] {
+            return testvalue.compactMap { value in
+                //print(value)
+                if let doubleValue = Double(value) {
+                    return Valuetype2.from(value: doubleValue)
+                }
+                return nil
+            }
+        }
+        
         VStack{
-            //Text(weatherData)
-            //Text(weatherData)
             HStack{
                 Spacer()
                 Text("대기오염 물질")
@@ -83,7 +70,6 @@ struct ValueList: View {
                     Spacer()
                 }
             }
-            .padding()
             ZStack{
                 HStack{
                     Spacer()
@@ -116,21 +102,10 @@ struct ValueList: View {
                     Spacer()
                 }
             }
-            .padding()
         }
         .onAppear {
-            weatherData.loadData()
+            viewModel.fineListTrigger.onNext(())
         }
     }
 }
 
-
-#Preview {
-    VStack {
-        Spacer()
-        ValueList(weatherData: ValueListViewModel())
-            .padding()
-
-        Spacer()
-    }
-}
