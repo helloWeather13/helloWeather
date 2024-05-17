@@ -29,7 +29,7 @@ enum Facetype: String {
 
 struct FineList: View {
     
-    @State private var isToggleOn = false
+    @SwiftUI.State private var isToggleOn = false
     var titleFontSize = 18
     let day1 = Date()
     let day2: Date? = Calendar.current.date(byAdding: .day, value: 1, to: Date())

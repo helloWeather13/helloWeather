@@ -138,11 +138,11 @@ struct LineChartView: View {
                         .scaleEffect(isAnimating ? 1.8 : 1.0, anchor: .trailing)
                         .onAppear {
                             withAnimation(.easeInOut(duration: 1.0)) {
-                                isAnimating = true
+                                self.isAnimating = true
                             }
                             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                                 withAnimation(.easeInOut(duration: 1.0)) {
-                                    isAnimating = false
+                                    self.isAnimating = false
                                 }
                             }
                         }

@@ -21,7 +21,7 @@ class SectionHeaderView : UITableViewHeaderFooterView{
         fatalError("init(Coder:) has not been implemented")
     }
 
-    func configure(section: Int, state: State){ 
+    func configure(section: Int, state: SearchState){ 
         [button, titleLabel].forEach{
             contentView.addSubview($0)
         }

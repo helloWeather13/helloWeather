@@ -10,7 +10,7 @@ import Alamofire
 import UIKit
 
 class SearchViewModel {
-    var state : State = .beforeSearch
+    var state : SearchState = .beforeSearch
     var relatedSearch : [SearchModel] = []
     var recentSearch : [SearchModel] = []
     var dataSource: UITableViewDiffableDataSource<SearchViewSection, SearchViewSectionItem>?

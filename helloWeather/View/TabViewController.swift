@@ -29,7 +29,7 @@ class TabViewController: RAMAnimatedTabBarController  {
         }
         self.tabBar.isTranslucent = true
         self.tabBar.tintColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.01)
-        self.tabBar.isOpaque = true
+        self.tabBar.isOpaque = false
         
         let appearance = UITabBarAppearance()
         appearance.configureWithOpaqueBackground()

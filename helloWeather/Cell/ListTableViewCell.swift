@@ -90,7 +90,6 @@ class ListTableViewCell: UITableViewCell {
         deleteButton.setImage(UIImage(systemName: "trash.fill"), for: .normal)
         deleteButton.isHidden = true
         deleteView.backgroundColor = .red
-        deleteView.layer.borderColor
         cityLabel.text = searchModel.city + ","
         cityLabel.font = .boldSystemFont(ofSize: 13)
         cityLabel.sizeToFit()

@@ -1,4 +1,5 @@
 import UIKit
+import SwiftUI
 import RAMAnimatedTabBarController
 
 class TabViewModel{
@@ -8,6 +9,9 @@ class TabViewModel{
         TabModel(title: "검색", image: UIImage(named: "bookmark_off")!,selectedImage:UIImage(named: "bookmark_on")!, vc: SearchViewController()),
         TabModel(title: "알람", image: UIImage(named: "location_off")!,selectedImage: UIImage(named: "location_on")!, vc: TempListViewController()),
         TabModel(title: "날씨", image: UIImage(named: "location_off")!,selectedImage: UIImage(named: "location_on")!, vc: WeatherDetailViewController()),
+        TabModel(title: "미세먼지", image: UIImage(named: "location_off")!,selectedImage: UIImage(named: "location_on")!, vc: UIHostingController(rootView: LineChartView())),
+        
+        
         
     ]
     var navs : [UINavigationController] = []
