@@ -29,6 +29,8 @@ class TabViewModel{
         item.textColor = .label
         item.textFontSize = 5
         nav.tabBarItem = item
+        nav.tabBarItem.title = nil
+//        nav.viewControllers.first?.navigationItem.title = tab.title
         nav.navigationBar.isTranslucent = true
         return nav
     }
