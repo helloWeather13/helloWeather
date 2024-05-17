@@ -35,6 +35,14 @@
 		146580F32BF1EB3E0093AA81 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 146580F22BF1EB3E0093AA81 /* SnapKit */; };
 		146580F82BF1EB4D0093AA81 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 146580F72BF1EB4D0093AA81 /* Alamofire */; };
 		146580FA2BF1EB4D0093AA81 /* AlamofireDynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 146580F92BF1EB4D0093AA81 /* AlamofireDynamic */; };
+		9A8DF86C2BF6C4A3009F0DAB /* ChatModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8DF86B2BF6C4A3009F0DAB /* ChatModel.swift */; };
+		9A8DF86E2BF6CB26009F0DAB /* ChatModel2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8DF86D2BF6CB26009F0DAB /* ChatModel2.swift */; };
+		9A8DF8712BF6E51E009F0DAB /* FineList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8DF8702BF6E51E009F0DAB /* FineList.swift */; };
+		9A8DF8732BF70A99009F0DAB /* ValueList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8DF8722BF70A99009F0DAB /* ValueList.swift */; };
+		9ABC1E212BF34BDC006A626C /* FineDustView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABC1E202BF34BDC006A626C /* FineDustView.swift */; };
+		9ABC1E232BF34BE8006A626C /* FineDustViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABC1E222BF34BE8006A626C /* FineDustViewModel.swift */; };
+		9ABC1E262BF35C34006A626C /* FineDustModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABC1E252BF35C34006A626C /* FineDustModel.swift */; };
+		9ABC1E292BF4BAD2006A626C /* ChartModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABC1E282BF4BAD2006A626C /* ChartModel.swift */; };
 		45D70DBD2BF3145C00942DC1 /* WeatherDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D70DBC2BF3145C00942DC1 /* WeatherDetailViewController.swift */; };
 		45D70DC02BF3262300942DC1 /* SwiftUICharts in Frameworks */ = {isa = PBXBuildFile; productRef = 45D70DBF2BF3262300942DC1 /* SwiftUICharts */; };
 		45D70DC22BF3325400942DC1 /* WeatherDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D70DC12BF3325400942DC1 /* WeatherDetailView.swift */; };
@@ -101,6 +109,14 @@
 		146580E92BF1E8B00093AA81 /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
 		146580EC2BF1E8D10093AA81 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		146580EE2BF1E8EF0093AA81 /* AlarmViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmViewController.swift; sourceTree = "<group>"; };
+		9A8DF86B2BF6C4A3009F0DAB /* ChatModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatModel.swift; sourceTree = "<group>"; };
+		9A8DF86D2BF6CB26009F0DAB /* ChatModel2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatModel2.swift; sourceTree = "<group>"; };
+		9A8DF8702BF6E51E009F0DAB /* FineList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FineList.swift; sourceTree = "<group>"; };
+		9A8DF8722BF70A99009F0DAB /* ValueList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValueList.swift; sourceTree = "<group>"; };
+		9ABC1E202BF34BDC006A626C /* FineDustView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FineDustView.swift; sourceTree = "<group>"; };
+		9ABC1E222BF34BE8006A626C /* FineDustViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FineDustViewModel.swift; sourceTree = "<group>"; };
+		9ABC1E252BF35C34006A626C /* FineDustModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FineDustModel.swift; sourceTree = "<group>"; };
+		9ABC1E282BF4BAD2006A626C /* ChartModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartModel.swift; sourceTree = "<group>"; };
 		45D70DBC2BF3145C00942DC1 /* WeatherDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDetailViewController.swift; sourceTree = "<group>"; };
 		45D70DC12BF3325400942DC1 /* WeatherDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDetailView.swift; sourceTree = "<group>"; };
 		45D70DC52BF3342000942DC1 /* SecondLeftCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondLeftCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -188,6 +204,7 @@
 		146580C92BF1E7EA0093AA81 /* helloWeather */ = {
 			isa = PBXGroup;
 			children = (
+				9ABC1E1F2BF34BCF006A626C /* FineDust */,
 				1445AF5E2BF32F720018AE3F /* SectionItemModel */,
 				1445AF5B2BF32C2F0018AE3F /* Cell */,
 				146580FB2BF1F1560093AA81 /* Manager */,
@@ -252,6 +269,45 @@
 				14450EA22BF474FC006A02F7 /* PaddingLabel.swift */,
 			);
 			path = Util;
+			sourceTree = "<group>";
+		};
+		9A8DF86A2BF6C48E009F0DAB /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				9A8DF86B2BF6C4A3009F0DAB /* ChatModel.swift */,
+				9A8DF86D2BF6CB26009F0DAB /* ChatModel2.swift */,
+			);
+			path = Chat;
+			sourceTree = "<group>";
+		};
+		9A8DF86F2BF6E4D2009F0DAB /* FineList */ = {
+			isa = PBXGroup;
+			children = (
+				9A8DF8702BF6E51E009F0DAB /* FineList.swift */,
+				9A8DF8722BF70A99009F0DAB /* ValueList.swift */,
+			);
+			path = FineList;
+			sourceTree = "<group>";
+		};
+		9ABC1E1F2BF34BCF006A626C /* FineDust */ = {
+			isa = PBXGroup;
+			children = (
+				9A8DF86F2BF6E4D2009F0DAB /* FineList */,
+				9A8DF86A2BF6C48E009F0DAB /* Chat */,
+				9ABC1E272BF4BAAF006A626C /* Chart */,
+				9ABC1E252BF35C34006A626C /* FineDustModel.swift */,
+				9ABC1E202BF34BDC006A626C /* FineDustView.swift */,
+				9ABC1E222BF34BE8006A626C /* FineDustViewModel.swift */,
+			);
+			path = FineDust;
+			sourceTree = "<group>";
+		};
+		9ABC1E272BF4BAAF006A626C /* Chart */ = {
+			isa = PBXGroup;
+			children = (
+				9ABC1E282BF4BAD2006A626C /* ChartModel.swift */,
+			);
+			path = Chart;
 			sourceTree = "<group>";
 		};
 		45D70DCB2BF3344500942DC1 /* WeatherDetailView */ = {
@@ -440,7 +496,16 @@
 				146580FF2BF1F1C30093AA81 /* ApiModel.swift in Sources */,
 				143B0AF82BF59F830028D919 /* ListVIewModel.swift in Sources */,
 				146580E62BF1E8740093AA81 /* TabModel.swift in Sources */,
+				9A8DF8712BF6E51E009F0DAB /* FineList.swift in Sources */,
+				9ABC1E262BF35C34006A626C /* FineDustModel.swift in Sources */,
+				9ABC1E232BF34BE8006A626C /* FineDustViewModel.swift in Sources */,
+				9A8DF8732BF70A99009F0DAB /* ValueList.swift in Sources */,
+				9A8DF86E2BF6CB26009F0DAB /* ChatModel2.swift in Sources */,
 				146580CD2BF1E7EA0093AA81 /* SceneDelegate.swift in Sources */,
+				9ABC1E212BF34BDC006A626C /* FineDustView.swift in Sources */,
+				9A8DF86C2BF6C4A3009F0DAB /* ChatModel.swift in Sources */,
+				146580E82BF1E8960093AA81 /* HomeViewController.swift in Sources */,
+				9ABC1E292BF4BAD2006A626C /* ChartModel.swift in Sources */,
 				14450E9F2BF45381006A02F7 /* RecentSearchTableViewCell.swift in Sources */,
 				14450EA12BF45962006A02F7 /* Extension.swift in Sources */,
 				14450EA32BF474FC006A02F7 /* PaddingLabel.swift in Sources */,
@@ -606,6 +671,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -633,6 +699,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
