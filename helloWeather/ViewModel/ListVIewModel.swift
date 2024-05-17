@@ -59,13 +59,4 @@ class ListViewModel {
         }
     }
     
-    func moveItem(from sourceIndex: Int, to destinationIndex: Int) {
-            guard sourceIndex != destinationIndex else { return }
-            
-            // 아이템을 이동시킵니다.
-            let itemToMove = items.remove(at: sourceIndex)
-            items.insert(itemToMove, at: destinationIndex)
-        }
-    
-    
 }

@@ -36,7 +36,7 @@ class ListViewController: UIViewController, UICollectionViewDragDelegate, UIColl
         collectionView.dropDelegate = self
         
         // destinationIndexPath 초기화
-                destinationIndexPath = IndexPath()
+        destinationIndexPath = IndexPath()
     }
     
     func configureUI() {
@@ -109,10 +109,6 @@ class ListViewController: UIViewController, UICollectionViewDragDelegate, UIColl
             make.bottom.equalTo(view.safeAreaLayoutGuide) // 하단을 safe area의 하단에 맞춤
         }
     }
-
-
-
-    
     private func setupBindings() {
         listViewModel.$items.receive(on: DispatchQueue.main).sink { [weak self] _ in
             self?.collectionView.reloadData()
@@ -208,7 +204,7 @@ extension ListViewController: UICollectionViewDelegate {
             }
         }
     }
-
+    
 }
 
 extension ListViewController {
@@ -219,6 +215,7 @@ extension ListViewController {
         // 드래그할 아이템을 생성하고 반환합니다.
         let itemProvider = NSItemProvider(object: "\(indexPath.section)-\(indexPath.item)" as NSString)
         let dragItem = UIDragItem(itemProvider: itemProvider)
+        dragItem.localObject = indexPath
         return [dragItem]
     }
     
@@ -229,34 +226,37 @@ extension ListViewController {
         return session.canLoadObjects(ofClass: NSString.self)
     }
     
-    // 셀을 드롭할 때 호출됩니다.
-    func collectionView(_ collectionView: UICollectionView, performDropWith coordinator: UICollectionViewDropCoordinator) {
-        // 드롭한 위치에 대한 처리를 수행합니다.
-        // 드롭한 위치가 셀 내부에 있는 경우
+    func collectionView(_ collectionView: UICollectionView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UICollectionViewDropProposal {
+        guard collectionView.hasActiveDrag else { return UICollectionViewDropProposal(operation: .forbidden) }
+        return UICollectionViewDropProposal(operation: .move, intent: .insertAtDestinationIndexPath)
+    }
+        /// 드래그가 끝나고 드랍할 때 호출되는 함수
+        func collectionView(_ collectionView: UICollectionView, performDropWith coordinator: UICollectionViewDropCoordinator) {
+            var destinationIndexPath: IndexPath
             if let indexPath = coordinator.destinationIndexPath {
                 destinationIndexPath = indexPath
             } else {
-                // 드롭한 위치가 셀 외부에 있는 경우
-                let section = collectionView.numberOfSections - 1
-                let row = collectionView.numberOfItems(inSection: section)
-                destinationIndexPath = IndexPath(row: row, section: section)
+                let item = collectionView.numberOfItems(inSection: 0)
+                destinationIndexPath = IndexPath(item: item-1, section: 0)
             }
             
-            // 아이템을 이동할 때 필요한 데이터를 가져옵니다.
-            guard let item = coordinator.items.first,
-                  let sourceIndexPath = item.sourceIndexPath else {
-                return
-            }
+            // 0번째 인덱스 드랍이 아닌 경우, 배열과 컬뷰 아이템 삭제, 삽입, reload까지 진행
+                guard let item = coordinator.items.first, let sourceIndexPath = item.sourceIndexPath else { return }
+                
+                collectionView.performBatchUpdates({
+                    let sourceItem = listViewModel.items.remove(at: sourceIndexPath.item)
+                    listViewModel.items.insert(sourceItem, at: destinationIndexPath.item)
+                    
+                    collectionView.deleteItems(at: [sourceIndexPath])
+                    collectionView.insertItems(at: [destinationIndexPath])
+                }, completion: { _ in
+                    // 드래그된 아이템을 목적지에 드롭합니다.
+                    coordinator.drop(item.dragItem, toItemAt: destinationIndexPath)
+                })
             
-            // 아이템의 위치를 변경합니다.
-            collectionView.performBatchUpdates({
-                // 셀을 이동합니다.
-                listViewModel.moveItem(from: sourceIndexPath.row, to: destinationIndexPath!.row)
-                collectionView.moveItem(at: sourceIndexPath, to: destinationIndexPath!)
-            }, completion: nil)
-            
-            // 해당 아이템의 드래그 상태를 완료합니다.
-        coordinator.drop(item.dragItem, toItemAt: destinationIndexPath!)
+        }
+        
     }
-}
+
+    
 
