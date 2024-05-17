@@ -5,7 +5,7 @@ enum SearchViewSection : String{
     case relatedSearch = "연관 검색"
 }
 
-enum SearchViewSectionItem : Hashable{
+enum SearchViewSectionItem : Hashable {
     case recentSearch(SearchModel)
     case relatedSearch(SearchModel)
 }

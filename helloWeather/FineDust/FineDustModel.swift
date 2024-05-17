@@ -24,6 +24,7 @@ struct LineChartView: View {
     var local = "서울시 강남구 역삼동"
     var titleFontSize = 18
     @State private var isAnimating = false
+    @StateObject private var weatherData = ValueListViewModel()
     
     private var formattedDate: String {
         createTimeFormatter().string(from: now)
@@ -155,11 +156,10 @@ struct LineChartView: View {
             //
             FineList()
                 .padding()
-            ValueList()
+            ValueList(weatherData: weatherData)
             
         }
     }
-    
 }
 
 #Preview {

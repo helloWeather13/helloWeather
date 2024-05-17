@@ -59,7 +59,6 @@ struct ScrollChartView: View {
                 .frame(height: 700)
         }
     }
-    
 }
 
 #Preview {

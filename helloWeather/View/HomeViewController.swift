@@ -17,7 +17,7 @@ class HomeViewController: UIViewController {
         button.imageView?.contentMode = .scaleAspectFit
         button.setBackgroundImage(UIImage(systemName: "bookmark"), for: .normal)
         button.tintColor = .black
-        button.addTarget(self, action: #selector(bookmarkButtonTapped), for: .touchUpInside)
+        button.addTarget(HomeViewController.self, action: #selector(bookmarkButtonTapped), for: .touchUpInside)
         return button
     }()
     
@@ -26,7 +26,7 @@ class HomeViewController: UIViewController {
         button.imageView?.contentMode = .scaleAspectFit
         button.setBackgroundImage(UIImage(systemName: "bell"), for: .normal)
         button.tintColor = .clear
-        button.addTarget(self, action: #selector(notificationButtonTapped), for: .touchUpInside)
+        button.addTarget(HomeViewController.self, action: #selector(notificationButtonTapped), for: .touchUpInside)
         return button
     }()
     

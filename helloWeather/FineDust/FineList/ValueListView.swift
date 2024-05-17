@@ -25,8 +25,8 @@ enum Valuetype: String {
     }
 }
 
-
 struct ValueList: View {
+    @ObservedObject var weatherData: ValueListViewModel
     
     var test: [Valuetype] = [
         .happy,
@@ -35,14 +35,17 @@ struct ValueList: View {
         .bad
     ]
     
-    
     var body: some View {
+    
         let testvalue = ["0.063", "0.009", "0.300", "0.003"]
         VStack{
+            //Text(weatherData)
+            //Text(weatherData)
             HStack{
                 Spacer()
                 Text("대기오염 물질")
                     .font(.system(size: 18, weight: .medium))
+                
                 ForEach(0..<8){ _ in
                     Spacer()
                 }
@@ -115,6 +118,9 @@ struct ValueList: View {
             }
             .padding()
         }
+        .onAppear {
+            weatherData.loadData()
+        }
     }
 }
 
@@ -122,8 +128,9 @@ struct ValueList: View {
 #Preview {
     VStack {
         Spacer()
-        ValueList()
+        ValueList(weatherData: ValueListViewModel())
             .padding()
+
         Spacer()
     }
 }

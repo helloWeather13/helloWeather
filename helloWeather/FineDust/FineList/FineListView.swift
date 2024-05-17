@@ -28,7 +28,6 @@ enum Facetype: String {
 
 
 struct FineList: View {
-    
     @SwiftUI.State private var isToggleOn = false
     var titleFontSize = 18
     let day1 = Date()
@@ -79,9 +78,9 @@ struct FineList: View {
         return false
     }
     
+    
     var body: some View {
         VStack(content: {
-            
             HStack(content: {
                 Spacer()
                 Text("주간 미세먼지")
@@ -141,9 +140,6 @@ struct FineList: View {
                     
                 }
                 Spacer()
-                
-                
-                
             }
         })
     }
