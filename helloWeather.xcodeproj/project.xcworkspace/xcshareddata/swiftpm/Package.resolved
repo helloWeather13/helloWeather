@@ -1,5 +1,5 @@
 {
-  "originHash" : "cfc5a8c3c28ef4dc17ff32e5d7029a5b1dcff2c3e328de2079cfdd76b91b3fa9",
+  "originHash" : "dd3285e933f2ba3ae9375c1fc1852b363396fa7797276f830cc5d461c29aafb4",
   "pins" : [
     {
       "identity" : "alamofire",
@@ -17,6 +17,21 @@
       "state" : {
         "revision" : "9115a992c91fa19cbb4f2241084240d38654a1fc",
         "version" : "1.5.5"
+      "identity" : "animated-tab-bar",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Ramotion/animated-tab-bar.git",
+      "state" : {
+        "revision" : "52174249fa7b296c0fce1114be8f34081b85ffc3",
+        "version" : "5.2.0"
+      }
+    },
+    {
+      "identity" : "rxswift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/ReactiveX/RxSwift",
+      "state" : {
+        "revision" : "b06a8c8596e4c3e8e7788e08e720e3248563ce6a",
+        "version" : "6.7.1"
       }
     },
     {
