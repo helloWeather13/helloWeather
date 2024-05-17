@@ -21,68 +21,13 @@ struct TimeData {
 struct LineChartView: View {
     
     let now = Date()
-    var local = "운중동"
-    
-    var body: some View {
-        VStack(alignment: .leading) {
-            HStack{
-                Text("\t\(local) ")
-                    .font(.system(size: 16, weight: .medium))
-                Text(formattedDate)
-                    .font(.system(size: 10, weight: .medium))
-                    .foregroundColor(.gray)
-                Spacer()
-            }
-            // tabbar자리
-            Text(" ")
-                .font(.system(size: 40, weight: .medium))
-            //
-            HStack{
-                Text("시간대별 미세먼지")
-                    .font(.system(size: 16, weight: .medium))
-                //.frame(maxWidth: .infinity)
-                Spacer()
-                Text("☑︎  등급 기준 안내       ")
-                    .font(.system(size: 10, weight: .medium))
-                    .foregroundColor(.gray)
-            }
-            HStack{
-                VStack(alignment: .trailing)  {
-                    Text("매우나쁨")
-                        .font(.system(size: 15, weight: .medium))
-                        .foregroundColor(.gray)
-                        .padding(.bottom, 6)
-                    Text("나쁨")
-                        .font(.system(size: 15, weight: .medium))
-                        .foregroundColor(.gray)
-                        .padding(.bottom, 6)
-                    Text("보통")
-                        .font(.system(size: 15, weight: .medium))
-                        .foregroundColor(.gray)
-                        .padding(.bottom, 6)
-                    Text("좋음")
-                        .font(.system(size: 15, weight: .medium))
-                        .foregroundColor(.gray)
-                }
-                .padding(.top, 10)
-                .padding(.leading, 10)
-                .padding(.trailing, 20)
-              
-                //.frame(maxWidth: .infinity)
-                Spacer()
-                //스크롤뷰 삽입
-                ChartView(data: chartDatas)
-            }
-            
-            
-        }
-        .frame(height: 300)
-    }
+    var local = "서울시 강남구 역삼동"
+    var titleFontSize = 18
+    @State private var isAnimating = false
     
     private var formattedDate: String {
         createTimeFormatter().string(from: now)
     }
-    
     private var formattedDateWithWeekdays: String {
         //let formatter = createTimeFormatter()
         //let formattedDate = formatter.string(from: now)
@@ -109,13 +54,126 @@ struct LineChartView: View {
         }
         return ""
     }
-    
     private func createTimeFormatter() -> DateFormatter {
         let formatter = DateFormatter()
         formatter.dateFormat = "MM. dd \(formattedDateWithWeekdays) HH:mm a" // 'a' for AM/PM indicator
         //formatter.locale = Locale(identifier: "ko_KR") // Sets the locale to Korean
         formatter.timeZone = TimeZone(identifier: "Asia/Seoul")
         return formatter
+    }
+    
+    var body: some View {
+        VStack(alignment: .leading) {
+            ZStack{
+                HStack{
+                    Spacer()
+                    Text("\(local) ")
+                        .font(.system(size: CGFloat(titleFontSize), weight: .medium))
+                    Spacer()
+                }
+                HStack{
+                    ForEach(0..<9) { _ in
+                        Spacer()
+                    }
+                    Image("search_1")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: CGFloat(titleFontSize) ,height: CGFloat(titleFontSize))
+                    
+                    Spacer()
+                }
+            }
+            // tabbar자리
+            Text(" ")
+                .font(.system(size: 40, weight: .medium))
+            //
+            HStack{
+                Spacer()
+                Text("시간대별 미세먼지")
+                    .font(.system(size: CGFloat(titleFontSize-2), weight: .medium))
+                ForEach(0..<10) { _ in
+                    Spacer()
+                }
+            }
+            .padding(.bottom, 10)
+            //미세먼지
+            VStack{
+                HStack{
+                    Spacer()
+                    VStack{
+                        Spacer()
+                        Text("미세먼지")
+                        ForEach(0..<2) { _ in
+                            Spacer()
+                        }
+                    }
+                    .font(.system(size: CGFloat(titleFontSize-5), weight: .light))
+                    ForEach(0..<10) { _ in
+                        Spacer()
+                    }
+                    
+                }
+                HStack{
+                    Spacer()
+                    ChatView()
+                        .scaleEffect(isAnimating ? 1.8 : 1.0, anchor: .leading)
+                        .onAppear {
+                            withAnimation(.easeInOut(duration: 1.0)) {
+                                isAnimating = true
+                            }
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                                withAnimation(.easeInOut(duration: 1.0)) {
+                                    isAnimating = false
+                                }
+                            }
+                        }
+                    ForEach(0..<10) { _ in
+                        Spacer()
+                    }
+                }
+            }
+            //초미세먼치 chat
+            VStack{
+                HStack{
+                    ForEach(0..<10) { _ in
+                        Spacer()
+                    }
+                    VStack{
+                        Spacer()
+                        Text("초 미세먼지")
+                        ForEach(0..<2) { _ in
+                            Spacer()
+                        }
+                    }
+                    .font(.system(size: CGFloat(titleFontSize-5), weight: .light))
+                    Spacer()
+                    
+                }
+                HStack{
+                    ForEach(0..<10) { _ in
+                        Spacer()
+                    }
+                    ChatView2()
+                        .scaleEffect(isAnimating ? 1.8 : 1.0, anchor: .trailing)
+                        .onAppear {
+                            withAnimation(.easeInOut(duration: 1.0)) {
+                                isAnimating = true
+                            }
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                                withAnimation(.easeInOut(duration: 1.0)) {
+                                    isAnimating = false
+                                }
+                            }
+                        }
+                    Spacer()
+                }
+            }
+            //그래프
+           
+            
+            
+        }
+        .frame(height: 300)
     }
     
 }
