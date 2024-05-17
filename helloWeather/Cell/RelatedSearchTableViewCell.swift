@@ -38,11 +38,11 @@ class RelatedSearchTableViewCell: UITableViewCell {
             make.height.equalTo(42)
         }
         line.snp.makeConstraints{
-            $0.bottom.equalToSuperview().inset(5)
+            $0.top.equalTo(wordsLabel.snp.bottom).inset(11)
             $0.height.equalTo(1)
             $0.leading.trailing.equalToSuperview().offset(4)
         }
-        line.backgroundColor = .black
+        line.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.05)
     }
 
 }
