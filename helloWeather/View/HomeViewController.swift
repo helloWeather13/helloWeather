@@ -68,7 +68,7 @@ class HomeViewController: UIViewController {
     }()
     
     lazy var stackView: UIStackView = {
-       let stview = UIStackView(arrangedSubviews: [todayLabel, secondLabel, thirdLabel])
+        let stview = UIStackView(arrangedSubviews: [todayLabel, secondLabel, thirdLabel])
         stview.spacing = 10
         stview.axis = .vertical
         stview.alignment = .leading
@@ -101,8 +101,9 @@ class HomeViewController: UIViewController {
         setupSecondLabel()
         setupThirdLabel()
         setupAutoLayout()
+        bind()
     }
-
+    
     func setupNaviBar() {
         homeViewModel.addressOnCompleted = { [unowned self] address in
             self.navigationItem.title = address
@@ -110,10 +111,13 @@ class HomeViewController: UIViewController {
         let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonTapped))
         addButton.tintColor = .black
         navigationItem.rightBarButtonItem = addButton
+
+        
     }
     
     @objc func addButtonTapped() {
-        print(#function)
+        self.navigationController?.pushViewController(SearchViewController(), animated: false)
+        
     }
     
     func setupSecondLabel() {
@@ -195,10 +199,19 @@ class HomeViewController: UIViewController {
         }
     }
     
+    func bind(){
+        self.homeViewModel.bookMarkDidChanged = { isBookmarked in
+            if isBookmarked {
+                self.bookmarkButton.setBackgroundImage(UIImage(systemName: "bookmark.fill"), for: .normal)
+            }else{
+                self.bookmarkButton.setBackgroundImage(UIImage(systemName: "bookmark"), for: .normal)
+            }
+            self.bookmarkButton.superview?.layoutIfNeeded()
+        }
+    }
     @objc func bookmarkButtonTapped() {
         if !homeViewModel.isBookmarked {
             homeViewModel.isBookmarked = true
-            bookmarkButton.setBackgroundImage(UIImage(systemName: "bookmark.fill"), for: .normal)
             
             UIView.animate(withDuration: 0.3, animations: {
                 self.notificationButton.tintColor = .black
@@ -207,9 +220,9 @@ class HomeViewController: UIViewController {
                 }
                 self.view.layoutIfNeeded()
             })
+            self.homeViewModel.saveCurrentBookMark()
         } else {
             homeViewModel.isBookmarked = false
-            bookmarkButton.setBackgroundImage(UIImage(systemName: "bookmark"), for: .normal)
             UIView.animate(withDuration: 0.3, animations: {
                 self.notificationButton.tintColor = .clear
             }) { _ in
@@ -220,6 +233,7 @@ class HomeViewController: UIViewController {
                     self.view.layoutIfNeeded()
                 }
             }
+            self.homeViewModel.deleteCurrentBookMark()
         }
     }
     

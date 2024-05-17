@@ -8,6 +8,8 @@
 import UIKit
 import SnapKit
 import RxSwift
+import RxCocoa
+
 
 class ListTableViewCell: UITableViewCell {
     
@@ -22,7 +24,8 @@ class ListTableViewCell: UITableViewCell {
     var deleteView = UIView()
     var viewContainer = UIView()
     var deleteButton = UIButton()
-    
+    var disposeBag = DisposeBag()
+    var isAlarm = false
     
     //    var weatherAPIModel : WeatherAPIModel?
     
@@ -34,6 +37,14 @@ class ListTableViewCell: UITableViewCell {
         fatalError("init(Coder:) has not been implemented")
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        disposeBag = DisposeBag()
+        self.viewContainer.snp.updateConstraints {
+            $0.trailing.equalToSuperview().offset(0)
+        }
+        
+    }
     override func layoutSubviews() {
         super.layoutSubviews()
         
@@ -58,6 +69,8 @@ class ListTableViewCell: UITableViewCell {
             }
             self.deleteButton.isHidden = false
             self.viewContainer.superview?.layoutIfNeeded()
+            self.deleteButton.superview?.layoutIfNeeded()
+            self.deleteButton.isEnabled = true
         }
     }
     
@@ -67,7 +80,28 @@ class ListTableViewCell: UITableViewCell {
                 $0.trailing.equalToSuperview().offset(0)
             }
             self.deleteButton.isHidden = true
+            self.deleteButton.isEnabled = false
             self.viewContainer.superview?.layoutIfNeeded()
+            self.deleteButton.superview?.layoutIfNeeded()
+        }
+    }
+    
+    var buttonTap: Observable<Void> {
+        return deleteButton.rx.tap.asObservable()
+    }
+    func setupAlarmImageView() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(alarmImageViewTapped))
+                alarmImageView.addGestureRecognizer(tapGesture)
+                alarmImageView.isUserInteractionEnabled = true
+    }
+    
+    @objc func alarmImageViewTapped() {
+        if isAlarm {
+            alarmImageView.image = .alarm0
+            isAlarm = false
+        } else {
+            alarmImageView.image = .alarm1
+            isAlarm = true
         }
     }
     func configureUI(weatherAPIModel : WeatherAPIModel, searchModel : SearchModel) {
@@ -78,14 +112,15 @@ class ListTableViewCell: UITableViewCell {
         let swipeGestureRight = UISwipeGestureRecognizer(target: self, action: #selector(didSwipeCellRight))
         swipeGestureRight.direction = .right
         self.addGestureRecognizer(swipeGestureRight)
-        
+        setupAlarmImageView()
         contentView.addSubview(viewContainer)
         
-        [cityLabel, conditionLabel,temperatureLabel,weatherImage,minMaxTempLabel,alarmImageView, deleteView].forEach{
+        [cityLabel, conditionLabel,temperatureLabel,weatherImage,minMaxTempLabel,alarmImageView].forEach{
             viewContainer.addSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
             $0.tintColor = .label
         }
+        contentView.addSubview(deleteView)
         deleteView.addSubview(deleteButton)
         deleteButton.setImage(UIImage(systemName: "trash.fill"), for: .normal)
         deleteButton.isHidden = true
@@ -104,7 +139,7 @@ class ListTableViewCell: UITableViewCell {
         minMaxTempLabel.textColor = .secondaryLabel
         minMaxTempLabel.font = .systemFont(ofSize: 12)
         minMaxTempLabel.sizeToFit()
-        alarmImageView.image = UIImage(systemName: "bell")
+        alarmImageView.image = .alarm0
         self.makeConstraints()
     }
     
@@ -151,4 +186,8 @@ class ListTableViewCell: UITableViewCell {
             $0.width.height.equalTo(24)
         }
     }
+}
+
+extension Reactive where Base: ListTableViewCell {
+    var buttonTapped: ControlEvent<Void> { base.deleteButton.rx.tap }
 }

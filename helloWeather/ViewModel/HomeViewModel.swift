@@ -37,15 +37,20 @@ class HomeViewModel: NSObject, CLLocationManagerDelegate {
     
     let webServiceManager = WebServiceManager.shared
     let userLocationManager = CLLocationManager()
-    
-    var isBookmarked = false
+    var currentSearchModel : SearchModel?
+    var bookMarkSearchModel : [SearchModel] = []
+    var isBookmarked = false {
+        didSet {
+            bookMarkDidChanged(isBookmarked)
+        }
+    }
     
     var userLocationAddress: String = "" {
         didSet {
             addressOnCompleted(userLocationAddress)
         }
     }
-    
+    var bookMarkDidChanged: ((Bool) -> ()) = { _ in }
     var addressOnCompleted: ((String) -> ()) = { _ in }
     
     var userLocationPoint: (Double, Double) = (0, 0) {
@@ -54,9 +59,10 @@ class HomeViewModel: NSObject, CLLocationManagerDelegate {
             let currentTime = DateFormatter()
             currentTime.dateFormat = "HH"
             let currentHour = Int(currentTime.string(from: Date()))!
+            self.currentSearchModel = SearchModel(keyWord: "", fullAddress: "", lat: userLocationPoint.0, lon: userLocationPoint.1, city: "")
             
             dispatchGroup.enter()
-            webServiceManager.getForecastWeather(searchModel: SearchModel(keyWord: "", fullAddress: "", lat: userLocationPoint.0, lon: userLocationPoint.1, city: "")) { [unowned self] data in
+            webServiceManager.getForecastWeather(searchModel: self.currentSearchModel!) { [unowned self] data in
                 if let currentData = data.current {
                     todayFeelsLike = currentData.feelslikeC
                 }
@@ -72,7 +78,7 @@ class HomeViewModel: NSObject, CLLocationManagerDelegate {
             }
             
             dispatchGroup.enter()
-            webServiceManager.getHistoryWeather(searchModel: SearchModel(keyWord: "", fullAddress: "", lat: userLocationPoint.0, lon: userLocationPoint.1, city: "")) { [unowned self] data in
+            webServiceManager.getHistoryWeather(searchModel: self.currentSearchModel!) { [unowned self] data in
                 let currentData = data.forecast.forecastday[0].hour[currentHour]
                 yesterdayFeelsLike = currentData.feelslikeC
                 dispatchGroup.leave()
@@ -135,6 +141,7 @@ class HomeViewModel: NSObject, CLLocationManagerDelegate {
     
     override init() {
         super.init()
+        loadCurrentBookMark()
         userLocationManager.delegate = self
         userLocationManager.distanceFilter = kCLDistanceFilterNone
         userLocationManager.desiredAccuracy = kCLLocationAccuracyBest
@@ -142,6 +149,7 @@ class HomeViewModel: NSObject, CLLocationManagerDelegate {
         userLocationManager.startUpdatingLocation()
         getUserLocation()
         userLocationManager.stopUpdatingLocation()
+        
     }
     
     func getUserLocation() {
@@ -154,14 +162,13 @@ class HomeViewModel: NSObject, CLLocationManagerDelegate {
                 if error != nil { return }
                 
                 if let placemark = placemarks?.first {
-    
+                    
                     let x = placemark.location?.coordinate.latitude ?? 0
                     let y = placemark.location?.coordinate.longitude ?? 0
-                    print(x, y)
                     userLocationPoint = (x, y)
                     
                     var address = ""
-
+                    
                     if let administrativeArea = placemark.administrativeArea {
                         address += "\(administrativeArea) "
                     }
@@ -173,9 +180,10 @@ class HomeViewModel: NSObject, CLLocationManagerDelegate {
                     if let subLocality = placemark.subLocality {
                         address += "\(subLocality)"
                     }
-                    
-                    print(address)
                     userLocationAddress = address
+                    self.currentSearchModel?.fullAddress = address
+                    self.currentSearchModel?.city = address
+                    self.isBookmarked = self.isCurrentLocationBookMarked()
                     
                 } else {
                     print("No location")
@@ -183,4 +191,52 @@ class HomeViewModel: NSObject, CLLocationManagerDelegate {
             }
         }
     }
+    
+    func saveCurrentBookMark() {
+        if !isCurrentLocationBookMarked() {
+            bookMarkSearchModel.append(currentSearchModel!)
+            let encoder = JSONEncoder()
+            if let encoded = try? encoder.encode(bookMarkSearchModel){
+                UserDefaults.standard.setValue(encoded, forKey: "bookMark")
+            }
+        }
+        
+    }
+
+    // MARK: - loadRecentSearch UserDefault에 최근 검색 결과 로드
+    func loadCurrentBookMark(){
+        if let savedData = UserDefaults.standard.object(forKey: "bookMark") as? Data {
+            let decoder = JSONDecoder()
+            if let savedObject = try? decoder.decode([SearchModel].self, from: savedData) {
+                self.bookMarkSearchModel = savedObject
+            }
+        }
+    }
+    
+    func isCurrentLocationBookMarked() -> Bool{
+        if let currentSearchModel {
+            if self.bookMarkSearchModel.contains(where: {
+                $0.fullAddress == currentSearchModel.fullAddress
+            }){
+                return true
+            }
+        }
+        return false
+    }
+    
+    // MARK: - deleteRecentSearch UserDefault에서 최근 결과 삭제
+    func deleteCurrentBookMark(){
+        guard let index = bookMarkSearchModel.firstIndex(where: {
+            $0.fullAddress == currentSearchModel?.fullAddress
+        }) else {return}
+        bookMarkSearchModel.remove(at: index)
+//        UserDefaults.standard.removeObject(forKey: "bookMark")
+        let encoder = JSONEncoder()
+        if let encoded = try? encoder.encode(bookMarkSearchModel){
+            UserDefaults.standard.setValue(encoded, forKey: "bookMark")
+        }
+        
+    }
+    
+    
 }

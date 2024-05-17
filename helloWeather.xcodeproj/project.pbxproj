@@ -44,7 +44,10 @@
 		147EF86E2BF62AF4000DC8A8 /* TempListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147EF86D2BF62AF4000DC8A8 /* TempListViewModel.swift */; };
 		147EF8702BF62F1B000DC8A8 /* ListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147EF86F2BF62F1B000DC8A8 /* ListTableViewCell.swift */; };
 		147EF8722BF63685000DC8A8 /* SpaceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147EF8712BF63685000DC8A8 /* SpaceTableViewCell.swift */; };
-		14FB28252BF723E80084796C /* AlamofireDynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 146580F92BF1EB4D0093AA81 /* AlamofireDynamic */; };
+		14E83D912BF793CB004CAD62 /* TSBlurEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E83D902BF793CB004CAD62 /* TSBlurEffectView.swift */; };
+		14E83D932BF79FF5004CAD62 /* DeleteAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E83D922BF79FF5004CAD62 /* DeleteAlertView.swift */; };
+		14E83D962BF7B6FE004CAD62 /* EmptySearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E83D952BF7B6FE004CAD62 /* EmptySearchView.swift */; };
+		14E83D992BF7C10D004CAD62 /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 14E83D982BF7C10D004CAD62 /* IQKeyboardManagerSwift */; };
 		45D70DBD2BF3145C00942DC1 /* WeatherDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D70DBC2BF3145C00942DC1 /* WeatherDetailViewController.swift */; };
 		45D70DC02BF3262300942DC1 /* SwiftUICharts in Frameworks */ = {isa = PBXBuildFile; productRef = 45D70DBF2BF3262300942DC1 /* SwiftUICharts */; };
 		45D70DC22BF3325400942DC1 /* WeatherDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D70DC12BF3325400942DC1 /* WeatherDetailView.swift */; };
@@ -119,6 +122,9 @@
 		147EF86D2BF62AF4000DC8A8 /* TempListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempListViewModel.swift; sourceTree = "<group>"; };
 		147EF86F2BF62F1B000DC8A8 /* ListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTableViewCell.swift; sourceTree = "<group>"; };
 		147EF8712BF63685000DC8A8 /* SpaceTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpaceTableViewCell.swift; sourceTree = "<group>"; };
+		14E83D902BF793CB004CAD62 /* TSBlurEffectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TSBlurEffectView.swift; sourceTree = "<group>"; };
+		14E83D922BF79FF5004CAD62 /* DeleteAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAlertView.swift; sourceTree = "<group>"; };
+		14E83D952BF7B6FE004CAD62 /* EmptySearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptySearchView.swift; sourceTree = "<group>"; };
 		45D70DBC2BF3145C00942DC1 /* WeatherDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDetailViewController.swift; sourceTree = "<group>"; };
 		45D70DC12BF3325400942DC1 /* WeatherDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDetailView.swift; sourceTree = "<group>"; };
 		45D70DC52BF3342000942DC1 /* SecondLeftCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondLeftCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -149,7 +155,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				14FB28252BF723E80084796C /* AlamofireDynamic in Frameworks */,
+				14E83D992BF7C10D004CAD62 /* IQKeyboardManagerSwift in Frameworks */,
 				1445AF582BF3203E0018AE3F /* RxCocoa in Frameworks */,
 				1445AF532BF2F0630018AE3F /* RAMAnimatedTabBarController in Frameworks */,
 				146580F82BF1EB4D0093AA81 /* Alamofire in Frameworks */,
@@ -254,6 +260,8 @@
 				146580EE2BF1E8EF0093AA81 /* AlarmViewController.swift */,
 				45D70DBC2BF3145C00942DC1 /* WeatherDetailViewController.swift */,
 				147EF86B2BF62AE4000DC8A8 /* TempListViewController.swift */,
+				14E83D922BF79FF5004CAD62 /* DeleteAlertView.swift */,
+				14E83D952BF7B6FE004CAD62 /* EmptySearchView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -267,6 +275,7 @@
 				1445AF542BF2F5D40018AE3F /* CustomBounceAnimation.swift */,
 				14450EA02BF45962006A02F7 /* Extension.swift */,
 				14450EA22BF474FC006A02F7 /* PaddingLabel.swift */,
+				14E83D902BF793CB004CAD62 /* TSBlurEffectView.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -397,11 +406,11 @@
 			packageProductDependencies = (
 				146580F22BF1EB3E0093AA81 /* SnapKit */,
 				146580F72BF1EB4D0093AA81 /* Alamofire */,
-				146580F92BF1EB4D0093AA81 /* AlamofireDynamic */,
 				45D70DBF2BF3262300942DC1 /* SwiftUICharts */,
 				1445AF522BF2F0630018AE3F /* RAMAnimatedTabBarController */,
 				1445AF572BF3203E0018AE3F /* RxCocoa */,
 				1445AF592BF3203E0018AE3F /* RxSwift */,
+				14E83D982BF7C10D004CAD62 /* IQKeyboardManagerSwift */,
 			);
 			productName = helloWeather;
 			productReference = 146580C72BF1E7EA0093AA81 /* helloWeather.app */;
@@ -437,6 +446,7 @@
 				45D70DBE2BF3262300942DC1 /* XCRemoteSwiftPackageReference "ChartView" */,
 				1445AF512BF2F0630018AE3F /* XCRemoteSwiftPackageReference "animated-tab-bar" */,
 				1445AF562BF3203D0018AE3F /* XCRemoteSwiftPackageReference "RxSwift" */,
+				14E83D972BF7C10D004CAD62 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
 			);
 			productRefGroup = 146580C82BF1E7EA0093AA81 /* Products */;
 			projectDirPath = "";
@@ -464,9 +474,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				14E83D962BF7B6FE004CAD62 /* EmptySearchView.swift in Sources */,
 				146580FD2BF1F1770093AA81 /* WebServiceManager.swift in Sources */,
 				147EF86E2BF62AF4000DC8A8 /* TempListViewModel.swift in Sources */,
 				146580EF2BF1E8EF0093AA81 /* AlarmViewController.swift in Sources */,
+				14E83D912BF793CB004CAD62 /* TSBlurEffectView.swift in Sources */,
 				45D70DE52BF5460500942DC1 /* HumidityCollectionView.swift in Sources */,
 				45D70DE72BF5469700942DC1 /* HumidityCollectionViewCell.swift in Sources */,
 				45D70DC82BF3342E00942DC1 /* SecondRightCollectionViewCell.swift in Sources */,
@@ -487,6 +499,7 @@
 				146580ED2BF1E8D10093AA81 /* SearchViewController.swift in Sources */,
 				45D70DC22BF3325400942DC1 /* WeatherDetailView.swift in Sources */,
 				146580E62BF1E8740093AA81 /* TabModel.swift in Sources */,
+				14E83D932BF79FF5004CAD62 /* DeleteAlertView.swift in Sources */,
 				146580CD2BF1E7EA0093AA81 /* SceneDelegate.swift in Sources */,
 				45D70DCD2BF3401D00942DC1 /* FirstLeftCollectionViewCell.swift in Sources */,
 				45D70DDF2BF50F9700942DC1 /* TomorrowTimeWeatherCollectionView.swift in Sources */,
@@ -769,6 +782,14 @@
 				minimumVersion = 5.9.1;
 			};
 		};
+		14E83D972BF7C10D004CAD62 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/hackiftekhar/IQKeyboardManager.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.0.3;
+			};
+		};
 		45D70DBE2BF3262300942DC1 /* XCRemoteSwiftPackageReference "ChartView" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/AppPear/ChartView.git";
@@ -805,10 +826,10 @@
 			package = 146580F62BF1EB4D0093AA81 /* XCRemoteSwiftPackageReference "Alamofire" */;
 			productName = Alamofire;
 		};
-		146580F92BF1EB4D0093AA81 /* AlamofireDynamic */ = {
+		14E83D982BF7C10D004CAD62 /* IQKeyboardManagerSwift */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 146580F62BF1EB4D0093AA81 /* XCRemoteSwiftPackageReference "Alamofire" */;
-			productName = AlamofireDynamic;
+			package = 14E83D972BF7C10D004CAD62 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */;
+			productName = IQKeyboardManagerSwift;
 		};
 		45D70DBF2BF3262300942DC1 /* SwiftUICharts */ = {
 			isa = XCSwiftPackageProductDependency;

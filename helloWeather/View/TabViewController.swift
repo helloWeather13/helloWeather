@@ -27,14 +27,16 @@ class TabViewController: RAMAnimatedTabBarController  {
             $0.iconView!.icon.frame = CGRect(x: $0.iconView!.icon.frame.origin.x, y: $0.iconView!.icon.frame.origin.y + 14, width: 24, height: 40)
             $0.iconView!.icon.frame.origin.x = oldCenter
         }
-        self.tabBar.isTranslucent = true
-        self.tabBar.tintColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.01)
-        self.tabBar.isOpaque = false
-        
-        let appearance = UITabBarAppearance()
-        appearance.configureWithOpaqueBackground()
-        appearance.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.7)
-        tabBar.standardAppearance = appearance;
+        self.tabBar.configureMaterialBackground()
+//        self.tabBar.isTranslucent = false
+//        self.tabBar.tintColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.01)
+//        self.tabBar.isOpaque = true
+//        
+//        let appearance = UITabBarAppearance()
+//        appearance.configureWithOpaqueBackground()
+//        appearance.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1)
+//        tabBar.standardAppearance = appearance
+//        tabBar.scrollEdgeAppearance = appearance
     }
     
     

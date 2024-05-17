@@ -8,8 +8,16 @@
 import Foundation
 import Alamofire
 import UIKit
+import MapKit
 
 class SearchViewModel {
+    
+    var searchCompleter: MKLocalSearchCompleter?
+    var searchRegion: MKCoordinateRegion = MKCoordinateRegion(MKMapRect.world)
+    var completerResults: [MKLocalSearchCompletion]?
+    
+
+    
     var state : SearchState = .beforeSearch
     var relatedSearch : [SearchModel] = []
     var recentSearch : [SearchModel] = []
@@ -66,10 +74,16 @@ class SearchViewModel {
     }
     
     // MARK: - getSearchResult WebSeriveManager로 주소 데이터 받아오고, SearchBar Text로 호출
-    func getSearchResult(address : String){
+    func getSearchResult(address : String, completion: @escaping (Bool) -> Void){
         WebServiceManager.shared.getKakaoAddressResult(address: address, completion:{ addressModel in
-            self.convertDataToRelatedModel(data: addressModel, address: address)
-            self.applySnapshot()
+            if addressModel.documents.count == 0 {
+                completion(true)
+            }else{
+                completion(false)
+                self.convertDataToRelatedModel(data: addressModel, address: address)
+                self.applySnapshot()
+            }
+            
         })
     }
     
