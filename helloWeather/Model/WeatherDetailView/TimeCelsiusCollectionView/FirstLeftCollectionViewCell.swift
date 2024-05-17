@@ -15,7 +15,7 @@ class FirstLeftCollectionViewCell: UICollectionViewCell {
     lazy var stackView: UIStackView = {
         let stack = UIStackView()
         stack.axis = .vertical
-        stack.spacing = 100
+        stack.spacing = 78
         return stack
     }()
     

@@ -25,10 +25,8 @@ class WeekCollectionView: UICollectionView, UICollectionViewDelegate, UICollecti
         self.dataSource = self
         self.register(WeekCollectionViewCell.self, forCellWithReuseIdentifier: WeekCollectionViewCell.identifier)
         
-        for iconName in weatherIconTestNames {
-            if let image = UIImage(named: iconName) {
-                weatherIconTestData.append(image)
-            }
+        if let rainyImage = UIImage(named: "rainy") {
+            weatherIconTestData = Array(repeating: rainyImage, count: weekTest.count)
         }
     }
     
@@ -46,13 +44,36 @@ class WeekCollectionView: UICollectionView, UICollectionViewDelegate, UICollecti
         
         cell.weekLabel.text = weekTest[indexPath.item]
         cell.dateLabel.text = dateTest[indexPath.item]
-        cell.minCelsiusLabel.text = minCelsiusTest[indexPath.item]
-        cell.maxCelsiusLabel.text = maxCelsiusTest[indexPath.item]
+        cell.minCelsiusLabel.text = "\(minCelsiusTest[indexPath.item])°"
+        cell.maxCelsiusLabel.text = "\(maxCelsiusTest[indexPath.item])°"
         
         
         if indexPath.item < weatherIconTestData.count {
-                    cell.weatherIcon.image = weatherIconTestData[indexPath.item]
-            }
+            cell.weatherIcon.image = weatherIconTestData[indexPath.item]
+        }
+        
+        if indexPath.item == 0 {
+            cell.weekLabel.textColor = .black
+            cell.weekLabel.font = UIFont.systemFont(ofSize: 11, weight: .medium)
+            cell.dateLabel.textColor = .black
+            cell.dateLabel.font = UIFont.systemFont(ofSize: 10, weight: .medium)
+            cell.minCelsiusLabel.font = UIFont.systemFont(ofSize: 10, weight: .medium)
+            cell.maxCelsiusLabel.font = UIFont.systemFont(ofSize: 10, weight: .medium)
+        } else {
+            cell.weekLabel.textColor = .darkGray
+            cell.weekLabel.font = UIFont.systemFont(ofSize: 11, weight: .regular)
+            cell.dateLabel.textColor = .darkGray
+            cell.dateLabel.font = UIFont.systemFont(ofSize: 10, weight: .regular)
+            cell.minCelsiusLabel.textColor = .darkGray
+            cell.minCelsiusLabel.font = UIFont.systemFont(ofSize: 10, weight: .regular)
+            cell.maxCelsiusLabel.textColor = .darkGray
+            cell.maxCelsiusLabel.font = UIFont.systemFont(ofSize: 10, weight: .regular)
+        }
+        
+        if weekTest[indexPath.item] == "토" || weekTest[indexPath.item] == "일" {
+            cell.weekLabel.textColor = .red
+            cell.dateLabel.textColor = .red
+        }
         
         return cell
     }
