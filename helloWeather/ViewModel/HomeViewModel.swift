@@ -50,37 +50,7 @@ class HomeViewModel: NSObject, CLLocationManagerDelegate {
     
     var userLocationPoint: (Double, Double) = (0, 0) {
         didSet {
-            let dispatchGroup = DispatchGroup()
-            let currentTime = DateFormatter()
-            currentTime.dateFormat = "HH"
-            let currentHour = Int(currentTime.string(from: Date()))!
-            
-            dispatchGroup.enter()
-            webServiceManager.getForecastWeather(searchModel: SearchModel(keyWord: "", fullAddress: "", lat: userLocationPoint.0, lon: userLocationPoint.1, city: "")) { [unowned self] data in
-                if let currentData = data.current {
-                    todayFeelsLike = currentData.feelslikeC
-                }
-                
-                if data.forecast.forecastday[0].hour[currentHour].willItRain == 1 {
-                    condition = .rain
-                } else if data.forecast.forecastday[0].hour[currentHour].willItSnow == 1 {
-                    condition = .snow
-                } else {
-                    condition = .none
-                }
-                dispatchGroup.leave()
-            }
-            
-            dispatchGroup.enter()
-            webServiceManager.getHistoryWeather(searchModel: SearchModel(keyWord: "", fullAddress: "", lat: userLocationPoint.0, lon: userLocationPoint.1, city: "")) { [unowned self] data in
-                let currentData = data.forecast.forecastday[0].hour[currentHour]
-                yesterdayFeelsLike = currentData.feelslikeC
-                dispatchGroup.leave()
-            }
-            
-            dispatchGroup.notify(queue: .main) { [unowned self] in
-                difference = todayFeelsLike - yesterdayFeelsLike
-            }
+            getWeatherData()
         }
     }
     
@@ -133,20 +103,58 @@ class HomeViewModel: NSObject, CLLocationManagerDelegate {
     
     var conditionOnCompleted: (() -> ()) = { }
     
+    var sunriseTime: String = ""
+    var sunsetTime: String = ""
+    
+    var sunriseNum: Int = 0
+    var sunsetNum: Int = 0
+    
+    var sunTimeSplit: Int = 0 {
+        didSet {
+            sunTimeSplitOnCompleted()
+        }
+    }
+    var sunTimeSplitOnCompleted: (() -> ()) = { }
+    
+    var nextSunriseTime: String = ""
+    var estimated = 0
+    var sunriseInfoString: String {
+        switch estimated {
+        case ..<0:
+            return "내일은 오늘보다 \(-estimated)분 일찍 해가 뜰 예정이에요"
+        case 0:
+            return "내일도 오늘과 같은 시간에 해가 뜰 예정이에요"
+        default:
+            return "내일은 오늘보다 \(estimated)분 늦게 해가 뜰 예정이에요"
+        }
+    }
+    
+    var now: Int {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "hh:mm a"
+        let formatted = dateFormatter.string(from: Date())
+        return timeInMinutes(time: formatted)
+    }
+
+    var sunImage: UIImage {
+        let index = min((now - sunriseNum) / sunTimeSplit + 1, 10)
+        let imageName = "SunRise" + String(format: "%02d", index)
+        return UIImage(named: imageName)!
+    }
+    
     override init() {
         super.init()
+        getUserLocation()
+    }
+    
+    func getUserLocation() {
         userLocationManager.delegate = self
         userLocationManager.distanceFilter = kCLDistanceFilterNone
         userLocationManager.desiredAccuracy = kCLLocationAccuracyBest
         userLocationManager.requestWhenInUseAuthorization()
         userLocationManager.startUpdatingLocation()
-        getUserLocation()
-        userLocationManager.stopUpdatingLocation()
-    }
-    
-    func getUserLocation() {
-        let geocoder = CLGeocoder()
         
+        let geocoder = CLGeocoder()
         let location = self.userLocationManager.location
         
         if let location = location {
@@ -157,7 +165,6 @@ class HomeViewModel: NSObject, CLLocationManagerDelegate {
     
                     let x = placemark.location?.coordinate.latitude ?? 0
                     let y = placemark.location?.coordinate.longitude ?? 0
-                    print(x, y)
                     userLocationPoint = (x, y)
                     
                     var address = ""
@@ -173,14 +180,69 @@ class HomeViewModel: NSObject, CLLocationManagerDelegate {
                     if let subLocality = placemark.subLocality {
                         address += "\(subLocality)"
                     }
-                    
-                    print(address)
                     userLocationAddress = address
-                    
                 } else {
                     print("No location")
                 }
             }
         }
+        userLocationManager.stopUpdatingLocation()
+    }
+    
+    func getWeatherData() {
+        let dispatchGroup = DispatchGroup()
+        let currentTime = DateFormatter()
+        currentTime.dateFormat = "HH"
+        let currentHour = Int(currentTime.string(from: Date()))!
+        
+        dispatchGroup.enter()
+        webServiceManager.getForecastWeather(searchModel: SearchModel(keyWord: "", fullAddress: "", lat: userLocationPoint.0, lon: userLocationPoint.1, city: "")) { [unowned self] data in
+            if let currentData = data.current {
+                todayFeelsLike = currentData.feelslikeC
+            }
+            
+            let forecastData = data.forecast.forecastday[0]
+            
+            if forecastData.hour[currentHour].willItRain == 1 {
+                condition = .rain
+            } else if forecastData.hour[currentHour].willItSnow == 1 {
+                condition = .snow
+            } else {
+                condition = .none
+            }
+            
+            sunriseTime = forecastData.astro.sunrise
+            sunsetTime = forecastData.astro.sunset
+            nextSunriseTime = data.forecast.forecastday[1].astro.sunrise
+            dispatchGroup.leave()
+        }
+        
+        dispatchGroup.enter()
+        webServiceManager.getHistoryWeather(searchModel: SearchModel(keyWord: "", fullAddress: "", lat: userLocationPoint.0, lon: userLocationPoint.1, city: "")) { [unowned self] data in
+            let currentData = data.forecast.forecastday[0].hour[currentHour]
+            yesterdayFeelsLike = currentData.feelslikeC
+            dispatchGroup.leave()
+        }
+        
+        dispatchGroup.notify(queue: .main) { [unowned self] in
+            difference = todayFeelsLike - yesterdayFeelsLike
+            
+            sunTimeSplit = getTimeDifference(from: sunriseTime, to: sunsetTime) / 10
+            estimated = getTimeDifference(from: sunriseTime, to: nextSunriseTime)
+        }
+    }
+    
+    func getTimeDifference(from start: String, to end: String) -> Int {
+        let startMinutes = timeInMinutes(time: start)
+        let endMinutes = timeInMinutes(time: end)
+        return endMinutes - startMinutes
+    }
+    
+    func timeInMinutes(time: String) -> Int {
+        let components = time.split(separator: ":")
+        let hour = Int(components[0]) ?? 0
+        let minute = Int(components[1].prefix(2)) ?? 0
+        let isPM = time.contains("PM")
+        return ((isPM ? 12 : 0) + hour) * 60 + minute
     }
 }
