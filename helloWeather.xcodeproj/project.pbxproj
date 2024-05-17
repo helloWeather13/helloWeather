@@ -62,6 +62,8 @@
 		45D70DE72BF5469700942DC1 /* HumidityCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D70DE62BF5469700942DC1 /* HumidityCollectionViewCell.swift */; };
 		9A5ACD942BF7763600DE586F /* FineListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5ACD932BF7763600DE586F /* FineListViewModel.swift */; };
 		9A5ACD962BF7764900DE586F /* ValueListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5ACD952BF7764900DE586F /* ValueListViewModel.swift */; };
+		9A5ACD982BF7B37C00DE586F /* FineDustUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5ACD972BF7B37C00DE586F /* FineDustUtil.swift */; };
+		9A5ACD9B2BF7B42B00DE586F /* GroupStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5ACD9A2BF7B42B00DE586F /* GroupStruct.swift */; };
 		9A8DF86C2BF6C4A3009F0DAB /* ChatModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8DF86B2BF6C4A3009F0DAB /* ChatModel.swift */; };
 		9A8DF86E2BF6CB26009F0DAB /* ChatModel2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8DF86D2BF6CB26009F0DAB /* ChatModel2.swift */; };
 		9A8DF8712BF6E51E009F0DAB /* FineListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8DF8702BF6E51E009F0DAB /* FineListView.swift */; };
@@ -137,6 +139,8 @@
 		45D70DE62BF5469700942DC1 /* HumidityCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HumidityCollectionViewCell.swift; sourceTree = "<group>"; };
 		9A5ACD932BF7763600DE586F /* FineListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FineListViewModel.swift; sourceTree = "<group>"; };
 		9A5ACD952BF7764900DE586F /* ValueListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValueListViewModel.swift; sourceTree = "<group>"; };
+		9A5ACD972BF7B37C00DE586F /* FineDustUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FineDustUtil.swift; sourceTree = "<group>"; };
+		9A5ACD9A2BF7B42B00DE586F /* GroupStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupStruct.swift; sourceTree = "<group>"; };
 		9A8DF86B2BF6C4A3009F0DAB /* ChatModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatModel.swift; sourceTree = "<group>"; };
 		9A8DF86D2BF6CB26009F0DAB /* ChatModel2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatModel2.swift; sourceTree = "<group>"; };
 		9A8DF8702BF6E51E009F0DAB /* FineListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FineListView.swift; sourceTree = "<group>"; };
@@ -335,6 +339,14 @@
 			path = HumidityCollectionView;
 			sourceTree = "<group>";
 		};
+		9A5ACD992BF7B3FE00DE586F /* FineDustModels */ = {
+			isa = PBXGroup;
+			children = (
+				9A5ACD9A2BF7B42B00DE586F /* GroupStruct.swift */,
+			);
+			path = FineDustModels;
+			sourceTree = "<group>";
+		};
 		9A8DF86A2BF6C48E009F0DAB /* Chat */ = {
 			isa = PBXGroup;
 			children = (
@@ -358,6 +370,8 @@
 		9ABC1E1F2BF34BCF006A626C /* FineDust */ = {
 			isa = PBXGroup;
 			children = (
+				9A5ACD972BF7B37C00DE586F /* FineDustUtil.swift */,
+				9A5ACD992BF7B3FE00DE586F /* FineDustModels */,
 				9A8DF86F2BF6E4D2009F0DAB /* FineList */,
 				9A8DF86A2BF6C48E009F0DAB /* Chat */,
 				9ABC1E272BF4BAAF006A626C /* Chart */,
@@ -491,6 +505,8 @@
 				146580CB2BF1E7EA0093AA81 /* AppDelegate.swift in Sources */,
 				1445AF5D2BF32C5A0018AE3F /* RelatedSearchTableViewCell.swift in Sources */,
 				146580ED2BF1E8D10093AA81 /* SearchViewController.swift in Sources */,
+				9A5ACD982BF7B37C00DE586F /* FineDustUtil.swift in Sources */,
+				9A5ACD9B2BF7B42B00DE586F /* GroupStruct.swift in Sources */,
 				45D70DC22BF3325400942DC1 /* WeatherDetailView.swift in Sources */,
 				146580E62BF1E8740093AA81 /* TabModel.swift in Sources */,
 				146580CD2BF1E7EA0093AA81 /* SceneDelegate.swift in Sources */,

@@ -9,75 +9,19 @@ import Foundation
 import SwiftUI
 import Charts
 
-
-enum Facetype: String {
-    case happy = "아주 좋음"
-    case smile = "좋음"
-    case umm = "보통"
-    case bad = "나쁨"
-    
-    var image : Image{
-        switch self {
-        case .happy: return Image("happy")
-        case .smile: return Image("smile")
-        case .umm: return Image("umm")
-        case .bad: return Image("bad")
-        }
-    }
-}
-
-
 struct FineList: View {
-    @SwiftUI.State private var isToggleOn = false
+    
+    //가져와야하는 데이터
+    //데이터가 어떻게 들어오는지 확인한 후 결정
+    //helloWeather.AirQuality(micro: Optional(36.1), fine: Optional(22.9))
+    
+    // 텍스트 포튼 크기
     var titleFontSize = 18
     let day1 = Date()
     let day2: Date? = Calendar.current.date(byAdding: .day, value: 1, to: Date())
     let day3: Date? = Calendar.current.date(byAdding: .day, value: 2, to: Date())
     let day4: Date? = Calendar.current.date(byAdding: .day, value: 3, to: Date())
-    
-    private func formattedDateWithWeekdays(date: Date) -> String {
-        let calendar = Calendar(identifier: .gregorian)
-        let components = calendar.dateComponents([.weekday], from: date)
-        
-        if let weekday = components.weekday {
-            switch weekday {
-            case 1:
-                return "(일)"
-            case 2:
-                return "(월)"
-            case 3:
-                return "(화)"
-            case 4:
-                return "(수)"
-            case 5:
-                return "(목)"
-            case 6:
-                return "(금)"
-            default:
-                return "(토)"
-            }
-        }
-        return ""
-    }
-    private func createTimeFormatter() -> DateFormatter {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "MM. dd"
-        // 'a' for AM/PM indicator
-        //formatter.locale = Locale(identifier: "ko_KR") // Sets the locale to Korean
-        formatter.timeZone = TimeZone(identifier: "Asia/Seoul")
-        return formatter
-    }
-    
-    private func isWeekend(date: Date) -> Bool {
-        let calendar = Calendar(identifier: .gregorian)
-        let components = calendar.dateComponents([.weekday], from: date)
-        
-        if let weekday = components.weekday {
-            return weekday == 1 || weekday == 7
-        }
-        return false
-    }
-    
+    @SwiftUI.State private var isToggleOn = false
     
     var body: some View {
         VStack(content: {

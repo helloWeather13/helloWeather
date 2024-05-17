@@ -48,9 +48,10 @@ struct Forecastday: Codable { // 하루 기준으로 나오는 정보
     let date: String // 날짜 String
     let day: Day // 하루 날씨 정보
     let astro: Astro // 일출 정보 용
+    let airQuality: AirQuality? // 미세먼지 정보
     let hour: [Hour] // 하루를 24시간으로 쪼개서 각각의 날씨 정보
     enum CodingKeys: String, CodingKey {
-        case date, day, astro, hour
+        case date, day, astro, airQuality, hour
        
     }
 }
@@ -67,11 +68,19 @@ struct Astro: Codable {
 struct AirQuality : Codable { //
     let micro : Double? // 초미세먼지 정도
     let fine : Double? // 미세먼지 정도
+    let o3 : Double? // 오존3
+    let co : Double? // 일산화 탄소
+    let no2 : Double? // 이산화질소
+    let so2 : Double? // 이산화황
+    
     enum CodingKeys: String, CodingKey {
         case micro = "pm10"
         case fine = "pm2_5"
+        case o3 = "o3"
+        case co = "co"
+        case no2 = "no2"
+        case so2 = "so2"
     }
-    
 }
 // MARK: - Day
 struct Day: Codable {
