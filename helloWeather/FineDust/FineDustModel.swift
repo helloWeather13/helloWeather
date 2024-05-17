@@ -154,10 +154,10 @@ struct LineChartView: View {
                 .frame(height: 100)
             //
             FineList()
-            
+                .padding()
+            ValueList()
             
         }
-        .frame(height: 300)
     }
     
 }

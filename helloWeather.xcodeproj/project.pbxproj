@@ -25,6 +25,7 @@
 		9A8DF86C2BF6C4A3009F0DAB /* ChatModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8DF86B2BF6C4A3009F0DAB /* ChatModel.swift */; };
 		9A8DF86E2BF6CB26009F0DAB /* ChatModel2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8DF86D2BF6CB26009F0DAB /* ChatModel2.swift */; };
 		9A8DF8712BF6E51E009F0DAB /* FineList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8DF8702BF6E51E009F0DAB /* FineList.swift */; };
+		9A8DF8732BF70A99009F0DAB /* ValueList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8DF8722BF70A99009F0DAB /* ValueList.swift */; };
 		9ABC1E212BF34BDC006A626C /* FineDustView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABC1E202BF34BDC006A626C /* FineDustView.swift */; };
 		9ABC1E232BF34BE8006A626C /* FineDustViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABC1E222BF34BE8006A626C /* FineDustViewModel.swift */; };
 		9ABC1E262BF35C34006A626C /* FineDustModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABC1E252BF35C34006A626C /* FineDustModel.swift */; };
@@ -48,6 +49,7 @@
 		9A8DF86B2BF6C4A3009F0DAB /* ChatModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatModel.swift; sourceTree = "<group>"; };
 		9A8DF86D2BF6CB26009F0DAB /* ChatModel2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatModel2.swift; sourceTree = "<group>"; };
 		9A8DF8702BF6E51E009F0DAB /* FineList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FineList.swift; sourceTree = "<group>"; };
+		9A8DF8722BF70A99009F0DAB /* ValueList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValueList.swift; sourceTree = "<group>"; };
 		9ABC1E202BF34BDC006A626C /* FineDustView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FineDustView.swift; sourceTree = "<group>"; };
 		9ABC1E222BF34BE8006A626C /* FineDustViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FineDustViewModel.swift; sourceTree = "<group>"; };
 		9ABC1E252BF35C34006A626C /* FineDustModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FineDustModel.swift; sourceTree = "<group>"; };
@@ -150,6 +152,7 @@
 			isa = PBXGroup;
 			children = (
 				9A8DF8702BF6E51E009F0DAB /* FineList.swift */,
+				9A8DF8722BF70A99009F0DAB /* ValueList.swift */,
 			);
 			path = FineList;
 			sourceTree = "<group>";
@@ -263,6 +266,7 @@
 				9A8DF8712BF6E51E009F0DAB /* FineList.swift in Sources */,
 				9ABC1E262BF35C34006A626C /* FineDustModel.swift in Sources */,
 				9ABC1E232BF34BE8006A626C /* FineDustViewModel.swift in Sources */,
+				9A8DF8732BF70A99009F0DAB /* ValueList.swift in Sources */,
 				9A8DF86E2BF6CB26009F0DAB /* ChatModel2.swift in Sources */,
 				146580CD2BF1E7EA0093AA81 /* SceneDelegate.swift in Sources */,
 				9ABC1E212BF34BDC006A626C /* FineDustView.swift in Sources */,
