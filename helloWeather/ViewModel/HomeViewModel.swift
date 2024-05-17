@@ -137,9 +137,13 @@ class HomeViewModel: NSObject, CLLocationManagerDelegate {
     }
 
     var sunImage: UIImage {
-        let index = min((now - sunriseNum) / sunTimeSplit + 1, 10)
-        let imageName = "SunRise" + String(format: "%02d", index)
-        return UIImage(named: imageName)!
+        if now > sunriseNum && now < sunsetNum {
+            let index = min((now - sunriseNum) / sunTimeSplit + 1, 10)
+            let imageName = "SunRise" + String(format: "%02d", index)
+            return UIImage(named: imageName)!
+        } else {
+            return UIImage(named: "SunRise10")!
+        }
     }
     
     override init() {

@@ -78,7 +78,7 @@ class HomeViewController: UIViewController {
     
     var temperatureLabel: UILabel = {
         let label = UILabel()
-        label.text = "23"
+        label.text = ""
         label.font = .systemFont(ofSize: 120, weight: .heavy)
         return label
     }()
