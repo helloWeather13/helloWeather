@@ -85,11 +85,11 @@ extension TempListViewController: UITableViewDelegate {
         guard let item = self.viewModel.dataSource?.itemIdentifier(for: indexPath) else { return 0 }
         switch item {
         case .currentWeather(_):
-            return 134
+            return 138
         case .space:
             return 61
         case .listWeather(_):
-            return 118
+            return 120
         }
     }
     
