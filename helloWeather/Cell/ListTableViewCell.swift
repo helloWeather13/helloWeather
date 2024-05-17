@@ -22,12 +22,17 @@ class ListTableViewCell: UITableViewCell {
     var deleteView = UIView()
     var viewContainer = UIView()
     var deleteButton = UIButton()
+    var isAlarm = false
+    
+    
     
     
     //    var weatherAPIModel : WeatherAPIModel?
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
+        setupAlarmImageView()
     }
     
     required init?(coder : NSCoder){
@@ -104,8 +109,24 @@ class ListTableViewCell: UITableViewCell {
         minMaxTempLabel.textColor = .secondaryLabel
         minMaxTempLabel.font = .systemFont(ofSize: 12)
         minMaxTempLabel.sizeToFit()
-        alarmImageView.image = UIImage(systemName: "bell")
+        alarmImageView.image = .alarm0
         self.makeConstraints()
+    }
+    
+    func setupAlarmImageView() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(alarmImageViewTapped))
+                alarmImageView.addGestureRecognizer(tapGesture)
+                alarmImageView.isUserInteractionEnabled = true
+    }
+    
+    @objc func alarmImageViewTapped() {
+        if isAlarm {
+            alarmImageView.image = .alarm0
+            isAlarm = false
+        } else {
+            alarmImageView.image = .alarm1
+            isAlarm = true
+        }
     }
     
     func makeConstraints(){
@@ -152,3 +173,4 @@ class ListTableViewCell: UITableViewCell {
         }
     }
 }
+
