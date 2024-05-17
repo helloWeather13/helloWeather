@@ -48,11 +48,13 @@ class TempListViewController: UIViewController {
                 return cell
             case .space:
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: SpaceTableViewCell.identifier, for: indexPath) as? SpaceTableViewCell else {
-                    return UITableViewCell()
-                }
-                cell.configure()
-                cell.selectionStyle = .none
-                return cell
+                                return UITableViewCell()
+                            }
+                            // SpaceCellViewModel 생성 및 설정
+                            let spaceCellViewModel = SpaceCellViewModel()
+                            cell.configure(with: spaceCellViewModel)
+                            cell.selectionStyle = .none
+                            return cell
             case .listWeather(let listWeather):
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: ListTableViewCell.identifier, for: indexPath) as? ListTableViewCell else {
                     return UITableViewCell()
@@ -88,7 +90,7 @@ extension TempListViewController: UITableViewDelegate {
         case .currentWeather(_):
             return 159
         case .space:
-            return 61
+            return 81
         case .listWeather(_):
             return 136
         }
@@ -171,3 +173,4 @@ extension TempListViewController: UITableViewDelegate {
     
     
 }
+

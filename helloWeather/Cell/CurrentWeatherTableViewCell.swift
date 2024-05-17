@@ -29,6 +29,8 @@ class CurrentWeatherTableViewCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+//        contentView.backgroundColor = UIColor(red: 0.0, green: 0.0, blue: 1.0, alpha: 1.0) // contentView 배경색을 파란색으로 설정
+//        viewContainer.backgroundColor = UIColor(red: 0.0, green: 0.0, blue: 1.0, alpha: 1.0) // viewContainer 배경색을 파란색으로 설정
     }
     
     required init?(coder : NSCoder){
@@ -92,7 +94,7 @@ class CurrentWeatherTableViewCell: UITableViewCell {
             temperatureTextLabel.text = "어제랑 기온이 같음"
         }
         temperatureTextLabel.font = .systemFont(ofSize: 11)
-        dustLabel.text = "미세 \(String((weatherAPIModel.current?.airQuality.fine)!)) ㆍ 초미세 \(String((weatherAPIModel.current?.airQuality.micro)!))"
+        dustLabel.text = "미세 \(String((weatherAPIModel.current?.airQuality.fine)!))ㆍ초미세 \(String((weatherAPIModel.current?.airQuality.micro)!))"
         dustLabel.font = .systemFont(ofSize: 11)
         self.makeConstraints()
     }
