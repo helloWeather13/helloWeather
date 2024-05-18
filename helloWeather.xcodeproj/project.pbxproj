@@ -63,12 +63,13 @@
 		9A5ACD942BF7763600DE586F /* FineListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5ACD932BF7763600DE586F /* FineListViewModel.swift */; };
 		9A5ACD982BF7B37C00DE586F /* FineDustUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5ACD972BF7B37C00DE586F /* FineDustUtil.swift */; };
 		9A5ACD9B2BF7B42B00DE586F /* DustGroupStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5ACD9A2BF7B42B00DE586F /* DustGroupStruct.swift */; };
+		9A5ACD9D2BF893BA00DE586F /* ChartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5ACD9C2BF893BA00DE586F /* ChartViewModel.swift */; };
+		9A5ACD9F2BF8B41100DE586F /* LineModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5ACD9E2BF8B41100DE586F /* LineModel.swift */; };
 		9A8DF86C2BF6C4A3009F0DAB /* ChatModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8DF86B2BF6C4A3009F0DAB /* ChatModel.swift */; };
 		9A8DF86E2BF6CB26009F0DAB /* ChatModel2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8DF86D2BF6CB26009F0DAB /* ChatModel2.swift */; };
 		9A8DF8712BF6E51E009F0DAB /* FineListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8DF8702BF6E51E009F0DAB /* FineListView.swift */; };
 		9A8DF8732BF70A99009F0DAB /* ValueListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8DF8722BF70A99009F0DAB /* ValueListView.swift */; };
 		9ABC1E212BF34BDC006A626C /* FineDustView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABC1E202BF34BDC006A626C /* FineDustView.swift */; };
-		9ABC1E232BF34BE8006A626C /* FineDustViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABC1E222BF34BE8006A626C /* FineDustViewModel.swift */; };
 		9ABC1E262BF35C34006A626C /* FineDustModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABC1E252BF35C34006A626C /* FineDustModel.swift */; };
 		9ABC1E292BF4BAD2006A626C /* ChartModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABC1E282BF4BAD2006A626C /* ChartModel.swift */; };
 		B687F6862BF4CC6000623F1D /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B687F6852BF4CC6000623F1D /* HomeViewModel.swift */; };
@@ -139,12 +140,13 @@
 		9A5ACD932BF7763600DE586F /* FineListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FineListViewModel.swift; sourceTree = "<group>"; };
 		9A5ACD972BF7B37C00DE586F /* FineDustUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FineDustUtil.swift; sourceTree = "<group>"; };
 		9A5ACD9A2BF7B42B00DE586F /* DustGroupStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DustGroupStruct.swift; sourceTree = "<group>"; };
+		9A5ACD9C2BF893BA00DE586F /* ChartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartViewModel.swift; sourceTree = "<group>"; };
+		9A5ACD9E2BF8B41100DE586F /* LineModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineModel.swift; sourceTree = "<group>"; };
 		9A8DF86B2BF6C4A3009F0DAB /* ChatModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatModel.swift; sourceTree = "<group>"; };
 		9A8DF86D2BF6CB26009F0DAB /* ChatModel2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatModel2.swift; sourceTree = "<group>"; };
 		9A8DF8702BF6E51E009F0DAB /* FineListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FineListView.swift; sourceTree = "<group>"; };
 		9A8DF8722BF70A99009F0DAB /* ValueListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValueListView.swift; sourceTree = "<group>"; };
 		9ABC1E202BF34BDC006A626C /* FineDustView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FineDustView.swift; sourceTree = "<group>"; };
-		9ABC1E222BF34BE8006A626C /* FineDustViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FineDustViewModel.swift; sourceTree = "<group>"; };
 		9ABC1E252BF35C34006A626C /* FineDustModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FineDustModel.swift; sourceTree = "<group>"; };
 		9ABC1E282BF4BAD2006A626C /* ChartModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartModel.swift; sourceTree = "<group>"; };
 		B687F6852BF4CC6000623F1D /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
@@ -368,13 +370,12 @@
 			isa = PBXGroup;
 			children = (
 				9A5ACD972BF7B37C00DE586F /* FineDustUtil.swift */,
+				9ABC1E252BF35C34006A626C /* FineDustModel.swift */,
+				9ABC1E202BF34BDC006A626C /* FineDustView.swift */,
 				9A5ACD992BF7B3FE00DE586F /* FineDustModels */,
 				9A8DF86F2BF6E4D2009F0DAB /* FineList */,
 				9A8DF86A2BF6C48E009F0DAB /* Chat */,
 				9ABC1E272BF4BAAF006A626C /* Chart */,
-				9ABC1E252BF35C34006A626C /* FineDustModel.swift */,
-				9ABC1E202BF34BDC006A626C /* FineDustView.swift */,
-				9ABC1E222BF34BE8006A626C /* FineDustViewModel.swift */,
 			);
 			path = FineDust;
 			sourceTree = "<group>";
@@ -382,7 +383,9 @@
 		9ABC1E272BF4BAAF006A626C /* Chart */ = {
 			isa = PBXGroup;
 			children = (
+				9A5ACD9C2BF893BA00DE586F /* ChartViewModel.swift */,
 				9ABC1E282BF4BAD2006A626C /* ChartModel.swift */,
+				9A5ACD9E2BF8B41100DE586F /* LineModel.swift */,
 			);
 			path = Chart;
 			sourceTree = "<group>";
@@ -517,7 +520,6 @@
 				146580E62BF1E8740093AA81 /* TabModel.swift in Sources */,
 				9A8DF8712BF6E51E009F0DAB /* FineListView.swift in Sources */,
 				9ABC1E262BF35C34006A626C /* FineDustModel.swift in Sources */,
-				9ABC1E232BF34BE8006A626C /* FineDustViewModel.swift in Sources */,
 				9A8DF8732BF70A99009F0DAB /* ValueListView.swift in Sources */,
 				9A8DF86E2BF6CB26009F0DAB /* ChatModel2.swift in Sources */,
 				146580CD2BF1E7EA0093AA81 /* SceneDelegate.swift in Sources */,
@@ -527,6 +529,7 @@
 				146580E82BF1E8960093AA81 /* HomeViewController.swift in Sources */,
 				9ABC1E292BF4BAD2006A626C /* ChartModel.swift in Sources */,
 				14450E9F2BF45381006A02F7 /* RecentSearchTableViewCell.swift in Sources */,
+				9A5ACD9D2BF893BA00DE586F /* ChartViewModel.swift in Sources */,
 				14450EA12BF45962006A02F7 /* Extension.swift in Sources */,
 				14450EA32BF474FC006A02F7 /* PaddingLabel.swift in Sources */,
 				146580E82BF1E8960093AA81 /* HomeViewController.swift in Sources */,
@@ -539,6 +542,7 @@
 				45D70DBD2BF3145C00942DC1 /* WeatherDetailViewController.swift in Sources */,
 				1445AF552BF2F5D40018AE3F /* CustomBounceAnimation.swift in Sources */,
 				146580E42BF1E8590093AA81 /* TabViewModel.swift in Sources */,
+				9A5ACD9F2BF8B41100DE586F /* LineModel.swift in Sources */,
 				147EF86C2BF62AE4000DC8A8 /* TempListViewController.swift in Sources */,
 				146581072BF240AF0093AA81 /* KakaoAddressModel.swift in Sources */,
 			);

@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import SwiftUICharts
 
 // 미세먼지 상태 얼굴 타입
 enum Facetype: String {
@@ -86,3 +87,258 @@ struct TimeData {
     let value: Double
 }
 
+//Path
+extension Path {
+    func point(to x: CGFloat) -> CGPoint {
+        var prevPoint: CGPoint? = nil
+        var closestPoint: CGPoint? = nil
+        var minDistance: CGFloat = .infinity
+        
+        self.forEach { element in
+            switch element {
+            case .move(to: let p):
+                prevPoint = p
+            case .line(to: let p):
+                guard let prevPoint = prevPoint else { return }
+                let distance = abs(x - p.x)
+                if distance < minDistance {
+                    minDistance = distance
+                    closestPoint = p
+                }
+                self.calculateClosestPoint(currentPoint: p, targetX: x, minDistance: &minDistance, closestPoint: &closestPoint)
+                //prevPoint = p
+            case .quadCurve(to: let p, control: _):
+                guard let prevPoint = prevPoint else { return }
+                let distance = abs(x - p.x)
+                if distance < minDistance {
+                    minDistance = distance
+                    closestPoint = p
+                }
+                self.calculateClosestPoint(currentPoint: p, targetX: x, minDistance: &minDistance, closestPoint: &closestPoint)
+                //prevPoint = p
+            case .curve(to: let p, control1: _, control2: _):
+                guard let prevPoint = prevPoint else { return }
+                let distance = abs(x - p.x)
+                if distance < minDistance {
+                    minDistance = distance
+                    closestPoint = p
+                }
+                self.calculateClosestPoint(currentPoint: p, targetX: x, minDistance: &minDistance, closestPoint: &closestPoint)
+                //prevPoint = p
+            case .closeSubpath:
+                break
+            }
+        }
+        return closestPoint ?? .zero
+    }
+    
+    
+    private func calculateClosestPoint(currentPoint: CGPoint, targetX: CGFloat, minDistance: inout CGFloat, closestPoint: inout CGPoint?) {
+        let distance = abs(targetX - currentPoint.x)
+        if distance < minDistance {
+            minDistance = distance
+            closestPoint = currentPoint
+        }
+    }
+    static func quadCurvedPathWithPoints(points: [Double], step: CGPoint, globalOffset: Double? = nil) -> Path {
+        var path = Path()
+        if points.count < 2 {
+            return path
+        }
+        let offset = globalOffset ?? points.min()!
+        var p1 = CGPoint(x: 0, y: CGFloat(points[0] - offset) * step.y)
+        path.move(to: p1)
+        for pointIndex in 1..<points.count {
+            let p2 = CGPoint(x: step.x * CGFloat(pointIndex), y: step.y * CGFloat(points[pointIndex] - offset))
+            let midPoint = CGPoint.midPointForPoints(p1: p1, p2: p2)
+            path.addQuadCurve(to: midPoint, control: CGPoint.controlPointForPoints(p1: midPoint, p2: p1))
+            path.addQuadCurve(to: p2, control: CGPoint.controlPointForPoints(p1: midPoint, p2: p2))
+            p1 = p2
+        }
+        return path
+    }
+
+    static func linePathWithPoints(points: [Double], step: CGPoint) -> Path {
+        var path = Path()
+        if points.count < 2 {
+            return path
+        }
+        guard let offset = points.min() else { return path }
+        let p1 = CGPoint(x: 0, y: CGFloat(points[0] - offset) * step.y)
+        path.move(to: p1)
+        for pointIndex in 1..<points.count {
+            let p2 = CGPoint(x: step.x * CGFloat(pointIndex), y: step.y * CGFloat(points[pointIndex] - offset))
+            path.addLine(to: p2)
+        }
+        return path
+    }
+
+    static func quadClosedCurvedPathWithPoints(points: [Double], step: CGPoint, globalOffset: Double? = nil) -> Path {
+        var path = Path()
+        if points.count < 2 {
+            return path
+        }
+        let offset = globalOffset ?? points.min()!
+        var p1 = CGPoint(x: 0, y: CGFloat(points[0] - offset) * step.y)
+        path.move(to: p1)
+        for pointIndex in 1..<points.count {
+            let p2 = CGPoint(x: step.x * CGFloat(pointIndex), y: step.y * CGFloat(points[pointIndex] - offset))
+            let midPoint = CGPoint.midPointForPoints(p1: p1, p2: p2)
+            path.addQuadCurve(to: midPoint, control: CGPoint.controlPointForPoints(p1: midPoint, p2: p1))
+            path.addQuadCurve(to: p2, control: CGPoint.controlPointForPoints(p1: midPoint, p2: p2))
+            p1 = p2
+        }
+        path.addLine(to: CGPoint(x: p1.x, y: 0))
+        path.addLine(to: CGPoint(x: 0, y: 0))
+        return path
+    }
+
+    static func closedLinePathWithPoints(points: [Double], step: CGPoint) -> Path {
+        var path = Path()
+        if points.count < 2 {
+            return path
+        }
+        guard let offset = points.min() else { return path }
+        let p1 = CGPoint(x: 0, y: CGFloat(points[0] - offset) * step.y)
+        path.move(to: p1)
+        for pointIndex in 1..<points.count {
+            let p2 = CGPoint(x: step.x * CGFloat(pointIndex), y: step.y * CGFloat(points[pointIndex] - offset))
+            path.addLine(to: p2)
+        }
+        path.addLine(to: CGPoint(x: CGFloat(points.count - 1) * step.x, y: 0))
+        path.addLine(to: CGPoint(x: 0, y: 0))
+        return path
+    }
+}
+
+extension CGPoint {
+    static func midPointForPoints(p1: CGPoint, p2: CGPoint) -> CGPoint {
+        return CGPoint(x: (p1.x + p2.x) / 2, y: (p1.y + p2.y) / 2)
+    }
+
+    static func controlPointForPoints(p1: CGPoint, p2: CGPoint) -> CGPoint {
+        var controlPoint = CGPoint.midPointForPoints(p1: p1, p2: p2)
+        let diffY = abs(p2.y - controlPoint.y)
+        
+        if p1.y < p2.y {
+            controlPoint.y += diffY
+        } else if p1.y > p2.y {
+            controlPoint.y -= diffY
+        }
+        return controlPoint
+    }
+}
+
+// Point Color
+struct IndicatorPoint: View {
+    var body: some View {
+        ZStack{
+            Circle()
+                .fill(Color.green)
+            Circle()
+                .stroke(Color.white, style: StrokeStyle(lineWidth: 4))
+        }
+        .frame(width: 14, height: 14)
+        .shadow(color: Color.green, radius: 6, x: 0, y: 6)
+    }
+}
+
+public struct Styles2 {
+    public static let lineChartStyleOne = ChartStyle2(
+        backgroundColor: Color.white,
+        accentColor: Color.orange,
+        secondGradientColor: Color.orange,
+        textColor: Color.black,
+        legendTextColor: Color.gray,
+        dropShadowColor: Color.gray)
+    
+    public static let barChartStyleOrangeLight = ChartStyle2(
+        backgroundColor: Color.white,
+        accentColor: Color.orange,
+        secondGradientColor: Color.orange,
+        textColor: Color.black,
+        legendTextColor: Color.gray,
+        dropShadowColor: Color.gray)
+    
+    public static let barChartStyleOrangeDark = ChartStyle2(
+        backgroundColor: Color.black,
+        accentColor: Color.orange,
+        secondGradientColor: Color.orange,
+        textColor: Color.white,
+        legendTextColor: Color.gray,
+        dropShadowColor: Color.gray)
+    
+    public static let barChartStyleNeonBlueLight = ChartStyle2(
+        backgroundColor: Color.white,
+        accentColor: Color.orange,
+        secondGradientColor: Color.orange,
+        textColor: Color.black,
+        legendTextColor: Color.gray,
+        dropShadowColor: Color.gray)
+    
+    public static let barChartStyleNeonBlueDark = ChartStyle2(
+        backgroundColor: Color.black,
+        accentColor: Color.orange,
+        secondGradientColor: Color.orange,
+        textColor: Color.white,
+        legendTextColor: Color.gray,
+        dropShadowColor: Color.gray)
+    
+    public static let barChartMidnightGreenDark = ChartStyle2(
+        backgroundColor: Color("#36534D"), //3B5147, 313D34
+        accentColor: Color("#FFD603"),
+        secondGradientColor: Color("#FFCA04"),
+        textColor: Color.white,
+        legendTextColor: Color("#D2E5E1"),
+        dropShadowColor: Color.gray)
+    
+    public static let barChartMidnightGreenLight = ChartStyle2(
+        backgroundColor: Color.white,
+        accentColor: Color("#84A094"), //84A094 , 698378
+        secondGradientColor: Color("#50675D"),
+        textColor: Color.black,
+        legendTextColor:Color.gray,
+        dropShadowColor: Color.gray)
+    
+    public static let pieChartStyleOne = ChartStyle2(
+        backgroundColor: Color.white,
+        accentColor: Colors.OrangeEnd,
+        secondGradientColor: Colors.OrangeStart,
+        textColor: Color.black,
+        legendTextColor: Color.gray,
+        dropShadowColor: Color.gray)
+    
+    public static let lineViewDarkMode = ChartStyle2(
+        backgroundColor: Color.black,
+        accentColor: Colors.OrangeStart,
+        secondGradientColor: Colors.OrangeEnd,
+        textColor: Color.white,
+        legendTextColor: Color.white,
+        dropShadowColor: Color.gray)
+}
+
+public struct MagnifierRect: View {
+    @Binding var currentNumber: Double
+    var valueSpecifier:String
+    @Environment(\.colorScheme) var colorScheme: ColorScheme
+    public var body: some View {
+        ZStack{
+            Text("\(self.currentNumber, specifier: valueSpecifier)")
+                .font(.system(size: 18, weight: .bold))
+                .offset(x: 0, y:-110)
+                .foregroundColor(self.colorScheme == .dark ? Color.white : Color.black)
+            if (self.colorScheme == .dark ){
+                RoundedRectangle(cornerRadius: 16)
+                    .stroke(Color.white, lineWidth: self.colorScheme == .dark ? 2 : 0)
+                    .frame(width: 60, height: 260)
+            }else{
+                RoundedRectangle(cornerRadius: 16)
+                    .frame(width: 60, height: 280)
+                    .foregroundColor(Color.white)
+                    .shadow(color: Colors.LegendText, radius: 12, x: 0, y: 6 )
+                    .blendMode(.multiply)
+            }
+        }
+        .offset(x: 0, y: -15)
+    }
+}

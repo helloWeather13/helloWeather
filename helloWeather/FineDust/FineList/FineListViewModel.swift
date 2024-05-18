@@ -77,7 +77,7 @@ class FineListViewModel: ObservableObject {
                 let forecastDays = data.forecast.forecastday.prefix(4)
                 
                 if let airQuality1 = forecastDays[0].day.airQuality {
-                    print(forecastDays[0].day)
+                    //print(forecastDays[0].day)
                     self.micro1 = formatToThreeDecimalPlaces(value: airQuality1.fine)
                     self.fine1 = formatToThreeDecimalPlaces(value: airQuality1.micro)
                     self.o3 = formatToThreeDecimalPlaces(value: airQuality1.o3)

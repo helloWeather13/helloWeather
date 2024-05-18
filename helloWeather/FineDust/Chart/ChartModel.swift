@@ -1,125 +1,114 @@
-//
-//  File.swift
-//  helloWeather
-//
-//  Created by 김태담 on 5/15/24.
-//
-
-import Foundation
 import SwiftUI
+import SwiftUICharts
 import Charts
 
-// 그래프 구조체
-struct ChartData: Identifiable {
-    var id: Int
-    var date: String
-    var value: Double
-    var type: ChartType
-}
-
-// 2개의 구조체
-enum ChartType: String, CaseIterable, Plottable {
-    case optimal = "미세먼지"
-    case outside = "초미세먼지"
-    case white = ""
+public struct ChartView: View {
+    @ObservedObject var data: ChartData
+    public var title: String?
+    public var legend: String?
+    public var style: ChartStyle2
+    public var darkModeStyle: ChartStyle2
+    public var valueSpecifier: String
+    public var legendSpecifier: String
     
-    var color: Color {
-        switch self {
-        case .optimal: return .white
-        case .outside: return .white
-        case .white: return .white
+    @Environment(\.colorScheme) var colorScheme: ColorScheme
+    @State private var showLegend = false
+    @State private var dragLocation:CGPoint = .zero
+    @State private var indicatorLocation:CGPoint = .zero
+    @State private var closestPoint: CGPoint = .zero
+    @State private var opacity:Double = 0
+    @State private var currentDataNumber: Double = 0
+    @State private var hideHorizontalLines: Bool = false
+    
+    public init(data: [Double],
+                title: String? = nil,
+                legend: String? = nil,
+                style: ChartStyle2 = Styles2.lineChartStyleOne,
+                valueSpecifier: String? = "%.1f",
+                legendSpecifier: String? = "%.1f",
+                hideXAxis: Bool = false,
+                hideYAxis: Bool = false) {
+        
+        self.data = ChartData(points: data)
+        self.title = nil
+        self.legend = legend
+        self.style = style
+        self.valueSpecifier = valueSpecifier!
+        self.legendSpecifier = legendSpecifier!
+        self.darkModeStyle = style.darkModeStyle != nil ? style.darkModeStyle! : Styles2.lineViewDarkMode
+    }
+    
+    func getClosestDataPoint(toPoint: CGPoint, width:CGFloat, height: CGFloat) -> CGPoint {
+        let points = self.data.onlyPoints()
+        let stepWidth: CGFloat = width / CGFloat(points.count-1)
+        let stepHeight: CGFloat = height / CGFloat(points.max()! + points.min()!)
+        
+        let index:Int = Int(floor((toPoint.x-15)/stepWidth))
+        if (index >= 0 && index < points.count){
+            self.currentDataNumber = points[index]
+            return CGPoint(x: CGFloat(index)*stepWidth, y: CGFloat(points[index])*stepHeight)
         }
+        return .zero
     }
     
-    var backgroudnColor: Color {
-        switch self {
-        case .optimal: return .green
-        case .outside: return Color(red: 15/255, green: 206/255, blue: 235/255)
-        case .white: return .white
-        }
-    }
-}
-
-
-// 테스트 데이타
-var chartDatas : [ChartData] = {
-  
-    var temp = [ChartData]()
-    
-    for i in 1...6 {
-        let value = Double.random(in: 0...0.5)
-        temp.append(ChartData(id: i, date: "\(i+3*i)", value: value, type: .optimal))
-    }
-    
-    for i in 1...6 {
-        let value = Double.random(in: 0...0.5)
-        temp.append(ChartData(id: i, date: "\(i+3*i)", value: value, type: .outside))
-    }
-    for i in 1...6 {
-        let value = 2
-        temp.append(ChartData(id: i, date: "\(i+3*i)", value: Double(value), type: .white))
-    }
-    
-    return temp
-}()
-
-
-struct ChartView: View {
-    
-    //변수
-    let data: [ChartData]
-    let now = Date()
-    let calendar = Calendar.current
-    
-    //함수
-    func createTimeFormatter() -> DateFormatter {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "HH시"
-        formatter.timeZone = TimeZone(identifier: "Asia/Seoul")
-        return formatter
-    }
-    
-    var body: some View {
-        VStack(alignment: .leading) {
-            ScrollView(.horizontal) {
-                Chart {
-                    ForEach(Array(data.enumerated()), id: \.element.id) { index ,item in
-                        LineMark(
-                            x: .value("시간", item.date),
-                            y: .value("미세먼지 농도", item.value)
+    public var body: some View {
+        GeometryReader{ geometry in
+            VStack(alignment: .leading, spacing: 8) {
+                ZStack{
+                    GeometryReader{ reader in
+                        Rectangle()
+                            .foregroundColor(self.colorScheme == .dark ? self.darkModeStyle.backgroundColor : self.style.backgroundColor)
+                        if(self.showLegend){
+                        }
+                        Line2(data: self.data,
+                             frame: .constant(CGRect(x: 0, y: 0, width: reader.frame(in: .local).width - 30, height: reader.frame(in: .local).height + 25)),
+                             touchLocation: self.$indicatorLocation,
+                             showIndicator: self.$hideHorizontalLines,
+                             minDataValue: .constant(nil),
+                             maxDataValue: .constant(nil),
+                             showBackground: false,
+                             gradient: self.style.gradientColor
                         )
-                        //선의 설정
-                        .foregroundStyle(item.type.backgroudnColor)
-                        .foregroundStyle(by: .value("Plot", item.type))
-                        .interpolationMethod(.linear)
-                        .lineStyle(index > 1 ? StrokeStyle(lineWidth: 2, dash: [5, 3]) : StrokeStyle(lineWidth: 2))
-
+                        .offset(x: 30, y: 0)
+                        .onAppear(){
+                            self.showLegend = true
+                        }
+                        .onDisappear(){
+                            self.showLegend = false
+                        }
                     }
+                    .frame(width: geometry.frame(in: .local).size.width, height: 240)
+                    .offset(x: 0, y: 40)
+                    MagnifierRect(currentNumber: self.$currentDataNumber, valueSpecifier: self.valueSpecifier)
+                        .opacity(self.opacity)
+                        .offset(x: self.dragLocation.x - geometry.frame(in: .local).size.width/2, y: 36)
                 }
-                //.chartLegend(.hidden)
-                .chartXAxis(.hidden)
-                .chartYAxis(.hidden)
-                .frame(width: 1000)
-                HStack(content: {
-                    Spacer()
-                    Text("지금")
-                    Spacer()
-                    ForEach(data) { time in
-                        Text("\(time.date)시")
-                        Spacer()
-                    }
-                    Spacer()
+                .frame(width: geometry.frame(in: .local).size.width, height: 240)
+                .gesture(DragGesture()
+                .onChanged({ value in
+                    self.dragLocation = value.location
+                    self.indicatorLocation = CGPoint(x: max(value.location.x-30,0), y: 32)
+                    self.opacity = 1
+                    self.closestPoint = self.getClosestDataPoint(toPoint: value.location, width: geometry.frame(in: .local).size.width-30, height: 240)
+                    self.hideHorizontalLines = true
                 })
+                    .onEnded({ value in
+                        self.opacity = 0
+                        self.hideHorizontalLines = false
+                    })
+                )
             }
         }
     }
+    
 }
 
-#Preview {
-    VStack {
-        ChartView(data: chartDatas)
-            .padding()
-        Spacer()
+struct LineView_Previews: PreviewProvider {
+    static var previews: some View {
+        Group {
+            ChartView(data: [282.502, 284.495, 283.51, 285.019, 285.197, 286.118, 288.737, 288.455, 289.391, 287.691, 285.878, 286.46, 286.252, 284.652, 284.129, 284.188], title: "Full chart", style: Styles2.lineChartStyleOne)
+            
+        }
     }
 }
 
