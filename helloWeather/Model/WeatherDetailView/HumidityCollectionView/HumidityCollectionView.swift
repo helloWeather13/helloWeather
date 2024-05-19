@@ -28,6 +28,7 @@ class HumidityCollectionView: UICollectionView, UICollectionViewDelegate, UIColl
            self.delegate = self
            self.dataSource = self
            self.register(HumidityCollectionViewCell.self, forCellWithReuseIdentifier: HumidityCollectionViewCell.identifier)
+        self.isScrollEnabled = false
         
         bindViewModel()
         

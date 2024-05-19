@@ -149,7 +149,7 @@ class WeatherDetailView: UIView {
     let secondRightCollectionView = TomorrowTimeWeatherCollectionView()
     
     // 주간 날씨
-    let weekCollectionView = WeekCollectionView()
+    lazy var weekCollectionView = WeekCollectionView(viewModel: weatherDetailViewModel)
     
     // 습도
     lazy var humidityCollectionView = HumidityCollectionView(viewModel: weatherDetailViewModel)

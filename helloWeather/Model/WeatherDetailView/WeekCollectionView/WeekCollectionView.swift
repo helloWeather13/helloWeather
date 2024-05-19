@@ -6,17 +6,24 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 class WeekCollectionView: UICollectionView, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
-    var weekTest: [String] = ["오늘", "화", "수", "목", "금", "토", "일"]
-    var dateTest: [String] = ["5.13", "5.14", "5.15", "5.16", "5.17", "5.18", "5.19" ]
-    var minCelsiusTest: [String] = ["17", "17", "17", "17", "17", "17", "17"]
-    var maxCelsiusTest: [String] = ["17", "17", "17", "17", "17", "17", "17"]
+    private var viewModel: WeatherDetailViewModel?
+    private var disposeBag = DisposeBag()
+    private var dailyWeatherData: [WeatherDetailViewModel.DailyWeather] = []
+    
+//    var weekTest: [String] = ["오늘", "화", "수", "목", "금", "토", "일"]
+//    var dateTest: [String] = ["5.13", "5.14", "5.15", "5.16", "5.17", "5.18", "5.19" ]
+//    var minCelsiusTest: [String] = ["17", "17", "17", "17", "17", "17", "17"]
+//    var maxCelsiusTest: [String] = ["17", "17", "17", "17", "17", "17", "17"]
     var weatherIconTestNames: [String] = ["rainy"]
     var weatherIconTestData: [UIImage] = []
     
-    init() {
+    init(viewModel: WeatherDetailViewModel) {
+        self.viewModel = viewModel
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         super.init(frame: .zero, collectionViewLayout: layout)
@@ -26,26 +33,50 @@ class WeekCollectionView: UICollectionView, UICollectionViewDelegate, UICollecti
         self.register(WeekCollectionViewCell.self, forCellWithReuseIdentifier: WeekCollectionViewCell.identifier)
         
         if let rainyImage = UIImage(named: "rainy") {
-            weatherIconTestData = Array(repeating: rainyImage, count: weekTest.count)
+            weatherIconTestData = Array(repeating: rainyImage, count: dailyWeatherData.count)
         }
+        
+        bindViewModel()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - ViewModel 바인딩
+    private func bindViewModel() {
+        viewModel?.fetchDailyWeather()
+                .observe(on: MainScheduler.instance)
+                .subscribe(onNext: { [weak self] dailyWeather in
+                    self?.dailyWeatherData = dailyWeather
+                    
+                    if let rainyImage = UIImage(named: "rainy") {
+                        self?.weatherIconTestData = Array(repeating: rainyImage, count: dailyWeather.count)
+                    }
+                    
+                    self?.reloadData()
+                })
+                .disposed(by: disposeBag)
+        }
+    
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return weekTest.count
+        return dailyWeatherData.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell  = collectionView.dequeueReusableCell(withReuseIdentifier: WeekCollectionViewCell.identifier, for: indexPath) as! WeekCollectionViewCell
         
-        cell.weekLabel.text = weekTest[indexPath.item]
-        cell.dateLabel.text = dateTest[indexPath.item]
-        cell.minCelsiusLabel.text = "\(minCelsiusTest[indexPath.item])°"
-        cell.maxCelsiusLabel.text = "\(maxCelsiusTest[indexPath.item])°"
+        let dailyWeather = dailyWeatherData[indexPath.item]
+//        cell.weekLabel.text = dailyWeather.
+        cell.dateLabel.text = dailyWeather.date
+        cell.maxCelsiusLabel.text = dailyWeather.maxtempC
+        cell.minCelsiusLabel.text = dailyWeather.mintempC
+        
+//        cell.weekLabel.text = weekTest[indexPath.item]
+//        cell.dateLabel.text = dateTest[indexPath.item]
+//        cell.minCelsiusLabel.text = "\(minCelsiusTest[indexPath.item])°"
+//        cell.maxCelsiusLabel.text = "\(maxCelsiusTest[indexPath.item])°"
         
         
         if indexPath.item < weatherIconTestData.count {
@@ -71,10 +102,10 @@ class WeekCollectionView: UICollectionView, UICollectionViewDelegate, UICollecti
             cell.maxCelsiusLabel.font = UIFont.systemFont(ofSize: 10, weight: .regular)
         }
         
-        if weekTest[indexPath.item] == "토" || weekTest[indexPath.item] == "일" {
-            cell.weekLabel.textColor = .red
-            cell.dateLabel.textColor = .red
-        }
+//        if weekTest[indexPath.item] == "토" || weekTest[indexPath.item] == "일" {
+//            cell.weekLabel.textColor = .red
+//            cell.dateLabel.textColor = .red
+//        }
         
         return cell
     }
