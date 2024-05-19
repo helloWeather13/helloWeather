@@ -24,6 +24,10 @@ class WeatherDetailViewModel {
     struct HourlyWeather {
         let time: String // 시간
         let feelslikeC: String // 체감온도 (Celsius)
+        let feelslikeF: String
+        let tempC: String // 온도 (Celsius)
+        let tempF: String
+        let humidity: String
     }
     
     private let weatherManager: WebServiceManager
@@ -42,12 +46,12 @@ class WeatherDetailViewModel {
         
         return Observable.create { observer in
             self.weatherManager.getForecastWeather(searchModel: location) { data in
-                if let hourlyData = data.forecast.forecastday.first?.hour.prefix(12) {
+                if let hourlyData = data.forecast.forecastday.first?.hour.prefix(27) {
                     let currentHour = Calendar.current.component(.hour, from: Date())
                     let hourlyWeather = hourlyData.enumerated().map { index, hourlyData in
                         let hour = (currentHour + index) % 24 // 현재 시간에 인덱스를 더한 값 (24시간 기준)
                         let formattedHour = "\(hour)시"
-                        return HourlyWeather(time: formattedHour, feelslikeC: "\(hourlyData.feelslikeC)°")
+                        return HourlyWeather(time: formattedHour, feelslikeC: "\(hourlyData.feelslikeC)°", feelslikeF: "\(hourlyData.feelslikeF)°", tempC: "\(hourlyData.tempC)°", tempF: "\(hourlyData.tempF)°", humidity: "\(hourlyData.humidity)%")
                     }
                     observer.onNext(hourlyWeather)
                 } else {
@@ -59,78 +63,3 @@ class WeatherDetailViewModel {
         }
     }
 }
-
-
-//class WeatherDetailViewModel {
-//
-//    // 트리거: 변환 시 호출 (Delegate 역할)
-//    struct Input {
-//        let fetchWeatherTrigger = PublishSubject<Void>()
-//    }
-//
-//    // 전달데이터
-//    struct Output {
-//        let location : Observable<SearchModel>
-//        let feelslikeC: Observable<String>
-//        let fellslikeF: Observable<String>
-//        let tempC: Observable<String>
-//        let tempF: Observable<String>
-//        let humidity: Observable<String>
-//    }
-//
-//    private let weatherManager: WebServiceManager
-//    private let userLocationPoint: (Double, Double)
-//    private var disposeBag = DisposeBag()
-//
-//
-//    // 다른 파일에서 인스턴스 생성할 때 실행되는 내용들
-//    init(weatherManager: WebServiceManager, userLocationPoint: (Double, Double)) {
-//        self.weatherManager = WebServiceManager.shared
-//        self.userLocationPoint = userLocationPoint
-//    }
-//
-//    // 날씨 정보 가져오기
-//        func fetchWeather() -> Output {
-//            let location = SearchModel(keyWord: "", fullAddress: "", lat: userLocationPoint.0, lon: userLocationPoint.1, city: "")
-//
-//            let fetchWeatherData = PublishSubject<WeatherAPIModel?>()
-//
-//            // 데이터 가져오기
-//            weatherManager.getForecastWeather(searchModel: location) { data in
-//                fetchWeatherData.onNext(data)
-//                fetchWeatherData.onCompleted()
-//            }
-//
-//            // Output 생성
-//            let output = Output(
-//                location: Observable.just(location),
-//                feelslikeC: fetchWeatherData
-//                    .map { data in
-//                        guard let feelslikeC = data?.current?.feelslikeC else { return "" }
-//                        return "\(feelslikeC)°"
-//                    },
-//                fellslikeF: fetchWeatherData
-//                    .map { data in
-//                        guard let feelslikeF = data?.current?.feelslikeF else { return "" }
-//                        return "\(feelslikeF)°"
-//                    },
-//                tempC: fetchWeatherData
-//                    .map { data in
-//                        guard let tempC = data?.current?.tempC else { return "" }
-//                        return "\(tempC)°"
-//                    },
-//                tempF: fetchWeatherData
-//                    .map { data in
-//                        guard let tempF = data?.current?.tempF else { return "" }
-//                        return "\(tempF)°"
-//                    },
-//                humidity: fetchWeatherData
-//                    .map { data in
-//                        guard let humidity = data?.current?.humidity else { return "" }
-//                        return "\(humidity)%"
-//                    }
-//            )
-//
-//            return output
-//        }
-//}

@@ -6,8 +6,14 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 class TodayTimeWeatherCollectionView: UICollectionView, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    
+    private var viewModel: WeatherDetailViewModel?
+    private var disposeBag = DisposeBag()
+    private var hourlyWeatherData: [WeatherDetailViewModel.HourlyWeather] = []
     
     var weatherIconTestNames: [String] = ["rainy"]
     var weatherIconTestData: [UIImage] = []
@@ -20,7 +26,9 @@ class TodayTimeWeatherCollectionView: UICollectionView, UICollectionViewDelegate
 //        return layer
 //    }()
     
-    init() {
+    init(viewModel: WeatherDetailViewModel) {
+        self.viewModel = viewModel
+        
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         super.init(frame: .zero, collectionViewLayout: layout)
@@ -33,6 +41,8 @@ class TodayTimeWeatherCollectionView: UICollectionView, UICollectionViewDelegate
         if let rainyImage = UIImage(named: "rainy") {
             weatherIconTestData = Array(repeating: rainyImage, count: 8)
         }
+        
+        bindViewModel()
         
 //        self.layer.mask = gradientLayer
         
@@ -47,18 +57,66 @@ class TodayTimeWeatherCollectionView: UICollectionView, UICollectionViewDelegate
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - ViewModel 바인딩
+    private func bindViewModel() {
+        viewModel?.fetchHourlyWeather()
+            .subscribe(onNext: { [weak self] hourlyWeather in
+                let now = Calendar.current.component(.hour, from: Date())
+                var shouldIncludeNextDay = false
+//                var shouldUpdateTomorrow = false
+                
+                if let lastHour = hourlyWeather.last?.time, lastHour == "21시" {
+                    shouldIncludeNextDay = true
+//                    shouldUpdateTomorrow = true
+                }
+                
+                self?.hourlyWeatherData = hourlyWeather.filter { hourlyWeather in
+                    guard let hour = Int(hourlyWeather.time.replacingOccurrences(of: "시", with: "")) else {
+                        return false
+                    }
+                    
+                    // 현재 시간부터 먼저 선택
+                    if hour == now {
+                        return true
+                    }
+                    
+                    // 3의 배수 시간만 선택
+                    if hour % 3 == 0 {
+                        return true
+                    }
+                    
+                    // 다음 날의 데이터가 필요한 경우 0시부터의 값을 반환
+                    if shouldIncludeNextDay && hour == 0 {
+                        return true
+                    }
+                    
+                    return false
+                }
+                self?.reloadData()
+                self?.updateCollectionViewSize()
+
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    // MARK: - Collectionview 프로토콜
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 8
+        return hourlyWeatherData.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell  = collectionView.dequeueReusableCell(withReuseIdentifier: SecondLeftCollectionViewCell.identifier, for: indexPath) as! SecondLeftCollectionViewCell
         
-        cell.celsiusLabel.text = "\(indexPath.item * 5)°"
+        let hourlyWeather = hourlyWeatherData[indexPath.item]
+        cell.celsiusLabel.text = hourlyWeather.tempC
+        cell.timeLabel.text = hourlyWeather.time
         
-        let hour = (indexPath.item * 3) % 24
-        cell.timeLabel.text = "\(hour)시"
+        
+//        cell.celsiusLabel.text = "\(indexPath.item * 5)°"
+//        
+//        let hour = (indexPath.item * 3) % 24
+//        cell.timeLabel.text = "\(hour)시"
         
         if indexPath.item < weatherIconTestData.count {
             cell.weatherIcon.image = weatherIconTestData[indexPath.item]
@@ -66,7 +124,7 @@ class TodayTimeWeatherCollectionView: UICollectionView, UICollectionViewDelegate
         }
         
         if indexPath.item == 0 {
-            cell.timeLabel.text = "오늘"
+            cell.timeLabel.text = "지금"
             cell.timeLabel.textColor = .myblack
             cell.timeLabel.font = UIFont.systemFont(ofSize: 12, weight: .regular)
             cell.celsiusLabel.font = UIFont.systemFont(ofSize: 20, weight: .regular)
@@ -85,4 +143,15 @@ class TodayTimeWeatherCollectionView: UICollectionView, UICollectionViewDelegate
         return CGSize(width: width, height: height)
     }
     
+    private func updateCollectionViewSize() {
+        let itemCount = hourlyWeatherData.count
+        let itemWidth: CGFloat = 40
+        let totalWidth = ( itemWidth + 10 ) * CGFloat(itemCount)
+        
+        self.snp.updateConstraints { make in
+            make.width.equalTo(totalWidth)
+            make.height.equalTo(152)
+            make.top.leading.bottom.equalToSuperview()
+        }
+    }
 }

@@ -145,14 +145,14 @@ class WeatherDetailView: UIView {
         image.image =  UIImage(named: "bottomTomorrow")
         return image
     }()
-    let secondLeftCollectionView = TodayTimeWeatherCollectionView()
+    lazy var secondLeftCollectionView = TodayTimeWeatherCollectionView(viewModel: weatherDetailViewModel)
     let secondRightCollectionView = TomorrowTimeWeatherCollectionView()
     
     // 주간 날씨
     let weekCollectionView = WeekCollectionView()
     
     // 습도
-    let humidityCollectionView = HumidityCollectionView()
+    lazy var humidityCollectionView = HumidityCollectionView(viewModel: weatherDetailViewModel)
     
     
     // MARK: - override
@@ -265,11 +265,11 @@ class WeatherDetailView: UIView {
             make.trailing.equalToSuperview().inset(5)
             make.height.equalTo(152)
         }
-        secondLeftCollectionView.snp.makeConstraints { make in
-            make.top.leading.bottom.equalToSuperview()
-            make.height.equalTo(152)
-            make.width.equalTo(393)
-        }
+//        secondLeftCollectionView.snp.makeConstraints { make in
+//            make.top.leading.bottom.equalToSuperview()
+//            make.height.equalTo(152)
+//            make.width.equalTo(393)
+//        }
         bottomTomorrowImageView.snp.makeConstraints { make in
             make.top.bottom.equalToSuperview()
             make.width.equalTo(29)
