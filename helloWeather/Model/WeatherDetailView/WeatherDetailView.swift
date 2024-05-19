@@ -112,6 +112,8 @@ class WeatherDetailView: UIView {
         return image
     }()
     
+    // MARK: -
+    let weatherDetailViewModel = WeatherDetailViewModel(weatherManager: WebServiceManager.shared, userLocationPoint: (33, 104))
     // MARK: - CollectionView
     // 체감온도 stack
     let topScrollView: UIScrollView = {
@@ -126,7 +128,8 @@ class WeatherDetailView: UIView {
         image.image =  UIImage(named: "tomorrow")
         return image
     }()
-    let firstLeftCollectionView = TodayTimeCelsiusCollectionView()
+    
+    lazy var firstLeftCollectionView = TodayTimeCelsiusCollectionView(viewModel: weatherDetailViewModel)
     let firstRightCollectionView = TomorrowTimeCelsiusCollectionView()
     
     // 날씨 stack
@@ -236,11 +239,10 @@ class WeatherDetailView: UIView {
             make.trailing.equalToSuperview().inset(5)
             make.height.equalTo(119)
         }
-        firstLeftCollectionView.snp.makeConstraints { make in
-            make.top.leading.bottom.equalToSuperview()
-            make.height.equalTo(119)
-            make.width.equalTo(393)
-        }
+//        firstLeftCollectionView.snp.makeConstraints { make in
+//            make.top.leading.bottom.equalToSuperview()
+//            make.height.equalTo(119)
+//        }
         topTomorrowImageView.snp.makeConstraints { make in
             make.top.bottom.equalToSuperview()
             make.width.equalTo(28)
