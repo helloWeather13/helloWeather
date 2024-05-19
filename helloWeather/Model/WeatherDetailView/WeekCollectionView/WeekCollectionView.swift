@@ -68,10 +68,10 @@ class WeekCollectionView: UICollectionView, UICollectionViewDelegate, UICollecti
         let cell  = collectionView.dequeueReusableCell(withReuseIdentifier: WeekCollectionViewCell.identifier, for: indexPath) as! WeekCollectionViewCell
         
         let dailyWeather = dailyWeatherData[indexPath.item]
-//        cell.weekLabel.text = dailyWeather.
+        cell.weekLabel.text = dailyWeather.dayOfWeek
         cell.dateLabel.text = dailyWeather.date
-        cell.maxCelsiusLabel.text = dailyWeather.maxtempC
-        cell.minCelsiusLabel.text = dailyWeather.mintempC
+        cell.maxCelsiusLabel.text = dailyWeather.mintempC
+        cell.minCelsiusLabel.text = dailyWeather.maxtempC
         
 //        cell.weekLabel.text = weekTest[indexPath.item]
 //        cell.dateLabel.text = dateTest[indexPath.item]
@@ -86,6 +86,7 @@ class WeekCollectionView: UICollectionView, UICollectionViewDelegate, UICollecti
         
         if indexPath.item == 0 {
             cell.weekLabel.textColor = .myblack
+            cell.weekLabel.text = "오늘"
             cell.weekLabel.font = UIFont.systemFont(ofSize: 11, weight: .medium)
             cell.dateLabel.textColor = .myblack
             cell.dateLabel.font = UIFont.systemFont(ofSize: 10, weight: .medium)
@@ -100,6 +101,11 @@ class WeekCollectionView: UICollectionView, UICollectionViewDelegate, UICollecti
             cell.minCelsiusLabel.font = UIFont.systemFont(ofSize: 10, weight: .regular)
             cell.maxCelsiusLabel.textColor = .mygray
             cell.maxCelsiusLabel.font = UIFont.systemFont(ofSize: 10, weight: .regular)
+        }
+        
+        if cell.weekLabel.text == "토" || cell.weekLabel.text == "일" {
+            cell.weekLabel.textColor = .myred
+            cell.dateLabel.textColor = .myred
         }
         
 //        if weekTest[indexPath.item] == "토" || weekTest[indexPath.item] == "일" {

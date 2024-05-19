@@ -35,6 +35,7 @@ class WeatherDetailViewModel {
     // 일일 날씨 정보(요일, 날짜, 온도)
     struct DailyWeather {
         let date: String // 날짜
+        let dayOfWeek: String
         let maxtempC: String // 최고온도 (Celsius)
         let maxtempF: String
         let mintempC: String // 최저온도 (Celsius)
@@ -88,16 +89,27 @@ class WeatherDetailViewModel {
                     // 날짜 형식을 "yyyy-MM-dd"에서 "MM.dd"로 변경하여 월과 일만 표시
                     let dateFormatter = DateFormatter()
                     dateFormatter.dateFormat = "yyyy-MM-dd"
+                    
                     if let date = dateFormatter.date(from: forecastDay.date) {
-                        dateFormatter.dateFormat = "MM.dd"
-                        var formattedDate = dateFormatter.string(from: date)
+                        let calendar = Calendar.current
+                        let dateFormatterForDate = DateFormatter()
+//                        dateFormatterForDate.locale = Locale(identifier: "ko_KR")
+                        dateFormatterForDate.dateFormat = "MM.dd" // 날짜만 표시
+                        
+                        let dateFormatterForDay = DateFormatter()
+//                        dateFormatterForDay.locale = Locale(identifier: "ko_KR")
+                        dateFormatterForDay.dateFormat = "E" // 요일만 표시
+                        
+                        var formattedDate = dateFormatterForDate.string(from: date)
+                        let formattedDay = dateFormatterForDay.string(from: date)
                         
                         if formattedDate.hasPrefix("0") {
                             formattedDate = String(formattedDate.dropFirst())
                         }
                         
                         return DailyWeather(
-                            date: formattedDate,
+                            date: formattedDate, 
+                            dayOfWeek: formattedDay,
                             maxtempC: "\(forecastDay.day.maxtempC)°",
                             maxtempF: "\(forecastDay.day.maxtempF)°",
                             mintempC: "\(forecastDay.day.mintempC)°",
@@ -109,7 +121,8 @@ class WeatherDetailViewModel {
                     }
                     // 오류가 발생할 경우 빈 문자열 반환
                     return DailyWeather(
-                        date: "",
+                        date: "", 
+                        dayOfWeek: "",
                         maxtempC: "",
                         maxtempF: "",
                         mintempC: "",
