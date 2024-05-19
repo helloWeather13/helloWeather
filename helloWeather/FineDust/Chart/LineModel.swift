@@ -71,7 +71,7 @@ public struct Line2: View {
                 .rotation3DEffect(.degrees(180), axis: (x: 0, y: 1, z: 0))
                 //.animation(nil) // 애니메이션 중첩 방지
                 .onAppear {
-                    withAnimation(Animation.easeOut(duration: 1.2).delay(Double(self.index) * 0.4)) {
+                    withAnimation(Animation.easeOut(duration: 10.6).delay(Double(self.index) * 0.4)) {
                         self.showFull = true
                     }
                 }
@@ -167,7 +167,7 @@ public struct Line3: View {
                 .rotation3DEffect(.degrees(180), axis: (x: 0, y: 1, z: 0))
                 //.animation(nil) // 애니메이션 중첩 방지
                 .onAppear {
-                    withAnimation(Animation.easeOut(duration: 1.2).delay(Double(self.index) * 0.4)) {
+                    withAnimation(Animation.easeOut(duration: 10.6).delay(Double(self.index) * 0.4)) {
                         self.showFull = true
                     }
                 }
@@ -191,10 +191,11 @@ public struct Line3: View {
     }
 }
 
-struct Line_Previews: PreviewProvider {
-    static var previews: some View {
-        GeometryReader { geometry in
-            Line2(data: ChartData(points: [12, -230, 10, 54]), frame: .constant(geometry.frame(in: .local)), touchLocation: .constant(CGPoint(x: 100, y: 12)), showIndicator: .constant(true), minDataValue: .constant(nil), maxDataValue: .constant(nil))
-        }.frame(width: 320, height: 160)
-    }
-}
+//struct Line_Previews: PreviewProvider {
+//    static var previews: some View {
+//        GeometryReader { geometry in
+//            Line2(data: ChartData(points: [12, -230, 10, 54]), frame: .constant(geometry.frame(in: .local)), touchLocation: .constant(CGPoint(x: 100, y: 12)), showIndicator: .constant(true), minDataValue: .constant(nil), maxDataValue: .constant(nil))
+//        }.frame(width: 320, height: 160)
+//    }
+//}
+

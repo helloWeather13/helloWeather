@@ -338,13 +338,13 @@ public struct MagnifierRect: View {
 //                .foregroundColor(self.colorScheme == .dark ? Color.white : Color.black)
             if (self.colorScheme == .dark ){
                 Rectangle()
-                        .frame(width: 6, height: 280)
+                        .frame(width: 16, height: 280)
                         .foregroundColor(.pink)
                         .shadow(color: Color.gray, radius: 12, x: 0, y: 6)
                         .blendMode(.multiply)
             }else{
                 Rectangle()
-                        .frame(width: 6, height: 280)
+                        .frame(width: 16, height: 280)
                         .foregroundColor(.pink)
                         .shadow(color: Color.gray, radius: 12, x: 0, y: 6)
                         .blendMode(.multiply)
