@@ -113,7 +113,7 @@ class WeatherDetailView: UIView {
     }()
     
     // MARK: -
-    let weatherDetailViewModel = WeatherDetailViewModel(weatherManager: WebServiceManager.shared, userLocationPoint: (-118, 34))
+    let weatherDetailViewModel = WeatherDetailViewModel(weatherManager: WebServiceManager.shared, userLocationPoint: (-73.935242, 40.730610))
     // MARK: - CollectionView
     // 체감온도 stack
     let topScrollView: UIScrollView = {

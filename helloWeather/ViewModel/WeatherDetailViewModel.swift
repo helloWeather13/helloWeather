@@ -66,7 +66,13 @@ class WeatherDetailViewModel {
                     let hourlyWeather = hourlyData.enumerated().map { index, hourlyData in
                         let hour = (currentHour + index) % 24 // 현재 시간에 인덱스를 더한 값 (24시간 기준)
                         let formattedHour = "\(hour)시"
-                        return HourlyWeather(time: formattedHour, feelslikeC: "\(hourlyData.feelslikeC)°", feelslikeF: "\(hourlyData.feelslikeF)°", tempC: "\(hourlyData.tempC)°", tempF: "\(hourlyData.tempF)°", humidity: "\(hourlyData.humidity)%")
+                        // 온도 정보에서 소수점 뒤의 수를 제외하고 반환
+                        let feelslikeCTemperature = Int(hourlyData.feelslikeC)
+                        let feelslikeFTemperature = Int(hourlyData.feelslikeF)
+                        let tempCTemperature = Int(hourlyData.tempC)
+                        let tempFTemperature = Int(hourlyData.tempF)
+                        
+                        return HourlyWeather(time: formattedHour, feelslikeC: "\(feelslikeCTemperature)°", feelslikeF: "\(feelslikeFTemperature)°", tempC: "\(tempCTemperature)°", tempF: "\(tempFTemperature)°", humidity: "\(hourlyData.humidity)%")
                     }
                     observer.onNext(hourlyWeather)
                 } else {
@@ -93,11 +99,11 @@ class WeatherDetailViewModel {
                     if let date = dateFormatter.date(from: forecastDay.date) {
                         let calendar = Calendar.current
                         let dateFormatterForDate = DateFormatter()
-//                        dateFormatterForDate.locale = Locale(identifier: "ko_KR")
+                        dateFormatterForDate.locale = Locale(identifier: "ko_KR")
                         dateFormatterForDate.dateFormat = "MM.dd" // 날짜만 표시
                         
                         let dateFormatterForDay = DateFormatter()
-//                        dateFormatterForDay.locale = Locale(identifier: "ko_KR")
+                        dateFormatterForDay.locale = Locale(identifier: "ko_KR")
                         dateFormatterForDay.dateFormat = "E" // 요일만 표시
                         
                         var formattedDate = dateFormatterForDate.string(from: date)
@@ -108,7 +114,7 @@ class WeatherDetailViewModel {
                         }
                         
                         return DailyWeather(
-                            date: formattedDate, 
+                            date: formattedDate,
                             dayOfWeek: formattedDay,
                             maxtempC: "\(forecastDay.day.maxtempC)°",
                             maxtempF: "\(forecastDay.day.maxtempF)°",
@@ -121,7 +127,7 @@ class WeatherDetailViewModel {
                     }
                     // 오류가 발생할 경우 빈 문자열 반환
                     return DailyWeather(
-                        date: "", 
+                        date: "",
                         dayOfWeek: "",
                         maxtempC: "",
                         maxtempF: "",
