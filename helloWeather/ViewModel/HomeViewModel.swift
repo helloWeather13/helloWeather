@@ -45,6 +45,7 @@ class HomeViewModel: NSObject, CLLocationManagerDelegate {
             addressOnCompleted(userLocationAddress)
         }
     }
+    
     var addressOnCompleted: ((String) -> ()) = { _ in }
     
     var userLocationPoint: (Double, Double) = (0, 0) {

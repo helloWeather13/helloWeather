@@ -23,7 +23,7 @@ public struct ChartView: View {
     public init(data: [Double],
                 title: String? = nil,
                 legend: String? = nil,
-                style: ChartStyle2 = Styles2.lineChartStyleOne,
+                style: ChartStyle2 = Styles2.lineChartStyleOne2,
                 valueSpecifier: String? = "%.1f",
                 legendSpecifier: String? = "%.1f") {
         
@@ -54,8 +54,9 @@ public struct ChartView: View {
             VStack(alignment: .leading, spacing: 8) {
                 ZStack{
                     GeometryReader{ reader in
+                        //배경색까
                         Rectangle()
-                            .foregroundColor(self.colorScheme == .dark ? self.darkModeStyle.backgroundColor : self.style.backgroundColor)
+                            .foregroundColor(Color.clear)
                         if(self.showLegend){
                         }
                         Line2(data: self.data,
@@ -153,47 +154,70 @@ public struct ChartView2: View {
             VStack(alignment: .leading, spacing: 8) {
                 ZStack{
                     GeometryReader{ reader in
+                        //줄 선
+                        MagnifierRect(currentNumber: self.$currentDataNumber, valueSpecifier: self.valueSpecifier)
+                            .opacity(self.opacity)
+                            .offset(x: self.dragLocation.x - geometry.frame(in: .local).size.width/2, y: 36)
                         Rectangle()
                             .foregroundColor(self.colorScheme == .dark ? self.darkModeStyle.backgroundColor : self.style.backgroundColor)
                         if(self.showLegend){
                         }
-                        
+                        Line3(data: self.data,
+                              frame: .constant(CGRect(x: 0, y: 0, width: reader.frame(in: .local).width - 30, height: reader.frame(in: .local).height + 25)),
+                              touchLocation: self.$indicatorLocation,
+                              showIndicator: self.$hideHorizontalLines,
+                              minDataValue: .constant(nil),
+                              maxDataValue: .constant(nil),
+                              showBackground: false,
+                              gradient: self.style.gradientColor
+                        )
+                        .offset(x: 30, y: 0)
+                        .onAppear(){
+                            self.showLegend = true
+                        }
+                        .onDisappear(){
+                            self.showLegend = false
+                        }
                     }
                     .frame(width: geometry.frame(in: .local).size.width, height: 240)
                     .offset(x: 0, y: 40)
-                    MagnifierRect(currentNumber: self.$currentDataNumber, valueSpecifier: self.valueSpecifier)
-                        .opacity(self.opacity)
-                        .offset(x: self.dragLocation.x - geometry.frame(in: .local).size.width/2, y: 36)
                 }
                 .frame(width: geometry.frame(in: .local).size.width, height: 240)
-                .gesture(DragGesture()
-                    .onChanged({ value in
-                        let lowerBound = geometry.frame(in: .local).size.width * 0.2
-                        let upperBound = geometry.frame(in: .local).size.width * 0.8
-                        if value.location.x >= lowerBound && value.location.x <= upperBound {
-                            self.dragLocation = value.location
-                            self.indicatorLocation = CGPoint(x: max(value.location.x - 30, 0), y: 32)
-                            self.opacity = 1
-                            self.closestPoint = self.getClosestDataPoint(toPoint: value.location, width: geometry.frame(in: .local).size.width - 30, height: 240)
-                            self.hideHorizontalLines = true
-                        }                })
-                        .onEnded({ value in
-                            self.opacity = 0
-                            self.hideHorizontalLines = false
-                        })
-                )
+//                .gesture(DragGesture()
+//                    .onChanged({ value in
+//                        self.dragLocation = value.location
+//                        self.indicatorLocation = CGPoint(x: max(value.location.x-30,0), y: 32)
+//                        self.opacity = 1
+//                        self.closestPoint = self.getClosestDataPoint(toPoint: value.location, width: geometry.frame(in: .local).size.width-30, height: 240)
+//                        self.hideHorizontalLines = true
+//                    })
+//                        .onEnded({ value in
+//                            self.opacity = 0
+//                            self.hideHorizontalLines = false
+//                        })
+//                )
             }
         }
     }
     
 }
 
+struct ContentViewTest: View {
+    var body: some View {
+        ZStack{
+            ChartView2(data: [300.0, 305.0, 290.0, 295.0, 310.0, 315.0, 320.0, 325.0, 330.0, 335.0, 340.0, 345.0, 350.0,300.0, 305.0, 290.0, 295.0, 310.0, 315.0, 320.0, 325.0, 330.0, 335.0, 340.0, 345.0, 350.0,300.0, 305.0, 290.0, 295.0, 310.0, 315.0, 320.0, 325.0, 330.0, 335.0, 340.0, 345.0, 350.0,300.0, 305.0, 290.0, 295.0, 310.0, 315.0, 320.0, 325.0, 330.0, 335.0, 340.0, 345.0, 350.0,300.0, 305.0, 290.0, 295.0, 310.0, 315.0, 320.0, 325.0, 330.0, 335.0, 340.0, 345.0, 350.0,300.0, 305.0, 290.0, 295.0, 310.0, 315.0, 320.0, 325.0, 330.0, 335.0, 340.0, 345.0, 350.0,300.0, 305.0, 290.0, 295.0, 310.0, 315.0, 320.0, 325.0, 330.0, 335.0, 340.0, 345.0, 350.0,300.0, 305.0, 290.0, 295.0, 310.0, 315.0, 320.0, 325.0, 330.0, 335.0, 340.0, 345.0, 350.0,300.0, 305.0, 290.0, 295.0, 310.0, 315.0, 320.0, 325.0, 330.0, 335.0, 340.0, 345.0, 350.0], title: "Second Chart", style: Styles2.lineChartStyleOne2)
+                .opacity(0.5)
+            ChartView(data: [282.502, 284.495, 283.51, 285.019, 285.197, 286.118, 288.737, 288.455, 289.391, 287.691, 285.878, 286.46, 286.252, 284.652, 284.129, 284.188,300.0, 305.0, 290.0, 295.0, 310.0, 315.0, 320.0, 325.0, 330.0, 335.0, 340.0, 345.0, 350.0,300.0, 305.0, 290.0, 295.0, 310.0, 315.0, 320.0, 325.0, 330.0, 335.0, 340.0, 345.0, 350.0,300.0, 305.0, 290.0, 295.0, 310.0, 315.0, 320.0, 325.0, 330.0, 335.0, 340.0, 345.0, 350.0,300.0, 305.0, 290.0, 295.0, 310.0, 315.0, 320.0, 325.0, 330.0, 335.0, 340.0, 345.0, 350.0,300.0, 305.0, 290.0, 295.0, 310.0, 315.0, 320.0, 325.0, 330.0, 335.0, 340.0, 345.0, 350.0,300.0, 305.0, 290.0, 295.0, 310.0, 315.0, 320.0, 325.0, 330.0, 335.0, 340.0, 345.0, 350.0,300.0, 305.0, 290.0, 295.0, 310.0, 315.0, 320.0, 325.0, 330.0, 335.0, 340.0, 345.0, 350.0,300.0, 305.0, 290.0, 295.0, 310.0, 315.0, 320.0, 325.0, 330.0, 335.0, 340.0, 345.0, 350.0], title: "Full chart", style: Styles2.lineChartStyleOne)
+        }
+    }
+}
+
+
 struct LineView_Previews: PreviewProvider {
     static var previews: some View {
-        Group {
-            ChartView(data: [282.502, 284.495, 283.51, 285.019, 285.197, 286.118, 288.737, 288.455, 289.391, 287.691, 285.878, 286.46, 286.252, 284.652, 284.129, 284.188], title: "Full chart", style: Styles2.lineChartStyleOne)
-            
-            
+        ScrollView(.horizontal){
+            ContentViewTest()
+                .frame(width: 800)
         }
     }
 }

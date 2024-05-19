@@ -23,7 +23,6 @@ struct FineListView: View {
                     .toggleStyle(CustomToggleStyle(viewModel: viewModel))
                     .opacity(0.7)
             }
-            
             HStack {
                 Spacer()
                 VStack {

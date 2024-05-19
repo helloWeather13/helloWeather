@@ -359,7 +359,6 @@
 		9A8DF86F2BF6E4D2009F0DAB /* FineList */ = {
 			isa = PBXGroup;
 			children = (
-				9A5ACD932BF7763600DE586F /* FineListViewModel.swift */,
 				9A8DF8702BF6E51E009F0DAB /* FineListView.swift */,
 				9A8DF8722BF70A99009F0DAB /* ValueListView.swift */,
 			);
@@ -372,6 +371,7 @@
 				9A5ACD972BF7B37C00DE586F /* FineDustUtil.swift */,
 				9ABC1E252BF35C34006A626C /* FineDustModel.swift */,
 				9ABC1E202BF34BDC006A626C /* FineDustView.swift */,
+				9A5ACD932BF7763600DE586F /* FineListViewModel.swift */,
 				9A5ACD992BF7B3FE00DE586F /* FineDustModels */,
 				9A8DF86F2BF6E4D2009F0DAB /* FineList */,
 				9A8DF86A2BF6C48E009F0DAB /* Chat */,

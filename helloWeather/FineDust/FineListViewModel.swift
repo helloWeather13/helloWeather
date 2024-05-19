@@ -75,6 +75,27 @@ class FineListViewModel: ObservableObject {
             }
             DispatchQueue.main.async {
                 let forecastDays = data.forecast.forecastday.prefix(4)
+                print(data.current)
+                print()
+                //print(data.forecast.forecastday[0].airQuality)
+                print()
+                //print(data.forecast.forecastday[0].day)
+                print()
+                //print(data.forecast.forecastday[0].astro)
+                print()
+                //print(data.forecast.forecastday[0].date)
+                print()
+                print(data.forecast.forecastday[0].hour.count)
+                print()
+                if let forecast = data.forecast.forecastday.first {
+                    for hour in forecast.hour {
+                        print(hour)
+                        print()
+                    }
+                } else {
+                    print("No forecast data available")
+                }
+                
                 
                 if let airQuality1 = forecastDays[0].day.airQuality {
                     //print(forecastDays[0].day)
@@ -88,6 +109,7 @@ class FineListViewModel: ObservableObject {
                 }
                 
                 if let airQuality2 = forecastDays[1].day.airQuality {
+                    //print(forecastDays[1].day)
                     self.micro2 = formatToThreeDecimalPlaces(value: airQuality2.fine)
                     self.fine2 = formatToThreeDecimalPlaces(value: airQuality2.micro)
                     self.faceType2 = self.toggle ? self.getFaceType(for: airQuality2.micro ?? 0.0) : self.getFaceType(for: airQuality2.fine ?? 0.0)

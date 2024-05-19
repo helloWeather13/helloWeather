@@ -157,7 +157,7 @@ extension Path {
         }
         return path
     }
-
+    
     static func linePathWithPoints(points: [Double], step: CGPoint) -> Path {
         var path = Path()
         if points.count < 2 {
@@ -172,7 +172,7 @@ extension Path {
         }
         return path
     }
-
+    
     static func quadClosedCurvedPathWithPoints(points: [Double], step: CGPoint, globalOffset: Double? = nil) -> Path {
         var path = Path()
         if points.count < 2 {
@@ -192,7 +192,7 @@ extension Path {
         path.addLine(to: CGPoint(x: 0, y: 0))
         return path
     }
-
+    
     static func closedLinePathWithPoints(points: [Double], step: CGPoint) -> Path {
         var path = Path()
         if points.count < 2 {
@@ -215,7 +215,7 @@ extension CGPoint {
     static func midPointForPoints(p1: CGPoint, p2: CGPoint) -> CGPoint {
         return CGPoint(x: (p1.x + p2.x) / 2, y: (p1.y + p2.y) / 2)
     }
-
+    
     static func controlPointForPoints(p1: CGPoint, p2: CGPoint) -> CGPoint {
         var controlPoint = CGPoint.midPointForPoints(p1: p1, p2: p2)
         let diffY = abs(p2.y - controlPoint.y)
@@ -234,20 +234,28 @@ struct IndicatorPoint: View {
     var body: some View {
         ZStack{
             Circle()
-                .fill(Color.green)
+                .fill(Color.white)
             Circle()
-                .stroke(Color.white, style: StrokeStyle(lineWidth: 4))
+                .stroke(Color.black, style: StrokeStyle(lineWidth: 1))
         }
-        .frame(width: 14, height: 14)
-        .shadow(color: Color.green, radius: 6, x: 0, y: 6)
+        .frame(width: 7, height: 7)
+        .shadow(color: Color.white, radius: 6, x: 0, y: 6)
     }
 }
 
 public struct Styles2 {
     public static let lineChartStyleOne = ChartStyle2(
         backgroundColor: Color.white,
-        accentColor: Color.orange,
-        secondGradientColor: Color.orange,
+        accentColor: Color.blue,
+        secondGradientColor: Color.red,
+        textColor: Color.black,
+        legendTextColor: Color.gray,
+        dropShadowColor: Color.gray)
+    
+    public static let lineChartStyleOne2 = ChartStyle2(
+        backgroundColor: Color.white,
+        accentColor: Color.yellow,
+        secondGradientColor: Color.pink,
         textColor: Color.black,
         legendTextColor: Color.gray,
         dropShadowColor: Color.gray)
@@ -323,20 +331,23 @@ public struct MagnifierRect: View {
     @Environment(\.colorScheme) var colorScheme: ColorScheme
     public var body: some View {
         ZStack{
-            Text("\(self.currentNumber, specifier: valueSpecifier)")
-                .font(.system(size: 18, weight: .bold))
-                .offset(x: 0, y:-110)
-                .foregroundColor(self.colorScheme == .dark ? Color.white : Color.black)
+            //Text("\(self.currentNumber, specifier: valueSpecifier)")
+//            Text("좋음")
+//                .font(.system(size: 18, weight: .bold))
+//                .offset(x: 0, y:-110)
+//                .foregroundColor(self.colorScheme == .dark ? Color.white : Color.black)
             if (self.colorScheme == .dark ){
-                RoundedRectangle(cornerRadius: 16)
-                    .stroke(Color.white, lineWidth: self.colorScheme == .dark ? 2 : 0)
-                    .frame(width: 60, height: 260)
+                Rectangle()
+                        .frame(width: 1, height: 280)
+                        .foregroundColor(.black)
+                        .shadow(color: Color.gray, radius: 12, x: 0, y: 6)
+                        .blendMode(.multiply)
             }else{
-                RoundedRectangle(cornerRadius: 16)
-                    .frame(width: 60, height: 280)
-                    .foregroundColor(Color.white)
-                    .shadow(color: Colors.LegendText, radius: 12, x: 0, y: 6 )
-                    .blendMode(.multiply)
+                Rectangle()
+                        .frame(width: 1, height: 280)
+                        .foregroundColor(.black)
+                        .shadow(color: Color.gray, radius: 12, x: 0, y: 6)
+                        .blendMode(.multiply)
             }
         }
         .offset(x: 0, y: -15)

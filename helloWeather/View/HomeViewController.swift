@@ -104,9 +104,15 @@ class HomeViewController: UIViewController {
     }
 
     func setupNaviBar() {
+        
+        
         homeViewModel.addressOnCompleted = { [unowned self] address in
             self.navigationItem.title = address
         }
+        
+        
+        
+        
         let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonTapped))
         addButton.tintColor = .black
         navigationItem.rightBarButtonItem = addButton
