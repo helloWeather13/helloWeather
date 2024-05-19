@@ -172,12 +172,10 @@ struct LineChartView: View {
                             Spacer()
                         }
                     }
-//                    .contentShape(Rectangle()) // Makes the entire area tappable
-//                    .gesture(DragGesture(minimumDistance: 0)
-//                        .onChanged { _ in } // Handle touch events without allowing scroll
-//                    )
-                    
+
                 }
+                //스크롤은 여기였구요
+                .scrollDisabled(true)
                 
                 
             }

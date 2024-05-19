@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 //MARK: - 주말에 해당하는 요일을 반환 해줍니다.
 func formattedDateWithWeekdays(date: Date) -> String {
@@ -61,4 +62,55 @@ func formatToThreeDecimalPlaces(value: Double?) -> String {
     formatter.minimumFractionDigits = 3
     
     return formatter.string(from: NSNumber(value: value)) ?? "\(value)"
+}
+
+struct ContentView100: View {
+    @State private var isScrollDisabled = true
+
+    var body: some View {
+        ZStack {
+            // Background ScrollView
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack {
+                    ForEach(0..<50) { index in
+                        Text("Item \(index)")
+                            .padding()
+                            .background(Color.yellow)
+                            .cornerRadius(8)
+                    }
+                }
+                .frame(height: 300)
+            }
+            .scrollDisabled(isScrollDisabled)
+
+            // Foreground View with gesture detection
+            GeometryReader { geometry in
+                Rectangle()
+                    .fill(Color.clear)
+                    .contentShape(Rectangle())
+                    .gesture(
+                        DragGesture()
+                            .onChanged { value in
+                                // Check if the gesture is within the specific area
+                                let touchLocation = value.location
+                                let specificArea = CGRect(x: 0, y: 0, width: geometry.size.width, height: 300)
+                                if specificArea.contains(touchLocation) {
+                                    isScrollDisabled = false
+                                } else {
+                                    isScrollDisabled = true
+                                }
+                            }
+                            .onEnded { _ in
+                                isScrollDisabled = true
+                            }
+                    )
+            }
+        }
+    }
+}
+
+struct ContentView_Previews100: PreviewProvider {
+    static var previews: some View {
+        ContentView100()
+    }
 }

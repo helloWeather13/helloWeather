@@ -79,7 +79,7 @@ public struct ChartView: View {
                     .frame(width: geometry.frame(in: .local).size.width, height: 240)
                     .offset(x: 0, y: 40)
                     MagnifierRect(currentNumber: self.$currentDataNumber, valueSpecifier: self.valueSpecifier)
-                        .opacity(self.opacity)
+                        .opacity(0.5)
                         .offset(x: self.dragLocation.x - geometry.frame(in: .local).size.width/2, y: 36)
                 }
                 .frame(width: geometry.frame(in: .local).size.width, height: 240)
@@ -89,6 +89,7 @@ public struct ChartView: View {
                         self.indicatorLocation = CGPoint(x: max(value.location.x-30,0), y: 32)
                         self.opacity = 1
                         self.closestPoint = self.getClosestDataPoint(toPoint: value.location, width: geometry.frame(in: .local).size.width-30, height: 240)
+                        //closestPoint추가하기
                         self.hideHorizontalLines = true
                     })
                         .onEnded({ value in
@@ -219,6 +220,8 @@ struct LineView_Previews: PreviewProvider {
             ContentViewTest()
                 .frame(width: 800)
         }
+        .scrollDisabled(true)
     }
 }
+
 

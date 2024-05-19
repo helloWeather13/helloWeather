@@ -17,7 +17,7 @@ struct Current: Codable { // 현재 시간 기준
     let feelslikeC, feelslikeF: Double // 현재 체감온도 온도 C 섭씨, F 화씨
     let airQuality: AirQuality // 현재 공기 오염도, 미세먼지 + 초미세먼지만 나옴
     let uv: Double // 자외선
-
+    
     enum CodingKeys: String, CodingKey {
         case lastUpdated = "last_updated"
         case tempC = "temp_c"
@@ -52,14 +52,14 @@ struct Forecastday: Codable { // 하루 기준으로 나오는 정보
     let hour: [Hour] // 하루를 24시간으로 쪼개서 각각의 날씨 정보
     enum CodingKeys: String, CodingKey {
         case date, day, astro, airQuality, hour
-       
+        
     }
 }
 
 // MARK: - Astro
 struct Astro: Codable {
     let sunrise, sunset: String // 일몰, 일출 시간 String
-
+    
     enum CodingKeys: String, CodingKey {
         case sunrise, sunset
     }
@@ -92,7 +92,7 @@ struct Day: Codable {
     let condition: Condition // 날씨 컨디션 : 맑음, 등등
     let airQuality: AirQuality? // 공기 오염도, 미세먼지 + 초미세먼지만 나옴
     let uv: Int // 자외선 수치
-
+    
     enum CodingKeys: String, CodingKey {
         case maxtempC = "maxtemp_c"
         case maxtempF = "maxtemp_f"
@@ -123,8 +123,8 @@ struct Hour: Codable {
     let humidity, cloud: Int // 습도 구름 0-100
     let feelslikeC, feelslikeF: Double // 체감온도 온도 C 섭씨, F 화씨
     let willItRain, chanceOfRain, willItSnow, chanceOfSnow: Int
+    let airQuality: AirQuality?
     let uv: Int
-
     enum CodingKeys: String, CodingKey {
         case time
         case tempC = "temp_c"
@@ -140,7 +140,7 @@ struct Hour: Codable {
         case chanceOfRain = "chance_of_rain"
         case willItSnow = "will_it_snow"
         case chanceOfSnow = "chance_of_snow"
+        case airQuality = "air_quality"
         case uv
     }
 }
-
