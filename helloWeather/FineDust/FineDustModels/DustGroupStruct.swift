@@ -254,8 +254,8 @@ public struct Styles2 {
     
     public static let lineChartStyleOne2 = ChartStyle2(
         backgroundColor: Color.white,
-        accentColor: Color.yellow,
-        secondGradientColor: Color.pink,
+        accentColor: Color.red,
+        secondGradientColor: Color.green,
         textColor: Color.black,
         legendTextColor: Color.gray,
         dropShadowColor: Color.gray)

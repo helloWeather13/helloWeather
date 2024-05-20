@@ -162,7 +162,14 @@ public struct Line3: View {
             self.path
                 .trim(from: 0, to: self.showFull ? 1 : 0)
                 // 간격조절하는 곳
-                .stroke(LinearGradient(gradient: gradient.getGradient(), startPoint: .leading, endPoint: .trailing), style: StrokeStyle(lineWidth: 3, lineJoin: .round, dash: [8, 10]))
+                .stroke(LinearGradient(
+                    gradient: Gradient(stops: [
+                        .init(color: .red, location: 0.0),
+                        .init(color: .yellow, location: 0.25),
+                        .init(color: .green, location: 0.5),
+                        .init(color: .blue, location: 0.75),
+                        .init(color: .purple, location: 1.0)
+                    ]), startPoint: .leading, endPoint: .trailing), style: StrokeStyle(lineWidth: 3, lineJoin: .round, dash: [2, 2]))
                 .rotationEffect(.degrees(180), anchor: .center)
                 .rotation3DEffect(.degrees(180), axis: (x: 0, y: 1, z: 0))
                 //.animation(nil) // 애니메이션 중첩 방지

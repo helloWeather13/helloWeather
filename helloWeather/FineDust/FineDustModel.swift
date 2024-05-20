@@ -16,18 +16,64 @@ struct LineChartView: View {
     var local = "서울시 강남구 역삼동"
     var titleFontSize = 19
     
-    @State private var isTouched: Bool = false
+    @State private var startPosition: CGPoint = .zero
     @State private var scrollOffset: CGFloat = 0.0
+    @State private var chartMove: CGFloat = 0.0
+    @State private var widtdmove: CGPoint = .zero
+    @State private var isOffsetEnabled: Bool = true
+    
+    @State private var isTouched: Bool = false
     @State private var isAnimating = false
+    @State private var currentDataNumber: Double = 0
+    @State private var currentDataNumber2: Double = 0
+
     @StateObject private var fineListViewModel =
     FineListViewModel(
         weatherManager: WebServiceManager.shared,
         userLocationPoint: (37.7749, -122.4194)
     )
-    var chart1 = ChartView2(data:  [300.0, 305.0, 290.0, 295.0, 310.0, 315.0, 320.0, 325.0, 330.0, 335.0, 340.0, 345.0, 350.0,300.0, 305.0, 290.0, 295.0, 310.0, 315.0, 320.0, 325.0, 330.0, 335.0, 340.0, 345.0, 350.0,300.0, 305.0, 290.0, 295.0, 310.0, 315.0, 320.0, 325.0, 330.0, 335.0, 340.0, 345.0, 350.0,300.0, 305.0, 290.0, 295.0, 310.0, 315.0, 320.0, 325.0, 330.0, 335.0, 340.0, 345.0, 350.0,300.0, 305.0, 290.0, 295.0, 310.0, 315.0, 320.0, 325.0, 330.0, 335.0, 340.0, 345.0, 350.0,300.0, 305.0, 290.0, 295.0, 310.0, 315.0, 320.0, 325.0, 330.0, 335.0, 340.0, 345.0, 350.0,300.0, 305.0, 290.0, 295.0, 310.0, 315.0, 320.0, 325.0, 330.0, 335.0, 340.0, 345.0, 350.0,300.0, 305.0, 290.0, 295.0, 310.0, 315.0, 320.0, 325.0, 330.0, 335.0, 340.0, 345.0, 350.0,300.0, 305.0, 290.0, 295.0, 310.0, 315.0, 320.0, 325.0, 330.0, 335.0, 340.0, 345.0, 350.0]
-                            
-                            , title: "Second Chart", style: Styles2.lineChartStyleOne2)
-//    var chart2 =  ChartView(data: [282.502, 284.495, 283.51, 285.019, 285.197, 286.118, 288.737, 288.455, 289.391, 287.691, 285.878, 286.46, 286.252, 284.652, 284.129, 284.188,300.0, 305.0, 290.0, 295.0, 310.0, 315.0, 320.0, 325.0, 330.0, 335.0, 340.0, 345.0, 350.0,300.0, 305.0, 290.0, 295.0, 310.0, 315.0, 320.0, 325.0, 330.0, 335.0, 340.0, 345.0, 350.0,300.0, 305.0, 290.0, 295.0, 310.0, 315.0, 320.0, 325.0, 330.0, 335.0, 340.0, 345.0, 350.0,300.0, 305.0, 290.0, 295.0, 310.0, 315.0, 320.0, 325.0, 330.0, 335.0, 340.0, 345.0, 350.0,300.0, 305.0, 290.0, 295.0, 310.0, 315.0, 320.0, 325.0, 330.0, 335.0, 340.0, 345.0, 350.0,300.0, 305.0, 290.0, 295.0, 310.0, 315.0, 320.0, 325.0, 330.0, 335.0, 340.0, 345.0, 350.0,300.0, 305.0, 290.0, 295.0, 310.0, 315.0, 320.0, 325.0, 330.0, 335.0, 340.0, 345.0, 350.0,300.0, 305.0, 290.0, 295.0, 310.0, 315.0, 320.0, 325.0, 330.0, 335.0, 340.0, 345.0, 350.0], title: "Full chart", style: Styles2.lineChartStyleOne)
+    
+    func moveScroll() {
+        //print(chartMove)
+//        print("scrolloffset \(scrollOffset)")
+//        print(self.widtdmove.x + self.chartMove)
+//        print(chartMove)
+//        
+        
+        if self.chartMove > 30 {
+            if self.scrollOffset > -400 {
+                print("증가")
+                self.scrollOffset -= 8
+            }
+            if self.scrollOffset == -400{
+                print("감소")
+                self.scrollOffset += 8
+            }
+        } else if self.chartMove < -30 {
+            if self.scrollOffset < 0 {
+                print("감소")
+                self.scrollOffset += 8
+            }
+            if self.scrollOffset == 0{
+                print("감소")
+                self.scrollOffset += 8
+            }
+            
+        }
+        
+        
+    }
+    
+    func setStartPosition(in size: CGSize) {
+        self.startPosition = CGPoint(x: size.width / 2, y: size.height / 2)
+    }
+    func enableOffset() {
+        self.isOffsetEnabled = true
+    }
+    
+    func disableOffset() {
+        self.isOffsetEnabled = false
+    }
     
     var body: some View {
         
@@ -43,69 +89,77 @@ struct LineChartView: View {
             .padding(.bottom, 30)
             //미세먼지 채팅
             VStack{
-                //미세먼지 text
-                HStack{
-                    Spacer()
-                    Text("미세먼지")
-                    ForEach(0..<10) { _ in
-                        Spacer()
-                    }
-                }
                 // 미세먼지 chat
                 HStack{
-                    Spacer()
-                    ChatView()
-                        .scaleEffect(isAnimating ? 1.8 : 1.0, anchor: .leading)
-                        .onAppear {
-                            withAnimation(.easeInOut(duration: 1.0)) {
-                                isAnimating = true
-                            }
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                    VStack{
+                        Text("미세먼지")
+                        ChatView(viewModel: fineListViewModel)
+                            .scaleEffect(isAnimating ? 1.4 : 1.0, anchor: .leading)
+                            .onAppear {
                                 withAnimation(.easeInOut(duration: 1.0)) {
-                                    isAnimating = false
+                                    isAnimating = true
+                                }
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                                    withAnimation(.easeInOut(duration: 1.0)) {
+                                        isAnimating = false
+                                    }
                                 }
                             }
-                        }
-                    ForEach(0..<10) { _ in
-                        Spacer()
+                            .padding(.leading, 10)
                     }
-                }
-                // 초미세먼지
-                HStack{
-                    ForEach(0..<10) { _ in
-                        Spacer()
-                    }
-                    Text("초 미세먼지")
                     Spacer()
-                }
-                // 초미세먼지 chat
-                HStack{
-                    ForEach(0..<10) { _ in
-                        Spacer()
-                    }
-                    ChatView2()
-                        .scaleEffect(isAnimating ? 1.8 : 1.0, anchor: .leading)
-                        .onAppear {
-                            withAnimation(.easeInOut(duration: 1.0)) {
-                                isAnimating = true
-                            }
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                    VStack{
+                        Text("초 미세먼지")
+                        ChatView2(viewModel: fineListViewModel)
+                            .scaleEffect(isAnimating ? 1.4 : 1.0, anchor: .trailing)
+                            .onAppear {
                                 withAnimation(.easeInOut(duration: 1.0)) {
-                                    isAnimating = false
+                                    isAnimating = true
+                                }
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                                    withAnimation(.easeInOut(duration: 1.0)) {
+                                        isAnimating = false
+                                    }
                                 }
                             }
-                        }
-                    Spacer()
+                            .padding(.trailing, 10)
+                    }
+                    
                 }
+                
             }
             ZStack{
                 ScrollView(.horizontal, showsIndicators: false){
                     ZStack{
                         VStack{
-                            ContentViewTest()
-                            .frame(width: 800,height: 300, alignment: .center)
-                           
+                            ZStack {
+                                GeometryReader { geometry in
+                                    ScrollView(.horizontal, showsIndicators: false) {
+                                        VStack{
+                                            ZStack {
+                                                ChartView2(data: fineListViewModel.returnfine(), title: "Second Chart", style: Styles2.lineChartStyleOne2, currentDataNumber: $currentDataNumber)
+                                                    .opacity(0.5)
+                                                    .frame(width: geometry.size.width-30, height: geometry.size.height)
+                                                
+                                                ChartView(data: fineListViewModel.returnmicro(), title: "Full chart", style: Styles2.lineChartStyleOne, move: $chartMove, widthmove: $widtdmove, currentDataNumber: $currentDataNumber2)
+                                                    .frame(width: geometry.size.width-30, height: geometry.size.height)
+                                            }
+                                            .offset(x: isOffsetEnabled ? self.scrollOffset : 0) // Apply scroll offset
+                                        }
+                                    }
+                                    .onAppear {
+                                        self.setStartPosition(in: geometry.size)
+                                        self.moveScroll()
+                                    }
+                                    .scrollDisabled(true)
+                                    
+                                }
+                            }
+                            .onChange(of: chartMove) {
+                                moveScroll()
+                            }
                         }
+                        .frame(width: 800,height: 300, alignment: .center)
                         //중간선
                         HStack{
                             Spacer()
@@ -133,7 +187,7 @@ struct LineChartView: View {
                             Spacer()
                         }
                     }
-
+                    
                 }
                 .scrollDisabled(true)
             }
@@ -144,10 +198,6 @@ struct LineChartView: View {
         }.frame(height: 800)
     }
 }
-
-
-
-
 
 #Preview {
     VStack {

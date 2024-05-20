@@ -1,4 +1,5 @@
 import Foundation
+import SwiftUI
 import RxSwift
 import RxCocoa
 
@@ -24,11 +25,20 @@ class FineListViewModel: ObservableObject {
     @Published var fine3: String = ""
     @Published var fine4: String = ""
     @Published var location : SearchModel = SearchModel(keyWord: "", fullAddress: "", lat: 0.0, lon: 0.1, city: "")
+    @Published var chat1: String = "좋아요!"
+    @Published var chat2: String = "아주 좋아요!"
+    @Published var chat1Color: Color = Color.green
+    @Published var chat2Color: Color = Color.blue
+    //미세
+    @Published var date1: [Double] = []
+    //초미세
+    @Published var date2: [Double] = []
     
     
     private let weatherManager: WebServiceManager
     private let userLocationPoint: (Double, Double)
     private var disposeBag = DisposeBag()
+    private var flag = false
     
     init(weatherManager: WebServiceManager, userLocationPoint: (Double, Double)) {
         self.weatherManager = weatherManager
@@ -45,6 +55,14 @@ class FineListViewModel: ObservableObject {
         toggle = !toggle
         print(toggle)
         fetchWeatherData()
+    }
+    
+    func returnfine() -> [Double]{
+        return date1
+    }
+    
+    func returnmicro() -> [Double]{
+        return date2
     }
     
     func dispose() {
@@ -73,20 +91,54 @@ class FineListViewModel: ObservableObject {
             guard (data.current != nil) else {
                 return
             }
-            DispatchQueue.main.async {
+            DispatchQueue.main.async { [self] in
                 let forecastDays = data.forecast.forecastday.prefix(4)
-                print(data.current)
-                print()
-                print(data.forecast.forecastday[0].hour.count)
-                print()
-                if let forecast = data.forecast.forecastday.first {
-                    for hour in forecast.hour {
-                        print(hour)
-                        print()
+                if flag == false {
+                    if let forecast = data.forecast.forecastday.first {
+                        for hour in forecast.hour {
+                            if let micro = hour.airQuality?.micro {
+                                date1.append(micro)
+                            } else {
+                                date1.append(1.1)
+                            }
+                            
+                            if let fine = hour.airQuality?.fine {
+                                
+                                date2.append(fine)
+                            } else {
+                                date2.append(1.4)
+                            }
+                            
+                        }
+                    } else {
+                        print("No forecast data available")
                     }
-                } else {
-                    print("No forecast data available")
+                    
+                    if let forecast2 = data.forecast.forecastday[safe: 2] {
+                        var x = 0
+                        for hour in forecast2.hour {
+                            var x = x + 1
+                            if x % 2 == 0{
+                                if let micro = hour.airQuality?.micro  {
+                                    //print(date1)
+                                    date1.append(micro)
+                                } else {
+                                    date1.append(12.0)
+                                }
+                                
+                                if let fine = hour.airQuality?.fine {
+                                    //print(date2)
+                                    date2.append(fine)
+                                } else {
+                                    date2.append(12.0)                        }
+                            }
+                        }
+                    } else {
+                        print("No forecast data available")
+                    }
+                    flag = true
                 }
+                
                 
                 
                 if let airQuality1 = forecastDays[0].day.airQuality {
