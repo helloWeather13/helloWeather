@@ -126,6 +126,29 @@ class TodayTimeCelsiusCollectionView: UICollectionView, UICollectionViewDelegate
             cell.celsiusLabel.textColor = .mygray
         }
         
+//        var height: Double = 0.0
+//        if let feelslikeC = Double(hourlyWeather.feelslikeC) {
+//            switch feelslikeC {
+//            case ..<0:
+//                height = 0.0
+//            case 0..<10:
+//                height = 0.1
+//            case 10..<15:
+//                height = 0.2
+//            case 15..<20:
+//                height = 0.3
+//            case 20..<25:
+//                height = 0.4
+//            case 25..<30:
+//                height = 0.5
+//            case 30..<35:
+//                height = 0.6
+//            case 35..<40:
+//                height = 0.7
+//            default:
+//                height = 0.8
+//            }
+//        }
         
         return cell
     }

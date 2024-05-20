@@ -301,7 +301,7 @@ class WeatherDetailView: UIView {
             make.top.equalTo(fourthStackView.snp.bottom).offset(40)
             make.leading.equalToSuperview().offset(12)
             make.trailing.equalToSuperview().inset(12)
-            make.height.equalTo(146)
+            make.height.equalTo(119)
             make.bottom.equalToSuperview().offset(-20)
         }
     }

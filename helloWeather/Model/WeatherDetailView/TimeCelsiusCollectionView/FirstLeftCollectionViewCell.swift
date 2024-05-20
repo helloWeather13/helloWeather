@@ -11,14 +11,19 @@ import SwiftUI
 
 class FirstLeftCollectionViewCell: UICollectionViewCell {
     
-    @State private var touchLocation: CGFloat = -1.0
-    
     static let identifier = String(describing: FirstLeftCollectionViewCell.self)
     
     lazy var stackView: UIStackView = {
         let stack = UIStackView()
         stack.axis = .vertical
-        stack.spacing = 78
+        stack.spacing = 8
+        return stack
+    }()
+    
+    lazy var stackView2: UIStackView = {
+        let stack = UIStackView()
+        stack.axis = .vertical
+        stack.spacing = 15
         return stack
     }()
     
@@ -38,16 +43,16 @@ class FirstLeftCollectionViewCell: UICollectionViewCell {
     }()
     
     lazy var barChartCellWrapper = BarChartCellWrapper(
-                //높이
-                value: 5,
-                index: 0,
-                width: 20,
-                numberOfDataPoints: 10,
-                accentColor: .gray,
-                touchLocation: $touchLocation
+        //높이
+        value: 0.9,
+        index: 0,
+        width: 60,
+        numberOfDataPoints: 10,
+        accentColor: .gray,
+        touchLocation: .constant(-1.0)
     )
-            
-        
+    
+    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -61,22 +66,28 @@ class FirstLeftCollectionViewCell: UICollectionViewCell {
     
     private func configureConstraints() {
         
-        contentView.addSubview(stackView)
+        contentView.addSubview(stackView2)
         [celsiusLabel, barChartCellWrapper].forEach {
             stackView.addArrangedSubview($0)
         }
         
-        stackView.snp.makeConstraints { make in
+        [stackView, timeLabel].forEach {
+            stackView2.addArrangedSubview($0)
+        }
+        
+        
+        stackView2.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
         
-        barChartCellWrapper.snp.makeConstraints { make in
-                   make.height.equalTo(10)
+        celsiusLabel.snp.makeConstraints { make in
+            make.height.equalTo(celsiusLabel.font.pointSize)
         }
-//
-//        celsiusLabel.snp.makeConstraints { make in
-//            make.height.equalTo(celsiusLabel.font.pointSize)
-//        }
+        
+        timeLabel.snp.makeConstraints { make in
+            make.height.equalTo(timeLabel.font.pointSize)
+        }
+
         
     }
     
@@ -90,7 +101,7 @@ import UIKit
 
 class BarChartCellWrapper: UIView {
     private var hostingController: UIHostingController<BarChartCell>?
-
+    
     init(value: Double, index: Int = 0, width: Float, numberOfDataPoints: Int, accentColor: Color, touchLocation: Binding<CGFloat>) {
         super.init(frame: .zero)
         setupHostingController(value: value, index: index, width: width, numberOfDataPoints: numberOfDataPoints, accentColor: accentColor, touchLocation: touchLocation)
@@ -142,7 +153,7 @@ public struct BarChartCell: View {
     
     public var body: some View {
         ZStack {
-            RoundedRectangle(cornerRadius: 4)
+            RoundedRectangle(cornerRadius: 10)
                 .fill(accentColor)
         }
         .frame(width: CGFloat(self.cellWidth))
