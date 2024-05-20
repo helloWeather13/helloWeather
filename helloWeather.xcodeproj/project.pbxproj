@@ -61,12 +61,12 @@
 		45D70DE12BF515A000942DC1 /* WeekCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D70DE02BF515A000942DC1 /* WeekCollectionView.swift */; };
 		45D70DE52BF5460500942DC1 /* HumidityCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D70DE42BF5460500942DC1 /* HumidityCollectionView.swift */; };
 		45D70DE72BF5469700942DC1 /* HumidityCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D70DE62BF5469700942DC1 /* HumidityCollectionViewCell.swift */; };
+		52AB828C2BF7EFFE00612D95 /* SpaceCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52AB828B2BF7EFFE00612D95 /* SpaceCellViewModel.swift */; };
 		9A5ACD942BF7763600DE586F /* FineListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5ACD932BF7763600DE586F /* FineListViewModel.swift */; };
 		9A5ACD982BF7B37C00DE586F /* FineDustUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5ACD972BF7B37C00DE586F /* FineDustUtil.swift */; };
 		9A5ACD9B2BF7B42B00DE586F /* DustGroupStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5ACD9A2BF7B42B00DE586F /* DustGroupStruct.swift */; };
 		9A5ACD9D2BF893BA00DE586F /* ChartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5ACD9C2BF893BA00DE586F /* ChartViewModel.swift */; };
 		9A5ACD9F2BF8B41100DE586F /* LineModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5ACD9E2BF8B41100DE586F /* LineModel.swift */; };
-		52AB828C2BF7EFFE00612D95 /* SpaceCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52AB828B2BF7EFFE00612D95 /* SpaceCellViewModel.swift */; };
 		9A8DF86C2BF6C4A3009F0DAB /* ChatModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8DF86B2BF6C4A3009F0DAB /* ChatModel.swift */; };
 		9A8DF86E2BF6CB26009F0DAB /* ChatModel2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8DF86D2BF6CB26009F0DAB /* ChatModel2.swift */; };
 		9A8DF8712BF6E51E009F0DAB /* FineListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8DF8702BF6E51E009F0DAB /* FineListView.swift */; };
@@ -140,12 +140,12 @@
 		45D70DE02BF515A000942DC1 /* WeekCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekCollectionView.swift; sourceTree = "<group>"; };
 		45D70DE42BF5460500942DC1 /* HumidityCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HumidityCollectionView.swift; sourceTree = "<group>"; };
 		45D70DE62BF5469700942DC1 /* HumidityCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HumidityCollectionViewCell.swift; sourceTree = "<group>"; };
+		52AB828B2BF7EFFE00612D95 /* SpaceCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpaceCellViewModel.swift; sourceTree = "<group>"; };
 		9A5ACD932BF7763600DE586F /* FineListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FineListViewModel.swift; sourceTree = "<group>"; };
 		9A5ACD972BF7B37C00DE586F /* FineDustUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FineDustUtil.swift; sourceTree = "<group>"; };
 		9A5ACD9A2BF7B42B00DE586F /* DustGroupStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DustGroupStruct.swift; sourceTree = "<group>"; };
 		9A5ACD9C2BF893BA00DE586F /* ChartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartViewModel.swift; sourceTree = "<group>"; };
 		9A5ACD9E2BF8B41100DE586F /* LineModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineModel.swift; sourceTree = "<group>"; };
-		52AB828B2BF7EFFE00612D95 /* SpaceCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpaceCellViewModel.swift; sourceTree = "<group>"; };
 		9A8DF86B2BF6C4A3009F0DAB /* ChatModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatModel.swift; sourceTree = "<group>"; };
 		9A8DF86D2BF6CB26009F0DAB /* ChatModel2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatModel2.swift; sourceTree = "<group>"; };
 		9A8DF8702BF6E51E009F0DAB /* FineListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FineListView.swift; sourceTree = "<group>"; };
@@ -703,7 +703,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -731,7 +731,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
