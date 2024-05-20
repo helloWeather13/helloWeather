@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import SkeletonView
 
 class HomeViewController: UIViewController {
     
@@ -97,13 +98,17 @@ class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupNotificationCenter()
         setupNaviBar()
         setupSecondLabel()
         setupThirdLabel()
         setupAutoLayout()
         bind()
     }
-    
+
+    func setupNotificationCenter(){
+        NotificationCenter.default.addObserver(self, selector: #selector(dataRecevied(notification:)), name: NSNotification.Name("SwitchTabNotification"), object: nil)
+    }
     func setupNaviBar() {
         homeViewModel.addressOnCompleted = { [unowned self] address in
             self.navigationItem.title = address
@@ -111,12 +116,12 @@ class HomeViewController: UIViewController {
         let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonTapped))
         addButton.tintColor = .black
         navigationItem.rightBarButtonItem = addButton
-
-        
     }
     
     @objc func addButtonTapped() {
-        self.navigationController?.pushViewController(SearchViewController(), animated: false)
+        let searchVC = SearchViewController()
+        searchVC.delegate = self
+        self.navigationController?.pushViewController(searchVC, animated: false)
         
     }
     
@@ -153,6 +158,12 @@ class HomeViewController: UIViewController {
             weatherStr.append(condition)
             weatherStr.append(verb)
             weatherLabel.attributedText = weatherStr
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
+                [self.compareLabel,self.thermometerIcon,self.weatherIcon,self.temperatureLabel,self.unitLabel,self.notificationButton,self.bookmarkButton,self.todayLabel, self.secondLabel,self.thirdLabel,self.weatherLabel].forEach{
+                    $0.hideSkeleton(transition: .crossDissolve(0.25))
+                }
+            })
+            
         }
     }
     
@@ -190,16 +201,17 @@ class HomeViewController: UIViewController {
             $0.top.equalToSuperview().offset(124)
             $0.trailing.equalToSuperview().inset(32)
             $0.width.height.equalTo(24)
-            
+        }
         notificationButton.snp.makeConstraints {
             $0.centerY.equalTo(bookmarkButton)
             $0.leading.equalTo(bookmarkButton.snp.leading)
             $0.width.height.equalTo(24)
         }
-        
-        
-        
+        [view,stackView,thermometerIcon,weatherIcon,temperatureLabel,unitLabel,notificationButton,bookmarkButton,compareLabel,todayLabel, secondLabel,thirdLabel,weatherLabel].forEach{
+            $0?.isSkeletonable = true
         }
+            
+        
     }
     
     func bind(){
@@ -252,4 +264,24 @@ class HomeViewController: UIViewController {
         self.homeViewModel.changeNotiCurrentBookMark()
     }
     
+    @objc func dataRecevied(notification: Notification){
+        guard let newSearchModel = notification.object as? SearchModel else{
+            return
+        }
+        print(newSearchModel)
+        self.homeViewModel.currentSearchModel = newSearchModel
+        [compareLabel,thermometerIcon,weatherIcon,temperatureLabel,unitLabel,notificationButton,bookmarkButton,todayLabel, secondLabel,thirdLabel,weatherLabel].forEach{
+            $0.showSkeleton()
+        }
+    }
+}
+
+extension HomeViewController : TransferDataToMainDelegate {
+    func searchDidTouched(searchModel: SearchModel) {
+        [compareLabel,thermometerIcon,weatherIcon,temperatureLabel,unitLabel,notificationButton,bookmarkButton,todayLabel, secondLabel,thirdLabel,weatherLabel].forEach{
+            $0.showSkeleton()
+        }
+        self.homeViewModel.currentSearchModel = searchModel
+    }
+
 }
