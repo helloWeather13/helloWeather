@@ -8,31 +8,6 @@
 import UIKit
 import CoreLocation
 
-enum ConditionText: String {
-    case rain = "비 소식"
-    case snow = "눈 소식"
-    case none = "맑은 날"
-    
-    var detail: (icon: UIImage, verb: String) {
-        switch self {
-        case .rain:
-            return (UIImage(systemName: "sun.min")!, "이 있어요")
-        case .snow:
-            return (UIImage(systemName: "sun.min")!, "이 있어요")
-        case .none:
-            return (UIImage(systemName: "sun.min")!, "이에요")
-        }
-    }
-    
-    var icon: UIImage {
-        return detail.icon
-    }
-    
-    var verb: String {
-        return detail.verb
-    }
-}
-
 class HomeViewModel: NSObject, CLLocationManagerDelegate {
     
     let webServiceManager = WebServiceManager.shared
@@ -79,56 +54,90 @@ class HomeViewModel: NSObject, CLLocationManagerDelegate {
         case ..<0:
             switch todayFeelsLike {
             case ..<10:
-                return ("춥고", UIImage(systemName: "thermometer.sun")!)
+                return ("춥고", UIImage(named: "temperature-down")!)
             default:
-                return ("선선하고", UIImage(systemName: "thermometer.sun")!)
+                return ("선선하고", UIImage(named: "temperature-down")!)
             }
         case 0:
-            return ("비슷하고", UIImage(systemName: "thermometer.sun")!)
+            return ("비슷하고", UIImage(named: "temperature-same")!)
         default:
             switch todayFeelsLike {
             case ..<24:
-                return ("따뜻하고", UIImage(systemName: "thermometer.sun")!)
+                return ("따뜻하고", UIImage(named: "temperature-up")!)
             default:
-                return ("덥고", UIImage(systemName: "thermometer.sun")!)
+                return ("덥고", UIImage(named: "temperature-up")!)
             }
         }
     }
     
-    var condition: ConditionText = .none {
-        didSet {
-            conditionOnCompleted()
+    var condition: ConditionText = .none
+        
+    enum ConditionText: String {
+        case rain = "비 소식"
+        case snow = "눈 소식"
+        case none = "맑은 날"
+        
+        func detail(sunrise: Int, sunset: Int, now: Int) -> (icon: UIImage, verb: String) {
+            switch self {
+            case .rain:
+                if sunrise < now && now < sunset {
+                    return (UIImage(named: "rainSrnog-day")!, "이 있어요")
+                } else {
+                    return (UIImage(named: "rainSrnog-night")!, "이 있어요")
+                }
+            case .snow:
+                if sunrise < now && now < sunset {
+                    return (UIImage(named: "snow-day")!, "이 있어요")
+                } else {
+                    return (UIImage(named: "snow-night")!, "이 있어요")
+                }
+            case .none:
+                if sunrise < now && now < sunset {
+                    return (UIImage(named: "clean-day")!, "이에요")
+                } else {
+                    return (UIImage(named: "clean-night")!, "이에요")
+                }
+            }
         }
     }
-    
-    var conditionOnCompleted: (() -> ()) = { }
     
     var sunriseTime: String = ""
     var sunsetTime: String = ""
     
     var sunriseNum: Int = 0
     var sunsetNum: Int = 0
-    
-    var sunTimeSplit: Int = 0 {
-        didSet {
-            sunTimeSplitOnCompleted()
-        }
-    }
-    var sunTimeSplitOnCompleted: (() -> ()) = { }
+    var sunTimeSplit: Int = 0
     
     var nextSunriseTime: String = ""
-    var estimated = 0
-    var sunriseInfoString: String {
-        switch estimated {
-        case ..<0:
-            return "내일은 오늘보다 \(-estimated)분 일찍 해가 뜰 예정이에요"
-        case 0:
-            return "내일도 오늘과 같은 시간에 해가 뜰 예정이에요"
-        default:
-            return "내일은 오늘보다 \(estimated)분 늦게 해가 뜰 예정이에요"
+    
+    var estimated: Int = 0 {
+        didSet {
+            updateSunriseInfoString()
+            updateSunImage()
         }
     }
     
+    var sunriseInfoString: String = ""
+
+    func updateSunriseInfoString() {
+        switch estimated {
+        case ..<0:
+            sunriseInfoString = "내일은 오늘보다 \(-estimated)분 일찍 해가 뜰 예정이에요"
+        case 0:
+            sunriseInfoString = "내일도 오늘과 같은 시간에 해가 뜰 예정이에요"
+        default:
+            sunriseInfoString = "내일은 오늘보다 \(estimated)분 늦게 해가 뜰 예정이에요"
+        }
+    }
+    
+    var sunImage: UIImage = UIImage(named: "SunRise01")! {
+        didSet {
+            estimatedOnCompleted()
+        }
+    }
+
+    var estimatedOnCompleted: (() -> ()) = { }
+
     var now: Int {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "hh:mm a"
@@ -136,13 +145,28 @@ class HomeViewModel: NSObject, CLLocationManagerDelegate {
         return timeInMinutes(time: formatted)
     }
 
-    var sunImage: UIImage {
-        if now > sunriseNum && now < sunsetNum {
-            let index = min((now - sunriseNum) / sunTimeSplit + 1, 10)
-            let imageName = "SunRise" + String(format: "%02d", index)
-            return UIImage(named: imageName)!
-        } else {
-            return UIImage(named: "SunRise10")!
+    func updateSunImage() {
+        switch now {
+        case sunriseNum..<sunriseNum + sunTimeSplit:
+            sunImage = UIImage(named: "SunRise02")!
+        case sunriseNum + sunTimeSplit..<(sunriseNum + sunTimeSplit * 2):
+            sunImage = UIImage(named: "SunRise03")!
+        case sunriseNum + sunTimeSplit * 2..<(sunriseNum + sunTimeSplit * 3):
+            sunImage = UIImage(named: "SunRise04")!
+        case sunriseNum + sunTimeSplit * 3..<(sunriseNum + sunTimeSplit * 4):
+            sunImage = UIImage(named: "SunRise05")!
+        case sunriseNum + sunTimeSplit * 4..<(sunriseNum + sunTimeSplit * 5):
+            sunImage = UIImage(named: "SunRise06")!
+        case sunriseNum + sunTimeSplit * 5..<(sunriseNum + sunTimeSplit * 6):
+            sunImage = UIImage(named: "SunRise07")!
+        case sunriseNum + sunTimeSplit * 6..<(sunriseNum + sunTimeSplit * 7):
+            sunImage = UIImage(named: "SunRise08")!
+        case sunriseNum + sunTimeSplit * 7..<(sunriseNum + sunTimeSplit * 8):
+            sunImage = UIImage(named: "SunRise09")!
+        case sunriseNum + sunTimeSplit * 8..<(sunriseNum + sunTimeSplit * 9):
+            sunImage = UIImage(named: "SunRise10")!
+        default:
+            sunImage = UIImage(named: "SunRise01")!
         }
     }
     
@@ -217,6 +241,10 @@ class HomeViewModel: NSObject, CLLocationManagerDelegate {
             
             sunriseTime = forecastData.astro.sunrise
             sunsetTime = forecastData.astro.sunset
+            
+            sunriseNum = timeInMinutes(time: sunriseTime)
+            sunsetNum = timeInMinutes(time: sunsetTime)
+            
             nextSunriseTime = data.forecast.forecastday[1].astro.sunrise
             dispatchGroup.leave()
         }
@@ -231,7 +259,7 @@ class HomeViewModel: NSObject, CLLocationManagerDelegate {
         dispatchGroup.notify(queue: .main) { [unowned self] in
             difference = todayFeelsLike - yesterdayFeelsLike
             
-            sunTimeSplit = getTimeDifference(from: sunriseTime, to: sunsetTime) / 10
+            sunTimeSplit = getTimeDifference(from: sunriseTime, to: sunsetTime) / 9
             estimated = getTimeDifference(from: sunriseTime, to: nextSunriseTime)
         }
     }

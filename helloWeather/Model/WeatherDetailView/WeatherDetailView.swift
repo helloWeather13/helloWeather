@@ -107,7 +107,6 @@ class WeatherDetailView: UIView {
     }()
     let sunGraph: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "SunRise05")
         return imageView
     }()
     let sunriseLabel: UILabel = {
@@ -307,7 +306,7 @@ class WeatherDetailView: UIView {
     }
     
     func setupSunData() {
-        homeViewModel.sunTimeSplitOnCompleted = { [unowned self] in
+        homeViewModel.estimatedOnCompleted = { [unowned self] in
             sunriseLabel.text = homeViewModel.sunriseTime
             sunsetLabel.text = homeViewModel.sunsetTime
             sunriseInfoLabel.text = homeViewModel.sunriseInfoString
