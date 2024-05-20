@@ -23,7 +23,7 @@ public struct ChartView: View {
     @State public var closestPoint: CGPoint = .zero
     @State public var opacity:Double = 0
     @State public var hideHorizontalLines: Bool = false
- 
+    
     
     public init(data: [Double],
                 title: String? = nil,
@@ -35,7 +35,7 @@ public struct ChartView: View {
                 widthmove: Binding<CGPoint>,
                 dragLocation: Binding<CGPoint>,
                 currentDataNumber: Binding<Double>
-                )
+    )
     
     
     {
@@ -198,7 +198,7 @@ public struct ChartView2: View {
     @State public var closestPoint: CGPoint = .zero
     @State public var opacity:Double = 0
     @State public var hideHorizontalLines: Bool = false
- 
+    
     
     public init(data: [Double],
                 title: String? = nil,
@@ -210,7 +210,7 @@ public struct ChartView2: View {
                 widthmove: Binding<CGPoint>,
                 dragLocation: Binding<CGPoint>,
                 currentDataNumber: Binding<Double>
-                )
+    )
     
     
     {
@@ -244,6 +244,7 @@ public struct ChartView2: View {
                         Line3(data: self.data,
                               frame: .constant(CGRect(x: 0, y: 0, width: reader.frame(in: .local).width - 30, height: reader.frame(in: .local).height + 25)),
                               touchLocation: self.$indicatorLocation,
+                              dragLocation: self.$dragLocation,
                               showIndicator: self.$hideHorizontalLines,
                               minDataValue: .constant(nil),
                               maxDataValue: .constant(nil),
@@ -257,13 +258,30 @@ public struct ChartView2: View {
                         .onDisappear(){
                             self.showLegend = false
                         }
+                        .onChange(of: dragLocation) { newLocation in
+                            self.updateDragLocationY(geometry: reader.frame(in: .local))
+                        }
                     }
                     .frame(width: geometry.frame(in: .local).size.width, height: 180)
                     .offset(x: 0, y: 40)
                 }
                 .frame(width: geometry.frame(in: .local).size.width, height: 240)
-
+                
             }
+        }
+    }
+    
+    private func updateDragLocationY(geometry: CGRect) {
+        let dataPoints = self.data.points
+        let xStep = geometry.width / CGFloat(dataPoints.count - 1)
+        let index = max(0, min(Int(self.dragLocation.x / xStep), dataPoints.count - 1))
+        
+        if index >= 0 && index < dataPoints.count {
+            let yValue = dataPoints[index].1
+            //print("뒤에 그래프 좌표:", currentDataNumber)
+            self.dragLocation.y = CGFloat(1 - yValue + 240)
+            currentDataNumber = Double(yValue-11)
+            
         }
     }
     

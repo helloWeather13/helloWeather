@@ -76,10 +76,11 @@ class FineListViewModel: ObservableObject {
     
     @Published var currentDataNumber: Double = 0 {
         didSet {
-            print("드래그 로케이션 :", draglocation.x)
-            draglocation2.x = draglocation.x
+            draglocation2.x = draglocation.x - 23
             updateChat1Color()
             updateChat2Color()
+            //print("드래그 로케이션1 :", draglocation)
+            //print("드래그 로케이션2 :", draglocation2)
         }
     }
     @Published var currentDataNumber2: Double = 0 {

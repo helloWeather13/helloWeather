@@ -79,54 +79,52 @@ struct LineChartView: View {
         
         VStack(alignment: .leading) {
             HStack{
-                Spacer()
+                
                 Text("시간대별 미세먼지")
                     .font(.system(size: CGFloat(titleFontSize), weight: .medium))
-                ForEach(0..<10) { _ in
-                    Spacer()
-                }
+                    .padding(.leading, 30)
+                Spacer()
             }
             .padding(.bottom, 30)
             //미세먼지 채팅
             VStack{
                 // 미세먼지 chat
-                HStack{
-                    VStack{
-                        Text("미세먼지")
-                        ChatView(viewModel: fineListViewModel)
-                            .scaleEffect(isAnimating ? 1.4 : 1.0, anchor: .leading)
-                            .onAppear {
-                                withAnimation(.easeInOut(duration: 1.0)) {
-                                    isAnimating = true
-                                }
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                                    withAnimation(.easeInOut(duration: 1.0)) {
-                                        isAnimating = false
-                                    }
-                                }
-                            }
-                            .padding(.leading, 10)
-                    }
+                HStack{ 
+                    Text("미세먼지")
+                        .padding(.leading, 5)
                     Spacer()
-                    VStack{
-                        Text("초 미세먼지")
-                        ChatView2(viewModel: fineListViewModel)
-                            .scaleEffect(isAnimating ? 1.4 : 1.0, anchor: .trailing)
-                            .onAppear {
+                    Text("초 미세먼지")
+                        .padding(.trailing, 5)
+                }
+                HStack{
+                    ChatView(viewModel: fineListViewModel)
+                        .scaleEffect(isAnimating ? 1.4 : 1.0, anchor: .leading)
+                        .onAppear {
+                            withAnimation(.easeInOut(duration: 1.0)) {
+                                isAnimating = true
+                            }
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                                 withAnimation(.easeInOut(duration: 1.0)) {
-                                    isAnimating = true
-                                }
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                                    withAnimation(.easeInOut(duration: 1.0)) {
-                                        isAnimating = false
-                                    }
+                                    isAnimating = false
                                 }
                             }
-                            .padding(.trailing, 10)
-                    }
-                    
+                        }
+                        .padding(.leading, 10)
+                    Spacer()
+                    ChatView2(viewModel: fineListViewModel)
+                        .scaleEffect(isAnimating ? 1.4 : 1.0, anchor: .trailing)
+                        .onAppear {
+                            withAnimation(.easeInOut(duration: 1.0)) {
+                                isAnimating = true
+                            }
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                                withAnimation(.easeInOut(duration: 1.0)) {
+                                    isAnimating = false
+                                }
+                            }
+                        }
+                        .padding(.trailing, 10)
                 }
-                
             }
             ZStack{
                 ScrollView(.horizontal, showsIndicators: false){
@@ -140,7 +138,6 @@ struct LineChartView: View {
                                                 ChartView2(data: fineListViewModel.returnfine(), title: "Second Chart", style: Styles2.lineChartStyleOne2, move: $chartMove2, widthmove: $widtdmove2, dragLocation: $fineListViewModel.draglocation2, currentDataNumber: $fineListViewModel.currentDataNumber2)
                                                     .opacity(0.5)
                                                     .frame(width: geometry.size.width-30, height: geometry.size.height)
-                                                
                                                 ChartView(data: fineListViewModel.returnmicro(), title: "Full chart", style: Styles2.lineChartStyleOne, move: $chartMove, widthmove: $widtdmove, dragLocation: $fineListViewModel.draglocation, currentDataNumber: $fineListViewModel.currentDataNumber)
                                                     .frame(width: geometry.size.width-30, height: geometry.size.height)
                                             }
@@ -148,6 +145,7 @@ struct LineChartView: View {
                                         }
                                     }
                                     .onAppear {
+                                        //움직이는 동작 시작하는 위치 설정으로 마우스 커서 이동제어
                                         self.setStartPosition(in: geometry.size)
                                         self.moveScroll()
                                     }
@@ -160,32 +158,6 @@ struct LineChartView: View {
                             }
                         }
                         .frame(width: 800,height: 300, alignment: .center)
-                        //중간선
-                        HStack{
-                            Spacer()
-                            VStack{
-                                ForEach(0..<12) { i in
-                                    Text("|")
-                                        .bold()
-                                        .foregroundColor(.black)
-                                }
-                            }
-                            Spacer()
-                        }.padding(.leading, 20)
-                        HStack{
-                            ForEach(0..<20) { _ in
-                                Spacer()
-                            }
-                            VStack{
-                                ForEach(0..<12) { i in
-                                    Text("|")
-                                        .bold()
-                                        .foregroundColor(.black)
-                                        .padding(.leading, 460)
-                                }
-                            }
-                            Spacer()
-                        }
                     }
                     
                 }

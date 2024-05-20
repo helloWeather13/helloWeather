@@ -327,29 +327,39 @@ public struct Styles2 {
 
 public struct MagnifierRect: View {
     @Binding var currentNumber: Double
-    var valueSpecifier:String
+    var valueSpecifier: String
     @Environment(\.colorScheme) var colorScheme: ColorScheme
+    @State private var chat1Color: Color = Color.blue
+
+    private func updateChat1Color() {
+        if currentNumber < 20 {
+            chat1Color = Color.blue
+        } else if currentNumber < 30 {
+            chat1Color = Color.green
+        } else if currentNumber < 40 {
+            chat1Color = Color.yellow
+        } else {
+            chat1Color = Color.red
+        }
+    }
+
     public var body: some View {
-        ZStack{
-            //Text("\(self.currentNumber, specifier: valueSpecifier)")
-//            Text("좋음")
-//                .font(.system(size: 18, weight: .bold))
-//                .offset(x: 0, y:-110)
-//                .foregroundColor(self.colorScheme == .dark ? Color.white : Color.black)
-            if (self.colorScheme == .dark ){
-                Rectangle()
-                        .frame(width: 16, height: 280)
-                        .foregroundColor(.pink)
-                        .shadow(color: Color.gray, radius: 12, x: 0, y: 6)
-                        .blendMode(.multiply)
-            }else{
-                Rectangle()
-                        .frame(width: 16, height: 280)
-                        .foregroundColor(.pink)
-                        .shadow(color: Color.gray, radius: 12, x: 0, y: 6)
-                        .blendMode(.multiply)
-            }
+        ZStack {
+            Text("\(self.currentNumber, specifier: valueSpecifier)")
+                .offset(x: 0, y: -110)
+                .foregroundColor(self.colorScheme == .dark ? Color.white : Color.black)
+            Rectangle()
+                .frame(width: 12, height: 280)
+                .foregroundColor(chat1Color)
+                .shadow(color: Color.gray, radius: 12, x: 0, y: 6)
+                .blendMode(.multiply)
         }
         .offset(x: 0, y: -15)
+        .onChange(of: currentNumber) { _ in
+            updateChat1Color()
+        }
+        .onAppear {
+            updateChat1Color()
+        }
     }
 }
