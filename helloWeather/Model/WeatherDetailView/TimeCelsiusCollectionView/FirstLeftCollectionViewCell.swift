@@ -7,10 +7,11 @@
 
 import UIKit
 import SnapKit
-import Charts
-import DGCharts
+import SwiftUI
 
 class FirstLeftCollectionViewCell: UICollectionViewCell {
+    
+    @State private var touchLocation: CGFloat = -1.0
     
     static let identifier = String(describing: FirstLeftCollectionViewCell.self)
     
@@ -36,25 +37,23 @@ class FirstLeftCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
-    var barChartView: BarChartView = {
-        let view = UIView()
-        view.frame = CGRect(x: 0, y: 0, width: 36, height: 50)
-        return view as! BarChartView
-    }()
-    
-    var horizontal: [String]!
-    var vertical: [Double]!
+    lazy var barChartCellWrapper = BarChartCellWrapper(
+                //높이
+                value: 5,
+                index: 0,
+                width: 20,
+                numberOfDataPoints: 10,
+                accentColor: .gray,
+                touchLocation: $touchLocation
+    )
+            
+        
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-//        configureConstraints()
-//        setChart(dataPoints: [String], values: [Double])
-//        
-//        horizontal = [""]
-//        vertical = ["celsiusLabel"]
-//        setChart(dataPoints: horizontal, values: vertical)
-//    }
+        configureConstraints()
+    }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -63,7 +62,7 @@ class FirstLeftCollectionViewCell: UICollectionViewCell {
     private func configureConstraints() {
         
         contentView.addSubview(stackView)
-        [celsiusLabel, timeLabel].forEach {
+        [celsiusLabel, barChartCellWrapper].forEach {
             stackView.addArrangedSubview($0)
         }
         
@@ -71,27 +70,86 @@ class FirstLeftCollectionViewCell: UICollectionViewCell {
             make.edges.equalToSuperview()
         }
         
-        celsiusLabel.snp.makeConstraints { make in
-            make.height.equalTo(celsiusLabel.font.pointSize)
+        barChartCellWrapper.snp.makeConstraints { make in
+                   make.height.equalTo(10)
         }
+//
+//        celsiusLabel.snp.makeConstraints { make in
+//            make.height.equalTo(celsiusLabel.font.pointSize)
+//        }
         
     }
     
-    private func setChart(dataPoints: [String], values: [Double]) {
-        var dataEntries: [BarChartDataEntry] = []
-        for i in 0..<dataPoints.count {
-            let dataEntry = BarChartDataEntry(x: Double(i), y: values[i])
-            dataEntries.append(dataEntry)
-        }
+}
 
-        let chartDataSet = BarChartDataSet(entries: dataEntries, label: "판매량")
+import SwiftUI
+import UIKit
+import SwiftUICharts
+import SwiftUI
+import UIKit
 
-        // 차트 컬러
-        chartDataSet.colors = [.gray]
+class BarChartCellWrapper: UIView {
+    private var hostingController: UIHostingController<BarChartCell>?
 
-        // 데이터 삽입
-        let chartData = BarChartData(dataSet: chartDataSet)
-        barChartView.data = chartData
+    init(value: Double, index: Int = 0, width: Float, numberOfDataPoints: Int, accentColor: Color, touchLocation: Binding<CGFloat>) {
+        super.init(frame: .zero)
+        setupHostingController(value: value, index: index, width: width, numberOfDataPoints: numberOfDataPoints, accentColor: accentColor, touchLocation: touchLocation)
     }
     
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+    }
+    
+    private func setupHostingController(value: Double, index: Int, width: Float, numberOfDataPoints: Int, accentColor: Color, touchLocation: Binding<CGFloat>) {
+        let barChartCell = BarChartCell(value: value, index: index, width: width, numberOfDataPoints: numberOfDataPoints, accentColor: accentColor, touchLocation: touchLocation)
+        let hostingController = UIHostingController(rootView: barChartCell)
+        self.hostingController = hostingController
+        addSubview(hostingController.view)
+        
+        hostingController.view.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            hostingController.view.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            hostingController.view.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            hostingController.view.topAnchor.constraint(equalTo: self.topAnchor),
+            hostingController.view.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+        ])
+    }
+}
+
+import SwiftUI
+
+public struct BarChartCell: View {
+    public var value: Double
+    public var index: Int = 0
+    public var width: Float
+    public var numberOfDataPoints: Int
+    public var cellWidth: Double {
+        return Double(width) / (Double(numberOfDataPoints) * 1.5)
+    }
+    public var accentColor: Color
+    
+    @State public var scaleValue: Double = 0
+    @Binding public var touchLocation: CGFloat
+    
+    public init(value: Double, index: Int = 0, width: Float, numberOfDataPoints: Int, accentColor: Color, touchLocation: Binding<CGFloat>) {
+        self.value = value
+        self.index = index
+        self.width = width
+        self.numberOfDataPoints = numberOfDataPoints
+        self.accentColor = accentColor
+        self._touchLocation = touchLocation
+    }
+    
+    public var body: some View {
+        ZStack {
+            RoundedRectangle(cornerRadius: 4)
+                .fill(accentColor)
+        }
+        .frame(width: CGFloat(self.cellWidth))
+        .scaleEffect(CGSize(width: 1, height: self.scaleValue), anchor: .bottom)
+        .onAppear {
+            self.scaleValue = self.value
+        }
+        .animation(Animation.spring().delay(self.touchLocation < 0 ?  Double(self.index) * 0.04 : 0))
+    }
 }
