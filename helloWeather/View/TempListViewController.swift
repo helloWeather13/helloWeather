@@ -168,8 +168,8 @@ extension TempListViewController: UITableViewDelegate {
         // 새로운 위치로 셀의 데이터를 이동시킵니다.
         guard case let .listWeather(searchModel) = itemToMove else { return }
         
-        viewModel.searchModel.remove(at: sourceIndexPath.row)
-        viewModel.searchModel.insert(searchModel, at: destinationIndexPath.row)
+        viewModel.bookMarkModel.remove(at: sourceIndexPath.row)
+        viewModel.bookMarkModel.insert(searchModel, at: destinationIndexPath.row)
         
         // UI를 업데이트합니다.
         viewModel.applySnapshot()

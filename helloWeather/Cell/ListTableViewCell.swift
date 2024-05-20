@@ -92,11 +92,6 @@ class ListTableViewCell: UITableViewCell {
     var buttonTap: Observable<Void> {
         return deleteButton.rx.tap.asObservable()
     }
-    func setupAlarmImageView() {
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(alarmImageViewTapped))
-                alarmImageView.addGestureRecognizer(tapGesture)
-                alarmImageView.isUserInteractionEnabled = true
-    }
     
     @objc func alarmImageViewTapped() {
         if isAlarm {
@@ -146,17 +141,6 @@ class ListTableViewCell: UITableViewCell {
                 alarmImageView.addGestureRecognizer(tapGesture)
                 alarmImageView.isUserInteractionEnabled = true
     }
-    
-    @objc func alarmImageViewTapped() {
-        if isAlarm {
-            alarmImageView.image = .alarm0
-            isAlarm = false
-        } else {
-            alarmImageView.image = .alarm1
-            isAlarm = true
-        }
-    }
-    
     func makeConstraints(){
     
         contentView.addSubview(viewContainer)
