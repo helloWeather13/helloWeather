@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		143B0AF62BF59EBC0028D919 /* ListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143B0AF52BF59EBC0028D919 /* ListCollectionViewCell.swift */; };
-		143B0AF82BF59F830028D919 /* ListVIewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143B0AF72BF59F830028D919 /* ListVIewModel.swift */; };
 		14450E9F2BF45381006A02F7 /* RecentSearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14450E9E2BF45381006A02F7 /* RecentSearchTableViewCell.swift */; };
 		14450EA12BF45962006A02F7 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14450EA02BF45962006A02F7 /* Extension.swift */; };
 		14450EA32BF474FC006A02F7 /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14450EA22BF474FC006A02F7 /* PaddingLabel.swift */; };
@@ -29,9 +27,7 @@
 		146580E42BF1E8590093AA81 /* TabViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146580E32BF1E8590093AA81 /* TabViewModel.swift */; };
 		146580E62BF1E8740093AA81 /* TabModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146580E52BF1E8740093AA81 /* TabModel.swift */; };
 		146580E82BF1E8960093AA81 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146580E72BF1E8960093AA81 /* HomeViewController.swift */; };
-		146580EA2BF1E8B00093AA81 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146580E92BF1E8B00093AA81 /* ListViewController.swift */; };
 		146580ED2BF1E8D10093AA81 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146580EC2BF1E8D10093AA81 /* SearchViewController.swift */; };
-		146580EF2BF1E8EF0093AA81 /* AlarmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146580EE2BF1E8EF0093AA81 /* AlarmViewController.swift */; };
 		146580F32BF1EB3E0093AA81 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 146580F22BF1EB3E0093AA81 /* SnapKit */; };
 		146580F82BF1EB4D0093AA81 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 146580F72BF1EB4D0093AA81 /* Alamofire */; };
 		146580FD2BF1F1770093AA81 /* WebServiceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146580FC2BF1F1770093AA81 /* WebServiceManager.swift */; };
@@ -78,7 +74,6 @@
 		14E83D912BF793CB004CAD62 /* TSBlurEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E83D902BF793CB004CAD62 /* TSBlurEffectView.swift */; };
 		14E83D932BF79FF5004CAD62 /* DeleteAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E83D922BF79FF5004CAD62 /* DeleteAlertView.swift */; };
 		14E83D962BF7B6FE004CAD62 /* EmptySearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E83D952BF7B6FE004CAD62 /* EmptySearchView.swift */; };
-		14FB28252BF723E80084796C /* AlamofireDynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 146580F92BF1EB4D0093AA81 /* AlamofireDynamic */; };
 		453593562BF8F637004BA149 /* WeatherDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453593552BF8F637004BA149 /* WeatherDetailViewModel.swift */; };
 		45D70DBD2BF3145C00942DC1 /* WeatherDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D70DBC2BF3145C00942DC1 /* WeatherDetailViewController.swift */; };
 		45D70DC02BF3262300942DC1 /* SwiftUICharts in Frameworks */ = {isa = PBXBuildFile; productRef = 45D70DBF2BF3262300942DC1 /* SwiftUICharts */; };
@@ -125,8 +120,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		143B0AF52BF59EBC0028D919 /* ListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCollectionViewCell.swift; sourceTree = "<group>"; };
-		143B0AF72BF59F830028D919 /* ListVIewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListVIewModel.swift; sourceTree = "<group>"; };
 		14450E9E2BF45381006A02F7 /* RecentSearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentSearchTableViewCell.swift; sourceTree = "<group>"; };
 		14450EA02BF45962006A02F7 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		14450EA22BF474FC006A02F7 /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
@@ -146,9 +139,7 @@
 		146580E32BF1E8590093AA81 /* TabViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabViewModel.swift; sourceTree = "<group>"; };
 		146580E52BF1E8740093AA81 /* TabModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabModel.swift; sourceTree = "<group>"; };
 		146580E72BF1E8960093AA81 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
-		146580E92BF1E8B00093AA81 /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
 		146580EC2BF1E8D10093AA81 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
-		146580EE2BF1E8EF0093AA81 /* AlarmViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmViewController.swift; sourceTree = "<group>"; };
 		146580FC2BF1F1770093AA81 /* WebServiceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebServiceManager.swift; sourceTree = "<group>"; };
 		146580FE2BF1F1C30093AA81 /* ApiModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiModel.swift; sourceTree = "<group>"; };
 		146581022BF1FB8B0093AA81 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
@@ -247,7 +238,6 @@
 				1445AF5C2BF32C5A0018AE3F /* RelatedSearchTableViewCell.swift */,
 				1445AF662BF3631D0018AE3F /* SectionHeaderView.swift */,
 				14450E9E2BF45381006A02F7 /* RecentSearchTableViewCell.swift */,
-				143B0AF52BF59EBC0028D919 /* ListCollectionViewCell.swift */,
 				1475CFB52BF7015900D0F920 /* CurrentWeatherTableViewCell.swift */,
 				147EF8712BF63685000DC8A8 /* SpaceTableViewCell.swift */,
 				147EF86F2BF62F1B000DC8A8 /* ListTableViewCell.swift */,
@@ -303,7 +293,6 @@
 				146580E32BF1E8590093AA81 /* TabViewModel.swift */,
 				B687F6852BF4CC6000623F1D /* HomeViewModel.swift */,
 				146581022BF1FB8B0093AA81 /* SearchViewModel.swift */,
-				143B0AF72BF59F830028D919 /* ListVIewModel.swift */,
 				147EF86D2BF62AF4000DC8A8 /* TempListViewModel.swift */,
 				52AB828B2BF7EFFE00612D95 /* SpaceCellViewModel.swift */,
 			);
@@ -330,9 +319,7 @@
 				146580D52BF1E7EB0093AA81 /* LaunchScreen.storyboard */,
 				146580DE2BF1E8160093AA81 /* TabViewController.swift */,
 				146580E72BF1E8960093AA81 /* HomeViewController.swift */,
-				146580E92BF1E8B00093AA81 /* ListViewController.swift */,
 				146580EC2BF1E8D10093AA81 /* SearchViewController.swift */,
-				146580EE2BF1E8EF0093AA81 /* AlarmViewController.swift */,
 				45D70DBC2BF3145C00942DC1 /* WeatherDetailViewController.swift */,
 				147EF86B2BF62AE4000DC8A8 /* TempListViewController.swift */,
 				14E83D922BF79FF5004CAD62 /* DeleteAlertView.swift */,
@@ -657,7 +644,6 @@
 				14E83D962BF7B6FE004CAD62 /* EmptySearchView.swift in Sources */,
 				146580FD2BF1F1770093AA81 /* WebServiceManager.swift in Sources */,
 				147EF86E2BF62AF4000DC8A8 /* TempListViewModel.swift in Sources */,
-				146580EF2BF1E8EF0093AA81 /* AlarmViewController.swift in Sources */,
 				14E83D912BF793CB004CAD62 /* TSBlurEffectView.swift in Sources */,
 				45D70DE52BF5460500942DC1 /* HumidityCollectionView.swift in Sources */,
 				45D70DE72BF5469700942DC1 /* HumidityCollectionViewCell.swift in Sources */,
@@ -690,7 +676,6 @@
 				45D70DE12BF515A000942DC1 /* WeekCollectionView.swift in Sources */,
 				146581032BF1FB8B0093AA81 /* SearchViewModel.swift in Sources */,
 				146580FF2BF1F1C30093AA81 /* ApiModel.swift in Sources */,
-				143B0AF82BF59F830028D919 /* ListVIewModel.swift in Sources */,
 				146580E62BF1E8740093AA81 /* TabModel.swift in Sources */,
 				9A8DF8712BF6E51E009F0DAB /* FineListView.swift in Sources */,
 				9ABC1E262BF35C34006A626C /* FineDustModel.swift in Sources */,
@@ -708,11 +693,9 @@
 				14450EA12BF45962006A02F7 /* Extension.swift in Sources */,
 				14450EA32BF474FC006A02F7 /* PaddingLabel.swift in Sources */,
 				146580E82BF1E8960093AA81 /* HomeViewController.swift in Sources */,
-				143B0AF62BF59EBC0028D919 /* ListCollectionViewCell.swift in Sources */,
 				147EF8702BF62F1B000DC8A8 /* ListTableViewCell.swift in Sources */,
 				1445AF602BF32F7E0018AE3F /* DataSource.swift in Sources */,
 				B687F6862BF4CC6000623F1D /* HomeViewModel.swift in Sources */,
-				146580EA2BF1E8B00093AA81 /* ListViewController.swift in Sources */,
 				45D70DC62BF3342000942DC1 /* SecondLeftCollectionViewCell.swift in Sources */,
 				45D70DBD2BF3145C00942DC1 /* WeatherDetailViewController.swift in Sources */,
 				1445AF552BF2F5D40018AE3F /* CustomBounceAnimation.swift in Sources */,
