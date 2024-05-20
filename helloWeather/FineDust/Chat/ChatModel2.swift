@@ -19,7 +19,7 @@ struct ChatView2: View {
             VStack(alignment: .leading) {
                 Text(viewModel.chat2)
                     .padding()
-                    .background(Color.blue)
+                    .background(viewModel.chat2Color)
                     .foregroundColor(.white)
                     .cornerRadius(10)
             }

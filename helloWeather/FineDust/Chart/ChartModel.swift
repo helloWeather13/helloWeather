@@ -13,11 +13,12 @@ public struct ChartView: View {
     @Binding public var move: CGFloat
     @Binding public var widthmove: CGPoint
     @Binding public var currentDataNumber: Double
+    @Binding public var dragLocation:CGPoint
     
     
     @Environment(\.colorScheme) var colorScheme: ColorScheme
     @State private var showLegend = false
-    @State public var dragLocation:CGPoint = .zero
+    //@State public var dragLocation:CGPoint = .zero
     @State public var indicatorLocation:CGPoint = .zero
     @State public var closestPoint: CGPoint = .zero
     @State public var opacity:Double = 0
@@ -32,6 +33,7 @@ public struct ChartView: View {
                 legendSpecifier: String? = "%.1f",
                 move: Binding<CGFloat>,
                 widthmove: Binding<CGPoint>,
+                dragLocation: Binding<CGPoint>,
                 currentDataNumber: Binding<Double>
                 )
     
@@ -48,6 +50,7 @@ public struct ChartView: View {
         self._move = move
         self._widthmove = widthmove
         self._currentDataNumber = currentDataNumber
+        self._dragLocation = dragLocation
     }
     
     func getClosestDataPoint(toPoint: CGPoint, width:CGFloat, height: CGFloat) -> CGPoint {
@@ -102,7 +105,7 @@ public struct ChartView: View {
                     .onChanged({ value in
                         self.move = value.translation.width
                         self.widthmove = value.startLocation
-                        print(self.$currentDataNumber)
+                        //print(self.dragLocation.x)
                         //print( self.move)
                         //print( self.widthmove)
                         //print("시간위치 \(value.startLocation)")
@@ -173,3 +176,97 @@ public struct ChartView: View {
     }
     
 }
+
+public struct ChartView2: View {
+    @ObservedObject var data: ChartData
+    public var title: String?
+    public var legend: String?
+    public var style: ChartStyle2
+    public var darkModeStyle: ChartStyle2
+    public var valueSpecifier: String
+    public var legendSpecifier: String
+    @Binding public var move: CGFloat
+    @Binding public var widthmove: CGPoint
+    @Binding public var currentDataNumber: Double
+    @Binding public var dragLocation:CGPoint
+    
+    
+    @Environment(\.colorScheme) var colorScheme: ColorScheme
+    @State private var showLegend = false
+    //@State public var dragLocation:CGPoint = .zero
+    @State public var indicatorLocation:CGPoint = .zero
+    @State public var closestPoint: CGPoint = .zero
+    @State public var opacity:Double = 0
+    @State public var hideHorizontalLines: Bool = false
+ 
+    
+    public init(data: [Double],
+                title: String? = nil,
+                legend: String? = nil,
+                style: ChartStyle2 = Styles2.lineChartStyleOne2,
+                valueSpecifier: String? = "%.1f",
+                legendSpecifier: String? = "%.1f",
+                move: Binding<CGFloat>,
+                widthmove: Binding<CGPoint>,
+                dragLocation: Binding<CGPoint>,
+                currentDataNumber: Binding<Double>
+                )
+    
+    
+    {
+        
+        self.data = ChartData(points: data)
+        self.title = nil
+        self.legend = legend
+        self.style = style
+        self.valueSpecifier = valueSpecifier!
+        self.legendSpecifier = legendSpecifier!
+        self.darkModeStyle = style.darkModeStyle != nil ? style.darkModeStyle! : Styles2.lineViewDarkMode
+        self._move = move
+        self._widthmove = widthmove
+        self._currentDataNumber = currentDataNumber
+        self._dragLocation = dragLocation
+    }
+    
+    public var body: some View {
+        GeometryReader{ geometry in
+            VStack(alignment: .leading, spacing: 8) {
+                ZStack{
+                    GeometryReader{ reader in
+                        //줄 선
+                        MagnifierRect(currentNumber: self.$currentDataNumber, valueSpecifier: self.valueSpecifier)
+                            .opacity(self.opacity)
+                            .offset(x: self.dragLocation.x - geometry.frame(in: .local).size.width/2, y: 36)
+                        Rectangle()
+                            .foregroundColor(self.colorScheme == .dark ? self.darkModeStyle.backgroundColor : self.style.backgroundColor)
+                        if(self.showLegend){
+                        }
+                        Line3(data: self.data,
+                              frame: .constant(CGRect(x: 0, y: 0, width: reader.frame(in: .local).width - 30, height: reader.frame(in: .local).height + 25)),
+                              touchLocation: self.$indicatorLocation,
+                              showIndicator: self.$hideHorizontalLines,
+                              minDataValue: .constant(nil),
+                              maxDataValue: .constant(nil),
+                              showBackground: false,
+                              gradient: self.style.gradientColor
+                        )
+                        .offset(x: 30, y: 0)
+                        .onAppear(){
+                            self.showLegend = true
+                        }
+                        .onDisappear(){
+                            self.showLegend = false
+                        }
+                    }
+                    .frame(width: geometry.frame(in: .local).size.width, height: 180)
+                    .offset(x: 0, y: 40)
+                }
+                .frame(width: geometry.frame(in: .local).size.width, height: 240)
+
+            }
+        }
+    }
+    
+}
+
+

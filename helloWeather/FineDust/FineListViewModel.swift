@@ -25,6 +25,7 @@ class FineListViewModel: ObservableObject {
     @Published var fine3: String = ""
     @Published var fine4: String = ""
     @Published var location : SearchModel = SearchModel(keyWord: "", fullAddress: "", lat: 0.0, lon: 0.1, city: "")
+    
     @Published var chat1: String = "좋아요!"
     @Published var chat2: String = "아주 좋아요!"
     @Published var chat1Color: Color = Color.green
@@ -33,6 +34,10 @@ class FineListViewModel: ObservableObject {
     @Published var date1: [Double] = []
     //초미세
     @Published var date2: [Double] = []
+    
+    
+    @Published var draglocation: CGPoint = CGPoint()
+    @Published var draglocation2: CGPoint = CGPoint()
     
     
     private let weatherManager: WebServiceManager
@@ -69,6 +74,53 @@ class FineListViewModel: ObservableObject {
         disposeBag = DisposeBag()  // Reset the DisposeBag to cancel all subscriptions
     }
     
+    @Published var currentDataNumber: Double = 0 {
+        didSet {
+            print("드래그 로케이션 :", draglocation.x)
+            draglocation2.x = draglocation.x
+            updateChat1Color()
+            updateChat2Color()
+        }
+    }
+    @Published var currentDataNumber2: Double = 0 {
+        didSet {
+            updateChat1Color()
+            updateChat2Color()
+            //draglocation2.x = draglocation.x
+        }
+    }
+    
+    private func updateChat1Color() {
+        if currentDataNumber < 20 {
+            chat1 = "아주 좋아요!"
+            chat1Color = .blue
+        } else if currentDataNumber < 30 {
+            chat1 = "좋아요!"
+            chat1Color = .green
+        } else if currentDataNumber < 40 {
+            chat1 = "보통이에요!"
+            chat1Color = .yellow
+        } else {
+            chat1 = "나빠요!"
+            chat1Color = .red
+        }
+    }
+    
+    private func updateChat2Color() {
+        if currentDataNumber2 < 20 {
+            chat2 = "아주 좋아요!"
+            chat2Color = .blue
+        } else if currentDataNumber2 < 30 {
+            chat2 = "좋아요!"
+            chat2Color = .green
+        } else if currentDataNumber2 < 40 {
+            chat2 = "보통이에요!"
+            chat2Color = .yellow
+        } else {
+            chat2 = "나빠요!"
+            chat2Color = .red
+        }
+    }
     
     
     func getFaceType(for value: Double) -> Facetype {

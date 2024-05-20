@@ -152,12 +152,6 @@ public struct Line3: View {
     public var body: some View {
         ZStack {
             if self.showFull && self.showBackground {
-//                self.closedPath
-//                    .fill(LinearGradient(gradient: Gradient(colors: [Color.white, .white]), startPoint: .bottom, endPoint: .top))
-//                    .rotationEffect(.degrees(180), anchor: .center)
-//                    .rotation3DEffect(.degrees(180), axis: (x: 0, y: 1, z: 0))
-//                    .transition(.opacity)
-//                    //.animation(nil) // 애니메이션 중첩 방지
             }
             self.path
                 .trim(from: 0, to: self.showFull ? 1 : 0)
@@ -198,11 +192,5 @@ public struct Line3: View {
     }
 }
 
-//struct Line_Previews: PreviewProvider {
-//    static var previews: some View {
-//        GeometryReader { geometry in
-//            Line2(data: ChartData(points: [12, -230, 10, 54]), frame: .constant(geometry.frame(in: .local)), touchLocation: .constant(CGPoint(x: 100, y: 12)), showIndicator: .constant(true), minDataValue: .constant(nil), maxDataValue: .constant(nil))
-//        }.frame(width: 320, height: 160)
-//    }
-//}
+
 

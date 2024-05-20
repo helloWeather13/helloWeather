@@ -20,12 +20,12 @@ struct LineChartView: View {
     @State private var scrollOffset: CGFloat = 0.0
     @State private var chartMove: CGFloat = 0.0
     @State private var widtdmove: CGPoint = .zero
+    @State private var chartMove2: CGFloat = 0.0
+    @State private var widtdmove2: CGPoint = .zero
     @State private var isOffsetEnabled: Bool = true
     
     @State private var isTouched: Bool = false
     @State private var isAnimating = false
-    @State private var currentDataNumber: Double = 0
-    @State private var currentDataNumber2: Double = 0
 
     @StateObject private var fineListViewModel =
     FineListViewModel(
@@ -137,11 +137,11 @@ struct LineChartView: View {
                                     ScrollView(.horizontal, showsIndicators: false) {
                                         VStack{
                                             ZStack {
-                                                ChartView2(data: fineListViewModel.returnfine(), title: "Second Chart", style: Styles2.lineChartStyleOne2, currentDataNumber: $currentDataNumber)
+                                                ChartView2(data: fineListViewModel.returnfine(), title: "Second Chart", style: Styles2.lineChartStyleOne2, move: $chartMove2, widthmove: $widtdmove2, dragLocation: $fineListViewModel.draglocation2, currentDataNumber: $fineListViewModel.currentDataNumber2)
                                                     .opacity(0.5)
                                                     .frame(width: geometry.size.width-30, height: geometry.size.height)
                                                 
-                                                ChartView(data: fineListViewModel.returnmicro(), title: "Full chart", style: Styles2.lineChartStyleOne, move: $chartMove, widthmove: $widtdmove, currentDataNumber: $currentDataNumber2)
+                                                ChartView(data: fineListViewModel.returnmicro(), title: "Full chart", style: Styles2.lineChartStyleOne, move: $chartMove, widthmove: $widtdmove, dragLocation: $fineListViewModel.draglocation, currentDataNumber: $fineListViewModel.currentDataNumber)
                                                     .frame(width: geometry.size.width-30, height: geometry.size.height)
                                             }
                                             .offset(x: isOffsetEnabled ? self.scrollOffset : 0) // Apply scroll offset
