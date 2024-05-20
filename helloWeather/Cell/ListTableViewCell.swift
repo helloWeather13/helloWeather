@@ -8,6 +8,8 @@
 import UIKit
 import SnapKit
 import RxSwift
+import RxCocoa
+import SkeletonView
 
 class ListTableViewCell: UITableViewCell {
     
@@ -22,10 +24,8 @@ class ListTableViewCell: UITableViewCell {
     var deleteView = UIView()
     var viewContainer = UIView()
     var deleteButton = UIButton()
+    var disposeBag = DisposeBag()
     var isAlarm = false
-    
-    
-    
     
     //    var weatherAPIModel : WeatherAPIModel?
     
@@ -39,6 +39,14 @@ class ListTableViewCell: UITableViewCell {
         fatalError("init(Coder:) has not been implemented")
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        disposeBag = DisposeBag()
+        self.viewContainer.snp.updateConstraints {
+            $0.trailing.equalToSuperview().offset(0)
+        }
+        
+    }
     override func layoutSubviews() {
         super.layoutSubviews()
         
@@ -51,6 +59,7 @@ class ListTableViewCell: UITableViewCell {
     }
     
     func configure(searchModel: SearchModel){
+        self.makeConstraints()
         WebServiceManager.shared.getForecastWeather(searchModel: searchModel, completion: { data in
             self.configureUI(weatherAPIModel: data, searchModel: searchModel)
         })
@@ -63,6 +72,8 @@ class ListTableViewCell: UITableViewCell {
             }
             self.deleteButton.isHidden = false
             self.viewContainer.superview?.layoutIfNeeded()
+            self.deleteButton.superview?.layoutIfNeeded()
+            self.deleteButton.isEnabled = true
         }
     }
     
@@ -72,7 +83,28 @@ class ListTableViewCell: UITableViewCell {
                 $0.trailing.equalToSuperview().offset(0)
             }
             self.deleteButton.isHidden = true
+            self.deleteButton.isEnabled = false
             self.viewContainer.superview?.layoutIfNeeded()
+            self.deleteButton.superview?.layoutIfNeeded()
+        }
+    }
+    
+    var buttonTap: Observable<Void> {
+        return deleteButton.rx.tap.asObservable()
+    }
+    func setupAlarmImageView() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(alarmImageViewTapped))
+                alarmImageView.addGestureRecognizer(tapGesture)
+                alarmImageView.isUserInteractionEnabled = true
+    }
+    
+    @objc func alarmImageViewTapped() {
+        if isAlarm {
+            alarmImageView.image = .alarm0
+            isAlarm = false
+        } else {
+            alarmImageView.image = .alarm1
+            isAlarm = true
         }
     }
     func configureUI(weatherAPIModel : WeatherAPIModel, searchModel : SearchModel) {
@@ -84,15 +116,8 @@ class ListTableViewCell: UITableViewCell {
         swipeGestureRight.direction = .right
         self.addGestureRecognizer(swipeGestureRight)
         
-        contentView.addSubview(viewContainer)
         
-        [cityLabel, conditionLabel,temperatureLabel,weatherImage,minMaxTempLabel,alarmImageView].forEach{
-            viewContainer.addSubview($0)
-            $0.translatesAutoresizingMaskIntoConstraints = false
-            $0.tintColor = .label
-        }
-        contentView.addSubview(deleteView)
-        deleteView.addSubview(deleteButton)
+
         deleteButton.setImage(UIImage(systemName: "trash.fill"), for: .normal)
         deleteButton.isHidden = true
         deleteView.backgroundColor = .red
@@ -111,8 +136,9 @@ class ListTableViewCell: UITableViewCell {
         minMaxTempLabel.textColor = .secondaryLabel
         minMaxTempLabel.font = .systemFont(ofSize: 12)
         minMaxTempLabel.sizeToFit()
-        alarmImageView.image = .alarm0
-        self.makeConstraints()
+        isAlarm = searchModel.notification
+        alarmImageView.image = isAlarm ? .alarm1 : .alarm0
+        setupAlarmImageView()
     }
     
     func setupAlarmImageView() {
@@ -132,8 +158,18 @@ class ListTableViewCell: UITableViewCell {
     }
     
     func makeConstraints(){
+    
+        contentView.addSubview(viewContainer)
         
+        [cityLabel, conditionLabel,temperatureLabel,weatherImage,minMaxTempLabel,alarmImageView].forEach{
+            viewContainer.addSubview($0)
+            $0.translatesAutoresizingMaskIntoConstraints = false
+            $0.tintColor = .label
+        }
+        contentView.addSubview(deleteView)
+        deleteView.addSubview(deleteButton)
         guard let superview = self.superview else { return }
+
         
         viewContainer.snp.makeConstraints{
             $0.bottom.top.leading.equalToSuperview()
@@ -186,6 +222,14 @@ class ListTableViewCell: UITableViewCell {
             $0.centerX.centerY.equalToSuperview()
             $0.width.height.equalTo(24)
         }
+//        [cityLabel, conditionLabel,temperatureLabel,weatherImage,minMaxTempLabel,alarmImageView].forEach{
+//            $0.isSkeletonable = true
+//            $0.showSkeleton(transition: .crossDissolve(0.5))
+//        }
     }
 }
 
+
+extension Reactive where Base: ListTableViewCell {
+    var buttonTapped: ControlEvent<Void> { base.deleteButton.rx.tap }
+}

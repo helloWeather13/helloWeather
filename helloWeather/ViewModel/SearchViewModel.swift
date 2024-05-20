@@ -8,8 +8,16 @@
 import Foundation
 import Alamofire
 import UIKit
+import MapKit
 
 class SearchViewModel {
+    
+    var searchCompleter: MKLocalSearchCompleter?
+    var searchRegion: MKCoordinateRegion = MKCoordinateRegion(MKMapRect.world)
+    var completerResults: [MKLocalSearchCompletion]?
+    
+
+    
     var state : SearchState = .beforeSearch
     var relatedSearch : [SearchModel] = []
     var recentSearch : [SearchModel] = []
@@ -57,19 +65,25 @@ class SearchViewModel {
     // MARK: - getWeatherResult WebSeriveManager로 날씨데이터 받아오고, SearchModel 즉 주소 정보 포함된 변수로 호출
     func getWeatherResult(searchModel : SearchModel){
         WebServiceManager.shared.getForecastWeather(searchModel: searchModel, completion: { weatherData in
-            print("99")
-        })
-        WebServiceManager.shared.getHistoryWeather(searchModel: searchModel, completion: { weatherData in
             print(weatherData)
         })
+//        WebServiceManager.shared.getHistoryWeather(searchModel: searchModel, completion: { weatherData in
+//            print(weatherData)
+//        })
         
     }
     
     // MARK: - getSearchResult WebSeriveManager로 주소 데이터 받아오고, SearchBar Text로 호출
-    func getSearchResult(address : String){
+    func getSearchResult(address : String, completion: @escaping (Bool) -> Void){
         WebServiceManager.shared.getKakaoAddressResult(address: address, completion:{ addressModel in
-            self.convertDataToRelatedModel(data: addressModel, address: address)
-            self.applySnapshot()
+            if addressModel.documents.count == 0 {
+                completion(true)
+            }else{
+                completion(false)
+                self.convertDataToRelatedModel(data: addressModel, address: address)
+                self.applySnapshot()
+            }
+            
         })
     }
     

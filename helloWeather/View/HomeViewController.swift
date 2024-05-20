@@ -68,7 +68,7 @@ class HomeViewController: UIViewController {
     }()
     
     lazy var stackView: UIStackView = {
-       let stview = UIStackView(arrangedSubviews: [todayLabel, secondLabel, thirdLabel])
+        let stview = UIStackView(arrangedSubviews: [todayLabel, secondLabel, thirdLabel])
         stview.spacing = 10
         stview.axis = .vertical
         stview.alignment = .leading
@@ -101,8 +101,9 @@ class HomeViewController: UIViewController {
         setupSecondLabel()
         setupThirdLabel()
         setupAutoLayout()
+        bind()
     }
-
+    
     func setupNaviBar() {
         
         
@@ -116,10 +117,13 @@ class HomeViewController: UIViewController {
         let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonTapped))
         addButton.tintColor = .black
         navigationItem.rightBarButtonItem = addButton
+
+        
     }
     
     @objc func addButtonTapped() {
-        print(#function)
+        self.navigationController?.pushViewController(SearchViewController(), animated: false)
+        
     }
     
     func setupSecondLabel() {
@@ -187,50 +191,71 @@ class HomeViewController: UIViewController {
         }
         
         view.addSubview(notificationButton)
-        notificationButton.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(128)
+        view.addSubview(bookmarkButton)
+        bookmarkButton.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(124)
             $0.trailing.equalToSuperview().inset(32)
+            $0.width.height.equalTo(24)
+            
+        notificationButton.snp.makeConstraints {
+            $0.centerY.equalTo(bookmarkButton)
+            $0.leading.equalTo(bookmarkButton.snp.leading)
             $0.width.height.equalTo(24)
         }
         
-        view.addSubview(bookmarkButton)
-        bookmarkButton.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(128)
-            $0.trailing.equalToSuperview().inset(32)
-            $0.width.height.equalTo(24)
+        
+        
         }
     }
     
+    func bind(){
+        self.homeViewModel.bookMarkDidChanged = { isBookmarked in
+            if isBookmarked {
+                self.bookmarkButton.setBackgroundImage(UIImage(systemName: "bookmark.fill"), for: .normal)
+            }else{
+                self.bookmarkButton.setBackgroundImage(UIImage(systemName: "bookmark"), for: .normal)
+            }
+            self.bookmarkButton.superview?.layoutIfNeeded()
+        }
+        self.homeViewModel.notfiedDiDChanged = { isnotified in
+            if isnotified {
+                self.notificationButton.setBackgroundImage(UIImage(systemName: "bell.fill"), for: .normal)
+            }else{
+                self.notificationButton.setBackgroundImage(UIImage(systemName: "bell"), for: .normal)
+            }
+            self.notificationButton.superview?.layoutIfNeeded()
+        }
+    }
     @objc func bookmarkButtonTapped() {
         if !homeViewModel.isBookmarked {
             homeViewModel.isBookmarked = true
-            bookmarkButton.setBackgroundImage(UIImage(systemName: "bookmark.fill"), for: .normal)
             
             UIView.animate(withDuration: 0.3, animations: {
                 self.notificationButton.tintColor = .black
                 self.notificationButton.snp.updateConstraints {
-                    $0.top.equalToSuperview().offset(172)
+                    $0.leading.equalTo(self.bookmarkButton.snp.leading).offset(-32)
                 }
                 self.view.layoutIfNeeded()
             })
+            self.homeViewModel.saveCurrentBookMark()
         } else {
             homeViewModel.isBookmarked = false
-            bookmarkButton.setBackgroundImage(UIImage(systemName: "bookmark"), for: .normal)
             UIView.animate(withDuration: 0.3, animations: {
                 self.notificationButton.tintColor = .clear
             }) { _ in
                 self.notificationButton.snp.updateConstraints {
-                    $0.top.equalToSuperview().offset(128)
+                    $0.leading.equalTo(self.bookmarkButton).offset(0)
                 }
                 UIView.animate(withDuration: 0.3) {
                     self.view.layoutIfNeeded()
                 }
             }
+            self.homeViewModel.deleteCurrentBookMark()
         }
     }
     
     @objc func notificationButtonTapped() {
-        print(#function)
+        self.homeViewModel.changeNotiCurrentBookMark()
     }
     
 }
