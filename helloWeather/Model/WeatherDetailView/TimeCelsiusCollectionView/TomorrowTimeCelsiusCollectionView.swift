@@ -11,60 +11,55 @@ import RxCocoa
 
 class TomorrowTimeCelsiusCollectionView: UICollectionView, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
-//    private var viewModel: WeatherDetailViewModel?
-//    private var disposeBag = DisposeBag()
+    private var viewModel: WeatherDetailViewModel?
+    private var disposeBag = DisposeBag()
     private var hourlyWeatherData: [WeatherDetailViewModel.HourlyWeather] = []
     
     
-    init(/*viewModel: WeatherDetailViewModel*/) {
-//        self.viewModel = viewModel
+    init(viewModel: WeatherDetailViewModel) {
+        self.viewModel = viewModel
         
-           let layout = UICollectionViewFlowLayout()
-           layout.scrollDirection = .horizontal
-           super.init(frame: .zero, collectionViewLayout: layout)
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        super.init(frame: .zero, collectionViewLayout: layout)
         
-           self.delegate = self
-           self.dataSource = self
-           self.register(FirstRightCollectionViewCell.self, forCellWithReuseIdentifier: FirstRightCollectionViewCell.identifier)
-            self.showsHorizontalScrollIndicator = false
+        self.delegate = self
+        self.dataSource = self
+        self.register(FirstRightCollectionViewCell.self, forCellWithReuseIdentifier: FirstRightCollectionViewCell.identifier)
+        self.showsHorizontalScrollIndicator = false
         self.isScrollEnabled = false
         
-//        bindViewModel()
+        bindViewModel()
         
-       }
-       
-       required init?(coder: NSCoder) {
-           fatalError("init(coder:) has not been implemented")
-       }
+    }
     
-//    private func bindViewModel() {
-//        viewModel?.fetchHourlyWeather()
-//            .subscribe(onNext: { [weak self] hourlyWeather in
-//                let now = Calendar.current.component(.hour, from: Date())
-//                self?.hourlyWeatherData = hourlyWeather.filter { hourlyWeather in
-//                    guard let hour = Int(hourlyWeather.time.replacingOccurrences(of: "시", with: "")) else {
-//                        return false
-//                    }
-//                    // 현재 시간 이후의 값 중에서 0시부터의 값만 반환
-//                    return hour >= now || hour == 0
-//                }
-//                self?.reloadData()
-//            })
-//            .disposed(by: disposeBag)
-//    }
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
-    func updateTomorrowData(with hourlyWeather: [WeatherDetailViewModel.HourlyWeather]) {
-            let now = Calendar.current.component(.hour, from: Date())
-            self.hourlyWeatherData = hourlyWeather.filter { hourlyWeather in
-                guard let hour = Int(hourlyWeather.time.replacingOccurrences(of: "시", with: "")) else {
-                    return false
-                }
-                // 현재 시간 이후의 값 중에서 0시부터의 값만 반환
-                return hour >= now || hour == 0
-            }
-            self.reloadData()
-        }
-    
+    // MARK: - ViewModel 바인딩
+    private func bindViewModel() {
+        viewModel?.fetchHourlyWeather()
+            .subscribe(onNext: { [weak self] hourlyWeather in
+                //print("받아 온 시간 정보: \(hourlyWeather)")
+                let currentDate = Date()
+                let calendar = Calendar.current
+                
+                // 첫 번째 0시의 인덱스 찾기
+                guard let firstZeroHourIndex = hourlyWeather.firstIndex(where: { $0.time.hasPrefix("0시") }) else { return }
+                
+                // 첫 번째 0시부터 3시간 간격으로 필터링된 시간대 가져오기
+                let nextDayHourlyWeather = hourlyWeather[firstZeroHourIndex...].enumerated().compactMap { index, hourlyData in
+                    guard index % 3 == 0 else { return nil }
+                    return hourlyData
+                } as [WeatherDetailViewModel.HourlyWeather]
+                
+                print("필터링된 데이터: \(nextDayHourlyWeather)")
+                self?.hourlyWeatherData = Array(nextDayHourlyWeather)
+                self?.reloadData()
+            })
+            .disposed(by: disposeBag)
+    }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return hourlyWeatherData.count
@@ -76,11 +71,8 @@ class TomorrowTimeCelsiusCollectionView: UICollectionView, UICollectionViewDeleg
         let hourlyWeather = hourlyWeatherData[indexPath.item]
         cell.celsiusLabel.text = hourlyWeather.feelslikeC
         cell.timeLabel.text = hourlyWeather.time
-//        cell.celsiusLabel.text = "\(indexPath.item * 5)°"
-//        cell.celsiusLabel.textColor = .mygray
-//        
-//        let hour = (indexPath.item * 3) % 24
-//        cell.timeLabel.text = "\(hour)시"
+        
+        cell.celsiusLabel.textColor = .mygray
         cell.timeLabel.textColor = .mygray
         
         return cell
@@ -91,5 +83,5 @@ class TomorrowTimeCelsiusCollectionView: UICollectionView, UICollectionViewDeleg
         let height: CGFloat = 119
         return CGSize(width: width, height: height)
     }
-
+    
 }

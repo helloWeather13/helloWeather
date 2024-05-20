@@ -112,7 +112,7 @@ class HumidityCollectionView: UICollectionView, UICollectionViewDelegate, UIColl
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize{
-        let width: CGFloat = 44
+        let width: CGFloat = 47
         let height: CGFloat = 119
         return CGSize(width: width, height: height)
     }

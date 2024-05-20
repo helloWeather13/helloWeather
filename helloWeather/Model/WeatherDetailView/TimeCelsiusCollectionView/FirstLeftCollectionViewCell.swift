@@ -19,7 +19,6 @@ class FirstLeftCollectionViewCell: UICollectionViewCell {
         stack.spacing = 8
         return stack
     }()
-    
     lazy var stackView2: UIStackView = {
         let stack = UIStackView()
         stack.axis = .vertical
@@ -74,7 +73,6 @@ class FirstLeftCollectionViewCell: UICollectionViewCell {
         [stackView, timeLabel].forEach {
             stackView2.addArrangedSubview($0)
         }
-        
         
         stackView2.snp.makeConstraints { make in
             make.edges.equalToSuperview()
@@ -159,8 +157,9 @@ public struct BarChartCell: View {
         .frame(width: CGFloat(self.cellWidth))
         .scaleEffect(CGSize(width: 1, height: self.scaleValue), anchor: .bottom)
         .onAppear {
-            self.scaleValue = self.value
+            withAnimation(Animation.spring().delay(self.touchLocation < 0 ?  Double(self.index) * 0.04 : 0)) { // 애니메이션 적용
+                self.scaleValue = self.value
+            }
         }
-        .animation(Animation.spring().delay(self.touchLocation < 0 ?  Double(self.index) * 0.04 : 0))
     }
 }

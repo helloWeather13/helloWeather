@@ -19,7 +19,6 @@ class SecondLeftCollectionViewCell: UICollectionViewCell {
         stack.spacing = 10
         return stack
     }()
-    
     lazy var secondStackView: UIStackView = {
         let stack = UIStackView()
         stack.axis = .vertical
@@ -158,8 +157,9 @@ public struct BarChartCell2: View {
         .frame(width: CGFloat(self.cellWidth))
         .scaleEffect(CGSize(width: 1, height: self.scaleValue), anchor: .bottom)
         .onAppear {
-            self.scaleValue = self.value
+            withAnimation(Animation.spring().delay(self.touchLocation < 0 ?  Double(self.index) * 0.04 : 0)) { // 애니메이션 적용
+                self.scaleValue = self.value
+            }
         }
-        .animation(Animation.spring().delay(self.touchLocation < 0 ?  Double(self.index) * 0.04 : 0))
     }
 }
