@@ -7,6 +7,8 @@
 
 import UIKit
 import SnapKit
+import Charts
+import DGCharts
 
 class FirstLeftCollectionViewCell: UICollectionViewCell {
     
@@ -34,11 +36,25 @@ class FirstLeftCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
+    var barChartView: BarChartView = {
+        let view = UIView()
+        view.frame = CGRect(x: 0, y: 0, width: 36, height: 50)
+        return view as! BarChartView
+    }()
+    
+    var horizontal: [String]!
+    var vertical: [Double]!
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        configureConstraints()
-    }
+//        configureConstraints()
+//        setChart(dataPoints: [String], values: [Double])
+//        
+//        horizontal = [""]
+//        vertical = ["celsiusLabel"]
+//        setChart(dataPoints: horizontal, values: vertical)
+//    }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -59,6 +75,23 @@ class FirstLeftCollectionViewCell: UICollectionViewCell {
             make.height.equalTo(celsiusLabel.font.pointSize)
         }
         
+    }
+    
+    private func setChart(dataPoints: [String], values: [Double]) {
+        var dataEntries: [BarChartDataEntry] = []
+        for i in 0..<dataPoints.count {
+            let dataEntry = BarChartDataEntry(x: Double(i), y: values[i])
+            dataEntries.append(dataEntry)
+        }
+
+        let chartDataSet = BarChartDataSet(entries: dataEntries, label: "판매량")
+
+        // 차트 컬러
+        chartDataSet.colors = [.gray]
+
+        // 데이터 삽입
+        let chartData = BarChartData(dataSet: chartDataSet)
+        barChartView.data = chartData
     }
     
 }
