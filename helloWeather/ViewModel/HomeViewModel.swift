@@ -44,12 +44,18 @@ class HomeViewModel: NSObject, CLLocationManagerDelegate {
             bookMarkDidChanged(isBookmarked)
         }
     }
-    
+    var isNotified = false {
+        didSet {
+            notfiedDiDChanged(isNotified)
+        }
+    }
+    var isNotification = false
     var userLocationAddress: String = "" {
         didSet {
             addressOnCompleted(userLocationAddress)
         }
     }
+    var notfiedDiDChanged : ((Bool) -> ()) = { _ in }
     var bookMarkDidChanged: ((Bool) -> ()) = { _ in }
     var addressOnCompleted: ((String) -> ()) = { _ in }
     
@@ -184,7 +190,7 @@ class HomeViewModel: NSObject, CLLocationManagerDelegate {
                     self.currentSearchModel?.fullAddress = address
                     self.currentSearchModel?.city = address
                     self.isBookmarked = self.isCurrentLocationBookMarked()
-                    
+                    loadNotification()
                 } else {
                     print("No location")
                 }
@@ -212,17 +218,27 @@ class HomeViewModel: NSObject, CLLocationManagerDelegate {
             }
         }
     }
-    
     func isCurrentLocationBookMarked() -> Bool{
         if let currentSearchModel {
             if self.bookMarkSearchModel.contains(where: {
                 $0.fullAddress == currentSearchModel.fullAddress
             }){
                 return true
+            }else{
+                return false
             }
         }
         return false
     }
+    
+    func loadNotification(){
+        if let currentSearchModel {
+            if isCurrentLocationBookMarked(){
+                self.isNotified = currentSearchModel.notification
+            }
+        }
+    }
+
     
     // MARK: - deleteRecentSearch UserDefault에서 최근 결과 삭제
     func deleteCurrentBookMark(){
@@ -230,12 +246,26 @@ class HomeViewModel: NSObject, CLLocationManagerDelegate {
             $0.fullAddress == currentSearchModel?.fullAddress
         }) else {return}
         bookMarkSearchModel.remove(at: index)
+        isBookmarked = false
+        isNotified = false
 //        UserDefaults.standard.removeObject(forKey: "bookMark")
         let encoder = JSONEncoder()
         if let encoded = try? encoder.encode(bookMarkSearchModel){
             UserDefaults.standard.setValue(encoded, forKey: "bookMark")
         }
         
+    }
+    
+    func changeNotiCurrentBookMark(){
+        self.isNotified = !isNotified
+        guard let index = bookMarkSearchModel.firstIndex(where: {
+            $0.fullAddress == currentSearchModel?.fullAddress
+        }) else {return}
+        bookMarkSearchModel[index].notification = isNotified
+        let encoder = JSONEncoder()
+        if let encoded = try? encoder.encode(bookMarkSearchModel){
+            UserDefaults.standard.setValue(encoded, forKey: "bookMark")
+        }
     }
     
     

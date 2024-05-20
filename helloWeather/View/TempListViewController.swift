@@ -27,6 +27,7 @@ class TempListViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        viewModel.bookMarkModel = []
         self.viewModel.loadBookMark()
         self.viewModel.applySnapshot()
     }

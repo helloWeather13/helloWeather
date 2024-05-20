@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 import RxSwift
 import RxCocoa
-
+import SkeletonView
 
 class ListTableViewCell: UITableViewCell {
     
@@ -57,6 +57,7 @@ class ListTableViewCell: UITableViewCell {
     }
     
     func configure(searchModel: SearchModel){
+        self.makeConstraints()
         WebServiceManager.shared.getForecastWeather(searchModel: searchModel, completion: { data in
             self.configureUI(weatherAPIModel: data, searchModel: searchModel)
         })
@@ -112,16 +113,8 @@ class ListTableViewCell: UITableViewCell {
         let swipeGestureRight = UISwipeGestureRecognizer(target: self, action: #selector(didSwipeCellRight))
         swipeGestureRight.direction = .right
         self.addGestureRecognizer(swipeGestureRight)
-        setupAlarmImageView()
-        contentView.addSubview(viewContainer)
         
-        [cityLabel, conditionLabel,temperatureLabel,weatherImage,minMaxTempLabel,alarmImageView].forEach{
-            viewContainer.addSubview($0)
-            $0.translatesAutoresizingMaskIntoConstraints = false
-            $0.tintColor = .label
-        }
-        contentView.addSubview(deleteView)
-        deleteView.addSubview(deleteButton)
+        
         deleteButton.setImage(UIImage(systemName: "trash.fill"), for: .normal)
         deleteButton.isHidden = true
         deleteView.backgroundColor = .red
@@ -139,11 +132,23 @@ class ListTableViewCell: UITableViewCell {
         minMaxTempLabel.textColor = .secondaryLabel
         minMaxTempLabel.font = .systemFont(ofSize: 12)
         minMaxTempLabel.sizeToFit()
-        alarmImageView.image = .alarm0
-        self.makeConstraints()
+        isAlarm = searchModel.notification
+        alarmImageView.image = isAlarm ? .alarm1 : .alarm0
+        setupAlarmImageView()
     }
     
     func makeConstraints(){
+        
+        contentView.addSubview(viewContainer)
+        
+        [cityLabel, conditionLabel,temperatureLabel,weatherImage,minMaxTempLabel,alarmImageView].forEach{
+            viewContainer.addSubview($0)
+            $0.translatesAutoresizingMaskIntoConstraints = false
+            $0.tintColor = .label
+        }
+        contentView.addSubview(deleteView)
+        deleteView.addSubview(deleteButton)
+        
         viewContainer.snp.makeConstraints{
             $0.bottom.top.leading.equalToSuperview()
             $0.trailing.equalToSuperview()
@@ -185,6 +190,10 @@ class ListTableViewCell: UITableViewCell {
             $0.centerX.centerY.equalToSuperview()
             $0.width.height.equalTo(24)
         }
+//        [cityLabel, conditionLabel,temperatureLabel,weatherImage,minMaxTempLabel,alarmImageView].forEach{
+//            $0.isSkeletonable = true
+//            $0.showSkeleton(transition: .crossDissolve(0.5))
+//        }
     }
 }
 

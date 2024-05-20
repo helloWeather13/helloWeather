@@ -39,7 +39,6 @@ class SearchViewController: UIViewController {
         // Create a custom button view
         let deleteButton = UIView()
         deleteButton.frame = CGRect(x: 0, y: 0, width: 48, height: 36)
-        deleteButton.backgroundColor = .red
         deleteButton.isUserInteractionEnabled = true // Enable user interaction
 
         // Create the label for the button
@@ -120,7 +119,7 @@ class SearchViewController: UIViewController {
         searchBar.placeholder = "어느 지역의 날씨가 궁금하세요?"
         searchBar.setValue("취소", forKey: "cancelButtonText")
         searchBar.showsCancelButton = false
-        searchBar.tintColor = .red
+        searchBar.tintColor = UIColor.label
         searchBarTextFieldConfigure()
         self.navigationItem.titleView = searchBar
     }

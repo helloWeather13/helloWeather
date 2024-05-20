@@ -6,5 +6,6 @@ struct SearchModel : Hashable, Codable {
     var lat: Double
     var lon: Double
     var city: String
+    var notification : Bool = false
 }
 

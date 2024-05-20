@@ -50,6 +50,6 @@ class TempListViewModel {
             .listWeather($0)
         })
         snapshot.appendItems(items)
-        dataSource?.apply(snapshot, animatingDifferences: true)
+        dataSource?.apply(snapshot, animatingDifferences: false)
     }
 }

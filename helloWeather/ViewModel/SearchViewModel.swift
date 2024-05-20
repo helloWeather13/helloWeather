@@ -65,11 +65,11 @@ class SearchViewModel {
     // MARK: - getWeatherResult WebSeriveManager로 날씨데이터 받아오고, SearchModel 즉 주소 정보 포함된 변수로 호출
     func getWeatherResult(searchModel : SearchModel){
         WebServiceManager.shared.getForecastWeather(searchModel: searchModel, completion: { weatherData in
-            print("99")
-        })
-        WebServiceManager.shared.getHistoryWeather(searchModel: searchModel, completion: { weatherData in
             print(weatherData)
         })
+//        WebServiceManager.shared.getHistoryWeather(searchModel: searchModel, completion: { weatherData in
+//            print(weatherData)
+//        })
         
     }
     

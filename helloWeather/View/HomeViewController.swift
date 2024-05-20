@@ -185,17 +185,20 @@ class HomeViewController: UIViewController {
         }
         
         view.addSubview(notificationButton)
-        notificationButton.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(128)
+        view.addSubview(bookmarkButton)
+        bookmarkButton.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(124)
             $0.trailing.equalToSuperview().inset(32)
+            $0.width.height.equalTo(24)
+            
+        notificationButton.snp.makeConstraints {
+            $0.centerY.equalTo(bookmarkButton)
+            $0.leading.equalTo(bookmarkButton.snp.leading)
             $0.width.height.equalTo(24)
         }
         
-        view.addSubview(bookmarkButton)
-        bookmarkButton.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(128)
-            $0.trailing.equalToSuperview().inset(32)
-            $0.width.height.equalTo(24)
+        
+        
         }
     }
     
@@ -208,6 +211,14 @@ class HomeViewController: UIViewController {
             }
             self.bookmarkButton.superview?.layoutIfNeeded()
         }
+        self.homeViewModel.notfiedDiDChanged = { isnotified in
+            if isnotified {
+                self.notificationButton.setBackgroundImage(UIImage(systemName: "bell.fill"), for: .normal)
+            }else{
+                self.notificationButton.setBackgroundImage(UIImage(systemName: "bell"), for: .normal)
+            }
+            self.notificationButton.superview?.layoutIfNeeded()
+        }
     }
     @objc func bookmarkButtonTapped() {
         if !homeViewModel.isBookmarked {
@@ -216,7 +227,7 @@ class HomeViewController: UIViewController {
             UIView.animate(withDuration: 0.3, animations: {
                 self.notificationButton.tintColor = .black
                 self.notificationButton.snp.updateConstraints {
-                    $0.top.equalToSuperview().offset(172)
+                    $0.leading.equalTo(self.bookmarkButton.snp.leading).offset(-32)
                 }
                 self.view.layoutIfNeeded()
             })
@@ -227,7 +238,7 @@ class HomeViewController: UIViewController {
                 self.notificationButton.tintColor = .clear
             }) { _ in
                 self.notificationButton.snp.updateConstraints {
-                    $0.top.equalToSuperview().offset(128)
+                    $0.leading.equalTo(self.bookmarkButton).offset(0)
                 }
                 UIView.animate(withDuration: 0.3) {
                     self.view.layoutIfNeeded()
@@ -238,7 +249,7 @@ class HomeViewController: UIViewController {
     }
     
     @objc func notificationButtonTapped() {
-        print(#function)
+        self.homeViewModel.changeNotiCurrentBookMark()
     }
     
 }

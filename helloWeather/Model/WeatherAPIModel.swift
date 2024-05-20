@@ -114,6 +114,7 @@ struct Hour: Codable {
     let humidity, cloud: Int // 습도 구름 0-100
     let feelslikeC, feelslikeF: Double // 체감온도 온도 C 섭씨, F 화씨
     let willItRain, chanceOfRain, willItSnow, chanceOfSnow: Int
+    let airQuality: AirQuality?
     let uv: Int
 
     enum CodingKeys: String, CodingKey {
@@ -131,6 +132,7 @@ struct Hour: Codable {
         case chanceOfRain = "chance_of_rain"
         case willItSnow = "will_it_snow"
         case chanceOfSnow = "chance_of_snow"
+        case airQuality = "air_quality"
         case uv
     }
 }
