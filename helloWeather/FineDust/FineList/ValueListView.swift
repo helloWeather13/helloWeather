@@ -9,40 +9,30 @@ import SwiftUI
 import Charts
 
 
-enum Valuetype: String {
-    case happy = "아주 좋음"
-    case smile = "좋음"
-    case umm = "보통"
-    case bad = "나쁨"
-    
-    var color : Color{
-        switch self {
-        case .happy: return .blue
-        case .smile: return .green
-        case .umm: return .orange
-        case .bad: return .red
-        }
-    }
-}
-
 
 struct ValueList: View {
     
-    var test: [Valuetype] = [
-        .happy,
-        .smile,
-        .umm,
-        .bad
-    ]
-    
+    @ObservedObject var viewModel: FineListViewModel
     
     var body: some View {
-        let testvalue = ["0.063", "0.009", "0.300", "0.003"]
+        
+        let testvalue = [viewModel.o3, viewModel.no2, viewModel.co, viewModel.so2]
+        var test: [Valuetype2] {
+            return testvalue.compactMap { value in
+                //print(value)
+                if let doubleValue = Double(value) {
+                    return Valuetype2.from(value: doubleValue)
+                }
+                return nil
+            }
+        }
+        
         VStack{
             HStack{
                 Spacer()
                 Text("대기오염 물질")
                     .font(.system(size: 18, weight: .medium))
+                
                 ForEach(0..<8){ _ in
                     Spacer()
                 }
@@ -80,7 +70,6 @@ struct ValueList: View {
                     Spacer()
                 }
             }
-            .padding()
             ZStack{
                 HStack{
                     Spacer()
@@ -113,17 +102,10 @@ struct ValueList: View {
                     Spacer()
                 }
             }
-            .padding()
+        }
+        .onAppear {
+            viewModel.fineListTrigger.onNext(())
         }
     }
 }
 
-
-#Preview {
-    VStack {
-        Spacer()
-        ValueList()
-            .padding()
-        Spacer()
-    }
-}

@@ -1,88 +1,18 @@
-//
-//  File.swift
-//  helloWeather
-//
-//  Created by 김태담 on 5/17/24.
-//
-
-import Foundation
 import SwiftUI
-import Charts
 
-
-enum Facetype: String {
-    case happy = "아주 좋음"
-    case smile = "좋음"
-    case umm = "보통"
-    case bad = "나쁨"
-    
-    var image : Image{
-        switch self {
-        case .happy: return Image("happy")
-        case .smile: return Image("smile")
-        case .umm: return Image("umm")
-        case .bad: return Image("bad")
-        }
-    }
-}
-
-
-struct FineList: View {
-    
+struct FineListView: View {
+    @ObservedObject var viewModel: FineListViewModel
     @SwiftUI.State private var isToggleOn = false
+    
     var titleFontSize = 18
     let day1 = Date()
     let day2: Date? = Calendar.current.date(byAdding: .day, value: 1, to: Date())
     let day3: Date? = Calendar.current.date(byAdding: .day, value: 2, to: Date())
     let day4: Date? = Calendar.current.date(byAdding: .day, value: 3, to: Date())
     
-    private func formattedDateWithWeekdays(date: Date) -> String {
-        let calendar = Calendar(identifier: .gregorian)
-        let components = calendar.dateComponents([.weekday], from: date)
-        
-        if let weekday = components.weekday {
-            switch weekday {
-            case 1:
-                return "(일)"
-            case 2:
-                return "(월)"
-            case 3:
-                return "(화)"
-            case 4:
-                return "(수)"
-            case 5:
-                return "(목)"
-            case 6:
-                return "(금)"
-            default:
-                return "(토)"
-            }
-        }
-        return ""
-    }
-    private func createTimeFormatter() -> DateFormatter {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "MM. dd"
-        // 'a' for AM/PM indicator
-        //formatter.locale = Locale(identifier: "ko_KR") // Sets the locale to Korean
-        formatter.timeZone = TimeZone(identifier: "Asia/Seoul")
-        return formatter
-    }
-    
-    private func isWeekend(date: Date) -> Bool {
-        let calendar = Calendar(identifier: .gregorian)
-        let components = calendar.dateComponents([.weekday], from: date)
-        
-        if let weekday = components.weekday {
-            return weekday == 1 || weekday == 7
-        }
-        return false
-    }
-    
     var body: some View {
-        VStack(content: {
-            
-            HStack(content: {
+        VStack {
+            HStack {
                 Spacer()
                 Text("주간 미세먼지")
                     .font(.system(size: CGFloat(titleFontSize), weight: .bold))
@@ -90,66 +20,62 @@ struct FineList: View {
                     Spacer()
                 }
                 Toggle("", isOn: $isToggleOn)
-                    .toggleStyle(CustomToggleStyle())
+                    .toggleStyle(CustomToggleStyle(viewModel: viewModel))
                     .opacity(0.7)
-            })
-            
-            HStack{
+            }
+            HStack {
                 Spacer()
-                VStack{
+                VStack {
                     Text(formattedDateWithWeekdays(date: day1))
                         .foregroundColor(isWeekend(date: day1) ? .red : .black)
                     Text(createTimeFormatter().string(from: day1))
-                    Image("smile")
+                    viewModel.faceType1.image
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .frame(width: CGFloat(titleFontSize*2) ,height: CGFloat(titleFontSize*2))
-                    
-                    
+                        .frame(width: CGFloat(titleFontSize * 2), height: CGFloat(titleFontSize * 2))
                 }
                 Spacer()
-                VStack{
+                VStack {
                     Text(formattedDateWithWeekdays(date: day2!))
                         .foregroundColor(isWeekend(date: day2!) ? .red : .black)
                     Text(createTimeFormatter().string(from: day2!))
-                    Image("happy")
+                    viewModel.faceType2.image
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .frame(width: CGFloat(titleFontSize*2) ,height: CGFloat(titleFontSize*2))
-                    
+                        .frame(width: CGFloat(titleFontSize * 2), height: CGFloat(titleFontSize * 2))
                 }
                 Spacer()
-                VStack{
+                VStack {
                     Text(formattedDateWithWeekdays(date: day3!))
                         .foregroundColor(isWeekend(date: day3!) ? .red : .black)
                     Text(createTimeFormatter().string(from: day3!))
-                    Image("umm")
+                    viewModel.faceType3.image
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .frame(width: CGFloat(titleFontSize*2) ,height: CGFloat(titleFontSize*2))
-                    
+                        .frame(width: CGFloat(titleFontSize * 2), height: CGFloat(titleFontSize * 2))
                 }
                 Spacer()
-                VStack{
+                VStack {
                     Text(formattedDateWithWeekdays(date: day4!))
                         .foregroundColor(isWeekend(date: day4!) ? .red : .black)
                     Text(createTimeFormatter().string(from: day4!))
-                    Image("sad")
+                    viewModel.faceType4.image
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .frame(width: CGFloat(titleFontSize*2) ,height: CGFloat(titleFontSize*2))
-                    
+                        .frame(width: CGFloat(titleFontSize * 2), height: CGFloat(titleFontSize * 2))
                 }
                 Spacer()
-                
-                
-                
             }
-        })
+
+        }
+        .onAppear {
+            viewModel.fineListTrigger.onNext(())
+        }
     }
 }
 
 struct CustomToggleStyle: ToggleStyle {
+    @ObservedObject var viewModel: FineListViewModel
     func makeBody(configuration: Configuration) -> some View {
         HStack {
             ZStack {
@@ -181,19 +107,12 @@ struct CustomToggleStyle: ToggleStyle {
             }
             .onTapGesture {
                 configuration.isOn.toggle()
+                viewModel.changeToggle()
             }
         }
         .padding()
-        
     }
 }
 
 
-#Preview {
-    VStack {
-        Spacer()
-        FineList()
-            .padding()
-        Spacer()
-    }
-}
+

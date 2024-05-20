@@ -60,7 +60,6 @@ class HomeViewModel: NSObject, CLLocationManagerDelegate {
                 if let currentData = data.current {
                     todayFeelsLike = currentData.feelslikeC
                 }
-                
                 if data.forecast.forecastday[0].hour[currentHour].willItRain == 1 {
                     condition = .rain
                 } else if data.forecast.forecastday[0].hour[currentHour].willItSnow == 1 {
@@ -70,7 +69,6 @@ class HomeViewModel: NSObject, CLLocationManagerDelegate {
                 }
                 dispatchGroup.leave()
             }
-            
             dispatchGroup.enter()
             webServiceManager.getHistoryWeather(searchModel: SearchModel(keyWord: "", fullAddress: "", lat: userLocationPoint.0, lon: userLocationPoint.1, city: "")) { [unowned self] data in
                 let currentData = data.forecast.forecastday[0].hour[currentHour]
@@ -146,9 +144,7 @@ class HomeViewModel: NSObject, CLLocationManagerDelegate {
     
     func getUserLocation() {
         let geocoder = CLGeocoder()
-        
         let location = self.userLocationManager.location
-        
         if let location = location {
             geocoder.reverseGeocodeLocation(location) { [unowned self] (placemarks, error) in
                 if error != nil { return }

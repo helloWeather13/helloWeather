@@ -45,7 +45,6 @@ class SectionHeaderView : UITableViewHeaderFooterView{
                 $0.height.equalTo(32)
             }
 
-            
         case .searching:
             titleLabel.text = "연관 검색어"
             
