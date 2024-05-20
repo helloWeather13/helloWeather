@@ -45,6 +45,7 @@
 		147EF8702BF62F1B000DC8A8 /* ListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147EF86F2BF62F1B000DC8A8 /* ListTableViewCell.swift */; };
 		147EF8722BF63685000DC8A8 /* SpaceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147EF8712BF63685000DC8A8 /* SpaceTableViewCell.swift */; };
 		14FB28252BF723E80084796C /* AlamofireDynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 146580F92BF1EB4D0093AA81 /* AlamofireDynamic */; };
+		453593562BF8F637004BA149 /* WeatherDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453593552BF8F637004BA149 /* WeatherDetailViewModel.swift */; };
 		45D70DBD2BF3145C00942DC1 /* WeatherDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D70DBC2BF3145C00942DC1 /* WeatherDetailViewController.swift */; };
 		45D70DC02BF3262300942DC1 /* SwiftUICharts in Frameworks */ = {isa = PBXBuildFile; productRef = 45D70DBF2BF3262300942DC1 /* SwiftUICharts */; };
 		45D70DC22BF3325400942DC1 /* WeatherDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D70DC12BF3325400942DC1 /* WeatherDetailView.swift */; };
@@ -124,6 +125,7 @@
 		147EF86D2BF62AF4000DC8A8 /* TempListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempListViewModel.swift; sourceTree = "<group>"; };
 		147EF86F2BF62F1B000DC8A8 /* ListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTableViewCell.swift; sourceTree = "<group>"; };
 		147EF8712BF63685000DC8A8 /* SpaceTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpaceTableViewCell.swift; sourceTree = "<group>"; };
+		453593552BF8F637004BA149 /* WeatherDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDetailViewModel.swift; sourceTree = "<group>"; };
 		45D70DBC2BF3145C00942DC1 /* WeatherDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDetailViewController.swift; sourceTree = "<group>"; };
 		45D70DC12BF3325400942DC1 /* WeatherDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDetailView.swift; sourceTree = "<group>"; };
 		45D70DC52BF3342000942DC1 /* SecondLeftCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondLeftCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -230,6 +232,7 @@
 		146580E02BF1E82A0093AA81 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				453593552BF8F637004BA149 /* WeatherDetailViewModel.swift */,
 				146580E32BF1E8590093AA81 /* TabViewModel.swift */,
 				B687F6852BF4CC6000623F1D /* HomeViewModel.swift */,
 				146581022BF1FB8B0093AA81 /* SearchViewModel.swift */,
@@ -532,6 +535,7 @@
 				9A8DF86C2BF6C4A3009F0DAB /* ChatModel.swift in Sources */,
 				146580E82BF1E8960093AA81 /* HomeViewController.swift in Sources */,
 				9ABC1E292BF4BAD2006A626C /* ChartModel.swift in Sources */,
+				453593562BF8F637004BA149 /* WeatherDetailViewModel.swift in Sources */,
 				14450E9F2BF45381006A02F7 /* RecentSearchTableViewCell.swift in Sources */,
 				9A5ACD9D2BF893BA00DE586F /* ChartViewModel.swift in Sources */,
 				14450EA12BF45962006A02F7 /* Extension.swift in Sources */,
@@ -699,7 +703,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -727,7 +731,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

@@ -105,11 +105,6 @@ class WeekCollectionViewCell: UICollectionViewCell {
         dateLabel.snp.makeConstraints { make in
             make.height.equalTo(dateLabel.font.pointSize)
         }
-        
-        weatherIcon.snp.makeConstraints { make in
-            make.height.equalTo(24)
-            make.width.equalTo(24)
-        }
 
         minCelsiusLabel.snp.makeConstraints { make in
             make.height.equalTo(minCelsiusLabel.font.pointSize)

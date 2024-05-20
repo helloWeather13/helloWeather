@@ -14,7 +14,7 @@ class SecondLeftCollectionViewCell: UICollectionViewCell {
     lazy var firstStackView: UIStackView = {
         let stack = UIStackView()
         stack.axis = .vertical
-        stack.spacing = 65
+        stack.spacing = 68
         return stack
     }()
     
@@ -66,6 +66,10 @@ class SecondLeftCollectionViewCell: UICollectionViewCell {
         
         secondStackView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
+        }
+        
+        celsiusLabel.snp.makeConstraints { make in
+            make.height.equalTo(celsiusLabel.font.pointSize)
         }
         
     }
