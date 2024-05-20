@@ -62,9 +62,12 @@ class SecondRightCollectionViewCell: UICollectionViewCell {
         secondStackView.addArrangedSubview(firstStackView)
         secondStackView.addArrangedSubview(timeLabel)
  
-        
         secondStackView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
+        }
+        
+        celsiusLabel.snp.makeConstraints { make in
+            make.height.equalTo(celsiusLabel.font.pointSize)
         }
         
     }

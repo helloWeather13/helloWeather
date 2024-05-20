@@ -54,9 +54,6 @@ class HumidityCollectionViewCell: UICollectionViewCell {
         percentLabel.snp.makeConstraints { make in
             make.height.equalTo(percentLabel.font.pointSize)
         }
-        timeLabel.snp.makeConstraints { make in
-            make.height.equalTo(timeLabel.font.pointSize)
-        }
         
     }
     

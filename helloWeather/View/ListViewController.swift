@@ -31,7 +31,7 @@ class ListViewController: UIViewController {
         setupBindings()
         
         let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(gesture:)))
-        longPressGesture.minimumPressDuration = 0.3 // Adjust as needed
+        longPressGesture.minimumPressDuration = 0.3
         listCollectionView.addGestureRecognizer(longPressGesture)
         
         longPressGesture.require(toFail: listCollectionView.panGestureRecognizer)

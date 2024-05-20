@@ -6,9 +6,13 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 class TomorrowTimeWeatherCollectionView: UICollectionView, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 
+    var weatherIconTestNames: [String] = ["rainy"]
+    var weatherIconTestData: [UIImage] = []
     
     init() {
            let layout = UICollectionViewFlowLayout()
@@ -19,6 +23,10 @@ class TomorrowTimeWeatherCollectionView: UICollectionView, UICollectionViewDeleg
            self.dataSource = self
            self.register(SecondRightCollectionViewCell.self, forCellWithReuseIdentifier: SecondRightCollectionViewCell.identifier)
             self.showsHorizontalScrollIndicator = false
+        
+        if let rainyImage = UIImage(named: "rainy") {
+            weatherIconTestData = Array(repeating: rainyImage, count: 8)
+        }
        }
        
        required init?(coder: NSCoder) {
@@ -33,17 +41,25 @@ class TomorrowTimeWeatherCollectionView: UICollectionView, UICollectionViewDeleg
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell  = collectionView.dequeueReusableCell(withReuseIdentifier: SecondRightCollectionViewCell.identifier, for: indexPath) as! SecondRightCollectionViewCell
         
-        cell.celsiusLabel.text = "\(indexPath.item * 5)°C"
+        cell.celsiusLabel.text = "\(indexPath.item * 5)°"
+        cell.celsiusLabel.textColor = .mygray
         
         let hour = (indexPath.item * 3) % 24
         cell.timeLabel.text = "\(hour)시"
+        cell.timeLabel.textColor = .mygray
+        
+        if indexPath.item < weatherIconTestData.count {
+            cell.weatherIcon.image = weatherIconTestData[indexPath.item]
+            cell.weatherIcon.contentMode = .scaleAspectFit
+        }
+
         
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize{
         let width: CGFloat = 40
-        let height: CGFloat = 146
+        let height: CGFloat = 152
         return CGSize(width: width, height: height)
     }
 

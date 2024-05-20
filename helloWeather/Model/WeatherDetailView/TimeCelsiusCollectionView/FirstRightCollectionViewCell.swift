@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 class FirstRightCollectionViewCell: UICollectionViewCell {
     
@@ -52,6 +53,10 @@ class FirstRightCollectionViewCell: UICollectionViewCell {
         
         stackView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
+        }
+        
+        celsiusLabel.snp.makeConstraints { make in
+            make.height.equalTo(celsiusLabel.font.pointSize)
         }
         
     }
