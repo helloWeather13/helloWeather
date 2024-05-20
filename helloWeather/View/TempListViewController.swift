@@ -77,7 +77,7 @@ class TempListViewController: UIViewController {
                     return UITableViewCell()
                 }
                 cell.configure(searchModel: listWeather)
-                
+
                 cell.rx.buttonTapped
                     .subscribe (onNext: { [ weak self ] in
                         self?.configureAlert()
@@ -86,6 +86,7 @@ class TempListViewController: UIViewController {
                     .disposed(by: cell.disposeBag)
                 
                 cell.selectionStyle = .none
+                
                 return cell
             }
         })
@@ -225,23 +226,6 @@ extension TempListViewController: UITableViewDelegate {
             case .space:
                 return
             }
-        
-//        guard let item = self.viewModel.dataSource?.itemIdentifier(for: indexPath) else { return }
-//        switch item {
-//        case .listWeather(_):
-//            // 셀을 클릭하면 애니메이션을 적용
-//            if let cell = tableView.cellForRow(at: indexPath) {
-//                UIView.animate(withDuration: 0.15, animations: {
-//                    cell.transform = CGAffineTransform(scaleX: 1.05, y: 1.05)
-//                }) { _ in
-//                    UIView.animate(withDuration: 0.15) {
-//                        cell.transform = .identity
-//                    }
-//                }
-//            }
-//        default:
-//            break
-//        }
     }
     
     func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {

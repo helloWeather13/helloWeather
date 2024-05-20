@@ -70,6 +70,13 @@
 		148FCA572BFADF2E0042F1D9 /* Pretendard-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 148FCA372BFADF2D0042F1D9 /* Pretendard-Regular.ttf */; };
 		148FCA582BFADF2E0042F1D9 /* Pretendard-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 148FCA382BFADF2D0042F1D9 /* Pretendard-SemiBold.ttf */; };
 		148FCA592BFADF2E0042F1D9 /* Pretendard-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 148FCA392BFADF2D0042F1D9 /* Pretendard-Thin.ttf */; };
+		148FCA602BFB63AF0042F1D9 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 148FCA5F2BFB63AF0042F1D9 /* WidgetKit.framework */; };
+		148FCA622BFB63AF0042F1D9 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 148FCA612BFB63AF0042F1D9 /* SwiftUI.framework */; };
+		148FCA652BFB63AF0042F1D9 /* helloWeatherWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148FCA642BFB63AF0042F1D9 /* helloWeatherWidgetBundle.swift */; };
+		148FCA672BFB63AF0042F1D9 /* helloWeatherWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148FCA662BFB63AF0042F1D9 /* helloWeatherWidget.swift */; };
+		148FCA692BFB63AF0042F1D9 /* AppIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148FCA682BFB63AF0042F1D9 /* AppIntent.swift */; };
+		148FCA6B2BFB63B10042F1D9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 148FCA6A2BFB63B10042F1D9 /* Assets.xcassets */; };
+		148FCA6F2BFB63B10042F1D9 /* helloWeatherWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 148FCA5E2BFB63AF0042F1D9 /* helloWeatherWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		14D0852E2BF909D300C9B985 /* SkeletonView in Frameworks */ = {isa = PBXBuildFile; productRef = 14D0852D2BF909D300C9B985 /* SkeletonView */; };
 		14E83D912BF793CB004CAD62 /* TSBlurEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E83D902BF793CB004CAD62 /* TSBlurEffectView.swift */; };
 		14E83D932BF79FF5004CAD62 /* DeleteAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E83D922BF79FF5004CAD62 /* DeleteAlertView.swift */; };
@@ -106,7 +113,28 @@
 		B687F6862BF4CC6000623F1D /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B687F6852BF4CC6000623F1D /* HomeViewModel.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		148FCA6D2BFB63B10042F1D9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 146580BF2BF1E7EA0093AA81 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 148FCA5D2BFB63AF0042F1D9;
+			remoteInfo = helloWeatherWidgetExtension;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXCopyFilesBuildPhase section */
+		148FCA732BFB63B10042F1D9 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				148FCA6F2BFB63B10042F1D9 /* helloWeatherWidgetExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B64E88182BF544180070C3EF /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -180,6 +208,14 @@
 		148FCA372BFADF2D0042F1D9 /* Pretendard-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Regular.ttf"; sourceTree = "<group>"; };
 		148FCA382BFADF2D0042F1D9 /* Pretendard-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-SemiBold.ttf"; sourceTree = "<group>"; };
 		148FCA392BFADF2D0042F1D9 /* Pretendard-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Thin.ttf"; sourceTree = "<group>"; };
+		148FCA5E2BFB63AF0042F1D9 /* helloWeatherWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = helloWeatherWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		148FCA5F2BFB63AF0042F1D9 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		148FCA612BFB63AF0042F1D9 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		148FCA642BFB63AF0042F1D9 /* helloWeatherWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = helloWeatherWidgetBundle.swift; sourceTree = "<group>"; };
+		148FCA662BFB63AF0042F1D9 /* helloWeatherWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = helloWeatherWidget.swift; sourceTree = "<group>"; };
+		148FCA682BFB63AF0042F1D9 /* AppIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIntent.swift; sourceTree = "<group>"; };
+		148FCA6A2BFB63B10042F1D9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		148FCA6C2BFB63B10042F1D9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		14E83D902BF793CB004CAD62 /* TSBlurEffectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TSBlurEffectView.swift; sourceTree = "<group>"; };
 		14E83D922BF79FF5004CAD62 /* DeleteAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAlertView.swift; sourceTree = "<group>"; };
 		14E83D952BF7B6FE004CAD62 /* EmptySearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptySearchView.swift; sourceTree = "<group>"; };
@@ -229,6 +265,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		148FCA5B2BFB63AF0042F1D9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				148FCA622BFB63AF0042F1D9 /* SwiftUI.framework in Frameworks */,
+				148FCA602BFB63AF0042F1D9 /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -257,6 +302,7 @@
 			isa = PBXGroup;
 			children = (
 				146580C92BF1E7EA0093AA81 /* helloWeather */,
+				148FCA632BFB63AF0042F1D9 /* helloWeatherWidget */,
 				146580C82BF1E7EA0093AA81 /* Products */,
 				B64E88152BF544180070C3EF /* Frameworks */,
 			);
@@ -266,6 +312,7 @@
 			isa = PBXGroup;
 			children = (
 				146580C72BF1E7EA0093AA81 /* helloWeather.app */,
+				148FCA5E2BFB63AF0042F1D9 /* helloWeatherWidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -412,6 +459,18 @@
 			path = Font;
 			sourceTree = "<group>";
 		};
+		148FCA632BFB63AF0042F1D9 /* helloWeatherWidget */ = {
+			isa = PBXGroup;
+			children = (
+				148FCA642BFB63AF0042F1D9 /* helloWeatherWidgetBundle.swift */,
+				148FCA662BFB63AF0042F1D9 /* helloWeatherWidget.swift */,
+				148FCA682BFB63AF0042F1D9 /* AppIntent.swift */,
+				148FCA6A2BFB63B10042F1D9 /* Assets.xcassets */,
+				148FCA6C2BFB63B10042F1D9 /* Info.plist */,
+			);
+			path = helloWeatherWidget;
+			sourceTree = "<group>";
+		};
 		45D70DCB2BF3344500942DC1 /* WeatherDetailView */ = {
 			isa = PBXGroup;
 			children = (
@@ -518,6 +577,8 @@
 		B64E88152BF544180070C3EF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				148FCA5F2BFB63AF0042F1D9 /* WidgetKit.framework */,
+				148FCA612BFB63AF0042F1D9 /* SwiftUI.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -533,10 +594,12 @@
 				146580C42BF1E7EA0093AA81 /* Frameworks */,
 				146580C52BF1E7EA0093AA81 /* Resources */,
 				B64E88182BF544180070C3EF /* Embed Frameworks */,
+				148FCA732BFB63B10042F1D9 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				148FCA6E2BFB63B10042F1D9 /* PBXTargetDependency */,
 			);
 			name = helloWeather;
 			packageProductDependencies = (
@@ -552,6 +615,23 @@
 			productReference = 146580C72BF1E7EA0093AA81 /* helloWeather.app */;
 			productType = "com.apple.product-type.application";
 		};
+		148FCA5D2BFB63AF0042F1D9 /* helloWeatherWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 148FCA702BFB63B10042F1D9 /* Build configuration list for PBXNativeTarget "helloWeatherWidgetExtension" */;
+			buildPhases = (
+				148FCA5A2BFB63AF0042F1D9 /* Sources */,
+				148FCA5B2BFB63AF0042F1D9 /* Frameworks */,
+				148FCA5C2BFB63AF0042F1D9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = helloWeatherWidgetExtension;
+			productName = helloWeatherWidgetExtension;
+			productReference = 148FCA5E2BFB63AF0042F1D9 /* helloWeatherWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -559,11 +639,14 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1530;
+				LastSwiftUpdateCheck = 1540;
 				LastUpgradeCheck = 1530;
 				TargetAttributes = {
 					146580C62BF1E7EA0093AA81 = {
 						CreatedOnToolsVersion = 15.3;
+					};
+					148FCA5D2BFB63AF0042F1D9 = {
+						CreatedOnToolsVersion = 15.4;
 					};
 				};
 			};
@@ -590,6 +673,7 @@
 			projectRoot = "";
 			targets = (
 				146580C62BF1E7EA0093AA81 /* helloWeather */,
+				148FCA5D2BFB63AF0042F1D9 /* helloWeatherWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -631,6 +715,14 @@
 				148FCA3F2BFADF2E0042F1D9 /* Montserrat-Black.ttf in Resources */,
 				148FCA442BFADF2E0042F1D9 /* Montserrat-ExtraBoldItalic.ttf in Resources */,
 				148FCA472BFADF2E0042F1D9 /* Montserrat-Italic.ttf in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		148FCA5C2BFB63AF0042F1D9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				148FCA6B2BFB63B10042F1D9 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -706,7 +798,25 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		148FCA5A2BFB63AF0042F1D9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				148FCA652BFB63AF0042F1D9 /* helloWeatherWidgetBundle.swift in Sources */,
+				148FCA672BFB63AF0042F1D9 /* helloWeatherWidget.swift in Sources */,
+				148FCA692BFB63AF0042F1D9 /* AppIntent.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		148FCA6E2BFB63B10042F1D9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 148FCA5D2BFB63AF0042F1D9 /* helloWeatherWidgetExtension */;
+			targetProxy = 148FCA6D2BFB63B10042F1D9 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		146580D52BF1E7EB0093AA81 /* LaunchScreen.storyboard */ = {
@@ -842,6 +952,7 @@
 		146580DC2BF1E7EB0093AA81 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
@@ -870,6 +981,7 @@
 		146580DD2BF1E7EB0093AA81 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
@@ -895,6 +1007,62 @@
 			};
 			name = Release;
 		};
+		148FCA712BFB63B10042F1D9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = helloWeatherWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = helloWeatherWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.seungwon.helloWeather.helloWeatherWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		148FCA722BFB63B10042F1D9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = helloWeatherWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = helloWeatherWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.seungwon.helloWeather.helloWeatherWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -912,6 +1080,15 @@
 			buildConfigurations = (
 				146580DC2BF1E7EB0093AA81 /* Debug */,
 				146580DD2BF1E7EB0093AA81 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		148FCA702BFB63B10042F1D9 /* Build configuration list for PBXNativeTarget "helloWeatherWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				148FCA712BFB63B10042F1D9 /* Debug */,
+				148FCA722BFB63B10042F1D9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -11,8 +11,7 @@ import SkeletonView
 
 class HomeViewController: UIViewController {
     
-    let homeViewModel = HomeViewModel()
-    
+    var homeViewModel = HomeViewModel()
     var bookmarkButton: UIButton = {
         let button = UIButton()
         button.imageView?.contentMode = .scaleAspectFit
@@ -95,6 +94,11 @@ class HomeViewController: UIViewController {
         let image = UIImage()
         return image
     }()
+    var emptyView1 = UIView()
+    var emptyView2 = UIView()
+    var emptyView3 = UIView()
+    var emptyView4 = UIView()
+    var emptyView5 = UIView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -105,7 +109,29 @@ class HomeViewController: UIViewController {
         setupAutoLayout()
         bind()
     }
-
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        emptyView5.isHidden = false
+        [view,emptyView1,emptyView2,emptyView3,emptyView4,emptyView5].forEach{
+            $0?.showAnimatedSkeleton()
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now()+0.1, execute: {
+            [self.view,self.emptyView1,self.emptyView2,self.emptyView3,self.emptyView4,self.emptyView5].forEach{
+                $0?.hideSkeleton(transition: .crossDissolve(0.25))
+                
+            }
+            self.emptyView5.isHidden = true
+        })
+       
+    }
+    override func viewDidDisappear(_ animated: Bool) {
+        emptyView5.isHidden = true
+        [view,emptyView1,emptyView2,emptyView3,emptyView4,emptyView5].forEach{
+            $0?.showAnimatedSkeleton()
+        }
+    }
     func setupNotificationCenter(){
         NotificationCenter.default.addObserver(self, selector: #selector(dataRecevied(notification:)), name: NSNotification.Name("SwitchTabNotification"), object: nil)
     }
@@ -158,12 +184,6 @@ class HomeViewController: UIViewController {
             weatherStr.append(condition)
             weatherStr.append(verb)
             weatherLabel.attributedText = weatherStr
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
-                [self.compareLabel,self.thermometerIcon,self.weatherIcon,self.temperatureLabel,self.unitLabel,self.notificationButton,self.bookmarkButton,self.todayLabel, self.secondLabel,self.thirdLabel,self.weatherLabel].forEach{
-                    $0.hideSkeleton(transition: .crossDissolve(0.25))
-                }
-            })
-            
         }
     }
     
@@ -207,10 +227,45 @@ class HomeViewController: UIViewController {
             $0.leading.equalTo(bookmarkButton.snp.leading)
             $0.width.height.equalTo(24)
         }
-        [view,stackView,thermometerIcon,weatherIcon,temperatureLabel,unitLabel,notificationButton,bookmarkButton,compareLabel,todayLabel, secondLabel,thirdLabel,weatherLabel].forEach{
-            $0?.isSkeletonable = true
+        
+        [emptyView1, emptyView2, emptyView3,emptyView4, emptyView5].forEach{
+            self.view.addSubview($0)
+            $0.translatesAutoresizingMaskIntoConstraints = false
         }
-            
+        
+        emptyView1.snp.makeConstraints{
+            $0.leading.equalToSuperview().offset(30)
+            $0.top.equalTo(stackView.snp.top)
+            $0.width.equalTo(100)
+            $0.height.equalTo(42)
+        }
+        emptyView2.snp.makeConstraints{
+            $0.leading.equalToSuperview().offset(30)
+            $0.top.equalTo(emptyView1.snp.bottom).offset(2)
+            $0.width.equalTo(300)
+            $0.height.equalTo(42)
+        }
+        emptyView3.snp.makeConstraints{
+            $0.leading.equalToSuperview().offset(30)
+            $0.top.equalTo(emptyView2.snp.bottom).offset(2)
+            $0.width.equalTo(300)
+            $0.height.equalTo(42)
+        }
+        emptyView4.snp.makeConstraints{
+            $0.width.equalTo(220)
+            $0.height.equalTo(120)
+            $0.trailing.equalToSuperview().offset(-30)
+            $0.top.equalTo(stackView.snp.bottom).offset(108)
+        }
+        emptyView5.snp.makeConstraints{
+            $0.centerY.centerX.equalTo(bookmarkButton)
+            $0.width.height.equalTo(40)
+        }
+        [view,emptyView1,emptyView2,emptyView3,emptyView4,emptyView5].forEach{
+            $0?.isSkeletonable = true
+            $0?.skeletonCornerRadius = 20
+        }
+        
         
     }
     
@@ -268,20 +323,42 @@ class HomeViewController: UIViewController {
         guard let newSearchModel = notification.object as? SearchModel else{
             return
         }
-        print(newSearchModel)
         self.homeViewModel.currentSearchModel = newSearchModel
-        [compareLabel,thermometerIcon,weatherIcon,temperatureLabel,unitLabel,notificationButton,bookmarkButton,todayLabel, secondLabel,thirdLabel,weatherLabel].forEach{
-            $0.showSkeleton()
+        createBackButton()
+    }
+    func createBackButton(){
+        let backButton = UIView()
+        backButton.frame = CGRect(x: 0, y: 0, width: 24, height: 24)
+        backButton.isUserInteractionEnabled = true // Enable user interaction
+
+        // Create the label for the button
+        let backImage = UIImageView()
+        backImage.image = UIImage(named: "chevron-left")
+        
+        backButton.addSubview(backImage)
+        // Add constraints to the label
+        backImage.snp.makeConstraints {
+            $0.edges.equalToSuperview()
         }
+
+        // Add a tap gesture recognizer to the deleteButton
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(backButtonTap))
+        backButton.addGestureRecognizer(tapGesture)
+
+        // Create the UIBarButtonItem with the custom view
+        let barButton = UIBarButtonItem(customView: backButton)
+        navigationItem.leftBarButtonItem = barButton
     }
 }
 
 extension HomeViewController : TransferDataToMainDelegate {
     func searchDidTouched(searchModel: SearchModel) {
-        [compareLabel,thermometerIcon,weatherIcon,temperatureLabel,unitLabel,notificationButton,bookmarkButton,todayLabel, secondLabel,thirdLabel,weatherLabel].forEach{
-            $0.showSkeleton()
-        }
         self.homeViewModel.currentSearchModel = searchModel
+        createBackButton()
     }
-
+    
+    @objc func backButtonTap(){
+        self.homeViewModel.getUserLocation()
+        self.navigationItem.leftBarButtonItem?.isHidden = true
+    }
 }
