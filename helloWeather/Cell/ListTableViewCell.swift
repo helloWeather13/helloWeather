@@ -22,12 +22,17 @@ class ListTableViewCell: UITableViewCell {
     var deleteView = UIView()
     var viewContainer = UIView()
     var deleteButton = UIButton()
+    var isAlarm = false
+    
+    
     
     
     //    var weatherAPIModel : WeatherAPIModel?
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
+        setupAlarmImageView()
     }
     
     required init?(coder : NSCoder){
@@ -81,11 +86,12 @@ class ListTableViewCell: UITableViewCell {
         
         contentView.addSubview(viewContainer)
         
-        [cityLabel, conditionLabel,temperatureLabel,weatherImage,minMaxTempLabel,alarmImageView, deleteView].forEach{
+        [cityLabel, conditionLabel,temperatureLabel,weatherImage,minMaxTempLabel,alarmImageView].forEach{
             viewContainer.addSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
             $0.tintColor = .label
         }
+        contentView.addSubview(deleteView)
         deleteView.addSubview(deleteButton)
         deleteButton.setImage(UIImage(systemName: "trash.fill"), for: .normal)
         deleteButton.isHidden = true
@@ -99,23 +105,44 @@ class ListTableViewCell: UITableViewCell {
         temperatureLabel.text = String(Int(weatherAPIModel.current?.feelslikeC ?? 0)) + "°"
         temperatureLabel.font = .boldSystemFont(ofSize: 42)
         temperatureLabel.sizeToFit()
-        weatherImage.image = UIImage(systemName: "cloud.sun.rain.fill")
+        weatherImage.image = UIImage(named: "rainy")
+        weatherImage.contentMode = .scaleAspectFit
         minMaxTempLabel.text = String(Int(weatherAPIModel.forecast.forecastday[0].day.maxtempC)) + "°" + " " + String(Int(weatherAPIModel.forecast.forecastday[0].day.mintempC)) + "°"
         minMaxTempLabel.textColor = .secondaryLabel
         minMaxTempLabel.font = .systemFont(ofSize: 12)
         minMaxTempLabel.sizeToFit()
-        alarmImageView.image = UIImage(systemName: "bell")
+        alarmImageView.image = .alarm0
         self.makeConstraints()
     }
     
+    func setupAlarmImageView() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(alarmImageViewTapped))
+                alarmImageView.addGestureRecognizer(tapGesture)
+                alarmImageView.isUserInteractionEnabled = true
+    }
+    
+    @objc func alarmImageViewTapped() {
+        if isAlarm {
+            alarmImageView.image = .alarm0
+            isAlarm = false
+        } else {
+            alarmImageView.image = .alarm1
+            isAlarm = true
+        }
+    }
+    
     func makeConstraints(){
+        
+        guard let superview = self.superview else { return }
+        
         viewContainer.snp.makeConstraints{
             $0.bottom.top.leading.equalToSuperview()
             $0.trailing.equalToSuperview()
         }
         cityLabel.snp.makeConstraints{
-            $0.leading.equalToSuperview().offset(20)
-            $0.top.equalTo(viewContainer).offset(19)
+            $0.leading.equalTo(superview.snp.trailing).offset(16)
+            $0.top.equalTo(viewContainer).offset(16)
+            
         }
         conditionLabel.snp.makeConstraints{
             $0.leading.equalTo(cityLabel.snp.trailing).offset(5)
@@ -123,23 +150,32 @@ class ListTableViewCell: UITableViewCell {
         }
         temperatureLabel.snp.makeConstraints{
             //$0.top.equalTo(cityLabel.snp.bottom)
-            $0.leading.equalTo(viewContainer).offset(20)
-            $0.bottom.equalTo(viewContainer).inset(19)
+            //            $0.leading.equalTo(currentLocationImageView)
+//            $0.centerY.equalTo(viewContainer)
+            $0.top.equalTo(cityLabel.snp.bottom).offset(8)
+            $0.height.equalTo(42)
+            $0.leading.equalTo(viewContainer).offset(16)
         }
         alarmImageView.snp.makeConstraints{
-            $0.width.height.equalTo(24)
-            $0.trailing.equalTo(viewContainer).offset(-20)
-            $0.centerY.equalTo(viewContainer).inset(55)
+            $0.width.height.equalTo(16)
+            $0.trailing.equalTo(viewContainer.snp.trailing).offset(-16)
+            $0.top.equalTo(viewContainer.snp.top).offset(16)
+//            $0.width.height.equalTo(16)
+//            $0.trailing.equalTo(viewContainer).offset(-10)
+//            $0.top.equalTo(conditionLabel).offset(-10)
+//            $0.centerY.equalTo(viewContainer).inset(55)
             
         }
         weatherImage.snp.makeConstraints{
-            $0.width.height.equalTo(52)
-            $0.trailing.equalTo(alarmImageView.snp.leading).offset(-30)
-            $0.top.equalTo(viewContainer).offset(16)
+            $0.width.height.equalTo(53)
+            $0.trailing.equalTo(viewContainer).offset(-16)
+//            $0.top.equalTo(alarmImageView.snp.bottom).inset(-19)
+            $0.bottom.equalTo(viewContainer).offset(-16)
+            
         }
         minMaxTempLabel.snp.makeConstraints{
-            $0.top.equalTo(weatherImage.snp.bottom).offset(5)
-            $0.centerX.equalTo(weatherImage)
+            $0.top.equalTo(temperatureLabel.snp.bottom).offset(8)
+            $0.leading.equalTo(viewContainer).offset(16)
         }
         deleteView.snp.makeConstraints{
             $0.top.bottom.equalTo(viewContainer)
@@ -152,3 +188,4 @@ class ListTableViewCell: UITableViewCell {
         }
     }
 }
+
