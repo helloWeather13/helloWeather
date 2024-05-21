@@ -114,6 +114,7 @@ class WeatherDetailView: UIView {
     
     // MARK: -
     let weatherDetailViewModel = WeatherDetailViewModel(weatherManager: WebServiceManager.shared, userLocationPoint: (-73.935242, 40.730610))
+    
     // MARK: - CollectionView
     // 체감온도 stack
     let topScrollView: UIScrollView = {
@@ -129,8 +130,19 @@ class WeatherDetailView: UIView {
         return image
     }()
     
-    lazy var firstLeftCollectionView = TodayTimeCelsiusCollectionView(viewModel: weatherDetailViewModel)
-    lazy var firstRightCollectionView = TomorrowTimeCelsiusCollectionView(viewModel: weatherDetailViewModel)
+    lazy var firstLeftCollectionView: TodayTimeCelsiusCollectionView = {
+        let collectionView = TodayTimeCelsiusCollectionView(viewModel: weatherDetailViewModel)
+        return collectionView
+    }()
+    lazy var firstRightCollectionView: TomorrowTimeCelsiusCollectionView = {
+        let collectionView = TomorrowTimeCelsiusCollectionView(viewModel: weatherDetailViewModel, todayCollectionView: firstLeftCollectionView)
+        return collectionView
+    }()
+    lazy var firstDayAfterTomorrowCollectionview: DATomorrowTimeCelsiusCollectionview = {
+        let collectionView = DATomorrowTimeCelsiusCollectionview(viewModel: weatherDetailViewModel, tomorrowCollectionView: firstRightCollectionView)
+        return collectionView
+    }()
+    
     
     // 날씨 stack
     let bottomScrollView: UIScrollView = {
@@ -314,6 +326,7 @@ class WeatherDetailView: UIView {
         topScrollView.addSubview(firstLeftCollectionView)
         topScrollView.addSubview(topTomorrowImageView)
         topScrollView.addSubview(firstRightCollectionView)
+        topScrollView.addSubview(firstDayAfterTomorrowCollectionview)
         
         bottomScrollView.addSubview(secondLeftCollectionView)
         bottomScrollView.addSubview(bottomTomorrowImageView)
@@ -343,6 +356,12 @@ class WeatherDetailView: UIView {
             make.width.equalTo(393)
             make.leading.equalTo(topTomorrowImageView.snp.trailing).offset(24)
         }
+        firstDayAfterTomorrowCollectionview.snp.makeConstraints { make in
+            make.top.bottom.equalToSuperview()
+            make.height.equalTo(119)
+            make.leading.equalTo(firstRightCollectionView.snp.trailing).offset(24)
+        }
+        
         
         secondStackView.snp.makeConstraints { make in
             make.top.equalTo(topScrollView.snp.bottom).offset(70)

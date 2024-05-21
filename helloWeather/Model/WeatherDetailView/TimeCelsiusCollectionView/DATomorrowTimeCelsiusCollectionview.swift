@@ -1,25 +1,25 @@
 //
-//  TomorrowTimeCelsiusCollectionView.swift
+//  DATomorrowTimeCelsiusCollectionview.swift
 //  helloWeather
 //
-//  Created by 이유진 on 5/15/24.
+//  Created by 이유진 on 5/21/24.
 //
 
 import UIKit
 import RxSwift
 import RxCocoa
 
-class TomorrowTimeCelsiusCollectionView: UICollectionView, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class DATomorrowTimeCelsiusCollectionview: UICollectionView, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     private var viewModel: WeatherDetailViewModel?
     private var disposeBag = DisposeBag()
-    var hourlyWeatherData: [WeatherDetailViewModel.HourlyWeather] = []
+    private var hourlyWeatherData: [WeatherDetailViewModel.HourlyWeather] = []
     
-    weak var todayCollectionView: TodayTimeCelsiusCollectionView?
+    weak var tomorrowCollectionView: TomorrowTimeCelsiusCollectionView?
     
-    init(viewModel: WeatherDetailViewModel, todayCollectionView: TodayTimeCelsiusCollectionView) {
+    init(viewModel: WeatherDetailViewModel, tomorrowCollectionView: TomorrowTimeCelsiusCollectionView) {
         self.viewModel = viewModel
-        self.todayCollectionView = todayCollectionView
+        self.tomorrowCollectionView = tomorrowCollectionView
         
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -27,7 +27,7 @@ class TomorrowTimeCelsiusCollectionView: UICollectionView, UICollectionViewDeleg
         
         self.delegate = self
         self.dataSource = self
-        self.register(FirstRightCollectionViewCell.self, forCellWithReuseIdentifier: FirstRightCollectionViewCell.identifier)
+        self.register(FirstDayAfterTomorrowCollectionViewCell.self, forCellWithReuseIdentifier: FirstDayAfterTomorrowCollectionViewCell.identifier)
         self.showsHorizontalScrollIndicator = false
         self.isScrollEnabled = false
         
@@ -43,27 +43,25 @@ class TomorrowTimeCelsiusCollectionView: UICollectionView, UICollectionViewDeleg
     private func bindViewModel() {
         viewModel?.fetchHourlyWeather()
             .subscribe(onNext: { [weak self] hourlyWeather in
-                guard let self = self, let todayCollectionView = self.todayCollectionView else { return }
+                guard let self = self, let tomorrowCollectionView = self.tomorrowCollectionView else { return }
                 
-                print("전체 데이터: \(hourlyWeather)")
-                
-                // 첫 번째 0시의 인덱스 찾기
+                // 두 번째 0시의 인덱스 찾기
                 guard let firstZeroHourIndex = hourlyWeather.firstIndex(where: { $0.time.hasPrefix("0시") }) else { return }
                 
-                // 첫 번째 0시부터 3시간 간격으로 필터링된 시간대 가져오기
+                // 두 번째 0시부터 3시간 간격으로 필터링된 시간대 가져오기
                 var nextDayHourlyWeather = hourlyWeather[firstZeroHourIndex...].enumerated().compactMap { index, hourlyData in
                     guard index % 3 == 0 else { return nil }
                     return hourlyData
                 } as [WeatherDetailViewModel.HourlyWeather]
                 
-                // TomorrowTimeCelsiusCollectionView 셀 개수 설정
-                let todayCellCount = todayCollectionView.hourlyWeatherData.count
-                let requiredCellCount = min(8, max(0, 16 - todayCellCount))
+                // DayAfterTomorrowTimeCelsiusCollectionView 셀 개수 설정
+                let tomorrowCellCount = tomorrowCollectionView.hourlyWeatherData.count
+                let requiredCellCount = max(0, 16 - tomorrowCellCount)
                 nextDayHourlyWeather = Array(nextDayHourlyWeather.prefix(requiredCellCount))
                 
-                print("필터링된 데이터: \(nextDayHourlyWeather)")
-                print("오늘 데이터: \(todayCellCount)")
-                print("내일 데이터: \(requiredCellCount)")
+                print("내일 날씨 데이터 수 확인: \(tomorrowCellCount)")
+                print("모레 날씨 데이터 수 확인: \(requiredCellCount)")
+                print("모레 날씨 확인: \(nextDayHourlyWeather)")
                 self.hourlyWeatherData = nextDayHourlyWeather
                 self.reloadData()
             })

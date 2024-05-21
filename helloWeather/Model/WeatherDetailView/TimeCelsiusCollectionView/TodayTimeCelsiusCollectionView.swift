@@ -13,7 +13,7 @@ class TodayTimeCelsiusCollectionView: UICollectionView, UICollectionViewDelegate
     
     private var viewModel: WeatherDetailViewModel?
     private var disposeBag = DisposeBag()
-    private var hourlyWeatherData: [WeatherDetailViewModel.HourlyWeather] = []
+    var hourlyWeatherData: [WeatherDetailViewModel.HourlyWeather] = []
     
     weak var tomorrowCollectionView: TomorrowTimeCelsiusCollectionView?
     
@@ -64,7 +64,7 @@ class TodayTimeCelsiusCollectionView: UICollectionView, UICollectionViewDelegate
                                }
                                return !isFirst21Found && hour % 3 == 0
                            }
-                print("확인확인확인: \(self?.hourlyWeatherData ?? [])")
+                print("오늘날씨 확인: \(self?.hourlyWeatherData ?? [])")
                 self?.reloadData()
                 self?.updateCollectionViewSize()
             })

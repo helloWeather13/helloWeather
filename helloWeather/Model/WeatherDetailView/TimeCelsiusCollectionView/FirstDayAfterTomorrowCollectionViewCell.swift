@@ -1,17 +1,17 @@
 //
-//  FirstRightCollectionViewCell.swift
+//  FirstDayAfterTomorrowCollectionViewCell.swift
 //  helloWeather
 //
-//  Created by 이유진 on 5/14/24.
+//  Created by 이유진 on 5/21/24.
 //
 
 import UIKit
 import SnapKit
 import SwiftUI
 
-class FirstRightCollectionViewCell: UICollectionViewCell {
-    
-    static let identifier = String(describing: FirstRightCollectionViewCell.self)
+class FirstDayAfterTomorrowCollectionViewCell: UICollectionViewCell {
+   
+    static let identifier = String(describing: FirstDayAfterTomorrowCollectionViewCell.self)
     
     lazy var stackView: UIStackView = {
         let stack = UIStackView()
@@ -35,13 +35,13 @@ class FirstRightCollectionViewCell: UICollectionViewCell {
     }()
     lazy var timeLabel: UILabel = {
         let label = UILabel()
-        label.text = ""
+        label.text = "3시"
         label.font = UIFont.systemFont(ofSize: 11, weight: .regular)
         label.textAlignment = .center
         return label
     }()
     
-    lazy var barChartCellWrapper = BarChartCellWrapper5(
+    lazy var barChartCellWrapper = BarChartCellWrapper7(
         //높이
         value: 0.9,
         index: 0,
@@ -50,6 +50,8 @@ class FirstRightCollectionViewCell: UICollectionViewCell {
         accentColor: .gray,
         touchLocation: .constant(-1.0)
     )
+    
+    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -95,7 +97,7 @@ import SwiftUICharts
 import SwiftUI
 import UIKit
 
-class BarChartCellWrapper5: UIView {
+class BarChartCellWrapper7: UIView {
     private var hostingController: UIHostingController<BarChartCell>?
     
     init(value: Double, index: Int = 0, width: Float, numberOfDataPoints: Int, accentColor: Color, touchLocation: Binding<CGFloat>) {
@@ -125,7 +127,7 @@ class BarChartCellWrapper5: UIView {
 
 import SwiftUI
 
-public struct BarChartCell5: View {
+public struct BarChartCell7: View {
     public var value: Double
     public var index: Int = 0
     public var width: Float
@@ -161,3 +163,4 @@ public struct BarChartCell5: View {
         }
     }
 }
+
