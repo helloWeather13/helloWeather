@@ -8,6 +8,7 @@
 import UIKit
 import SnapKit
 import SwiftUI
+import SwiftUICharts
 
 class FirstDayAfterTomorrowCollectionViewCell: UICollectionViewCell {
    
@@ -41,29 +42,27 @@ class FirstDayAfterTomorrowCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
-    lazy var barChartCellWrapper = BarChartCellWrapper7(
-        //높이
-        value: 0.9,
-        index: 0,
-        width: 60,
-        numberOfDataPoints: 10,
-        accentColor: .gray,
-        touchLocation: .constant(-1.0)
-    )
-    
-    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
-        configureConstraints()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func configureConstraints() {
+    func configureConstraints(data: WeatherDetailViewModel.HourlyWeather) {
+        
+        // BarChart
+         let barChartCellWrapper = BarChartCellWrapper(
+             //높이
+             value: changeDataToHeight(data: data),
+             index: 0,
+             width: 60,
+             numberOfDataPoints: 10,
+             accentColor: .gray,
+             touchLocation: .constant(-1.0)
+         )
         
         contentView.addSubview(stackView2)
         [celsiusLabel, barChartCellWrapper].forEach {
@@ -86,16 +85,37 @@ class FirstDayAfterTomorrowCollectionViewCell: UICollectionViewCell {
             make.height.equalTo(timeLabel.font.pointSize)
         }
 
+        func changeDataToHeight(data: WeatherDetailViewModel.HourlyWeather) -> Double{
+            var height: Double = 0.0
+            if let tempC = Double(data.tempC.dropLast()) {
+                switch tempC {
+                case ..<0:
+                    height = 0.1
+                case 0..<10:
+                    height = 0.2
+                case 10..<15:
+                    height = 0.3
+                case 15..<20:
+                    height = 0.4
+                case 20..<25:
+                    height = 0.5
+                case 25..<30:
+                    height = 0.6
+                case 30..<35:
+                    height = 0.7
+                case 35..<40:
+                    height = 0.8
+                default:
+                    height = 0.9
+                }
+            }
+            return height
+        }
         
     }
     
 }
 
-import SwiftUI
-import UIKit
-import SwiftUICharts
-import SwiftUI
-import UIKit
 
 class BarChartCellWrapper7: UIView {
     private var hostingController: UIHostingController<BarChartCell>?
@@ -125,7 +145,6 @@ class BarChartCellWrapper7: UIView {
     }
 }
 
-import SwiftUI
 
 public struct BarChartCell7: View {
     public var value: Double
@@ -151,13 +170,13 @@ public struct BarChartCell7: View {
     
     public var body: some View {
         ZStack {
-            RoundedRectangle(cornerRadius: 10)
+            RoundedRectangle(cornerRadius: 25)
                 .fill(accentColor)
         }
         .frame(width: CGFloat(self.cellWidth))
         .scaleEffect(CGSize(width: 1, height: self.scaleValue), anchor: .bottom)
         .onAppear {
-            withAnimation(Animation.spring().delay(self.touchLocation < 0 ?  Double(self.index) * 0.04 : 0)) { // 애니메이션 적용
+            withAnimation(Animation.spring().delay(self.touchLocation < 0 ?  Double(self.index) * 0.04 : 0)) {
                 self.scaleValue = self.value
             }
         }

@@ -79,6 +79,7 @@ class TomorrowTimeCelsiusCollectionView: UICollectionView, UICollectionViewDeleg
         
         let hourlyWeather = hourlyWeatherData[indexPath.item]
         cell.configureConstraints(data: hourlyWeather)
+        
         cell.celsiusLabel.text = hourlyWeather.feelslikeC
         cell.timeLabel.text = hourlyWeather.time
         cell.celsiusLabel.textColor = .mygray

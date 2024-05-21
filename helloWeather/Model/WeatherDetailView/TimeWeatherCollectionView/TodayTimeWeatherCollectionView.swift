@@ -78,6 +78,8 @@ class TodayTimeWeatherCollectionView: UICollectionView, UICollectionViewDelegate
         let cell  = collectionView.dequeueReusableCell(withReuseIdentifier: SecondLeftCollectionViewCell.identifier, for: indexPath) as! SecondLeftCollectionViewCell
         
         let hourlyWeather = hourlyWeatherData[indexPath.item]
+        cell.configureConstraints(data: hourlyWeather)
+        
         cell.celsiusLabel.text = hourlyWeather.tempC
         cell.timeLabel.text = hourlyWeather.time
         

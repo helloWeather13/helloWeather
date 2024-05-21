@@ -6,6 +6,9 @@
 //
 
 import UIKit
+import SnapKit
+import SwiftUI
+import SwiftUICharts
 
 class HumidityCollectionViewCell: UICollectionViewCell {
     
@@ -38,26 +41,24 @@ class HumidityCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
-    lazy var barChartCellWrapper = BarChartCellWrapper4(
-        value: 0.9,
-        index: 0,
-        width: 60,
-        numberOfDataPoints: 10,
-        accentColor: .gray,
-        touchLocation: .constant(-1.0)
-    )
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
-        configureConstraints()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func configureConstraints() {
+    func configureConstraints(data: WeatherDetailViewModel.HourlyWeather) {
+        
+        let barChartCellWrapper = BarChartCellWrapper4 (
+            value: changeDataToHeight(data: data),
+            index: 0,
+            width: 60,
+            numberOfDataPoints: 10,
+            accentColor: .gray,
+            touchLocation: .constant(-1.0)
+        )
         
         contentView.addSubview(stackView2)
         stackView.addArrangedSubview(percentLabel)
@@ -74,15 +75,41 @@ class HumidityCollectionViewCell: UICollectionViewCell {
             make.height.equalTo(percentLabel.font.pointSize)
         }
         
+        func changeDataToHeight(data: WeatherDetailViewModel.HourlyWeather) -> Double{
+            var height: Double = 0.0
+            if let tempC = Double(data.humidity.dropLast()) {
+                switch tempC {
+                case ..<10:
+                    height = 0.0
+                case 10..<20:
+                    height = 0.2
+                case 20..<30:
+                    height = 0.3
+                case 30..<40:
+                    height = 0.4
+                case 40..<50:
+                    height = 0.5
+                case 50..<60:
+                    height = 0.6
+                case 60..<70:
+                    height = 0.7
+                case 70..<80:
+                    height = 0.8
+                case 80..<90:
+                    height = 0.9
+                default:
+                    height = 1.0
+                }
+            }
+            return height
+        }
+        
+        
+        
     }
     
 }
 
-import SwiftUI
-import UIKit
-import SwiftUICharts
-import SwiftUI
-import UIKit
 
 class BarChartCellWrapper4: UIView {
     private var hostingController: UIHostingController<BarChartCell>?
@@ -112,7 +139,6 @@ class BarChartCellWrapper4: UIView {
     }
 }
 
-import SwiftUI
 
 public struct BarChartCell4: View {
     public var value: Double

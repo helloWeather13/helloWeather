@@ -68,15 +68,12 @@ class WeekCollectionView: UICollectionView, UICollectionViewDelegate, UICollecti
         let cell  = collectionView.dequeueReusableCell(withReuseIdentifier: WeekCollectionViewCell.identifier, for: indexPath) as! WeekCollectionViewCell
         
         let dailyWeather = dailyWeatherData[indexPath.item]
+        cell.configureConstraints(data: dailyWeather)
+        
         cell.weekLabel.text = dailyWeather.dayOfWeek
         cell.dateLabel.text = dailyWeather.date
         cell.maxCelsiusLabel.text = dailyWeather.mintempC
         cell.minCelsiusLabel.text = dailyWeather.maxtempC
-        
-//        cell.weekLabel.text = weekTest[indexPath.item]
-//        cell.dateLabel.text = dateTest[indexPath.item]
-//        cell.minCelsiusLabel.text = "\(minCelsiusTest[indexPath.item])°"
-//        cell.maxCelsiusLabel.text = "\(maxCelsiusTest[indexPath.item])°"
         
         
         if indexPath.item < weatherIconTestData.count {

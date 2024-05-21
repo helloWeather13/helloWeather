@@ -8,32 +8,33 @@
 import UIKit
 import SnapKit
 import SwiftUI
+import SwiftUICharts
 
 class FirstRightCollectionViewCell: UICollectionViewCell {
     
     static let identifier = String(describing: FirstRightCollectionViewCell.self)
     
-    lazy var stackView: UIStackView = {
+    var stackView: UIStackView = {
         let stack = UIStackView()
         stack.axis = .vertical
         stack.spacing = 8
         return stack
     }()
-    lazy var stackView2: UIStackView = {
+    var stackView2: UIStackView = {
         let stack = UIStackView()
         stack.axis = .vertical
         stack.spacing = 15
         return stack
     }()
     
-    lazy var celsiusLabel: UILabel = {
+    var celsiusLabel: UILabel = {
         let label = UILabel()
         label.text = "17"
         label.font = UIFont.systemFont(ofSize: 15, weight: .regular)
         label.textAlignment = .center
         return label
     }()
-    lazy var timeLabel: UILabel = {
+    var timeLabel: UILabel = {
         let label = UILabel()
         label.text = ""
         label.font = UIFont.systemFont(ofSize: 11, weight: .regular)
@@ -51,7 +52,7 @@ class FirstRightCollectionViewCell: UICollectionViewCell {
     
     func configureConstraints(data : WeatherDetailViewModel.HourlyWeather) {
         
-        var barChartCellWrapper = BarChartCellWrapper5(
+        let barChartCellWrapper = BarChartCellWrapper5(
             //높이
             value: changeDataToHeight(data: data),
             index: 0,
@@ -62,7 +63,6 @@ class FirstRightCollectionViewCell: UICollectionViewCell {
         )
         
         contentView.addSubview(stackView2)
-        
         [celsiusLabel,barChartCellWrapper].forEach {
             stackView.addArrangedSubview($0)
         }
@@ -113,11 +113,6 @@ class FirstRightCollectionViewCell: UICollectionViewCell {
     
 }
 
-import SwiftUI
-import UIKit
-import SwiftUICharts
-import SwiftUI
-import UIKit
 
 class BarChartCellWrapper5: UIView {
     private var hostingController: UIHostingController<BarChartCell>?
@@ -147,7 +142,6 @@ class BarChartCellWrapper5: UIView {
     }
 }
 
-import SwiftUI
 
 public struct BarChartCell5: View {
     public var value: Double
@@ -173,13 +167,13 @@ public struct BarChartCell5: View {
     
     public var body: some View {
         ZStack {
-            RoundedRectangle(cornerRadius: 10)
+            RoundedRectangle(cornerRadius: 25)
                 .fill(accentColor)
         }
         .frame(width: CGFloat(self.cellWidth))
         .scaleEffect(CGSize(width: 1, height: self.scaleValue), anchor: .bottom)
         .onAppear {
-            withAnimation(Animation.spring().delay(self.touchLocation < 0 ?  Double(self.index) * 0.04 : 0)) { // 애니메이션 적용
+            withAnimation(Animation.spring().delay(self.touchLocation < 0 ?  Double(self.index) * 0.04 : 0)) {
                 self.scaleValue = self.value
             }
         }

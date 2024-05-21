@@ -80,6 +80,8 @@ class TodayTimeCelsiusCollectionView: UICollectionView, UICollectionViewDelegate
         let cell  = collectionView.dequeueReusableCell(withReuseIdentifier: FirstLeftCollectionViewCell.identifier, for: indexPath) as! FirstLeftCollectionViewCell
         
         let hourlyWeather = hourlyWeatherData[indexPath.item]
+        cell.configureConstraints(data: hourlyWeather)
+        
         cell.celsiusLabel.text = hourlyWeather.feelslikeC
         cell.timeLabel.text = hourlyWeather.time
         
@@ -88,7 +90,6 @@ class TodayTimeCelsiusCollectionView: UICollectionView, UICollectionViewDelegate
             cell.timeLabel.textColor = .myblack
             cell.timeLabel.font = UIFont.systemFont(ofSize: 12, weight: .regular)
             cell.celsiusLabel.font = UIFont.systemFont(ofSize: 20, weight: .regular)
-            //            cell.barChartCellWrapper.accentColor = UIColor.darkGray
         } else {
             cell.timeLabel.textColor = .mygray
             cell.celsiusLabel.textColor = .mygray

@@ -8,35 +8,36 @@
 import UIKit
 import SnapKit
 import SwiftUI
+import SwiftUICharts
 
 class SecondLeftCollectionViewCell: UICollectionViewCell {
     
     static let identifier = String(describing: SecondLeftCollectionViewCell.self)
     
-    lazy var firstStackView: UIStackView = {
+    var firstStackView: UIStackView = {
         let stack = UIStackView()
         stack.axis = .vertical
         stack.spacing = 10
         return stack
     }()
-    lazy var secondStackView: UIStackView = {
+    var secondStackView: UIStackView = {
         let stack = UIStackView()
         stack.axis = .vertical
         stack.spacing = 20
         return stack
     }()
     
-    lazy var celsiusLabel: UILabel = {
+    var celsiusLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 15, weight: .regular)
         label.textAlignment = .center
         return label
     }()
-    lazy var weatherIcon: UIImageView = {
+    var weatherIcon: UIImageView = {
         let image = UIImageView()
         return image
     }()
-    lazy var timeLabel: UILabel = {
+    var timeLabel: UILabel = {
         let label = UILabel()
         label.text = ""
         label.font = UIFont.systemFont(ofSize: 11, weight: .regular)
@@ -44,28 +45,26 @@ class SecondLeftCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
-    lazy var barChartCellWrapper = BarChartCellWrapper2(
-        //높이
-        value: 0.9,
-        index: 0,
-        width: 60,
-        numberOfDataPoints: 10,
-        accentColor: .gray,
-        touchLocation: .constant(-1.0)
-    )
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
-        configureConstraints()
-        
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func configureConstraints() {
+    func configureConstraints(data: WeatherDetailViewModel.HourlyWeather) {
+        
+        let barChartCellWrapper = BarChartCellWrapper2(
+            //높이
+            value: changeDataToHeight(data: data),
+            index: 0,
+            width: 60,
+            numberOfDataPoints: 10,
+            accentColor: .gray,
+            touchLocation: .constant(-1.0)
+        )
+        
         
         [celsiusLabel, barChartCellWrapper, weatherIcon].forEach {
             firstStackView.addArrangedSubview($0)
@@ -87,15 +86,37 @@ class SecondLeftCollectionViewCell: UICollectionViewCell {
             make.height.equalTo(24)
         }
         
+        func changeDataToHeight(data: WeatherDetailViewModel.HourlyWeather) -> Double{
+            var height: Double = 0.0
+            if let tempC = Double(data.tempC.dropLast()) {
+                switch tempC {
+                case ..<0:
+                    height = 0.1
+                case 0..<10:
+                    height = 0.2
+                case 10..<15:
+                    height = 0.3
+                case 15..<20:
+                    height = 0.4
+                case 20..<25:
+                    height = 0.5
+                case 25..<30:
+                    height = 0.6
+                case 30..<35:
+                    height = 0.7
+                case 35..<40:
+                    height = 0.8
+                default:
+                    height = 0.9
+                }
+            }
+            return height
+        }
+        
     }
     
 }
 
-import SwiftUI
-import UIKit
-import SwiftUICharts
-import SwiftUI
-import UIKit
 
 class BarChartCellWrapper2: UIView {
     private var hostingController: UIHostingController<BarChartCell>?
@@ -125,8 +146,6 @@ class BarChartCellWrapper2: UIView {
     }
 }
 
-import SwiftUI
-
 public struct BarChartCell2: View {
     public var value: Double
     public var index: Int = 0
@@ -151,13 +170,13 @@ public struct BarChartCell2: View {
     
     public var body: some View {
         ZStack {
-            RoundedRectangle(cornerRadius: 10)
+            RoundedRectangle(cornerRadius: 25)
                 .fill(accentColor)
         }
         .frame(width: CGFloat(self.cellWidth))
-        .scaleEffect(CGSize(width: 1, height: self.scaleValue), anchor: .bottom)
+        .scaleEffect(CGSize(width: 15, height: self.scaleValue), anchor: .bottom)
         .onAppear {
-            withAnimation(Animation.spring().delay(self.touchLocation < 0 ?  Double(self.index) * 0.04 : 0)) { // 애니메이션 적용
+            withAnimation(Animation.spring().delay(self.touchLocation < 0 ?  Double(self.index) * 0.04 : 0)) {
                 self.scaleValue = self.value
             }
         }
