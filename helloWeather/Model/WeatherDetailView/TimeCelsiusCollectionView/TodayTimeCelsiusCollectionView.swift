@@ -64,7 +64,6 @@ class TodayTimeCelsiusCollectionView: UICollectionView, UICollectionViewDelegate
                                }
                                return !isFirst21Found && hour % 3 == 0
                            }
-//                print("오늘날씨 확인: \(self?.hourlyWeatherData ?? [])")
                 self?.reloadData()
                 self?.updateCollectionViewSize()
             })

@@ -33,10 +33,6 @@ class TomorrowTimeWeatherCollectionView: UICollectionView, UICollectionViewDeleg
            self.register(SecondRightCollectionViewCell.self, forCellWithReuseIdentifier: SecondRightCollectionViewCell.identifier)
             self.showsHorizontalScrollIndicator = false
         
-        if let rainyImage = UIImage(named: "rainy") {
-            weatherIconTestData = Array(repeating: rainyImage, count: 8)
-        }
-        
         bindViewModel()
         
        }
@@ -76,6 +72,33 @@ class TomorrowTimeWeatherCollectionView: UICollectionView, UICollectionViewDeleg
             .disposed(by: disposeBag)
     }
     
+    // MARK: - SetupWeatherImage
+    
+    func setupWeatherImage(data: WeatherDetailViewModel.HourlyWeather , cell: SecondRightCollectionViewCell) {
+        switch data.condition  {
+        case "맑음", "대체로 맑음", "화창함":
+            cell.weatherIcon.image = UIImage(named: "clean")
+        case "흐린", "흐림", "구름 낀":
+            cell.weatherIcon.image = UIImage(named: "cloudStrong")
+        case "안개":
+            cell.weatherIcon.image = UIImage(named: "cloud")
+        case "짧은 소나기", "가벼운 비":
+            cell.weatherIcon.image = UIImage(named: "rainWeak")
+        case "보통 비", "근처 곳곳에 비", "비", "소나기":
+            cell.weatherIcon.image = UIImage(named: "rainSrong")
+        case "폭우":
+            cell.weatherIcon.image = UIImage(named: "rainSrong")
+        case "낙뢰":
+            cell.weatherIcon.image = UIImage(named: "thunder")
+        case "뇌우":
+            cell.weatherIcon.image = UIImage(named: "storm")
+        case "눈":
+            cell.weatherIcon.image = UIImage(named: "snow")
+        default:
+            cell.weatherIcon.image = UIImage(named: "searchImage")
+        }
+    }
+    
 
     // MARK: - CollectionView 프로토콜
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -91,10 +114,8 @@ class TomorrowTimeWeatherCollectionView: UICollectionView, UICollectionViewDeleg
         cell.celsiusLabel.text = hourlyWeather.tempC
         cell.timeLabel.text = hourlyWeather.time
         
-        if indexPath.item < weatherIconTestData.count {
-            cell.weatherIcon.image = weatherIconTestData[indexPath.item]
-            cell.weatherIcon.contentMode = .scaleAspectFit
-        }
+        setupWeatherImage(data: hourlyWeather, cell: cell)
+        cell.weatherIcon.contentMode = .scaleAspectFit
         
         if indexPath.item == 0 {
             cell.timeLabel.textColor = .myblack

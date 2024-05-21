@@ -30,6 +30,7 @@ class WeatherDetailViewModel {
         let tempC: String // 온도 (Celsius)
         let tempF: String
         let humidity: String
+        let condition: String
     }
     
     // 일일 날씨 정보(요일, 날짜, 온도)
@@ -76,13 +77,16 @@ class WeatherDetailViewModel {
                             let tempCTemperature = Int(hourlyData.tempC)
                             let tempFTemperature = Int(hourlyData.tempF)
                             
+                            let condition = hourlyData.condition.text
+                            
                             let hourlyWeatherData = HourlyWeather(
                                 time: formattedHour,
                                 feelslikeC: "\(feelslikeCTemperature)°",
                                 feelslikeF: "\(feelslikeFTemperature)°",
                                 tempC: "\(tempCTemperature)°",
                                 tempF: "\(tempFTemperature)°",
-                                humidity: "\(hourlyData.humidity)%"
+                                humidity: "\(hourlyData.humidity)%", 
+                                condition: "\(condition)"
                             )
                             hourlyWeather.append(hourlyWeatherData)
                         }

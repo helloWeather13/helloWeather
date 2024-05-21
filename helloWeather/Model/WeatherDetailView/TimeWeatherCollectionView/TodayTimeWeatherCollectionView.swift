@@ -29,11 +29,7 @@ class TodayTimeWeatherCollectionView: UICollectionView, UICollectionViewDelegate
         self.dataSource = self
         self.register(SecondLeftCollectionViewCell.self, forCellWithReuseIdentifier: SecondLeftCollectionViewCell.identifier)
         self.showsHorizontalScrollIndicator = false
-        
-        if let rainyImage = UIImage(named: "rainy") {
-            weatherIconTestData = Array(repeating: rainyImage, count: 8)
-        }
-        
+            
         bindViewModel()
         
     }
@@ -61,12 +57,44 @@ class TodayTimeWeatherCollectionView: UICollectionView, UICollectionViewDelegate
                                }
                                return !isFirst21Found && hour % 3 == 0
                            }
+                if let hourlyWeatherData = self?.hourlyWeatherData {
+                              print("오늘 날씨 확인: \(hourlyWeatherData)")
+                          }
                 self?.reloadData()
                 self?.updateCollectionViewSize()
 
             })
             .disposed(by: disposeBag)
     }
+    
+    // MARK: - SetupWeatherImage
+    
+    func setupWeatherImage(data: WeatherDetailViewModel.HourlyWeather , cell: SecondLeftCollectionViewCell) {
+        switch data.condition  {
+        case "맑음", "대체로 맑음", "화창함":
+            cell.weatherIcon.image = UIImage(named: "clean")
+        case "흐린", "흐림", "구름 낀":
+            cell.weatherIcon.image = UIImage(named: "cloudStrong")
+        case "안개":
+            cell.weatherIcon.image = UIImage(named: "cloud")
+        case "짧은 소나기", "가벼운 비":
+            cell.weatherIcon.image = UIImage(named: "rainWeak")
+        case "보통 비", "근처 곳곳에 비", "비", "소나기":
+            cell.weatherIcon.image = UIImage(named: "rainSrong")
+        case "폭우":
+            cell.weatherIcon.image = UIImage(named: "rainSrong")
+        case "낙뢰":
+            cell.weatherIcon.image = UIImage(named: "thunder")
+        case "뇌우":
+            cell.weatherIcon.image = UIImage(named: "storm")
+        case "눈":
+            cell.weatherIcon.image = UIImage(named: "snow")
+        default:
+            cell.weatherIcon.image = UIImage(named: "searchImage")
+        }
+    }
+    
+    
     
     // MARK: - Collectionview 프로토콜
     
@@ -82,6 +110,9 @@ class TodayTimeWeatherCollectionView: UICollectionView, UICollectionViewDelegate
         
         cell.celsiusLabel.text = hourlyWeather.tempC
         cell.timeLabel.text = hourlyWeather.time
+        
+        setupWeatherImage(data: hourlyWeather, cell: cell)
+        cell.weatherIcon.contentMode = .scaleAspectFit
         
         if indexPath.item < weatherIconTestData.count {
             cell.weatherIcon.image = weatherIconTestData[indexPath.item]
