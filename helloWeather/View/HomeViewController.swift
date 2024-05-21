@@ -17,7 +17,7 @@ class HomeViewController: UIViewController {
         button.imageView?.contentMode = .scaleAspectFit
         button.setBackgroundImage(UIImage(systemName: "bookmark"), for: .normal)
         button.tintColor = .black
-        button.addTarget(HomeViewController.self, action: #selector(bookmarkButtonTapped), for: .touchUpInside)
+        button.addTarget(self, action: #selector(bookmarkButtonTapped), for: .touchUpInside)
         return button
     }()
     
@@ -26,7 +26,7 @@ class HomeViewController: UIViewController {
         button.imageView?.contentMode = .scaleAspectFit
         button.setBackgroundImage(UIImage(systemName: "bell"), for: .normal)
         button.tintColor = .clear
-        button.addTarget(HomeViewController.self, action: #selector(notificationButtonTapped), for: .touchUpInside)
+        button.addTarget(self, action: #selector(notificationButtonTapped), for: .touchUpInside)
         return button
     }()
     
@@ -97,6 +97,7 @@ class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+//        self.homeViewModel.currentSearchModel = SearchModel(keyWord: "", fullAddress: "전원 강릉시", lat: 37.74913611, lon: 128.8784972, city: "전원 강릉시")
         setupNaviBar()
         setupSecondLabel()
         setupThirdLabel()
@@ -105,20 +106,12 @@ class HomeViewController: UIViewController {
     }
     
     func setupNaviBar() {
-        
-        
         homeViewModel.addressOnCompleted = { [unowned self] address in
             self.navigationItem.title = address
         }
-        
-        
-        
-        
         let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonTapped))
         addButton.tintColor = .black
         navigationItem.rightBarButtonItem = addButton
-
-        
     }
     
     @objc func addButtonTapped() {
@@ -202,8 +195,6 @@ class HomeViewController: UIViewController {
             $0.leading.equalTo(bookmarkButton.snp.leading)
             $0.width.height.equalTo(24)
         }
-        
-        
         
         }
     }

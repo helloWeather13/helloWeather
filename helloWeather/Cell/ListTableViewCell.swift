@@ -119,21 +119,55 @@ class ListTableViewCell: UITableViewCell {
         cityLabel.text = searchModel.city + ","
         cityLabel.font = .boldSystemFont(ofSize: 13)
         cityLabel.sizeToFit()
-        conditionLabel.text = weatherAPIModel.current?.condition.text
+//        conditionLabel.text = weatherAPIModel.current?.condition.text
+        conditionLabel.text = weatherAPIModel.current?.condition.change()
         conditionLabel.font = .systemFont(ofSize: 13)
         conditionLabel.sizeToFit()
         temperatureLabel.text = String(Int(weatherAPIModel.current?.feelslikeC ?? 0)) + "°"
         temperatureLabel.font = .boldSystemFont(ofSize: 42)
         temperatureLabel.sizeToFit()
-        weatherImage.image = UIImage(named: "rainy")
+//        weatherImage.image = UIImage(named: "rainy")
         weatherImage.contentMode = .scaleAspectFit
-        minMaxTempLabel.text = String(Int(weatherAPIModel.forecast.forecastday[0].day.maxtempC)) + "°" + " " + String(Int(weatherAPIModel.forecast.forecastday[0].day.mintempC)) + "°"
+        minMaxTempLabel.text = String(Int(weatherAPIModel.forecast.forecastday[0].day.maxtempC)) + "°" + "/ " + String(Int(weatherAPIModel.forecast.forecastday[0].day.mintempC)) + "°"
         minMaxTempLabel.textColor = .secondaryLabel
         minMaxTempLabel.font = .systemFont(ofSize: 12)
         minMaxTempLabel.sizeToFit()
         isAlarm = searchModel.notification
         alarmImageView.image = isAlarm ? .alarm1 : .alarm0
         setupAlarmImageView()
+        setupWeatherImage()
+    }
+    // 흐린 -> 흐림
+    // 맑음, 화창함 -> 맑음
+    // 대체로 맑음 그대로 유지
+    // 가벼운 소나기 -> 짧은 소나기
+    // 곳곳에 가벼운 이슬비 -> 가벼운 비
+    // 근처 곳곳에 비 -> 비
+    // 보통 또는 심한 소나기 -> 소나기
+    // 폭우 그대로 유지
+    // 근처에 천둥 발생 -> 낙뢰
+    // 천둥을 동반한 보통 또는 심한 비 -> 뇌우
+    func setupWeatherImage() {
+        switch conditionLabel.text {
+        case "맑음":
+            weatherImage.image = UIImage(named: "clean-day")
+        case "흐림":
+            weatherImage.image = UIImage(named: "cloudStrong-day")
+        case "대체로 맑음":
+            weatherImage.image = UIImage(named: "cloud-day")
+        case "짧은 소나기", "가벼운 비":
+            weatherImage.image = UIImage(named: "rainWeak-day")
+        case "비", "소나기":
+            weatherImage.image = UIImage(named: "rainSrong-day")
+        case "폭우": // 폭우 그림 바뀔 예정이라 따로 빼둠
+            weatherImage.image = UIImage(named: "rainSrong-day")
+        case "낙뢰":
+            weatherImage.image = UIImage(named: "thunder-day")
+        case "뇌우":
+            weatherImage.image = UIImage(named: "storm-day")
+        default:
+            weatherImage.image = UIImage(named: "searchImage")
+        }
     }
     
     func setupAlarmImageView() {
@@ -169,9 +203,6 @@ class ListTableViewCell: UITableViewCell {
             $0.centerY.equalTo(cityLabel)
         }
         temperatureLabel.snp.makeConstraints{
-            //$0.top.equalTo(cityLabel.snp.bottom)
-            //            $0.leading.equalTo(currentLocationImageView)
-//            $0.centerY.equalTo(viewContainer)
             $0.top.equalTo(cityLabel.snp.bottom).offset(8)
             $0.height.equalTo(42)
             $0.leading.equalTo(viewContainer).offset(16)
@@ -180,14 +211,9 @@ class ListTableViewCell: UITableViewCell {
             $0.width.height.equalTo(16)
             $0.trailing.equalTo(viewContainer.snp.trailing).offset(-16)
             $0.top.equalTo(viewContainer.snp.top).offset(16)
-//            $0.width.height.equalTo(16)
-//            $0.trailing.equalTo(viewContainer).offset(-10)
-//            $0.top.equalTo(conditionLabel).offset(-10)
-//            $0.centerY.equalTo(viewContainer).inset(55)
-            
         }
         weatherImage.snp.makeConstraints{
-            $0.width.height.equalTo(53)
+            $0.width.height.equalTo(36)
             $0.trailing.equalTo(viewContainer).offset(-16)
 //            $0.top.equalTo(alarmImageView.snp.bottom).inset(-19)
             $0.bottom.equalTo(viewContainer).offset(-16)
@@ -206,10 +232,6 @@ class ListTableViewCell: UITableViewCell {
             $0.centerX.centerY.equalToSuperview()
             $0.width.height.equalTo(24)
         }
-//        [cityLabel, conditionLabel,temperatureLabel,weatherImage,minMaxTempLabel,alarmImageView].forEach{
-//            $0.isSkeletonable = true
-//            $0.showSkeleton(transition: .crossDissolve(0.5))
-//        }
     }
 }
 
