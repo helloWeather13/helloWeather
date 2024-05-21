@@ -8,10 +8,10 @@ class TempListViewModel {
     var weatherAPIModel : [WeatherAPIModel] = []
     var willDeleteSearchModel : SearchModel?
     
-//    init(){
-//        loadBookMark()
-//        applySnapshot()
-//    }
+    //    init(){
+    //        loadBookMark()
+    //        applySnapshot()
+    //    }
     func loadBookMark(){
         // RecentSearch가 아니라 바껴야 함
         if let savedData = UserDefaults.standard.object(forKey: "bookMark") as? Data {
@@ -51,5 +51,11 @@ class TempListViewModel {
         })
         snapshot.appendItems(items)
         dataSource?.apply(snapshot, animatingDifferences: false)
+    }
+    func moveBookMark(from sourceIndex: Int, to destinationIndex: Int) {
+        let movedItem = bookMarkModel.remove(at: sourceIndex)
+        bookMarkModel.insert(movedItem, at: destinationIndex)
+        updateBookMark()
+        applySnapshot()
     }
 }
