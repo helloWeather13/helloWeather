@@ -13,7 +13,7 @@ class TodayTimeWeatherCollectionView: UICollectionView, UICollectionViewDelegate
     
     private var viewModel: WeatherDetailViewModel?
     private var disposeBag = DisposeBag()
-    private var hourlyWeatherData: [WeatherDetailViewModel.HourlyWeather] = []
+    var hourlyWeatherData: [WeatherDetailViewModel.HourlyWeather] = []
     
     var weatherIconTestNames: [String] = ["rainy"]
     var weatherIconTestData: [UIImage] = []
@@ -61,7 +61,6 @@ class TodayTimeWeatherCollectionView: UICollectionView, UICollectionViewDelegate
                                }
                                return !isFirst21Found && hour % 3 == 0
                            }
-                print("확인확인확인: \(self?.hourlyWeatherData ?? [])")
                 self?.reloadData()
                 self?.updateCollectionViewSize()
 

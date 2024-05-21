@@ -15,10 +15,12 @@ class DATomorrowTimeCelsiusCollectionview: UICollectionView, UICollectionViewDel
     private var disposeBag = DisposeBag()
     private var hourlyWeatherData: [WeatherDetailViewModel.HourlyWeather] = []
     
+    weak var todayCollectionView: TodayTimeCelsiusCollectionView?
     weak var tomorrowCollectionView: TomorrowTimeCelsiusCollectionView?
     
-    init(viewModel: WeatherDetailViewModel, tomorrowCollectionView: TomorrowTimeCelsiusCollectionView) {
+    init(viewModel: WeatherDetailViewModel, todayCollectionView: TodayTimeCelsiusCollectionView, tomorrowCollectionView: TomorrowTimeCelsiusCollectionView) {
         self.viewModel = viewModel
+        self.todayCollectionView = todayCollectionView
         self.tomorrowCollectionView = tomorrowCollectionView
         
         let layout = UICollectionViewFlowLayout()
@@ -43,7 +45,7 @@ class DATomorrowTimeCelsiusCollectionview: UICollectionView, UICollectionViewDel
     private func bindViewModel() {
         viewModel?.fetchHourlyWeather()
             .subscribe(onNext: { [weak self] hourlyWeather in
-                guard let self = self, let tomorrowCollectionView = self.tomorrowCollectionView else { return }
+                guard let self = self, let todayCollectionView = self.todayCollectionView, let tomorrowCollectionView = self.tomorrowCollectionView else { return }
                 
                 // 두 번째 0시의 인덱스 찾기
                 guard let firstZeroHourIndex = hourlyWeather.firstIndex(where: { $0.time.hasPrefix("0시") }) else { return }
@@ -55,10 +57,12 @@ class DATomorrowTimeCelsiusCollectionview: UICollectionView, UICollectionViewDel
                 } as [WeatherDetailViewModel.HourlyWeather]
                 
                 // DayAfterTomorrowTimeCelsiusCollectionView 셀 개수 설정
+                let todayCellCount = todayCollectionView.hourlyWeatherData.count
                 let tomorrowCellCount = tomorrowCollectionView.hourlyWeatherData.count
-                let requiredCellCount = max(0, 16 - tomorrowCellCount)
+                let requiredCellCount = max(0, 16 - ( todayCellCount + tomorrowCellCount ))
                 nextDayHourlyWeather = Array(nextDayHourlyWeather.prefix(requiredCellCount))
                 
+    
                 print("내일 날씨 데이터 수 확인: \(tomorrowCellCount)")
                 print("모레 날씨 데이터 수 확인: \(requiredCellCount)")
                 print("모레 날씨 확인: \(nextDayHourlyWeather)")

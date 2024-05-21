@@ -139,7 +139,7 @@ class WeatherDetailView: UIView {
         return collectionView
     }()
     lazy var firstDayAfterTomorrowCollectionview: DATomorrowTimeCelsiusCollectionview = {
-        let collectionView = DATomorrowTimeCelsiusCollectionview(viewModel: weatherDetailViewModel, tomorrowCollectionView: firstRightCollectionView)
+        let collectionView = DATomorrowTimeCelsiusCollectionview(viewModel: weatherDetailViewModel, todayCollectionView: firstLeftCollectionView,  tomorrowCollectionView: firstRightCollectionView)
         return collectionView
     }()
     
@@ -158,7 +158,7 @@ class WeatherDetailView: UIView {
         return image
     }()
     lazy var secondLeftCollectionView = TodayTimeWeatherCollectionView(viewModel: weatherDetailViewModel)
-    lazy var secondRightCollectionView = TomorrowTimeWeatherCollectionView(viewModel: weatherDetailViewModel)
+    lazy var secondRightCollectionView = TomorrowTimeWeatherCollectionView(viewModel: weatherDetailViewModel, todayCollectionView: secondLeftCollectionView)
     
     // 주간 날씨
     lazy var weekCollectionView = WeekCollectionView(viewModel: weatherDetailViewModel)
@@ -356,11 +356,12 @@ class WeatherDetailView: UIView {
             make.width.equalTo(393)
             make.leading.equalTo(topTomorrowImageView.snp.trailing).offset(24)
         }
-        firstDayAfterTomorrowCollectionview.snp.makeConstraints { make in
-            make.top.bottom.equalToSuperview()
-            make.height.equalTo(119)
-            make.leading.equalTo(firstRightCollectionView.snp.trailing).offset(24)
-        }
+//        firstDayAfterTomorrowCollectionview.snp.makeConstraints { make in
+//            make.top.bottom.equalToSuperview()
+//            make.height.equalTo(119)
+//            make.width.equalTo(393)
+//            make.leading.equalTo(firstRightCollectionView.snp.trailing).offset(24)
+//        }
         
         
         secondStackView.snp.makeConstraints { make in
