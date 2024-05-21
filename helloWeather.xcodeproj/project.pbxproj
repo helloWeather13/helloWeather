@@ -20,13 +20,9 @@
 		1445AF672BF3631D0018AE3F /* SectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1445AF662BF3631D0018AE3F /* SectionHeaderView.swift */; };
 		1445AF692BF3784E0018AE3F /* SearchState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1445AF682BF3784E0018AE3F /* SearchState.swift */; };
 		146580CB2BF1E7EA0093AA81 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146580CA2BF1E7EA0093AA81 /* AppDelegate.swift */; };
-		146580CD2BF1E7EA0093AA81 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146580CC2BF1E7EA0093AA81 /* SceneDelegate.swift */; };
 		146580D42BF1E7EB0093AA81 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 146580D32BF1E7EB0093AA81 /* Assets.xcassets */; };
 		146580D72BF1E7EB0093AA81 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 146580D62BF1E7EB0093AA81 /* Base */; };
-		146580DF2BF1E8160093AA81 /* TabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146580DE2BF1E8160093AA81 /* TabViewController.swift */; };
 		146580E42BF1E8590093AA81 /* TabViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146580E32BF1E8590093AA81 /* TabViewModel.swift */; };
-		146580E62BF1E8740093AA81 /* TabModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146580E52BF1E8740093AA81 /* TabModel.swift */; };
-		146580E82BF1E8960093AA81 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146580E72BF1E8960093AA81 /* HomeViewController.swift */; };
 		146580ED2BF1E8D10093AA81 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146580EC2BF1E8D10093AA81 /* SearchViewController.swift */; };
 		146580F32BF1EB3E0093AA81 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 146580F22BF1EB3E0093AA81 /* SnapKit */; };
 		146580F82BF1EB4D0093AA81 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 146580F72BF1EB4D0093AA81 /* Alamofire */; };
@@ -40,6 +36,27 @@
 		147EF86E2BF62AF4000DC8A8 /* TempListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147EF86D2BF62AF4000DC8A8 /* TempListViewModel.swift */; };
 		147EF8702BF62F1B000DC8A8 /* ListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147EF86F2BF62F1B000DC8A8 /* ListTableViewCell.swift */; };
 		147EF8722BF63685000DC8A8 /* SpaceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147EF8712BF63685000DC8A8 /* SpaceTableViewCell.swift */; };
+		1485D6E32BFC4B7A00D69ABF /* TabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146580DE2BF1E8160093AA81 /* TabViewController.swift */; };
+		1485D6E42BFC4B8700D69ABF /* TabModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146580E52BF1E8740093AA81 /* TabModel.swift */; };
+		1485D6E52BFC4B9400D69ABF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146580CC2BF1E7EA0093AA81 /* SceneDelegate.swift */; };
+		1485D6E62BFC4B9E00D69ABF /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146580E72BF1E8960093AA81 /* HomeViewController.swift */; };
+		1485D6EC2BFC4BC400D69ABF /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 148FCA5F2BFB63AF0042F1D9 /* WidgetKit.framework */; };
+		1485D6ED2BFC4BC400D69ABF /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 148FCA612BFB63AF0042F1D9 /* SwiftUI.framework */; };
+		1485D6F02BFC4BC400D69ABF /* HelloWeatherWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1485D6EF2BFC4BC400D69ABF /* HelloWeatherWidgetBundle.swift */; };
+		1485D6F22BFC4BC400D69ABF /* HelloWeatherWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1485D6F12BFC4BC400D69ABF /* HelloWeatherWidget.swift */; };
+		1485D6F42BFC4BC600D69ABF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1485D6F32BFC4BC600D69ABF /* Assets.xcassets */; };
+		1485D6F82BFC4BC600D69ABF /* HelloWeatherWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 1485D6EB2BFC4BC400D69ABF /* HelloWeatherWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		1485D6FC2BFC4C5800D69ABF /* WeatherAPIModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146581042BF21EC40093AA81 /* WeatherAPIModel.swift */; };
+		1485D6FE2BFC4DC300D69ABF /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1485D6FD2BFC4DC300D69ABF /* LocationManager.swift */; };
+		1485D6FF2BFC4DD200D69ABF /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1485D6FD2BFC4DC300D69ABF /* LocationManager.swift */; };
+		1485D7002BFC503600D69ABF /* SearchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1445AF642BF350CA0018AE3F /* SearchModel.swift */; };
+		1485D7052BFC844D00D69ABF /* WidgetModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1485D7032BFC828F00D69ABF /* WidgetModel.swift */; };
+		1485D7092BFC9C6D00D69ABF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 146580D32BF1E7EB0093AA81 /* Assets.xcassets */; };
+		1485D70A2BFC9D1C00D69ABF /* GmarketSansTTFBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 148FCA1A2BFADF2D0042F1D9 /* GmarketSansTTFBold.ttf */; };
+		1485D70B2BFCA36800D69ABF /* Pretendard-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 148FCA362BFADF2D0042F1D9 /* Pretendard-Medium.ttf */; };
+		1485D70C2BFCA4A400D69ABF /* Pretendard-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 148FCA342BFADF2D0042F1D9 /* Pretendard-ExtraLight.ttf */; };
+		1485D70D2BFCA4A700D69ABF /* Pretendard-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 148FCA352BFADF2D0042F1D9 /* Pretendard-Light.ttf */; };
+		1485D70E2BFCA59900D69ABF /* Pretendard-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 148FCA372BFADF2D0042F1D9 /* Pretendard-Regular.ttf */; };
 		148FCA3C2BFADF2E0042F1D9 /* GmarketSansTTFBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 148FCA1A2BFADF2D0042F1D9 /* GmarketSansTTFBold.ttf */; };
 		148FCA3D2BFADF2E0042F1D9 /* GmarketSansTTFLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 148FCA1B2BFADF2D0042F1D9 /* GmarketSansTTFLight.ttf */; };
 		148FCA3E2BFADF2E0042F1D9 /* GmarketSansTTFMedium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 148FCA1C2BFADF2D0042F1D9 /* GmarketSansTTFMedium.ttf */; };
@@ -70,13 +87,6 @@
 		148FCA572BFADF2E0042F1D9 /* Pretendard-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 148FCA372BFADF2D0042F1D9 /* Pretendard-Regular.ttf */; };
 		148FCA582BFADF2E0042F1D9 /* Pretendard-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 148FCA382BFADF2D0042F1D9 /* Pretendard-SemiBold.ttf */; };
 		148FCA592BFADF2E0042F1D9 /* Pretendard-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 148FCA392BFADF2D0042F1D9 /* Pretendard-Thin.ttf */; };
-		148FCA602BFB63AF0042F1D9 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 148FCA5F2BFB63AF0042F1D9 /* WidgetKit.framework */; };
-		148FCA622BFB63AF0042F1D9 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 148FCA612BFB63AF0042F1D9 /* SwiftUI.framework */; };
-		148FCA652BFB63AF0042F1D9 /* helloWeatherWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148FCA642BFB63AF0042F1D9 /* helloWeatherWidgetBundle.swift */; };
-		148FCA672BFB63AF0042F1D9 /* helloWeatherWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148FCA662BFB63AF0042F1D9 /* helloWeatherWidget.swift */; };
-		148FCA692BFB63AF0042F1D9 /* AppIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148FCA682BFB63AF0042F1D9 /* AppIntent.swift */; };
-		148FCA6B2BFB63B10042F1D9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 148FCA6A2BFB63B10042F1D9 /* Assets.xcassets */; };
-		148FCA6F2BFB63B10042F1D9 /* helloWeatherWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 148FCA5E2BFB63AF0042F1D9 /* helloWeatherWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		14D0852E2BF909D300C9B985 /* SkeletonView in Frameworks */ = {isa = PBXBuildFile; productRef = 14D0852D2BF909D300C9B985 /* SkeletonView */; };
 		14E83D912BF793CB004CAD62 /* TSBlurEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E83D902BF793CB004CAD62 /* TSBlurEffectView.swift */; };
 		14E83D932BF79FF5004CAD62 /* DeleteAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E83D922BF79FF5004CAD62 /* DeleteAlertView.swift */; };
@@ -114,12 +124,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		148FCA6D2BFB63B10042F1D9 /* PBXContainerItemProxy */ = {
+		1485D6F62BFC4BC600D69ABF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 146580BF2BF1E7EA0093AA81 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 148FCA5D2BFB63AF0042F1D9;
-			remoteInfo = helloWeatherWidgetExtension;
+			remoteGlobalIDString = 1485D6EA2BFC4BC400D69ABF;
+			remoteInfo = HelloWeatherWidgetExtension;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -130,7 +140,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				148FCA6F2BFB63B10042F1D9 /* helloWeatherWidgetExtension.appex in Embed Foundation Extensions */,
+				1485D6F82BFC4BC600D69ABF /* HelloWeatherWidgetExtension.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -178,6 +188,15 @@
 		147EF86D2BF62AF4000DC8A8 /* TempListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempListViewModel.swift; sourceTree = "<group>"; };
 		147EF86F2BF62F1B000DC8A8 /* ListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTableViewCell.swift; sourceTree = "<group>"; };
 		147EF8712BF63685000DC8A8 /* SpaceTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpaceTableViewCell.swift; sourceTree = "<group>"; };
+		1485D6EB2BFC4BC400D69ABF /* HelloWeatherWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = HelloWeatherWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		1485D6EF2BFC4BC400D69ABF /* HelloWeatherWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelloWeatherWidgetBundle.swift; sourceTree = "<group>"; };
+		1485D6F12BFC4BC400D69ABF /* HelloWeatherWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelloWeatherWidget.swift; sourceTree = "<group>"; };
+		1485D6F32BFC4BC600D69ABF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		1485D6F52BFC4BC600D69ABF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1485D6FD2BFC4DC300D69ABF /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		1485D7012BFC56A100D69ABF /* helloWeather.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = helloWeather.entitlements; sourceTree = "<group>"; };
+		1485D7022BFC575600D69ABF /* HelloWeatherWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HelloWeatherWidgetExtension.entitlements; sourceTree = "<group>"; };
+		1485D7032BFC828F00D69ABF /* WidgetModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetModel.swift; sourceTree = "<group>"; };
 		148FCA1A2BFADF2D0042F1D9 /* GmarketSansTTFBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = GmarketSansTTFBold.ttf; sourceTree = "<group>"; };
 		148FCA1B2BFADF2D0042F1D9 /* GmarketSansTTFLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = GmarketSansTTFLight.ttf; sourceTree = "<group>"; };
 		148FCA1C2BFADF2D0042F1D9 /* GmarketSansTTFMedium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = GmarketSansTTFMedium.ttf; sourceTree = "<group>"; };
@@ -208,14 +227,8 @@
 		148FCA372BFADF2D0042F1D9 /* Pretendard-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Regular.ttf"; sourceTree = "<group>"; };
 		148FCA382BFADF2D0042F1D9 /* Pretendard-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-SemiBold.ttf"; sourceTree = "<group>"; };
 		148FCA392BFADF2D0042F1D9 /* Pretendard-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Thin.ttf"; sourceTree = "<group>"; };
-		148FCA5E2BFB63AF0042F1D9 /* helloWeatherWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = helloWeatherWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		148FCA5F2BFB63AF0042F1D9 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		148FCA612BFB63AF0042F1D9 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
-		148FCA642BFB63AF0042F1D9 /* helloWeatherWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = helloWeatherWidgetBundle.swift; sourceTree = "<group>"; };
-		148FCA662BFB63AF0042F1D9 /* helloWeatherWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = helloWeatherWidget.swift; sourceTree = "<group>"; };
-		148FCA682BFB63AF0042F1D9 /* AppIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIntent.swift; sourceTree = "<group>"; };
-		148FCA6A2BFB63B10042F1D9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		148FCA6C2BFB63B10042F1D9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		14E83D902BF793CB004CAD62 /* TSBlurEffectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TSBlurEffectView.swift; sourceTree = "<group>"; };
 		14E83D922BF79FF5004CAD62 /* DeleteAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAlertView.swift; sourceTree = "<group>"; };
 		14E83D952BF7B6FE004CAD62 /* EmptySearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptySearchView.swift; sourceTree = "<group>"; };
@@ -265,12 +278,12 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		148FCA5B2BFB63AF0042F1D9 /* Frameworks */ = {
+		1485D6E82BFC4BC400D69ABF /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				148FCA622BFB63AF0042F1D9 /* SwiftUI.framework in Frameworks */,
-				148FCA602BFB63AF0042F1D9 /* WidgetKit.framework in Frameworks */,
+				1485D6ED2BFC4BC400D69ABF /* SwiftUI.framework in Frameworks */,
+				1485D6EC2BFC4BC400D69ABF /* WidgetKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -301,8 +314,9 @@
 		146580BE2BF1E7EA0093AA81 = {
 			isa = PBXGroup;
 			children = (
+				1485D7022BFC575600D69ABF /* HelloWeatherWidgetExtension.entitlements */,
 				146580C92BF1E7EA0093AA81 /* helloWeather */,
-				148FCA632BFB63AF0042F1D9 /* helloWeatherWidget */,
+				1485D6EE2BFC4BC400D69ABF /* HelloWeatherWidget */,
 				146580C82BF1E7EA0093AA81 /* Products */,
 				B64E88152BF544180070C3EF /* Frameworks */,
 			);
@@ -312,7 +326,7 @@
 			isa = PBXGroup;
 			children = (
 				146580C72BF1E7EA0093AA81 /* helloWeather.app */,
-				148FCA5E2BFB63AF0042F1D9 /* helloWeatherWidgetExtension.appex */,
+				1485D6EB2BFC4BC400D69ABF /* HelloWeatherWidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -320,6 +334,7 @@
 		146580C92BF1E7EA0093AA81 /* helloWeather */ = {
 			isa = PBXGroup;
 			children = (
+				1485D7012BFC56A100D69ABF /* helloWeather.entitlements */,
 				9ABC1E1F2BF34BCF006A626C /* FineDust */,
 				1445AF5E2BF32F720018AE3F /* SectionItemModel */,
 				1445AF5B2BF32C2F0018AE3F /* Cell */,
@@ -394,8 +409,21 @@
 			isa = PBXGroup;
 			children = (
 				146580FC2BF1F1770093AA81 /* WebServiceManager.swift */,
+				1485D6FD2BFC4DC300D69ABF /* LocationManager.swift */,
 			);
 			path = Manager;
+			sourceTree = "<group>";
+		};
+		1485D6EE2BFC4BC400D69ABF /* HelloWeatherWidget */ = {
+			isa = PBXGroup;
+			children = (
+				1485D7032BFC828F00D69ABF /* WidgetModel.swift */,
+				1485D6EF2BFC4BC400D69ABF /* HelloWeatherWidgetBundle.swift */,
+				1485D6F12BFC4BC400D69ABF /* HelloWeatherWidget.swift */,
+				1485D6F32BFC4BC600D69ABF /* Assets.xcassets */,
+				1485D6F52BFC4BC600D69ABF /* Info.plist */,
+			);
+			path = HelloWeatherWidget;
 			sourceTree = "<group>";
 		};
 		148FCA1D2BFADF2D0042F1D9 /* GmarketSans */ = {
@@ -457,18 +485,6 @@
 				148FCA3A2BFADF2D0042F1D9 /* Pretendard */,
 			);
 			path = Font;
-			sourceTree = "<group>";
-		};
-		148FCA632BFB63AF0042F1D9 /* helloWeatherWidget */ = {
-			isa = PBXGroup;
-			children = (
-				148FCA642BFB63AF0042F1D9 /* helloWeatherWidgetBundle.swift */,
-				148FCA662BFB63AF0042F1D9 /* helloWeatherWidget.swift */,
-				148FCA682BFB63AF0042F1D9 /* AppIntent.swift */,
-				148FCA6A2BFB63B10042F1D9 /* Assets.xcassets */,
-				148FCA6C2BFB63B10042F1D9 /* Info.plist */,
-			);
-			path = helloWeatherWidget;
 			sourceTree = "<group>";
 		};
 		45D70DCB2BF3344500942DC1 /* WeatherDetailView */ = {
@@ -599,7 +615,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				148FCA6E2BFB63B10042F1D9 /* PBXTargetDependency */,
+				1485D6F72BFC4BC600D69ABF /* PBXTargetDependency */,
 			);
 			name = helloWeather;
 			packageProductDependencies = (
@@ -615,21 +631,21 @@
 			productReference = 146580C72BF1E7EA0093AA81 /* helloWeather.app */;
 			productType = "com.apple.product-type.application";
 		};
-		148FCA5D2BFB63AF0042F1D9 /* helloWeatherWidgetExtension */ = {
+		1485D6EA2BFC4BC400D69ABF /* HelloWeatherWidgetExtension */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 148FCA702BFB63B10042F1D9 /* Build configuration list for PBXNativeTarget "helloWeatherWidgetExtension" */;
+			buildConfigurationList = 1485D6F92BFC4BC600D69ABF /* Build configuration list for PBXNativeTarget "HelloWeatherWidgetExtension" */;
 			buildPhases = (
-				148FCA5A2BFB63AF0042F1D9 /* Sources */,
-				148FCA5B2BFB63AF0042F1D9 /* Frameworks */,
-				148FCA5C2BFB63AF0042F1D9 /* Resources */,
+				1485D6E72BFC4BC400D69ABF /* Sources */,
+				1485D6E82BFC4BC400D69ABF /* Frameworks */,
+				1485D6E92BFC4BC400D69ABF /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = helloWeatherWidgetExtension;
-			productName = helloWeatherWidgetExtension;
-			productReference = 148FCA5E2BFB63AF0042F1D9 /* helloWeatherWidgetExtension.appex */;
+			name = HelloWeatherWidgetExtension;
+			productName = HelloWeatherWidgetExtension;
+			productReference = 1485D6EB2BFC4BC400D69ABF /* HelloWeatherWidgetExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
@@ -640,12 +656,12 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1540;
-				LastUpgradeCheck = 1530;
+				LastUpgradeCheck = 1540;
 				TargetAttributes = {
 					146580C62BF1E7EA0093AA81 = {
 						CreatedOnToolsVersion = 15.3;
 					};
-					148FCA5D2BFB63AF0042F1D9 = {
+					1485D6EA2BFC4BC400D69ABF = {
 						CreatedOnToolsVersion = 15.4;
 					};
 				};
@@ -673,7 +689,7 @@
 			projectRoot = "";
 			targets = (
 				146580C62BF1E7EA0093AA81 /* helloWeather */,
-				148FCA5D2BFB63AF0042F1D9 /* helloWeatherWidgetExtension */,
+				1485D6EA2BFC4BC400D69ABF /* HelloWeatherWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -718,11 +734,17 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		148FCA5C2BFB63AF0042F1D9 /* Resources */ = {
+		1485D6E92BFC4BC400D69ABF /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				148FCA6B2BFB63B10042F1D9 /* Assets.xcassets in Resources */,
+				1485D70D2BFCA4A700D69ABF /* Pretendard-Light.ttf in Resources */,
+				1485D70E2BFCA59900D69ABF /* Pretendard-Regular.ttf in Resources */,
+				1485D70B2BFCA36800D69ABF /* Pretendard-Medium.ttf in Resources */,
+				1485D7092BFC9C6D00D69ABF /* Assets.xcassets in Resources */,
+				1485D70C2BFCA4A400D69ABF /* Pretendard-ExtraLight.ttf in Resources */,
+				1485D6F42BFC4BC600D69ABF /* Assets.xcassets in Resources */,
+				1485D70A2BFC9D1C00D69ABF /* GmarketSansTTFBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -733,6 +755,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1485D6E62BFC4B9E00D69ABF /* HomeViewController.swift in Sources */,
+				1485D6E52BFC4B9400D69ABF /* SceneDelegate.swift in Sources */,
+				1485D6E42BFC4B8700D69ABF /* TabModel.swift in Sources */,
+				1485D6E32BFC4B7A00D69ABF /* TabViewController.swift in Sources */,
 				14E83D962BF7B6FE004CAD62 /* EmptySearchView.swift in Sources */,
 				146580FD2BF1F1770093AA81 /* WebServiceManager.swift in Sources */,
 				147EF86E2BF62AF4000DC8A8 /* TempListViewModel.swift in Sources */,
@@ -742,7 +768,6 @@
 				52AB828C2BF7EFFE00612D95 /* SpaceCellViewModel.swift in Sources */,
 				45D70DC82BF3342E00942DC1 /* SecondRightCollectionViewCell.swift in Sources */,
 				45D70DCF2BF3402A00942DC1 /* FirstRightCollectionViewCell.swift in Sources */,
-				146580DF2BF1E8160093AA81 /* TabViewController.swift in Sources */,
 				45D70DDB2BF4DBFD00942DC1 /* TomorrowTimeCelsiusCollectionView.swift in Sources */,
 				45D70DCA2BF3344000942DC1 /* WeekCollectionViewCell.swift in Sources */,
 				45D70DD92BF3557E00942DC1 /* TodayTimeCelsiusCollectionView.swift in Sources */,
@@ -750,7 +775,6 @@
 				1445AF652BF350CA0018AE3F /* SearchModel.swift in Sources */,
 				1445AF692BF3784E0018AE3F /* SearchState.swift in Sources */,
 				1475CFB62BF7015900D0F920 /* CurrentWeatherTableViewCell.swift in Sources */,
-				146580DF2BF1E8160093AA81 /* TabViewController.swift in Sources */,
 				1445AF672BF3631D0018AE3F /* SectionHeaderView.swift in Sources */,
 				146581052BF21EC40093AA81 /* WeatherAPIModel.swift in Sources */,
 				146580CB2BF1E7EA0093AA81 /* AppDelegate.swift in Sources */,
@@ -759,38 +783,33 @@
 				9A5ACD982BF7B37C00DE586F /* FineDustUtil.swift in Sources */,
 				9A5ACD9B2BF7B42B00DE586F /* DustGroupStruct.swift in Sources */,
 				45D70DC22BF3325400942DC1 /* WeatherDetailView.swift in Sources */,
-				146580E62BF1E8740093AA81 /* TabModel.swift in Sources */,
 				14E83D932BF79FF5004CAD62 /* DeleteAlertView.swift in Sources */,
-				146580CD2BF1E7EA0093AA81 /* SceneDelegate.swift in Sources */,
 				45D70DCD2BF3401D00942DC1 /* FirstLeftCollectionViewCell.swift in Sources */,
 				45D70DDF2BF50F9700942DC1 /* TomorrowTimeWeatherCollectionView.swift in Sources */,
 				45D70DDD2BF50F8400942DC1 /* TodayTimeWeatherCollectionView.swift in Sources */,
 				45D70DE12BF515A000942DC1 /* WeekCollectionView.swift in Sources */,
 				146581032BF1FB8B0093AA81 /* SearchViewModel.swift in Sources */,
 				146580FF2BF1F1C30093AA81 /* ApiModel.swift in Sources */,
-				146580E62BF1E8740093AA81 /* TabModel.swift in Sources */,
 				9A8DF8712BF6E51E009F0DAB /* FineListView.swift in Sources */,
 				9ABC1E262BF35C34006A626C /* FineDustModel.swift in Sources */,
 				9A8DF8732BF70A99009F0DAB /* ValueListView.swift in Sources */,
 				9A8DF86E2BF6CB26009F0DAB /* ChatModel2.swift in Sources */,
-				146580CD2BF1E7EA0093AA81 /* SceneDelegate.swift in Sources */,
 				9A5ACD942BF7763600DE586F /* FineListViewModel.swift in Sources */,
 				9ABC1E212BF34BDC006A626C /* FineDustView.swift in Sources */,
 				9A8DF86C2BF6C4A3009F0DAB /* ChatModel.swift in Sources */,
-				146580E82BF1E8960093AA81 /* HomeViewController.swift in Sources */,
 				9ABC1E292BF4BAD2006A626C /* ChartModel.swift in Sources */,
 				453593562BF8F637004BA149 /* WeatherDetailViewModel.swift in Sources */,
 				14450E9F2BF45381006A02F7 /* RecentSearchTableViewCell.swift in Sources */,
 				9A5ACD9D2BF893BA00DE586F /* ChartViewModel.swift in Sources */,
 				14450EA12BF45962006A02F7 /* Extension.swift in Sources */,
 				14450EA32BF474FC006A02F7 /* PaddingLabel.swift in Sources */,
-				146580E82BF1E8960093AA81 /* HomeViewController.swift in Sources */,
 				147EF8702BF62F1B000DC8A8 /* ListTableViewCell.swift in Sources */,
 				1445AF602BF32F7E0018AE3F /* DataSource.swift in Sources */,
 				B687F6862BF4CC6000623F1D /* HomeViewModel.swift in Sources */,
 				45D70DC62BF3342000942DC1 /* SecondLeftCollectionViewCell.swift in Sources */,
 				45D70DBD2BF3145C00942DC1 /* WeatherDetailViewController.swift in Sources */,
 				1445AF552BF2F5D40018AE3F /* CustomBounceAnimation.swift in Sources */,
+				1485D6FE2BFC4DC300D69ABF /* LocationManager.swift in Sources */,
 				146580E42BF1E8590093AA81 /* TabViewModel.swift in Sources */,
 				9A5ACD9F2BF8B41100DE586F /* LineModel.swift in Sources */,
 				147EF86C2BF62AE4000DC8A8 /* TempListViewController.swift in Sources */,
@@ -798,23 +817,26 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		148FCA5A2BFB63AF0042F1D9 /* Sources */ = {
+		1485D6E72BFC4BC400D69ABF /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				148FCA652BFB63AF0042F1D9 /* helloWeatherWidgetBundle.swift in Sources */,
-				148FCA672BFB63AF0042F1D9 /* helloWeatherWidget.swift in Sources */,
-				148FCA692BFB63AF0042F1D9 /* AppIntent.swift in Sources */,
+				1485D6FF2BFC4DD200D69ABF /* LocationManager.swift in Sources */,
+				1485D6F02BFC4BC400D69ABF /* HelloWeatherWidgetBundle.swift in Sources */,
+				1485D6F22BFC4BC400D69ABF /* HelloWeatherWidget.swift in Sources */,
+				1485D7052BFC844D00D69ABF /* WidgetModel.swift in Sources */,
+				1485D7002BFC503600D69ABF /* SearchModel.swift in Sources */,
+				1485D6FC2BFC4C5800D69ABF /* WeatherAPIModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		148FCA6E2BFB63B10042F1D9 /* PBXTargetDependency */ = {
+		1485D6F72BFC4BC600D69ABF /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 148FCA5D2BFB63AF0042F1D9 /* helloWeatherWidgetExtension */;
-			targetProxy = 148FCA6D2BFB63B10042F1D9 /* PBXContainerItemProxy */;
+			target = 1485D6EA2BFC4BC400D69ABF /* HelloWeatherWidgetExtension */;
+			targetProxy = 1485D6F62BFC4BC600D69ABF /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -955,9 +977,10 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = helloWeather/helloWeather.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 27X8924SNC;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = helloWeather/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -984,9 +1007,10 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = helloWeather/helloWeather.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 27X8924SNC;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = helloWeather/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -1007,26 +1031,27 @@
 			};
 			name = Release;
 		};
-		148FCA712BFB63B10042F1D9 /* Debug */ = {
+		1485D6FA2BFC4BC600D69ABF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = HelloWeatherWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 27X8924SNC;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = helloWeatherWidget/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = helloWeatherWidget;
+				INFOPLIST_FILE = HelloWeatherWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = HelloWeatherWidget;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.seungwon.helloWeather.helloWeatherWidget;
+				PRODUCT_BUNDLE_IDENTIFIER = com.seungwon.helloWeather.HelloWeatherWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1035,26 +1060,27 @@
 			};
 			name = Debug;
 		};
-		148FCA722BFB63B10042F1D9 /* Release */ = {
+		1485D6FB2BFC4BC600D69ABF /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = HelloWeatherWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 27X8924SNC;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = helloWeatherWidget/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = helloWeatherWidget;
+				INFOPLIST_FILE = HelloWeatherWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = HelloWeatherWidget;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.seungwon.helloWeather.helloWeatherWidget;
+				PRODUCT_BUNDLE_IDENTIFIER = com.seungwon.helloWeather.HelloWeatherWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1084,11 +1110,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		148FCA702BFB63B10042F1D9 /* Build configuration list for PBXNativeTarget "helloWeatherWidgetExtension" */ = {
+		1485D6F92BFC4BC600D69ABF /* Build configuration list for PBXNativeTarget "HelloWeatherWidgetExtension" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				148FCA712BFB63B10042F1D9 /* Debug */,
-				148FCA722BFB63B10042F1D9 /* Release */,
+				1485D6FA2BFC4BC600D69ABF /* Debug */,
+				1485D6FB2BFC4BC600D69ABF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -51,7 +51,8 @@ struct Forecastday: Codable { // 하루 기준으로 나오는 정보
     let airQuality: AirQuality? // 미세먼지 정보
     let hour: [Hour] // 하루를 24시간으로 쪼개서 각각의 날씨 정보
     enum CodingKeys: String, CodingKey {
-        case date, day, astro, airQuality, hour
+        case date, day, hour, astro
+        case airQuality = "air_quality"
         
     }
 }
