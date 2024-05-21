@@ -80,7 +80,6 @@
 		14E83D962BF7B6FE004CAD62 /* EmptySearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E83D952BF7B6FE004CAD62 /* EmptySearchView.swift */; };
 		453593562BF8F637004BA149 /* WeatherDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453593552BF8F637004BA149 /* WeatherDetailViewModel.swift */; };
 		45C5268C2BFAF36200AA53E3 /* DGCharts in Frameworks */ = {isa = PBXBuildFile; productRef = 45C5268B2BFAF36200AA53E3 /* DGCharts */; };
-		45C5268E2BFAF36200AA53E3 /* DGChartsDynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 45C5268D2BFAF36200AA53E3 /* DGChartsDynamic */; };
 		45C526902BFC4A8E00AA53E3 /* FirstDayAfterTomorrowCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C5268F2BFC4A8E00AA53E3 /* FirstDayAfterTomorrowCollectionViewCell.swift */; };
 		45C526942BFC4AEE00AA53E3 /* DATomorrowTimeCelsiusCollectionview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C526932BFC4AEE00AA53E3 /* DATomorrowTimeCelsiusCollectionview.swift */; };
 		45D70DBD2BF3145C00942DC1 /* WeatherDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D70DBC2BF3145C00942DC1 /* WeatherDetailViewController.swift */; };
@@ -240,7 +239,6 @@
 				146580F82BF1EB4D0093AA81 /* Alamofire in Frameworks */,
 				146580F32BF1EB3E0093AA81 /* SnapKit in Frameworks */,
 				45D70DC02BF3262300942DC1 /* SwiftUICharts in Frameworks */,
-				45C5268E2BFAF36200AA53E3 /* DGChartsDynamic in Frameworks */,
 				1445AF5A2BF3203E0018AE3F /* RxSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -570,7 +568,6 @@
 				1445AF592BF3203E0018AE3F /* RxSwift */,
 				14D0852D2BF909D300C9B985 /* SkeletonView */,
 				45C5268B2BFAF36200AA53E3 /* DGCharts */,
-				45C5268D2BFAF36200AA53E3 /* DGChartsDynamic */,
 			);
 			productName = helloWeather;
 			productReference = 146580C72BF1E7EA0093AA81 /* helloWeather.app */;
@@ -1051,11 +1048,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 45C5268A2BFAF36200AA53E3 /* XCRemoteSwiftPackageReference "Charts" */;
 			productName = DGCharts;
-		};
-		45C5268D2BFAF36200AA53E3 /* DGChartsDynamic */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 45C5268A2BFAF36200AA53E3 /* XCRemoteSwiftPackageReference "Charts" */;
-			productName = DGChartsDynamic;
 		};
 		45D70DBF2BF3262300942DC1 /* SwiftUICharts */ = {
 			isa = XCSwiftPackageProductDependency;

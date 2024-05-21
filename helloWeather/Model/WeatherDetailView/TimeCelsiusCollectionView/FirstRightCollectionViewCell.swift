@@ -41,30 +41,29 @@ class FirstRightCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
-    lazy var barChartCellWrapper = BarChartCellWrapper5(
-        //높이
-        value: 0.9,
-        index: 0,
-        width: 60,
-        numberOfDataPoints: 10,
-        accentColor: .gray,
-        touchLocation: .constant(-1.0)
-    )
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
-        configureConstraints()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func configureConstraints() {
+    func configureConstraints(data : WeatherDetailViewModel.HourlyWeather) {
+        
+        var barChartCellWrapper = BarChartCellWrapper5(
+            //높이
+            value: changeDataToHeight(data: data),
+            index: 0,
+            width: 60,
+            numberOfDataPoints: 10,
+            accentColor: .gray,
+            touchLocation: .constant(-1.0)
+        )
         
         contentView.addSubview(stackView2)
-        [celsiusLabel, barChartCellWrapper].forEach {
+        
+        [celsiusLabel,barChartCellWrapper].forEach {
             stackView.addArrangedSubview($0)
         }
         
@@ -83,8 +82,33 @@ class FirstRightCollectionViewCell: UICollectionViewCell {
         timeLabel.snp.makeConstraints { make in
             make.height.equalTo(timeLabel.font.pointSize)
         }
-
-        
+    }
+    
+    func changeDataToHeight(data: WeatherDetailViewModel.HourlyWeather) -> Double{
+        var height: Double = 0.0
+        if let tempC = Double(data.tempC.dropLast()) {
+            switch tempC {
+            case ..<0:
+                height = 0.1
+            case 0..<10:
+                height = 0.2
+            case 10..<15:
+                height = 0.3
+            case 15..<20:
+                height = 0.4
+            case 20..<25:
+                height = 0.5
+            case 25..<30:
+                height = 0.6
+            case 30..<35:
+                height = 0.7
+            case 35..<40:
+                height = 0.8
+            default:
+                height = 0.9
+            }
+        }
+        return height
     }
     
 }

@@ -43,7 +43,7 @@ class FirstLeftCollectionViewCell: UICollectionViewCell {
     
     lazy var barChartCellWrapper = BarChartCellWrapper(
         //높이
-        value: 0.9,
+        value: 0.7,
         index: 0,
         width: 60,
         numberOfDataPoints: 10,

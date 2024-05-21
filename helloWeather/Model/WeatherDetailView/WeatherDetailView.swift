@@ -112,7 +112,7 @@ class WeatherDetailView: UIView {
         return image
     }()
     
-    // MARK: -
+    // MARK: - 이부분이 데이터 넘기는 겁니다~~
     let weatherDetailViewModel = WeatherDetailViewModel(weatherManager: WebServiceManager.shared, userLocationPoint: (-73.935242, 40.730610))
     
     // MARK: - CollectionView

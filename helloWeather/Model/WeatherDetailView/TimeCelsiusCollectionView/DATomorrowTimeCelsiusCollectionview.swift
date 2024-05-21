@@ -63,9 +63,9 @@ class DATomorrowTimeCelsiusCollectionview: UICollectionView, UICollectionViewDel
                 nextDayHourlyWeather = Array(nextDayHourlyWeather.prefix(requiredCellCount))
                 
     
-                print("내일 날씨 데이터 수 확인: \(tomorrowCellCount)")
-                print("모레 날씨 데이터 수 확인: \(requiredCellCount)")
-                print("모레 날씨 확인: \(nextDayHourlyWeather)")
+//                print("내일 날씨 데이터 수 확인: \(tomorrowCellCount)")
+//                print("모레 날씨 데이터 수 확인: \(requiredCellCount)")
+//                print("모레 날씨 확인: \(nextDayHourlyWeather)")
                 self.hourlyWeatherData = nextDayHourlyWeather
                 self.reloadData()
             })
