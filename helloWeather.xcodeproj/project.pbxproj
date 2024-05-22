@@ -97,7 +97,6 @@
 		14E83D932BF79FF5004CAD62 /* DeleteAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E83D922BF79FF5004CAD62 /* DeleteAlertView.swift */; };
 		14E83D962BF7B6FE004CAD62 /* EmptySearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E83D952BF7B6FE004CAD62 /* EmptySearchView.swift */; };
 		453593562BF8F637004BA149 /* WeatherDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453593552BF8F637004BA149 /* WeatherDetailViewModel.swift */; };
-		45C5268C2BFAF36200AA53E3 /* DGCharts in Frameworks */ = {isa = PBXBuildFile; productRef = 45C5268B2BFAF36200AA53E3 /* DGCharts */; };
 		45C526902BFC4A8E00AA53E3 /* FirstDayAfterTomorrowCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C5268F2BFC4A8E00AA53E3 /* FirstDayAfterTomorrowCollectionViewCell.swift */; };
 		45C526942BFC4AEE00AA53E3 /* DATomorrowTimeCelsiusCollectionview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C526932BFC4AEE00AA53E3 /* DATomorrowTimeCelsiusCollectionview.swift */; };
 		45D70DBD2BF3145C00942DC1 /* WeatherDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D70DBC2BF3145C00942DC1 /* WeatherDetailViewController.swift */; };
@@ -129,6 +128,11 @@
 		9ABC1E262BF35C34006A626C /* FineDustModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABC1E252BF35C34006A626C /* FineDustModel.swift */; };
 		9ABC1E292BF4BAD2006A626C /* ChartModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABC1E282BF4BAD2006A626C /* ChartModel.swift */; };
 		B687F6862BF4CC6000623F1D /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B687F6852BF4CC6000623F1D /* HomeViewModel.swift */; };
+		B69CA1262BFDA27C0068BFA8 /* LaunchScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B69CA1252BFDA27C0068BFA8 /* LaunchScreen.swift */; };
+		B6EADA2E2BFDA90C006DA323 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6EADA2D2BFDA90C006DA323 /* MainViewController.swift */; };
+		B6EADA302BFDA911006DA323 /* TabViewController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6EADA2F2BFDA911006DA323 /* TabViewController2.swift */; };
+		B6EADA322BFDA951006DA323 /* Tabman in Frameworks */ = {isa = PBXBuildFile; productRef = B6EADA312BFDA951006DA323 /* Tabman */; };
+		B6EADA352BFDAA00006DA323 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = B6EADA342BFDAA00006DA323 /* Lottie */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -273,6 +277,9 @@
 		9ABC1E252BF35C34006A626C /* FineDustModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FineDustModel.swift; sourceTree = "<group>"; };
 		9ABC1E282BF4BAD2006A626C /* ChartModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartModel.swift; sourceTree = "<group>"; };
 		B687F6852BF4CC6000623F1D /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		B69CA1252BFDA27C0068BFA8 /* LaunchScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchScreen.swift; sourceTree = "<group>"; };
+		B6EADA2D2BFDA90C006DA323 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		B6EADA2F2BFDA911006DA323 /* TabViewController2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabViewController2.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -280,11 +287,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				45C5268C2BFAF36200AA53E3 /* DGCharts in Frameworks */,
 				1445AF582BF3203E0018AE3F /* RxCocoa in Frameworks */,
 				14D0852E2BF909D300C9B985 /* SkeletonView in Frameworks */,
 				1445AF532BF2F0630018AE3F /* RAMAnimatedTabBarController in Frameworks */,
 				146580F82BF1EB4D0093AA81 /* Alamofire in Frameworks */,
+				B6EADA352BFDAA00006DA323 /* Lottie in Frameworks */,
+				B6EADA322BFDA951006DA323 /* Tabman in Frameworks */,
 				146580F32BF1EB3E0093AA81 /* SnapKit in Frameworks */,
 				45D70DC02BF3262300942DC1 /* SwiftUICharts in Frameworks */,
 				1445AF5A2BF3203E0018AE3F /* RxSwift in Frameworks */,
@@ -392,8 +400,11 @@
 			isa = PBXGroup;
 			children = (
 				146580D52BF1E7EB0093AA81 /* LaunchScreen.storyboard */,
+				B69CA1252BFDA27C0068BFA8 /* LaunchScreen.swift */,
 				146580DE2BF1E8160093AA81 /* TabViewController.swift */,
+				B6EADA2D2BFDA90C006DA323 /* MainViewController.swift */,
 				146580E72BF1E8960093AA81 /* HomeViewController.swift */,
+				B6EADA2F2BFDA911006DA323 /* TabViewController2.swift */,
 				146580EC2BF1E8D10093AA81 /* SearchViewController.swift */,
 				45D70DBC2BF3145C00942DC1 /* WeatherDetailViewController.swift */,
 				147EF86B2BF62AE4000DC8A8 /* TempListViewController.swift */,
@@ -643,7 +654,8 @@
 				1445AF572BF3203E0018AE3F /* RxCocoa */,
 				1445AF592BF3203E0018AE3F /* RxSwift */,
 				14D0852D2BF909D300C9B985 /* SkeletonView */,
-				45C5268B2BFAF36200AA53E3 /* DGCharts */,
+				B6EADA312BFDA951006DA323 /* Tabman */,
+				B6EADA342BFDAA00006DA323 /* Lottie */,
 			);
 			productName = helloWeather;
 			productReference = 146580C72BF1E7EA0093AA81 /* helloWeather.app */;
@@ -702,6 +714,8 @@
 				14E83D972BF7C10D004CAD62 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
 				14D0852A2BF8F07600C9B985 /* XCRemoteSwiftPackageReference "SkeletonView" */,
 				45C5268A2BFAF36200AA53E3 /* XCRemoteSwiftPackageReference "Charts" */,
+				B69CA1272BFDA7F90068BFA8 /* XCRemoteSwiftPackageReference "Tabman" */,
+				B6EADA332BFDA9FF006DA323 /* XCRemoteSwiftPackageReference "lottie-spm" */,
 			);
 			productRefGroup = 146580C82BF1E7EA0093AA81 /* Products */;
 			projectDirPath = "";
@@ -820,6 +834,7 @@
 				9A5ACD942BF7763600DE586F /* FineListViewModel.swift in Sources */,
 				9ABC1E212BF34BDC006A626C /* FineDustView.swift in Sources */,
 				9A8DF86C2BF6C4A3009F0DAB /* ChatModel.swift in Sources */,
+				B6EADA2E2BFDA90C006DA323 /* MainViewController.swift in Sources */,
 				45C526902BFC4A8E00AA53E3 /* FirstDayAfterTomorrowCollectionViewCell.swift in Sources */,
 				9ABC1E292BF4BAD2006A626C /* ChartModel.swift in Sources */,
 				453593562BF8F637004BA149 /* WeatherDetailViewModel.swift in Sources */,
@@ -828,6 +843,7 @@
 				45C526942BFC4AEE00AA53E3 /* DATomorrowTimeCelsiusCollectionview.swift in Sources */,
 				14450EA12BF45962006A02F7 /* Extension.swift in Sources */,
 				14450EA32BF474FC006A02F7 /* PaddingLabel.swift in Sources */,
+				B69CA1262BFDA27C0068BFA8 /* LaunchScreen.swift in Sources */,
 				147EF8702BF62F1B000DC8A8 /* ListTableViewCell.swift in Sources */,
 				1445AF602BF32F7E0018AE3F /* DataSource.swift in Sources */,
 				B687F6862BF4CC6000623F1D /* HomeViewModel.swift in Sources */,
@@ -835,6 +851,7 @@
 				45D70DBD2BF3145C00942DC1 /* WeatherDetailViewController.swift in Sources */,
 				1445AF552BF2F5D40018AE3F /* CustomBounceAnimation.swift in Sources */,
 				1485D6FE2BFC4DC300D69ABF /* LocationManager.swift in Sources */,
+				B6EADA302BFDA911006DA323 /* TabViewController2.swift in Sources */,
 				146580E42BF1E8590093AA81 /* TabViewModel.swift in Sources */,
 				9A5ACD9F2BF8B41100DE586F /* LineModel.swift in Sources */,
 				147EF86C2BF62AE4000DC8A8 /* TempListViewController.swift in Sources */,
@@ -1212,6 +1229,22 @@
 				minimumVersion = 1.5.5;
 			};
 		};
+		B69CA1272BFDA7F90068BFA8 /* XCRemoteSwiftPackageReference "Tabman" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/uias/Tabman";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.2.0;
+			};
+		};
+		B6EADA332BFDA9FF006DA323 /* XCRemoteSwiftPackageReference "lottie-spm" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-spm.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.4.3;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1245,15 +1278,20 @@
 			package = 14D0852A2BF8F07600C9B985 /* XCRemoteSwiftPackageReference "SkeletonView" */;
 			productName = SkeletonView;
 		};
-		45C5268B2BFAF36200AA53E3 /* DGCharts */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 45C5268A2BFAF36200AA53E3 /* XCRemoteSwiftPackageReference "Charts" */;
-			productName = DGCharts;
-		};
 		45D70DBF2BF3262300942DC1 /* SwiftUICharts */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 45D70DBE2BF3262300942DC1 /* XCRemoteSwiftPackageReference "ChartView" */;
 			productName = SwiftUICharts;
+		};
+		B6EADA312BFDA951006DA323 /* Tabman */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B69CA1272BFDA7F90068BFA8 /* XCRemoteSwiftPackageReference "Tabman" */;
+			productName = Tabman;
+		};
+		B6EADA342BFDAA00006DA323 /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B6EADA332BFDA9FF006DA323 /* XCRemoteSwiftPackageReference "lottie-spm" */;
+			productName = Lottie;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -11,17 +11,26 @@ import SwiftUICharts
 
 // 미세먼지 상태 얼굴 타입
 enum Facetype: String {
-    case happy = "아주 좋음"
-    case smile = "좋음"
-    case umm = "보통"
-    case bad = "나쁨"
+    case happy = "좋음"
+    case smile = "보통"
+    case umm = "나쁨"
+    case bad = "아주 나쁨"
     
     var image : Image{
         switch self {
-        case .happy: return Image("happy")
-        case .smile: return Image("smile")
-        case .umm: return Image("umm")
-        case .bad: return Image("bad")
+        case .happy: return Image("air-great")
+        case .smile: return Image("_air-good")
+        case .umm: return Image("air-soso")
+        case .bad: return Image("air-bad")
+        }
+    }
+    
+    var color : Color{
+        switch self {
+        case .happy: return Color.blue
+        case .smile: return Color.green
+        case .umm: return Color.orange
+        case .bad: return Color.red
         }
     }
     
@@ -48,10 +57,10 @@ enum Valuetype: String {
 }
 
 enum Valuetype2: String {
-    case happy = "아주 좋음"
-    case smile = "좋음"
-    case umm = "보통"
-    case bad = "나쁨"
+    case happy = "좋음"
+    case smile = "보통"
+    case umm = "나쁨"
+    case bad = "아주나쁨"
     
     static func from(value: Double) -> Valuetype2 {
         switch value {
@@ -231,15 +240,70 @@ extension CGPoint {
 
 // Point Color
 struct IndicatorPoint: View {
+    @Binding var currentNumber: Double
+    @State private var chat1Color: Color = Color.gray
+    
+    private func updateChat1Color() {
+        if currentNumber < 20 {
+            chat1Color = Color.blue
+        } else if currentNumber < 30 {
+            chat1Color = Color.green
+        } else if currentNumber < 40 {
+            chat1Color = Color.yellow
+        } else {
+            chat1Color = Color.red
+        }
+    }
+    
     var body: some View {
         ZStack{
             Circle()
                 .fill(Color.white)
             Circle()
-                .stroke(Color.black, style: StrokeStyle(lineWidth: 1))
+                .stroke(chat1Color, style: StrokeStyle(lineWidth: 1))
         }
         .frame(width: 7, height: 7)
         .shadow(color: Color.white, radius: 6, x: 0, y: 6)
+        .onChange(of: currentNumber) { _ in
+            updateChat1Color()
+        }
+        .onAppear {
+            updateChat1Color()
+        }
+    }
+}
+
+struct IndicatorPoint2: View {
+    @Binding var currentNumber: Double
+    @State private var chat1Color: Color = Color.gray
+    
+    private func updateChat1Color() {
+        if currentNumber < 20 {
+            chat1Color = Color.blue
+        } else if currentNumber < 30 {
+            chat1Color = Color.green
+        } else if currentNumber < 40 {
+            chat1Color = Color.yellow
+        } else {
+            chat1Color = Color.red
+        }
+    }
+    
+    var body: some View {
+        ZStack{
+            Circle()
+                .fill(Color.white)
+            Circle()
+                .stroke(chat1Color, style: StrokeStyle(lineWidth: 1, dash: [1,1]))
+        }
+        .frame(width: 7, height: 7)
+        .shadow(color: Color.white, radius: 6, x: 0, y: 6)
+        .onChange(of: currentNumber) { _ in
+            updateChat1Color()
+        }
+        .onAppear {
+            updateChat1Color()
+        }
     }
 }
 
@@ -254,8 +318,8 @@ public struct Styles2 {
     
     public static let lineChartStyleOne2 = ChartStyle2(
         backgroundColor: Color.white,
-        accentColor: Color.yellow,
-        secondGradientColor: Color.pink,
+        accentColor: Color.red,
+        secondGradientColor: Color.green,
         textColor: Color.black,
         legendTextColor: Color.gray,
         dropShadowColor: Color.gray)
@@ -327,29 +391,39 @@ public struct Styles2 {
 
 public struct MagnifierRect: View {
     @Binding var currentNumber: Double
-    var valueSpecifier:String
+    var valueSpecifier: String
     @Environment(\.colorScheme) var colorScheme: ColorScheme
+    @State private var chat1Color: Color = Color.gray
+
+    private func updateChat1Color() {
+        if currentNumber < 20 {
+            chat1Color = Color.blue
+        } else if currentNumber < 30 {
+            chat1Color = Color.green
+        } else if currentNumber < 40 {
+            chat1Color = Color.yellow
+        } else {
+            chat1Color = Color.red
+        }
+    }
+
     public var body: some View {
-        ZStack{
+        ZStack {
             //Text("\(self.currentNumber, specifier: valueSpecifier)")
-//            Text("좋음")
-//                .font(.system(size: 18, weight: .bold))
-//                .offset(x: 0, y:-110)
-//                .foregroundColor(self.colorScheme == .dark ? Color.white : Color.black)
-            if (self.colorScheme == .dark ){
-                Rectangle()
-                        .frame(width: 16, height: 280)
-                        .foregroundColor(.pink)
-                        .shadow(color: Color.gray, radius: 12, x: 0, y: 6)
-                        .blendMode(.multiply)
-            }else{
-                Rectangle()
-                        .frame(width: 16, height: 280)
-                        .foregroundColor(.pink)
-                        .shadow(color: Color.gray, radius: 12, x: 0, y: 6)
-                        .blendMode(.multiply)
-            }
+                //.offset(x: 0, y: -110)
+                //.foregroundColor(self.colorScheme == .dark ? Color.white : Color.black)
+            Rectangle()
+                .frame(width: 0.5, height: 220)
+                .foregroundColor(chat1Color)
+                .shadow(color: Color.gray, radius: 12, x: 0, y: 6)
+                .blendMode(.multiply)
         }
         .offset(x: 0, y: -15)
+        .onChange(of: currentNumber) { _ in
+            //updateChat1Color()
+        }
+        .onAppear {
+            //updateChat1Color()
+        }
     }
 }
