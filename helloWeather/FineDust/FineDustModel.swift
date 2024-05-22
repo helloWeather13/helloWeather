@@ -9,91 +9,49 @@ import Foundation
 import SwiftUI
 import Charts
 
-struct CustomChartView {
-    let labels = ["매우 나쁨", "나쁨", "보통", "좋음"]
-    //let values = [1,2,3,4]
-}
-struct TimeData {
-    let time: Date
-    let value: Double
-}
 
 struct LineChartView: View {
     
     let now = Date()
     var local = "서울시 강남구 역삼동"
-    var titleFontSize = 18
-    @State private var isAnimating = false
+    var titleFontSize = 19
     
-    private var formattedDate: String {
-        createTimeFormatter().string(from: now)
-    }
-    private var formattedDateWithWeekdays: String {
-        //let formatter = createTimeFormatter()
-        //let formattedDate = formatter.string(from: now)
-        let calendar = Calendar(identifier: .gregorian)
-        let components = calendar.dateComponents([.weekday], from: now)
-        
-        if let weekday = components.weekday {
-            switch weekday {
-            case 1:
-                return "(일)"
-            case 2:
-                return "(월)"
-            case 3:
-                return "(화)"
-            case 4:
-                return "(수)"
-            case 5:
-                return "(목)"
-            case 6:
-                return "(금)"
-            default:
-                return "(토)"
-            }
-        }
-        return ""
-    }
-    private func createTimeFormatter() -> DateFormatter {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "MM. dd \(formattedDateWithWeekdays) HH:mm a" // 'a' for AM/PM indicator
-        //formatter.locale = Locale(identifier: "ko_KR") // Sets the locale to Korean
-        formatter.timeZone = TimeZone(identifier: "Asia/Seoul")
-        return formatter
-    }
+    @State private var isTouched: Bool = false
+    @State private var scrollOffset: CGFloat = 0.0
+    @State private var isAnimating = false
+    @StateObject private var fineListViewModel =
+    FineListViewModel(
+        weatherManager: WebServiceManager.shared,
+        userLocationPoint: (37.7749, -122.4194)
+    )
+    var chart1 = ChartView2(data:  [300.0, 305.0, 290.0, 295.0, 310.0, 315.0, 320.0, 325.0, 330.0, 335.0, 340.0, 345.0, 350.0,300.0, 305.0, 290.0, 295.0, 310.0, 315.0, 320.0, 325.0, 330.0, 335.0, 340.0, 345.0, 350.0,300.0, 305.0, 290.0, 295.0, 310.0, 315.0, 320.0, 325.0, 330.0, 335.0, 340.0, 345.0, 350.0,300.0, 305.0, 290.0, 295.0, 310.0, 315.0, 320.0, 325.0, 330.0, 335.0, 340.0, 345.0, 350.0,300.0, 305.0, 290.0, 295.0, 310.0, 315.0, 320.0, 325.0, 330.0, 335.0, 340.0, 345.0, 350.0,300.0, 305.0, 290.0, 295.0, 310.0, 315.0, 320.0, 325.0, 330.0, 335.0, 340.0, 345.0, 350.0,300.0, 305.0, 290.0, 295.0, 310.0, 315.0, 320.0, 325.0, 330.0, 335.0, 340.0, 345.0, 350.0,300.0, 305.0, 290.0, 295.0, 310.0, 315.0, 320.0, 325.0, 330.0, 335.0, 340.0, 345.0, 350.0,300.0, 305.0, 290.0, 295.0, 310.0, 315.0, 320.0, 325.0, 330.0, 335.0, 340.0, 345.0, 350.0]
+                            
+                            , title: "Second Chart", style: Styles2.lineChartStyleOne2)
+//    var chart2 =  ChartView(data: [282.502, 284.495, 283.51, 285.019, 285.197, 286.118, 288.737, 288.455, 289.391, 287.691, 285.878, 286.46, 286.252, 284.652, 284.129, 284.188,300.0, 305.0, 290.0, 295.0, 310.0, 315.0, 320.0, 325.0, 330.0, 335.0, 340.0, 345.0, 350.0,300.0, 305.0, 290.0, 295.0, 310.0, 315.0, 320.0, 325.0, 330.0, 335.0, 340.0, 345.0, 350.0,300.0, 305.0, 290.0, 295.0, 310.0, 315.0, 320.0, 325.0, 330.0, 335.0, 340.0, 345.0, 350.0,300.0, 305.0, 290.0, 295.0, 310.0, 315.0, 320.0, 325.0, 330.0, 335.0, 340.0, 345.0, 350.0,300.0, 305.0, 290.0, 295.0, 310.0, 315.0, 320.0, 325.0, 330.0, 335.0, 340.0, 345.0, 350.0,300.0, 305.0, 290.0, 295.0, 310.0, 315.0, 320.0, 325.0, 330.0, 335.0, 340.0, 345.0, 350.0,300.0, 305.0, 290.0, 295.0, 310.0, 315.0, 320.0, 325.0, 330.0, 335.0, 340.0, 345.0, 350.0,300.0, 305.0, 290.0, 295.0, 310.0, 315.0, 320.0, 325.0, 330.0, 335.0, 340.0, 345.0, 350.0], title: "Full chart", style: Styles2.lineChartStyleOne)
     
     var body: some View {
+        
         VStack(alignment: .leading) {
-            // tabbar자리
-            Text(" ")
-                .font(.system(size: 40, weight: .medium))
-            //
             HStack{
                 Spacer()
                 Text("시간대별 미세먼지")
-                    .font(.system(size: CGFloat(titleFontSize-2), weight: .medium))
+                    .font(.system(size: CGFloat(titleFontSize), weight: .medium))
                 ForEach(0..<10) { _ in
                     Spacer()
                 }
             }
-            .padding(.bottom, 10)
-            //미세먼지
+            .padding(.bottom, 30)
+            //미세먼지 채팅
             VStack{
+                //미세먼지 text
                 HStack{
                     Spacer()
-                    VStack{
-                        Spacer()
-                        Text("미세먼지")
-                        ForEach(0..<2) { _ in
-                            Spacer()
-                        }
-                    }
-                    .font(.system(size: CGFloat(titleFontSize-5), weight: .light))
+                    Text("미세먼지")
                     ForEach(0..<10) { _ in
                         Spacer()
                     }
-                    
                 }
+                // 미세먼지 chat
                 HStack{
                     Spacer()
                     ChatView()
@@ -112,58 +70,88 @@ struct LineChartView: View {
                         Spacer()
                     }
                 }
-            }
-            //초미세먼치 chat
-            VStack{
+                // 초미세먼지
                 HStack{
                     ForEach(0..<10) { _ in
                         Spacer()
                     }
-                    VStack{
-                        Spacer()
-                        Text("초 미세먼지")
-                        ForEach(0..<2) { _ in
-                            Spacer()
-                        }
-                    }
-                    .font(.system(size: CGFloat(titleFontSize-5), weight: .light))
+                    Text("초 미세먼지")
                     Spacer()
-                    
                 }
+                // 초미세먼지 chat
                 HStack{
                     ForEach(0..<10) { _ in
                         Spacer()
                     }
                     ChatView2()
-                        .scaleEffect(isAnimating ? 1.8 : 1.0, anchor: .trailing)
+                        .scaleEffect(isAnimating ? 1.8 : 1.0, anchor: .leading)
                         .onAppear {
                             withAnimation(.easeInOut(duration: 1.0)) {
-                                self.isAnimating = true
+                                isAnimating = true
                             }
                             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                                 withAnimation(.easeInOut(duration: 1.0)) {
-                                    self.isAnimating = false
+                                    isAnimating = false
                                 }
                             }
                         }
                     Spacer()
                 }
             }
-            //그래프
-            Text("")
-                .frame(height: 100)
-            //
-            FineList()
-                .padding()
-            ValueList()
-            
-        }
+            ZStack{
+                ScrollView(.horizontal, showsIndicators: false){
+                    ZStack{
+                        VStack{
+                            ContentViewTest()
+                            .frame(width: 800,height: 300, alignment: .center)
+                           
+                        }
+                        //중간선
+                        HStack{
+                            Spacer()
+                            VStack{
+                                ForEach(0..<12) { i in
+                                    Text("|")
+                                        .bold()
+                                        .foregroundColor(.black)
+                                }
+                            }
+                            Spacer()
+                        }.padding(.leading, 20)
+                        HStack{
+                            ForEach(0..<20) { _ in
+                                Spacer()
+                            }
+                            VStack{
+                                ForEach(0..<12) { i in
+                                    Text("|")
+                                        .bold()
+                                        .foregroundColor(.black)
+                                        .padding(.leading, 460)
+                                }
+                            }
+                            Spacer()
+                        }
+                    }
+
+                }
+                .scrollDisabled(true)
+            }
+            FineListView(viewModel: fineListViewModel)
+                .padding(.bottom, 50)
+            ValueList(viewModel: fineListViewModel)
+            Spacer()
+        }.frame(height: 800)
     }
-    
 }
+
+
+
+
 
 #Preview {
     VStack {
         LineChartView()
     }
 }
+

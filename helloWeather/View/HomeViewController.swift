@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import SkeletonView
 import Lottie
 
 class HomeViewController: UIViewController {
@@ -93,14 +94,14 @@ class HomeViewController: UIViewController {
     var temperatureLabel: UILabel = {
         let label = UILabel()
         label.text = ""
-        label.font = UIFont(name: "Montserrat-Black", size: 136)
+        label.font = UIFont(name: "GmarketSansTTFBold", size: 136)
         return label
     }()
     
     var unitLabel: UILabel = {
         let label = UILabel()
         label.text = "°"
-        label.font = UIFont(name: "Montserrat-Black", size: 136)
+        label.font = UIFont(name: "GmarketSansTTFBold", size: 136)
         return label
     }()
     
@@ -110,14 +111,53 @@ class HomeViewController: UIViewController {
         return lottie
     }()
     
+    var emptyView1 = UIView()
+    var emptyView2 = UIView()
+    var emptyView3 = UIView()
+    var emptyView4 = UIView()
+    var emptyView5 = UIView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(red: 0.988, green: 0.988, blue: 0.992, alpha: 1)
+        setupNotificationCenter()
         setupNaviBar()
         setupLastUpdateLabel()
         setupSecondLabel()
         setupThirdLabel()
         setupAutoLayout()
+        bind()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        if let existingAlertView = view.subviews.first(where: { $0.tag == 999 }) {
+            existingAlertView.removeFromSuperview()
+        }
+        emptyView5.isHidden = false
+        [view,emptyView1,emptyView2,emptyView3,emptyView4,emptyView5].forEach{
+            $0?.showAnimatedSkeleton()
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now()+0.1, execute: {
+            [self.view,self.emptyView1,self.emptyView2,self.emptyView3,self.emptyView4,self.emptyView5].forEach{
+                $0?.hideSkeleton(transition: .crossDissolve(0.25))
+                
+            }
+            self.emptyView5.isHidden = true
+        })
+        
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        emptyView5.isHidden = true
+        [view,emptyView1,emptyView2,emptyView3,emptyView4,emptyView5].forEach{
+            $0?.showAnimatedSkeleton()
+        }
+    }
+    
+    func setupNotificationCenter(){
+        NotificationCenter.default.addObserver(self, selector: #selector(dataRecevied(notification:)), name: NSNotification.Name("SwitchTabNotification"), object: nil)
     }
     
     func setupLastUpdateLabel() {
@@ -204,7 +244,7 @@ class HomeViewController: UIViewController {
     }
     
     func setupAutoLayout() {
-         
+        
         view.addSubview(updateStackView)
         updateStackView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).offset(55)
@@ -257,9 +297,73 @@ class HomeViewController: UIViewController {
             self.scrollAnimation.alpha = 1
           }, completion: nil)
         }
+        
+        [emptyView1, emptyView2, emptyView3,emptyView4, emptyView5].forEach{
+            self.view.addSubview($0)
+            $0.translatesAutoresizingMaskIntoConstraints = false
+        }
+        
+        emptyView1.snp.makeConstraints{
+            $0.leading.equalToSuperview().offset(30)
+            $0.top.equalTo(stackView.snp.top)
+            $0.width.equalTo(100)
+            $0.height.equalTo(42)
+        }
+        
+        emptyView2.snp.makeConstraints{
+            $0.leading.equalToSuperview().offset(30)
+            $0.top.equalTo(emptyView1.snp.bottom).offset(2)
+            $0.width.equalTo(300)
+            $0.height.equalTo(42)
+        }
+        
+        emptyView3.snp.makeConstraints{
+            $0.leading.equalToSuperview().offset(30)
+            $0.top.equalTo(emptyView2.snp.bottom).offset(2)
+            $0.width.equalTo(300)
+            $0.height.equalTo(42)
+        }
+        
+        emptyView4.snp.makeConstraints{
+            $0.width.equalTo(220)
+            $0.height.equalTo(120)
+            $0.trailing.equalToSuperview().offset(-30)
+            $0.top.equalTo(stackView.snp.bottom).offset(108)
+        }
+        
+        emptyView5.snp.makeConstraints{
+            $0.centerY.centerX.equalTo(bookmarkButton)
+            $0.width.height.equalTo(40)
+        }
+        
+        [view,emptyView1,emptyView2,emptyView3,emptyView4,emptyView5].forEach{
+            $0?.isSkeletonable = true
+            $0?.skeletonCornerRadius = 20
+        }
+        
+    }
+    
+    func bind(){
+        self.homeViewModel.bookMarkDidChanged = { isBookmarked in
+            if isBookmarked {
+                self.bookmarkButton.setBackgroundImage(UIImage(systemName: "bookmark.fill"), for: .normal)
+            }else{
+                self.bookmarkButton.setBackgroundImage(UIImage(systemName: "bookmark"), for: .normal)
+            }
+            self.bookmarkButton.superview?.layoutIfNeeded()
+        }
+        self.homeViewModel.notfiedDiDChanged = { isnotified in
+            if isnotified {
+                self.notificationButton.setBackgroundImage(UIImage(systemName: "bell.fill"), for: .normal)
+            }else{
+                self.notificationButton.setBackgroundImage(UIImage(systemName: "bell"), for: .normal)
+            }
+            self.notificationButton.superview?.layoutIfNeeded()
+        }
     }
     
     @objc func bookmarkButtonTapped() {
+        
         if !homeViewModel.isBookmarked {
             homeViewModel.isBookmarked = true
             bookmarkButton.setBackgroundImage(UIImage(named: "bookmark_S-1"), for: .normal)
@@ -268,6 +372,11 @@ class HomeViewController: UIViewController {
                 self.notificationButton.setBackgroundImage(UIImage(named: "notification_S-0"), for: .normal)
             }, completion: nil)
             
+            let bookMarkImage = UIImageView()
+            bookMarkImage.image = .popupBookmark
+            showCustomAlert(image: bookMarkImage.image!, message: "북마크 페이지에 추가했어요.")
+            
+            self.homeViewModel.saveCurrentBookMark()
         } else {
             homeViewModel.isBookmarked = false
             bookmarkButton.setBackgroundImage(UIImage(named: "bookmark_S-0"), for: .normal)
@@ -275,11 +384,74 @@ class HomeViewController: UIViewController {
             UIView.transition(with: self.notificationButton, duration: 0.3, options: .transitionCrossDissolve, animations: {
                 self.notificationButton.setBackgroundImage(nil, for: .normal)
             }, completion: nil)
+            
+            let bookMarkImage = UIImageView()
+            bookMarkImage.image = .popupBookmark1
+            showCustomAlert(image: bookMarkImage.image!, message: "북마크 페이지에서 삭제했어요.")
+            
+            self.homeViewModel.deleteCurrentBookMark()
         }
     }
     
     @objc func notificationButtonTapped() {
-        print(#function)
+        self.homeViewModel.changeNotiCurrentBookMark()
+        if !homeViewModel.isNotified {
+            
+            let alarmImageYellow = UIImageView()
+            alarmImageYellow.image = .popupNotification1
+            homeViewModel.isNotified = false
+            showCustomAlert(image: alarmImageYellow.image!, message: "비소식 알림을 껐어요.")
+        }
+        else {
+            
+            let alarmImageYellow = UIImageView()
+            alarmImageYellow.image = .popupNotification
+            homeViewModel.isNotified = true
+            showCustomAlert(image: alarmImageYellow.image!, message: "비소식 1시간 전에 알림을 울려요.")
+        }
     }
     
+    @objc func dataRecevied(notification: Notification){
+        guard let newSearchModel = notification.object as? SearchModel else{
+            return
+        }
+        self.homeViewModel.currentSearchModel = newSearchModel
+        createBackButton()
+    }
+    func createBackButton(){
+        let backButton = UIView()
+        backButton.frame = CGRect(x: 0, y: 0, width: 24, height: 24)
+        backButton.isUserInteractionEnabled = true // Enable user interaction
+        
+        // Create the label for the button
+        let backImage = UIImageView()
+        backImage.image = UIImage(named: "chevron-left")
+        
+        backButton.addSubview(backImage)
+        // Add constraints to the label
+        backImage.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+        
+        // Add a tap gesture recognizer to the deleteButton
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(backButtonTap))
+        backButton.addGestureRecognizer(tapGesture)
+        
+        // Create the UIBarButtonItem with the custom view
+        let barButton = UIBarButtonItem(customView: backButton)
+        navigationItem.leftBarButtonItem = barButton
+    }
 }
+
+extension HomeViewController : TransferDataToMainDelegate {
+    func searchDidTouched(searchModel: SearchModel) {
+        self.homeViewModel.currentSearchModel = searchModel
+        createBackButton()
+    }
+    
+    @objc func backButtonTap(){
+        self.homeViewModel.getUserLocation()
+        self.navigationItem.leftBarButtonItem?.isHidden = true
+    }
+}
+

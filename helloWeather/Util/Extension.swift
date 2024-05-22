@@ -40,3 +40,39 @@ extension Calendar {
     }
 }
 
+extension UITabBar {
+    func configureMaterialBackground(
+        selectedItemColor: UIColor = .systemBlue,
+        unselectedItemColor: UIColor = .secondaryLabel,
+        blurStyle: UIBlurEffect.Style = .regular
+    ) {
+        // Make tabBar fully tranparent
+        isTranslucent = true
+        backgroundImage = UIImage()
+        shadowImage = UIImage() // no separator
+        barTintColor = .clear
+        layer.backgroundColor = UIColor.clear.cgColor
+    
+        // Apply icon colors
+        tintColor = selectedItemColor
+        unselectedItemTintColor = unselectedItemColor
+    
+        // Add material blur
+//        let blurEffect = UIBlurEffect(style: blurStyle)
+        let blurView = TSBlurEffectView()
+        blurView.intensity = 10
+        blurView.frame = bounds
+        blurView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        blurView.layer.opacity = 1
+    
+        // Add black view to cancel out gray look
+//        let blackView = UIView(frame: bounds)
+//        blackView.backgroundColor = .systemBackground.withAlphaComponent(0.9)
+//        blackView.frame = bounds
+//        blackView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+    
+        insertSubview(blurView, at: 0)
+//        insertSubview(blackView, aboveSubview: blurView)
+    }
+}
+

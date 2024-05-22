@@ -12,7 +12,7 @@ import SwiftUI
 
 class TabViewController2: TabmanViewController {
 
-    private var viewControllers = [WeatherDetailViewController(), UIHostingController(rootView: ScrollChartView())]
+    private var viewControllers = [HomeViewController(), UIHostingController(rootView: ScrollChartView())]
 
     let homeViewModel = HomeViewModel()
     

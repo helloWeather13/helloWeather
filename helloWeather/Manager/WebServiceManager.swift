@@ -8,7 +8,6 @@ class WebServiceManager{
     private init(){
         
     }
-    
     // MARK: - kakaoAddress 주소 검색 API 호출용
     var kakaoAddress = ApiModel(
         url: "https://dapi.kakao.com/v2/local/search/address.json",

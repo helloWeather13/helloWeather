@@ -48,9 +48,7 @@ struct ChatView: View {
 
 #Preview {
     VStack {
-        Spacer()
         ChatView()
             .padding()
-        Spacer()
     }
 }

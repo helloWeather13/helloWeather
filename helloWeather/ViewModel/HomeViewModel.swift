@@ -12,8 +12,26 @@ class HomeViewModel: NSObject, CLLocationManagerDelegate {
     
     let webServiceManager = WebServiceManager.shared
     let userLocationManager = CLLocationManager()
-    
-    var isBookmarked = false
+    var currentSearchModel : SearchModel? {
+        didSet{
+            if currentSearchModel?.city != "" || currentSearchModel?.fullAddress != ""{
+                self.getCurrentWeather()
+            }
+        }
+    }
+    var bookMarkSearchModel : [SearchModel] = []
+    var isBookmarked = false {
+        didSet {
+            bookMarkDidChanged(isBookmarked)
+        }
+    }
+    var isNotified = false {
+        didSet {
+            notfiedDiDChanged(isNotified)
+        }
+    }
+    var isNotification = false
+//    var isBookmarked = false
     
     var userLocationAddress: String = "" {
         didSet {
@@ -21,6 +39,8 @@ class HomeViewModel: NSObject, CLLocationManagerDelegate {
         }
     }
     
+    var notfiedDiDChanged : ((Bool) -> ()) = { _ in }
+    var bookMarkDidChanged: ((Bool) -> ()) = { _ in }
     var addressOnCompleted: ((String) -> ()) = { _ in }
     
     var userLocationPoint: (Double, Double) = (0, 0) {
@@ -172,7 +192,15 @@ class HomeViewModel: NSObject, CLLocationManagerDelegate {
     
     override init() {
         super.init()
+        loadCurrentBookMark()
         getUserLocation()
+    }
+    
+    func getCurrentWeather(){
+        userLocationAddress = self.currentSearchModel?.fullAddress ?? ""
+        userLocationPoint = (self.currentSearchModel?.lat ?? 0 , self.currentSearchModel?.lon ?? 0)
+        self.isBookmarked = self.isCurrentLocationBookMarked()
+        loadNotification()
     }
     
     func getUserLocation() {
@@ -222,6 +250,10 @@ class HomeViewModel: NSObject, CLLocationManagerDelegate {
         let currentTime = DateFormatter()
         currentTime.dateFormat = "HH"
         let currentHour = Int(currentTime.string(from: Date()))!
+        
+        if self.currentSearchModel == nil {
+            self.currentSearchModel = SearchModel(keyWord: "", fullAddress: "" , lat: userLocationPoint.0, lon: userLocationPoint.1, city: "")
+        }
         
         dispatchGroup.enter()
         webServiceManager.getForecastWeather(searchModel: SearchModel(keyWord: "", fullAddress: "", lat: userLocationPoint.0, lon: userLocationPoint.1, city: "")) { [unowned self] data in
@@ -276,5 +308,74 @@ class HomeViewModel: NSObject, CLLocationManagerDelegate {
         let minute = Int(components[1].prefix(2)) ?? 0
         let isPM = time.contains("PM")
         return ((isPM ? 12 : 0) + hour) * 60 + minute
+    }
+    
+    func saveCurrentBookMark() {
+        if !isCurrentLocationBookMarked() {
+            bookMarkSearchModel.append(currentSearchModel!)
+            let encoder = JSONEncoder()
+            if let encoded = try? encoder.encode(bookMarkSearchModel){
+                UserDefaults.standard.setValue(encoded, forKey: "bookMark")
+            }
+        }
+    }
+
+    // MARK: - loadRecentSearch UserDefault에 최근 검색 결과 로드
+    func loadCurrentBookMark(){
+        if let savedData = UserDefaults.standard.object(forKey: "bookMark") as? Data {
+            let decoder = JSONDecoder()
+            if let savedObject = try? decoder.decode([SearchModel].self, from: savedData) {
+                self.bookMarkSearchModel = savedObject
+            }
+        }
+    }
+    func isCurrentLocationBookMarked() -> Bool{
+        if let currentSearchModel {
+            if self.bookMarkSearchModel.contains(where: {
+                $0.fullAddress == currentSearchModel.fullAddress
+            }){
+                return true
+            }else{
+                return false
+            }
+        }
+        return false
+    }
+    
+    func loadNotification(){
+        if let currentSearchModel {
+            if isCurrentLocationBookMarked(){
+                self.isNotified = currentSearchModel.notification
+            }
+        }
+    }
+
+    
+    // MARK: - deleteRecentSearch UserDefault에서 최근 결과 삭제
+    func deleteCurrentBookMark(){
+        guard let index = bookMarkSearchModel.firstIndex(where: {
+            $0.fullAddress == currentSearchModel?.fullAddress
+        }) else {return}
+        bookMarkSearchModel.remove(at: index)
+        isBookmarked = false
+        isNotified = false
+//        UserDefaults.standard.removeObject(forKey: "bookMark")
+        let encoder = JSONEncoder()
+        if let encoded = try? encoder.encode(bookMarkSearchModel){
+            UserDefaults.standard.setValue(encoded, forKey: "bookMark")
+        }
+        
+    }
+    
+    func changeNotiCurrentBookMark(){
+        self.isNotified = !isNotified
+        guard let index = bookMarkSearchModel.firstIndex(where: {
+            $0.fullAddress == currentSearchModel?.fullAddress
+        }) else {return}
+        bookMarkSearchModel[index].notification = isNotified
+        let encoder = JSONEncoder()
+        if let encoded = try? encoder.encode(bookMarkSearchModel){
+            UserDefaults.standard.setValue(encoded, forKey: "bookMark")
+        }
     }
 }
