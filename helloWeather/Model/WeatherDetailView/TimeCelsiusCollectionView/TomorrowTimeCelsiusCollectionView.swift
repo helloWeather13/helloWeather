@@ -69,7 +69,7 @@ class TomorrowTimeCelsiusCollectionView: UICollectionView, UICollectionViewDeleg
             })
             .disposed(by: disposeBag)
         
-        viewModel?.temperatureUnitSubject
+        viewModel?.temperatureUnitSubject1
             .subscribe(onNext: { [weak self] _ in
                 self?.updateCellTemperatureLabels()
             })

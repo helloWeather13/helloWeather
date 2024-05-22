@@ -59,7 +59,12 @@ class WeatherDetailViewModel {
     var temperatureUnit: TemperatureUnit = .celsius
     var temperatureUnit2: TemperatureUnit = .celsius
     var temperatureUnit3: TemperatureUnit = .celsius
-    let temperatureUnitSubject = BehaviorSubject<TemperatureUnit>(value: .celsius)
+    var flag1: Bool = false
+    var flag2: Bool = false
+    var flag3: Bool = false
+    let temperatureUnitSubject1 = BehaviorSubject<TemperatureUnit>(value: .celsius)
+    let temperatureUnitSubject2 = BehaviorSubject<TemperatureUnit>(value: .celsius)
+    let temperatureUnitSubject3 = BehaviorSubject<TemperatureUnit>(value: .celsius)
     
     
     
@@ -102,7 +107,7 @@ class WeatherDetailViewModel {
                                 feelslikeF: "\(feelslikeFTemperature)°",
                                 tempC: "\(tempCTemperature)°",
                                 tempF: "\(tempFTemperature)°",
-                                humidity: "\(hourlyData.humidity)%", 
+                                humidity: "\(hourlyData.humidity)%",
                                 condition: "\(condition)"
                             )
                             hourlyWeather.append(hourlyWeatherData)
@@ -182,21 +187,21 @@ class WeatherDetailViewModel {
     
     // 온도 단위 토글
     func toggleTemperatureUnit() {
-            temperatureUnit = (temperatureUnit == .celsius) ? .fahrenheit : .celsius
-            // 온도 단위 변경을 UI에 알리는 Observable 업데이트
-            temperatureUnitSubject.onNext(temperatureUnit)
-        }
+        temperatureUnit = (temperatureUnit == .celsius) ? .fahrenheit : .celsius
+        // 온도 단위 변경을 UI에 알리는 Observable 업데이트
+        temperatureUnitSubject1.onNext(temperatureUnit)
+    }
     
     func toggleTemperatureUnit2() {
-            temperatureUnit2 = (temperatureUnit2 == .celsius) ? .fahrenheit : .celsius
-            // 온도 단위 변경을 UI에 알리는 Observable 업데이트
-            temperatureUnitSubject.onNext(temperatureUnit2)
-        }
+        temperatureUnit2 = (temperatureUnit2 == .celsius) ? .fahrenheit : .celsius
+        // 온도 단위 변경을 UI에 알리는 Observable 업데이트
+        temperatureUnitSubject2.onNext(temperatureUnit2)
+    }
     
     func toggleTemperatureUnit3() {
-            temperatureUnit3 = (temperatureUnit3 == .celsius) ? .fahrenheit : .celsius
-            // 온도 단위 변경을 UI에 알리는 Observable 업데이트
-            temperatureUnitSubject.onNext(temperatureUnit3)
-        }
+        temperatureUnit3 = (temperatureUnit3 == .celsius) ? .fahrenheit : .celsius
+        // 온도 단위 변경을 UI에 알리는 Observable 업데이트
+        temperatureUnitSubject3.onNext(temperatureUnit3)
+    }
     
 }

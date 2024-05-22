@@ -120,6 +120,8 @@
 		9A5ACD9D2BF893BA00DE586F /* ChartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5ACD9C2BF893BA00DE586F /* ChartViewModel.swift */; };
 		9A5ACD9F2BF8B41100DE586F /* LineModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5ACD9E2BF8B41100DE586F /* LineModel.swift */; };
 		9A5D54252BFE058900E672D5 /* CustomToggleView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5D54242BFE058900E672D5 /* CustomToggleView2.swift */; };
+		9A5D54272BFE7B3200E672D5 /* CustomToggleView3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5D54262BFE7B3200E672D5 /* CustomToggleView3.swift */; };
+		9A5D54292BFE7B4700E672D5 /* CustomToggleView4.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5D54282BFE7B4700E672D5 /* CustomToggleView4.swift */; };
 		9A8DF86C2BF6C4A3009F0DAB /* ChatModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8DF86B2BF6C4A3009F0DAB /* ChatModel.swift */; };
 		9A8DF86E2BF6CB26009F0DAB /* ChatModel2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8DF86D2BF6CB26009F0DAB /* ChatModel2.swift */; };
 		9A8DF8712BF6E51E009F0DAB /* FineListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8DF8702BF6E51E009F0DAB /* FineListView.swift */; };
@@ -269,6 +271,8 @@
 		9A5ACD9C2BF893BA00DE586F /* ChartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartViewModel.swift; sourceTree = "<group>"; };
 		9A5ACD9E2BF8B41100DE586F /* LineModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineModel.swift; sourceTree = "<group>"; };
 		9A5D54242BFE058900E672D5 /* CustomToggleView2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomToggleView2.swift; sourceTree = "<group>"; };
+		9A5D54262BFE7B3200E672D5 /* CustomToggleView3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomToggleView3.swift; sourceTree = "<group>"; };
+		9A5D54282BFE7B4700E672D5 /* CustomToggleView4.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomToggleView4.swift; sourceTree = "<group>"; };
 		9A8DF86B2BF6C4A3009F0DAB /* ChatModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatModel.swift; sourceTree = "<group>"; };
 		9A8DF86D2BF6CB26009F0DAB /* ChatModel2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatModel2.swift; sourceTree = "<group>"; };
 		9A8DF8702BF6E51E009F0DAB /* FineListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FineListView.swift; sourceTree = "<group>"; };
@@ -604,6 +608,8 @@
 				9A8DF86A2BF6C48E009F0DAB /* Chat */,
 				9ABC1E272BF4BAAF006A626C /* Chart */,
 				9A5D54242BFE058900E672D5 /* CustomToggleView2.swift */,
+				9A5D54262BFE7B3200E672D5 /* CustomToggleView3.swift */,
+				9A5D54282BFE7B4700E672D5 /* CustomToggleView4.swift */,
 			);
 			path = FineDust;
 			sourceTree = "<group>";
@@ -819,6 +825,7 @@
 				146580ED2BF1E8D10093AA81 /* SearchViewController.swift in Sources */,
 				9A5ACD982BF7B37C00DE586F /* FineDustUtil.swift in Sources */,
 				9A5ACD9B2BF7B42B00DE586F /* DustGroupStruct.swift in Sources */,
+				9A5D54292BFE7B4700E672D5 /* CustomToggleView4.swift in Sources */,
 				45D70DC22BF3325400942DC1 /* WeatherDetailView.swift in Sources */,
 				14E83D932BF79FF5004CAD62 /* DeleteAlertView.swift in Sources */,
 				45D70DCD2BF3401D00942DC1 /* FirstLeftCollectionViewCell.swift in Sources */,
@@ -843,6 +850,7 @@
 				9A5ACD9D2BF893BA00DE586F /* ChartViewModel.swift in Sources */,
 				14450EA12BF45962006A02F7 /* Extension.swift in Sources */,
 				14450EA32BF474FC006A02F7 /* PaddingLabel.swift in Sources */,
+				9A5D54272BFE7B3200E672D5 /* CustomToggleView3.swift in Sources */,
 				B69CA1262BFDA27C0068BFA8 /* LaunchScreen.swift in Sources */,
 				147EF8702BF62F1B000DC8A8 /* ListTableViewCell.swift in Sources */,
 				1445AF602BF32F7E0018AE3F /* DataSource.swift in Sources */,

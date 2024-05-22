@@ -182,15 +182,15 @@ class WeatherDetailView: UIView {
     
     // MARK: - C/F ChangeToggle
     let customToggleView: CustomToggleView2
-    let customToggleView2: CustomToggleView2
-    let customToggleView3: CustomToggleView2
+    let customToggleView2: CustomToggleView3
+    let customToggleView3: CustomToggleView4
     
     // MARK: - override
     override init(frame: CGRect) {
         
         self.customToggleView = CustomToggleView2(viewModel: weatherDetailViewModel)
-        self.customToggleView2 = CustomToggleView2(viewModel: weatherDetailViewModel)
-        self.customToggleView3 = CustomToggleView2(viewModel: weatherDetailViewModel)
+        self.customToggleView2 = CustomToggleView3(viewModel: weatherDetailViewModel)
+        self.customToggleView3 = CustomToggleView4(viewModel: weatherDetailViewModel)
         
         super.init(frame: frame)
         

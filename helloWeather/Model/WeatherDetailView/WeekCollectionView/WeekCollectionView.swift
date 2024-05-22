@@ -42,7 +42,7 @@ class WeekCollectionView: UICollectionView, UICollectionViewDelegate, UICollecti
                 })
                 .disposed(by: disposeBag)
         
-        viewModel?.temperatureUnitSubject
+        viewModel?.temperatureUnitSubject3
             .subscribe(onNext: { [weak self] _ in
                 self?.updateCellTemperatureLabels()
             })

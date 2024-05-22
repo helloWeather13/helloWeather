@@ -1,7 +1,14 @@
+//
+//  CustomToggleView3.swift
+//  helloWeather
+//
+//  Created by 김태담 on 5/23/24.
+//
+
+import Foundation
 import UIKit
 import SnapKit
-
-class CustomToggleView2: UIView {
+class CustomToggleView3: UIView {
     private let viewModel: WeatherDetailViewModel
     private var isOn: Bool = false {
         didSet {
@@ -77,7 +84,7 @@ class CustomToggleView2: UIView {
     }
     
     @objc private func toggleSwitch() {
-        viewModel.toggleTemperatureUnit()
+        viewModel.toggleTemperatureUnit2()
     }
     
     private func updateToggleState() {
