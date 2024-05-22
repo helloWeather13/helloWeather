@@ -65,6 +65,7 @@ struct Condition: Codable {
     }
 }
 
+
 // MARK: - Forecast
 struct Forecast: Codable { // 미리 7일간의 데이터 저장용
     let forecastday: [Forecastday]
