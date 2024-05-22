@@ -100,7 +100,6 @@
 		45B332E42BFE561C00002B9D /* CustomToggleView3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B332E32BFE561C00002B9D /* CustomToggleView3.swift */; };
 		45B332E62BFE563300002B9D /* CustomToggleView4.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B332E52BFE563300002B9D /* CustomToggleView4.swift */; };
 		45C526902BFC4A8E00AA53E3 /* FirstDayAfterTomorrowCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C5268F2BFC4A8E00AA53E3 /* FirstDayAfterTomorrowCollectionViewCell.swift */; };
-		45C526942BFC4AEE00AA53E3 /* DATomorrowTimeCelsiusCollectionview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C526932BFC4AEE00AA53E3 /* DATomorrowTimeCelsiusCollectionview.swift */; };
 		45D70DBD2BF3145C00942DC1 /* WeatherDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D70DBC2BF3145C00942DC1 /* WeatherDetailViewController.swift */; };
 		45D70DC02BF3262300942DC1 /* SwiftUICharts in Frameworks */ = {isa = PBXBuildFile; productRef = 45D70DBF2BF3262300942DC1 /* SwiftUICharts */; };
 		45D70DC22BF3325400942DC1 /* WeatherDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D70DC12BF3325400942DC1 /* WeatherDetailView.swift */; };
@@ -253,7 +252,6 @@
 		45B332E32BFE561C00002B9D /* CustomToggleView3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomToggleView3.swift; sourceTree = "<group>"; };
 		45B332E52BFE563300002B9D /* CustomToggleView4.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomToggleView4.swift; sourceTree = "<group>"; };
 		45C5268F2BFC4A8E00AA53E3 /* FirstDayAfterTomorrowCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstDayAfterTomorrowCollectionViewCell.swift; sourceTree = "<group>"; };
-		45C526932BFC4AEE00AA53E3 /* DATomorrowTimeCelsiusCollectionview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DATomorrowTimeCelsiusCollectionview.swift; sourceTree = "<group>"; };
 		45D70DBC2BF3145C00942DC1 /* WeatherDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDetailViewController.swift; sourceTree = "<group>"; };
 		45D70DC12BF3325400942DC1 /* WeatherDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDetailView.swift; sourceTree = "<group>"; };
 		45D70DC52BF3342000942DC1 /* SecondLeftCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondLeftCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -550,7 +548,6 @@
 				45C5268F2BFC4A8E00AA53E3 /* FirstDayAfterTomorrowCollectionViewCell.swift */,
 				45D70DD82BF3557E00942DC1 /* TodayTimeCelsiusCollectionView.swift */,
 				45D70DDA2BF4DBFD00942DC1 /* TomorrowTimeCelsiusCollectionView.swift */,
-				45C526932BFC4AEE00AA53E3 /* DATomorrowTimeCelsiusCollectionview.swift */,
 			);
 			path = TimeCelsiusCollectionView;
 			sourceTree = "<group>";
@@ -852,7 +849,6 @@
 				9A5D54252BFE058900E672D5 /* CustomToggleView2.swift in Sources */,
 				14450E9F2BF45381006A02F7 /* RecentSearchTableViewCell.swift in Sources */,
 				9A5ACD9D2BF893BA00DE586F /* ChartViewModel.swift in Sources */,
-				45C526942BFC4AEE00AA53E3 /* DATomorrowTimeCelsiusCollectionview.swift in Sources */,
 				14450EA12BF45962006A02F7 /* Extension.swift in Sources */,
 				14450EA32BF474FC006A02F7 /* PaddingLabel.swift in Sources */,
 				B69CA1262BFDA27C0068BFA8 /* LaunchScreen.swift in Sources */,
