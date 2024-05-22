@@ -9,8 +9,7 @@ import UIKit
 import SnapKit
 
 class WeatherDetailView: UIView {
-    
-    // MARK: - Scroll
+    var homeViewModel = HomeViewModel()
     let scrollView: UIScrollView = {
         let scroll = UIScrollView()
         scroll.isScrollEnabled = true
@@ -95,11 +94,10 @@ class WeatherDetailView: UIView {
         return image
     }()
     
-    // 일출일몰 stack
-    let fifthStackView: UIStackView = {
-        let stack = UIStackView()
-        stack.axis = .horizontal
-        return stack
+    // 일출일몰뷰
+    let sunView: UIView = {
+        let view = UIView()
+        return view
     }()
     let sunLabel: UILabel = {
         let label = UILabel()
@@ -107,9 +105,28 @@ class WeatherDetailView: UIView {
         label.font = UIFont.systemFont(ofSize: 19, weight: .bold)
         return label
     }()
-    let sunIcon: UIImageView = {
-        let image = UIImageView()
-        return image
+    let sunGraph: UIImageView = {
+        let imageView = UIImageView()
+        return imageView
+    }()
+    let sunriseLabel: UILabel = {
+        let label = UILabel()
+        label.text = ""
+        label.font = .systemFont(ofSize: 12)
+        return label
+    }()
+    let sunsetLabel: UILabel = {
+        let label = UILabel()
+        label.text = ""
+        label.font = .systemFont(ofSize: 12)
+        return label
+    }()
+    let sunriseInfoLabel: UILabel = {
+        let label = UILabel()
+        label.text = ""
+        label.textColor = .gray
+        label.font = .systemFont(ofSize: 13)
+        return label
     }()
     
     // MARK: - 이부분이 데이터 넘기는 겁니다~~
@@ -209,6 +226,7 @@ class WeatherDetailView: UIView {
         self.backgroundColor = .white
         configureScrollView()
         configureConstraints()
+        setupSunData()
     }
     
     required init?(coder: NSCoder) {
@@ -273,10 +291,8 @@ class WeatherDetailView: UIView {
     private func configureScrollView() {
         self.addSubview(addressLabel)
         self.addSubview(scrollView)
-        
         scrollView.addSubview(contentView)
-        
-        [firstStackView, secondStackView, thirdStackView, fourthStackView, fifthStackView, topScrollView, bottomScrollView, weekCollectionView, humidityCollectionView, changeButton1].forEach {
+        [sunView, firstStackView, secondStackView, thirdStackView, fourthStackView, fifthStackView, topScrollView, bottomScrollView, weekCollectionView, humidityCollectionView, changeButton1].forEach {
             contentView.addSubview($0)
         }
         
@@ -318,9 +334,6 @@ class WeatherDetailView: UIView {
         
         fourthStackView.addArrangedSubview(humidityLabel)
         fourthStackView.addArrangedSubview(humidityIcon)
-        
-        fifthStackView.addArrangedSubview(sunLabel)
-        fifthStackView.addArrangedSubview(sunIcon)
         
         // CollectionView
         topScrollView.addSubview(firstLeftCollectionView)
@@ -409,13 +422,61 @@ class WeatherDetailView: UIView {
             make.height.equalTo(119)
             make.bottom.equalToSuperview().offset(-20)
         }
-        
-        // Buttons Constraints
-        changeButton1.snp.makeConstraints { make in
+      changeButton1.snp.makeConstraints { make in
             make.top.equalTo(firstStackView.snp.top)
             make.leading.equalTo(firstStackView.snp.trailing).offset(158)
             make.width.equalTo(54)
             make.height.equalTo(30)
+       }
+        // 일출일몰 레이아웃
+        sunView.snp.makeConstraints { make in
+            make.top.equalTo(humidityCollectionView.snp.bottom).offset(30)
+            make.leading.equalTo(scrollView)
+            make.trailing.equalTo(scrollView)
+            make.bottom.equalTo(scrollView).inset(78)
+            make.height.equalTo(252)
+            make.width.equalTo(393)
+        }
+        
+        sunView.addSubview(sunLabel) 
+        sunLabel.snp.makeConstraints { make in
+            make.top.equalTo(sunView).offset(4)
+            make.leading.equalTo(sunView).offset(20)
+        }
+        
+        sunView.addSubview(sunGraph)
+        sunGraph.snp.makeConstraints { make in
+            make.top.equalTo(sunLabel.snp.bottom).offset(30)
+            make.centerX.equalTo(sunView)
+            make.height.equalTo(154)
+            make.width.equalTo(300)
+        }
+        
+        sunView.addSubview(sunriseLabel)
+        sunriseLabel.snp.makeConstraints { make in
+            make.top.equalTo(sunGraph.snp.bottom)
+            make.leading.equalTo(sunView).offset(45)
+        }
+        
+        sunView.addSubview(sunsetLabel)
+        sunsetLabel.snp.makeConstraints { make in
+            make.top.equalTo(sunGraph.snp.bottom)
+            make.trailing.equalTo(sunView).offset(-45)
+        }
+        
+        sunView.addSubview(sunriseInfoLabel)
+        sunriseInfoLabel.snp.makeConstraints { make in
+            make.top.equalTo(sunsetLabel.snp.bottom).offset(38)
+            make.centerX.equalTo(sunView)
+        }
+    }
+    
+    func setupSunData() {
+        homeViewModel.estimatedOnCompleted = { [unowned self] in
+            sunriseLabel.text = homeViewModel.sunriseTime
+            sunsetLabel.text = homeViewModel.sunsetTime
+            sunriseInfoLabel.text = homeViewModel.sunriseInfoString
+            sunGraph.image = homeViewModel.sunImage
         }
     }
 }
