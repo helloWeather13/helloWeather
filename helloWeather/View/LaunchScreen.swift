@@ -34,6 +34,7 @@ class LaunchViewController: UIViewController {
           }, completion: { _ in
             self.animationView.isHidden = true
             self.animationView.removeFromSuperview()
+              
             guard let vc = TabViewController() as? UIViewController else { return }
             vc.modalPresentationStyle = .fullScreen
             self.present(vc, animated: true, completion: nil)

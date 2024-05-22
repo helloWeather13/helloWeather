@@ -98,8 +98,11 @@
 		B618E8062BFB1CCC00864363 /* Pretendard-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B618E7E62BFB1CCC00864363 /* Pretendard-SemiBold.ttf */; };
 		B618E8072BFB1CCC00864363 /* Pretendard-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B618E7E72BFB1CCC00864363 /* Pretendard-Thin.ttf */; };
 		B618E8092BFB40D300864363 /* LaunchScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B618E8082BFB40D300864363 /* LaunchScreen.swift */; };
+		B618E82D2BFC229200864363 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B618E82C2BFC229200864363 /* MainViewController.swift */; };
 		B687F6862BF4CC6000623F1D /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B687F6852BF4CC6000623F1D /* HomeViewModel.swift */; };
 		B69210192BFB18E600BF89ED /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = B69210182BFB18E600BF89ED /* Lottie */; };
+		B6F887192BFC93380029BF27 /* Tabman in Frameworks */ = {isa = PBXBuildFile; productRef = B6F887182BFC93380029BF27 /* Tabman */; };
+		B6F8871B2BFC93590029BF27 /* TabViewController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F8871A2BFC93590029BF27 /* TabViewController2.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -203,7 +206,9 @@
 		B618E7E62BFB1CCC00864363 /* Pretendard-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-SemiBold.ttf"; sourceTree = "<group>"; };
 		B618E7E72BFB1CCC00864363 /* Pretendard-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Thin.ttf"; sourceTree = "<group>"; };
 		B618E8082BFB40D300864363 /* LaunchScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchScreen.swift; sourceTree = "<group>"; };
+		B618E82C2BFC229200864363 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		B687F6852BF4CC6000623F1D /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		B6F8871A2BFC93590029BF27 /* TabViewController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabViewController2.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -212,6 +217,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1445AF582BF3203E0018AE3F /* RxCocoa in Frameworks */,
+				B6F887192BFC93380029BF27 /* Tabman in Frameworks */,
 				B69210192BFB18E600BF89ED /* Lottie in Frameworks */,
 				1445AF532BF2F0630018AE3F /* RAMAnimatedTabBarController in Frameworks */,
 				146580F82BF1EB4D0093AA81 /* Alamofire in Frameworks */,
@@ -311,7 +317,9 @@
 				146580D52BF1E7EB0093AA81 /* LaunchScreen.storyboard */,
 				B618E8082BFB40D300864363 /* LaunchScreen.swift */,
 				146580DE2BF1E8160093AA81 /* TabViewController.swift */,
+				B618E82C2BFC229200864363 /* MainViewController.swift */,
 				146580E72BF1E8960093AA81 /* HomeViewController.swift */,
+				B6F8871A2BFC93590029BF27 /* TabViewController2.swift */,
 				146580E92BF1E8B00093AA81 /* ListViewController.swift */,
 				146580EC2BF1E8D10093AA81 /* SearchViewController.swift */,
 				146580EE2BF1E8EF0093AA81 /* AlarmViewController.swift */,
@@ -527,6 +535,7 @@
 				1445AF572BF3203E0018AE3F /* RxCocoa */,
 				1445AF592BF3203E0018AE3F /* RxSwift */,
 				B69210182BFB18E600BF89ED /* Lottie */,
+				B6F887182BFC93380029BF27 /* Tabman */,
 			);
 			productName = helloWeather;
 			productReference = 146580C72BF1E7EA0093AA81 /* helloWeather.app */;
@@ -563,6 +572,7 @@
 				1445AF512BF2F0630018AE3F /* XCRemoteSwiftPackageReference "animated-tab-bar" */,
 				1445AF562BF3203D0018AE3F /* XCRemoteSwiftPackageReference "RxSwift" */,
 				B69210172BFB18E600BF89ED /* XCRemoteSwiftPackageReference "lottie-spm" */,
+				B6F887172BFC93380029BF27 /* XCRemoteSwiftPackageReference "Tabman" */,
 			);
 			productRefGroup = 146580C82BF1E7EA0093AA81 /* Products */;
 			projectDirPath = "";
@@ -632,6 +642,7 @@
 				45D70DCA2BF3344000942DC1 /* WeekCollectionViewCell.swift in Sources */,
 				45D70DD92BF3557E00942DC1 /* TodayTimeCelsiusCollectionView.swift in Sources */,
 				147EF8722BF63685000DC8A8 /* SpaceTableViewCell.swift in Sources */,
+				B618E82D2BFC229200864363 /* MainViewController.swift in Sources */,
 				1445AF652BF350CA0018AE3F /* SearchModel.swift in Sources */,
 				1445AF692BF3784E0018AE3F /* SearchState.swift in Sources */,
 				1475CFB62BF7015900D0F920 /* CurrentWeatherTableViewCell.swift in Sources */,
@@ -646,6 +657,7 @@
 				146580CD2BF1E7EA0093AA81 /* SceneDelegate.swift in Sources */,
 				B618E8092BFB40D300864363 /* LaunchScreen.swift in Sources */,
 				45D70DCD2BF3401D00942DC1 /* FirstLeftCollectionViewCell.swift in Sources */,
+				B6F8871B2BFC93590029BF27 /* TabViewController2.swift in Sources */,
 				45D70DDF2BF50F9700942DC1 /* TomorrowTimeWeatherCollectionView.swift in Sources */,
 				45D70DDD2BF50F8400942DC1 /* TodayTimeWeatherCollectionView.swift in Sources */,
 				45D70DE12BF515A000942DC1 /* WeekCollectionView.swift in Sources */,
@@ -942,6 +954,14 @@
 				minimumVersion = 4.4.3;
 			};
 		};
+		B6F887172BFC93380029BF27 /* XCRemoteSwiftPackageReference "Tabman" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/uias/Tabman";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.2.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -979,6 +999,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B69210172BFB18E600BF89ED /* XCRemoteSwiftPackageReference "lottie-spm" */;
 			productName = Lottie;
+		};
+		B6F887182BFC93380029BF27 /* Tabman */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B6F887172BFC93380029BF27 /* XCRemoteSwiftPackageReference "Tabman" */;
+			productName = Tabman;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
