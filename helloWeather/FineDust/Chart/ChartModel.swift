@@ -71,6 +71,9 @@ public struct ChartView: View {
         GeometryReader{ geometry in
             VStack(alignment: .leading, spacing: 8) {
                 ZStack{
+//                    Text("\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |")
+//                        .foregroundColor(Color.black)
+//                        .padding(.leading, 20)
                     GeometryReader{ reader in
                         //배경색까
                         Rectangle()
@@ -82,7 +85,7 @@ public struct ChartView: View {
                               touchLocation: self.$indicatorLocation,
                               showIndicator: self.$hideHorizontalLines,
                               minDataValue: .constant(nil),
-                              maxDataValue: .constant(nil),
+                              maxDataValue: .constant(nil), currentNumber: self.$currentDataNumber,
                               showBackground: false,
                               gradient: self.style.gradientColor
                         )
@@ -100,6 +103,7 @@ public struct ChartView: View {
                         .opacity(0.2)
                         .offset(x: self.dragLocation.x - geometry.frame(in: .local).size.width/2, y: 36)
                 }
+                .padding(.bottom, -5)
                 .frame(width: geometry.frame(in: .local).size.width, height: 240)
                 .gesture(DragGesture()
                     .onChanged({ value in
@@ -125,23 +129,40 @@ public struct ChartView: View {
                             self.hideHorizontalLines = false
                         })
                 )
+                Rectangle()
+                    .frame(width: 800, height: 1)
+                    .foregroundColor(Color.gray)
+                    .opacity(0.1)
+                    .shadow(color: Color.gray, radius: 12, x: 0, y: 6)
+                    .blendMode(.multiply)
+                    .padding(.top, 5)
                 HStack {
                     Spacer()
-                    Text("지금")
-                        .bold()
-                        .foregroundColor(.black)
+                    Spacer()
+                    Text("오늘")
+                        .font(.system(size: 14))
+                        .foregroundColor(.white)
+                        .padding(5)
+                        .background(Color.black)
+                        .cornerRadius(10)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 10)
+                                .stroke(Color.black, lineWidth: 2)
+                        )
+                        
                     Spacer()
                     
                     ForEach(3..<24) { i in
                         if i % 3 == 0 {
                             Text("\(i)")
-                                .foregroundColor(.black)
+                                .foregroundColor(.gray)
+                                .font(.system(size: 14))
                             Spacer()
                         }
                     }
                     
                     Text("내일")
-                        .font(.system(size: 15))
+                        .font(.system(size: 14))
                         .foregroundColor(.white)
                         .padding(5)
                         .background(Color.black)
@@ -156,12 +177,13 @@ public struct ChartView: View {
                         if i % 3 == 0 {
                             Text("\(i)")
                                 .foregroundColor(.black)
+                                .font(.system(size: 14))
                             Spacer()
                         }
                     }
                     
                     Text("모래")
-                        .font(.system(size: 15))
+                        .font(.system(size: 14))
                         .foregroundColor(.white)
                         .padding(5)
                         .background(Color.black)
@@ -189,6 +211,7 @@ public struct ChartView2: View {
     @Binding public var widthmove: CGPoint
     @Binding public var currentDataNumber: Double
     @Binding public var dragLocation:CGPoint
+    @Binding public var colorline: Gradient
     
     
     @Environment(\.colorScheme) var colorScheme: ColorScheme
@@ -209,7 +232,8 @@ public struct ChartView2: View {
                 move: Binding<CGFloat>,
                 widthmove: Binding<CGPoint>,
                 dragLocation: Binding<CGPoint>,
-                currentDataNumber: Binding<Double>
+                currentDataNumber: Binding<Double>,
+                colorline: Binding<Gradient>
     )
     
     
@@ -226,6 +250,8 @@ public struct ChartView2: View {
         self._widthmove = widthmove
         self._currentDataNumber = currentDataNumber
         self._dragLocation = dragLocation
+        self._colorline = colorline
+        
     }
     
     public var body: some View {
@@ -242,14 +268,14 @@ public struct ChartView2: View {
                         if(self.showLegend){
                         }
                         Line3(data: self.data,
-                              frame: .constant(CGRect(x: 0, y: 0, width: reader.frame(in: .local).width - 30, height: reader.frame(in: .local).height + 25)),
+                              frame: .constant(CGRect(x: 0, y: 0, width: reader.frame(in: .local).width - 30, height: reader.frame(in: .local).height + 25)), currentNumber: self.$currentDataNumber ,
                               touchLocation: self.$indicatorLocation,
                               dragLocation: self.$dragLocation,
                               showIndicator: self.$hideHorizontalLines,
                               minDataValue: .constant(nil),
                               maxDataValue: .constant(nil),
                               showBackground: false,
-                              gradient: self.style.gradientColor
+                              gradient: self.style.gradientColor, colorline: self.$colorline
                         )
                         .offset(x: 30, y: 0)
                         .onAppear(){

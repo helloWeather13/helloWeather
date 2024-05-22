@@ -16,19 +16,19 @@ func formattedDateWithWeekdays(date: Date) -> String {
     if let weekday = components.weekday {
         switch weekday {
         case 1:
-            return "(일)"
+            return "일"
         case 2:
-            return "(월)"
+            return "월"
         case 3:
-            return "(화)"
+            return "화"
         case 4:
-            return "(수)"
+            return "수"
         case 5:
-            return "(목)"
+            return "목"
         case 6:
-            return "(금)"
+            return "금"
         default:
-            return "(토)"
+            return "토"
         }
     }
     return ""
@@ -37,7 +37,7 @@ func formattedDateWithWeekdays(date: Date) -> String {
 //MARK: - 한국 시간과 원하는 형식에 맞게 데이터 포맷형태를 반환해 줍니다.
 func createTimeFormatter() -> DateFormatter {
     let formatter = DateFormatter()
-    formatter.dateFormat = "MM. dd"
+    formatter.dateFormat = "MM.dd"
     formatter.timeZone = TimeZone(identifier: "Asia/Seoul")
     return formatter
 }

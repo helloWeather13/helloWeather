@@ -19,11 +19,21 @@ class TabViewController2: TabmanViewController {
 
         self.dataSource = self
 
-        // Create bar
         let bar = TMBar.ButtonBar()
         bar.layout.transitionStyle = .snap // Customize
+        bar.layout.contentInset = UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: 0.0)
+        bar.layout.interButtonSpacing = 0
+        bar.layout.alignment = .centerDistributed
+        bar.layout.contentMode = .fit
+        //bar.layout.
+        bar.indicator.tintColor = .black
 
-        // Add to view
+        
+        bar.buttons.customize { (button) in
+            button.tintColor = .gray
+            button.selectedTintColor = .black
+        }
+
         addBar(bar, dataSource: self, at: .top)
     }
 }
@@ -44,7 +54,15 @@ extension TabViewController2: PageboyViewControllerDataSource, TMBarDataSource {
     }
 
     func barItem(for bar: TMBar, at index: Int) -> TMBarItemable {
-        let title = "Page \(index)"
-        return TMBarItem(title: title)
+        switch index {
+        case 0 :
+            let title = "날씨"
+            return TMBarItem(title: title)
+        case 1 :
+            let title = "미세 먼지"
+            return TMBarItem(title: title)
+        default:
+            return TMBarItem(title: "")
+        }
     }
 }

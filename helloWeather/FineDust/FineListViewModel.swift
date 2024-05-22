@@ -34,12 +34,22 @@ class FineListViewModel: ObservableObject {
     @Published var date1: [Double] = []
     //초미세
     @Published var date2: [Double] = []
-    
-    
+    @Published  var colorline: Gradient = Gradient(stops: [
+        .init(color: .yellow, location: 0.0),
+        .init(color: .yellow, location: 0.1),
+        .init(color: .red, location: 0.2),
+        .init(color: .red, location: 0.3),
+        .init(color: .red, location: 0.4),
+        .init(color: .yellow, location: 0.5),
+        .init(color: .green, location: 0.6),
+        .init(color: .yellow, location: 0.7),
+        .init(color: .red, location: 0.8),
+        .init(color: .red, location: 0.9),
+        .init(color: .red, location: 1.0)
+    ])
     @Published var draglocation: CGPoint = CGPoint()
     @Published var draglocation2: CGPoint = CGPoint()
-    
-    
+    private var simplifiedValues = [Double]()
     private let weatherManager: WebServiceManager
     private let userLocationPoint: (Double, Double)
     private var disposeBag = DisposeBag()
@@ -90,6 +100,37 @@ class FineListViewModel: ObservableObject {
             //draglocation2.x = draglocation.x
         }
     }
+    private func updateChatColor(input : Double) {
+        if input < 20 {
+            chat1 = "아주 좋아요!"
+            chat1Color = .blue
+        } else if input < 30 {
+            chat1 = "좋아요!"
+            chat1Color = .green
+        } else if input < 40 {
+            chat1 = "나빠요!"
+            chat1Color = .yellow
+        } else {
+            chat1 = "아주 나빠요!"
+            chat1Color = .red
+        }
+    }
+    
+    private func updateChatColor4(input : Double) {
+        if input < 20 {
+            chat2 = "아주 좋아요!"
+            chat2Color = .blue
+        } else if input < 30 {
+            chat2 = "좋아요!"
+            chat2Color = .green
+        } else if input < 40 {
+            chat2 = "나빠요!"
+            chat2Color = .yellow
+        } else {
+            chat2 = "아주 나빠요!"
+            chat2Color = .red
+        }
+    }
     
     private func updateChat1Color() {
         if currentDataNumber < 20 {
@@ -99,10 +140,10 @@ class FineListViewModel: ObservableObject {
             chat1 = "좋아요!"
             chat1Color = .green
         } else if currentDataNumber < 40 {
-            chat1 = "보통이에요!"
+            chat1 = "나빠요!"
             chat1Color = .yellow
         } else {
-            chat1 = "나빠요!"
+            chat1 = "아주 나빠요!"
             chat1Color = .red
         }
     }
@@ -115,14 +156,53 @@ class FineListViewModel: ObservableObject {
             chat2 = "좋아요!"
             chat2Color = .green
         } else if currentDataNumber2 < 40 {
-            chat2 = "보통이에요!"
+            chat2 = "나빠요!"
             chat2Color = .yellow
         } else {
-            chat2 = "나빠요!"
+            chat2 = "아주 나빠요!"
             chat2Color = .red
         }
     }
+    private func updateGradient(with values: [Double]) {
+        guard values.count == 10 else {
+            return
+        }
+        
+        let colors: [Color] = values.map { value in
+            switch value {
+            case ..<20:
+                return .blue
+            case 20..<30:
+                return .green
+            case 30..<40:
+                return .yellow
+            default:
+                return .red
+            }
+        }
+        
+        self.colorline = Gradient(stops: zip(colors, values).map { color, location in
+            Gradient.Stop(color: color, location: location)
+        })
+    }
     
+    func simplify(values: [Double]) -> [Double] {
+        guard values.count == 48 else {
+            return []
+        }
+        
+        let chunkSize = 48 / 10
+        var simplifiedValues: [Double] = []
+        
+        for i in 0..<10 {
+            let chunk = values[i*chunkSize..<min((i+1)*chunkSize, values.count)]
+            let average = chunk.reduce(0, +) / Double(chunk.count)
+            simplifiedValues.append(average)
+        }
+        
+        return simplifiedValues
+    }
+
     
     func getFaceType(for value: Double) -> Facetype {
         switch value {
@@ -148,9 +228,13 @@ class FineListViewModel: ObservableObject {
                 let forecastDays = data.forecast.forecastday.prefix(4)
                 if flag == false {
                     if let forecast = data.forecast.forecastday.first {
+                        var x = 0
                         for hour in forecast.hour {
+                            x += 1
+                            //if x % 2 == 0{
                             if let micro = hour.airQuality?.micro {
                                 date1.append(micro)
+                                updateChatColor(input: date1.first ?? 25)
                             } else {
                                 date1.append(1.1)
                             }
@@ -161,8 +245,10 @@ class FineListViewModel: ObservableObject {
                             } else {
                                 date2.append(1.4)
                             }
+                            // }
                             
                         }
+                        
                     } else {
                         print("No forecast data available")
                     }
@@ -170,26 +256,32 @@ class FineListViewModel: ObservableObject {
                     if let forecast2 = data.forecast.forecastday[safe: 2] {
                         var x = 0
                         for hour in forecast2.hour {
-                            var x = x + 1
-                            if x % 2 == 0{
-                                if let micro = hour.airQuality?.micro  {
-                                    //print(date1)
-                                    date1.append(micro)
-                                } else {
-                                    date1.append(12.0)
-                                }
-                                
-                                if let fine = hour.airQuality?.fine {
-                                    //print(date2)
-                                    date2.append(fine)
-                                } else {
-                                    date2.append(12.0)                        }
+                            x += 1
+                            //print(x)
+                            
+                            if let micro = hour.airQuality?.micro  {
+                                //print(date1)
+                                date1.append(micro)
+                                updateChatColor4(input: date1.first ?? 10)
+                            } else {
+                                date1.append(12.0)
                             }
+                            
+                            if let fine = hour.airQuality?.fine {
+                                //print(date2)
+                                date2.append(fine)
+                            } else {
+                                date2.append(12.0)
+                            }
+                            
                         }
                     } else {
                         print("No forecast data available")
                     }
                     flag = true
+                    print(date1)
+                    print(simplify(values: date1).count)
+                    //updateGradient(with: simplify(values: date1))
                 }
                 
                 

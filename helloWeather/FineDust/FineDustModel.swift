@@ -26,7 +26,8 @@ struct LineChartView: View {
     
     @State private var isTouched: Bool = false
     @State private var isAnimating = false
-
+    @State private var isAnimating2 = false
+    
     @StateObject private var fineListViewModel =
     FineListViewModel(
         weatherManager: WebServiceManager.shared,
@@ -35,27 +36,27 @@ struct LineChartView: View {
     
     func moveScroll() {
         //print(chartMove)
-//        print("scrolloffset \(scrollOffset)")
-//        print(self.widtdmove.x + self.chartMove)
-//        print(chartMove)
-//        
+        //        print("scrolloffset \(scrollOffset)")
+        //        print(self.widtdmove.x + self.chartMove)
+        //        print(chartMove)
+        //
         
         if self.chartMove > 30 {
             if self.scrollOffset > -400 {
-                print("증가")
+                //print("증가")
                 self.scrollOffset -= 8
             }
             if self.scrollOffset == -400{
-                print("감소")
+                //print("감소")
                 self.scrollOffset += 8
             }
         } else if self.chartMove < -30 {
             if self.scrollOffset < 0 {
-                print("감소")
+                //print("감소")
                 self.scrollOffset += 8
             }
             if self.scrollOffset == 0{
-                print("감소")
+                //print("감소")
                 self.scrollOffset += 8
             }
             
@@ -63,6 +64,7 @@ struct LineChartView: View {
         
         
     }
+    
     
     func setStartPosition(in size: CGSize) {
         self.startPosition = CGPoint(x: size.width / 2, y: size.height / 2)
@@ -82,19 +84,21 @@ struct LineChartView: View {
                 
                 Text("시간대별 미세먼지")
                     .font(.system(size: CGFloat(titleFontSize), weight: .medium))
-                    .padding(.leading, 30)
+                //.font(.custom("Pretendard", size: titleFontSize))
+                    .padding(.leading, 22)
+                    .padding(.top, 26)
                 Spacer()
             }
-            .padding(.bottom, 30)
+            .padding(.bottom, 16)
             //미세먼지 채팅
             VStack{
                 // 미세먼지 chat
-                HStack{ 
+                HStack{
                     Text("미세먼지")
-                        .padding(.leading, 5)
+                        .padding(.leading, 38)
                     Spacer()
-                    Text("초 미세먼지")
-                        .padding(.trailing, 5)
+                    Text("초미세먼지")
+                        .padding(.trailing, 38)
                 }
                 HStack{
                     ChatView(viewModel: fineListViewModel)
@@ -107,35 +111,40 @@ struct LineChartView: View {
                                 withAnimation(.easeInOut(duration: 1.0)) {
                                     isAnimating = false
                                 }
-                            }
-                        }
-                        .padding(.leading, 10)
-                    Spacer()
-                    ChatView2(viewModel: fineListViewModel)
-                        .scaleEffect(isAnimating ? 1.4 : 1.0, anchor: .trailing)
-                        .onAppear {
-                            withAnimation(.easeInOut(duration: 1.0)) {
-                                isAnimating = true
-                            }
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                                withAnimation(.easeInOut(duration: 1.0)) {
-                                    isAnimating = false
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                                    // 첫 번째 애니메이션이 끝난 후 두 번째 애니메이션 시작
+                                    withAnimation(.easeInOut(duration: 1.0)) {
+                                        isAnimating2 = true
+                                    }
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                                        withAnimation(.easeInOut(duration: 1.0)) {
+                                            isAnimating2 = false
+                                        }
+                                    }
                                 }
                             }
                         }
-                        .padding(.trailing, 10)
+                        .padding(.leading, 33)
+                    
+                    Spacer()
+                    
+                    ChatView2(viewModel: fineListViewModel)
+                        .scaleEffect(isAnimating2 ? 1.4 : 1.0, anchor: .trailing)
+                        .padding(.trailing, 33)
                 }
-            }
+            }.padding(.bottom, 50)
             ZStack{
+                
                 ScrollView(.horizontal, showsIndicators: false){
                     ZStack{
                         VStack{
                             ZStack {
+                                
                                 GeometryReader { geometry in
                                     ScrollView(.horizontal, showsIndicators: false) {
                                         VStack{
                                             ZStack {
-                                                ChartView2(data: fineListViewModel.returnfine(), title: "Second Chart", style: Styles2.lineChartStyleOne2, move: $chartMove2, widthmove: $widtdmove2, dragLocation: $fineListViewModel.draglocation2, currentDataNumber: $fineListViewModel.currentDataNumber2)
+                                                ChartView2(data: fineListViewModel.returnfine(), title: "Second Chart", style: Styles2.lineChartStyleOne2, move: $chartMove2, widthmove: $widtdmove2, dragLocation: $fineListViewModel.draglocation2, currentDataNumber: $fineListViewModel.currentDataNumber2, colorline: $fineListViewModel.colorline)
                                                     .opacity(0.5)
                                                     .frame(width: geometry.size.width-30, height: geometry.size.height)
                                                 ChartView(data: fineListViewModel.returnmicro(), title: "Full chart", style: Styles2.lineChartStyleOne, move: $chartMove, widthmove: $widtdmove, dragLocation: $fineListViewModel.draglocation, currentDataNumber: $fineListViewModel.currentDataNumber)
@@ -150,26 +159,47 @@ struct LineChartView: View {
                                         self.moveScroll()
                                     }
                                     .scrollDisabled(true)
-                                    
+                                    .padding(.leading, -20)
                                 }
+            
                             }
                             .onChange(of: chartMove) {
                                 moveScroll()
                             }
+                            .frame(width: 800,height: 300, alignment: .center)
                         }
-                        .frame(width: 800,height: 300, alignment: .center)
+                       
                     }
                     
                 }
                 .scrollDisabled(true)
             }
+            .padding(.bottom, 45)
+            Rectangle()
+                .frame(width: 400, height: 1)
+                .foregroundColor(Color.gray)
+                .opacity(0.1)
+                .shadow(color: Color.gray, radius: 12, x: 0, y: 6)
+                .blendMode(.multiply)
+                .padding(.top, 5)
             FineListView(viewModel: fineListViewModel)
-                .padding(.bottom, 50)
+                //.opacity(0.5)
+                //.border(color: .gray, width: 1, opacity: opacity(0.5))
+                //.padding(.to)
+                .frame(height : 200)
+            Rectangle()
+                .frame(width: 400, height: 1)
+                .foregroundColor(Color.gray)
+                .opacity(0.1)
+                .shadow(color: Color.gray, radius: 12, x: 0, y: 6)
+                .blendMode(.multiply)
+                .padding(.top, 5)
             ValueList(viewModel: fineListViewModel)
             Spacer()
-        }.frame(height: 800)
+        }.frame(height: 1100)
     }
 }
+
 
 #Preview {
     VStack {
