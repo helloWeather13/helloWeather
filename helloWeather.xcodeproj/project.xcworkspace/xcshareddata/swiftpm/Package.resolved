@@ -1,5 +1,4 @@
 {
-  "originHash" : "aefd19d1505c61cfedcb9e080a3d02af5bf2170d16034382feac13ad21ba6516",
   "pins" : [
     {
       "identity" : "alamofire",
@@ -94,7 +93,7 @@
     {
       "identity" : "tabman",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/uias/Tabman",
+      "location" : "https://github.com/uias/Tabman.git",
       "state" : {
         "revision" : "3b2213290eb93e55bb50b49d1a179033005c11ab",
         "version" : "3.2.0"

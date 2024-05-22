@@ -1,37 +1,5 @@
-//
-//  HomeViewModel.swift
-//  helloWeather
-//
-//  Created by CaliaPark on 5/15/24.
-//
-
 import UIKit
 import CoreLocation
-
-enum ConditionText: String {
-    case rain = "비 소식"
-    case snow = "눈 소식"
-    case none = "맑은 날"
-    
-    var detail: (icon: UIImage, verb: String) {
-        switch self {
-        case .rain:
-            return (UIImage(systemName: "sun.min")!, "이 있어요")
-        case .snow:
-            return (UIImage(systemName: "sun.min")!, "이 있어요")
-        case .none:
-            return (UIImage(systemName: "sun.min")!, "이에요")
-        }
-    }
-    
-    var icon: UIImage {
-        return detail.icon
-    }
-    
-    var verb: String {
-        return detail.verb
-    }
-}
 
 class HomeViewModel: NSObject, CLLocationManagerDelegate {
     
@@ -56,10 +24,11 @@ class HomeViewModel: NSObject, CLLocationManagerDelegate {
         }
     }
     var isNotification = false
+//    var isBookmarked = false
     
     var userLocationAddress: String = "" {
         didSet {
-            addressOnCompleted(userLocationAddress!)
+            addressOnCompleted(userLocationAddress)
         }
     }
     
@@ -98,29 +67,121 @@ class HomeViewModel: NSObject, CLLocationManagerDelegate {
         case ..<0:
             switch todayFeelsLike {
             case ..<10:
-                return ("춥고", UIImage(systemName: "thermometer.sun")!)
+                return ("춥고", UIImage(named: "temperature-down")!)
             default:
-                return ("선선하고", UIImage(systemName: "thermometer.sun")!)
+                return ("선선하고", UIImage(named: "temperature-down")!)
             }
         case 0:
-            return ("비슷하고", UIImage(systemName: "thermometer.sun")!)
+            return ("비슷하고", UIImage(named: "temperature-same")!)
         default:
             switch todayFeelsLike {
             case ..<24:
-                return ("따뜻하고", UIImage(systemName: "thermometer.sun")!)
+                return ("따뜻하고", UIImage(named: "temperature-up")!)
             default:
-                return ("덥고", UIImage(systemName: "thermometer.sun")!)
+                return ("덥고", UIImage(named: "temperature-up")!)
             }
         }
     }
     
-    var condition: ConditionText = .none {
-        didSet {
-            conditionOnCompleted()
+    var condition: ConditionText = .none
+        
+    enum ConditionText: String {
+        case rain = "비 소식"
+        case snow = "눈 소식"
+        case none = "맑은 날"
+        
+        func detail(sunrise: Int, sunset: Int, now: Int) -> (icon: UIImage, verb: String) {
+            switch self {
+            case .rain:
+                if sunrise < now && now < sunset {
+                    return (UIImage(named: "rainSrnog-day")!, "이 있어요")
+                } else {
+                    return (UIImage(named: "rainSrnog-night")!, "이 있어요")
+                }
+            case .snow:
+                if sunrise < now && now < sunset {
+                    return (UIImage(named: "snow-day")!, "이 있어요")
+                } else {
+                    return (UIImage(named: "snow-night")!, "이 있어요")
+                }
+            case .none:
+                if sunrise < now && now < sunset {
+                    return (UIImage(named: "clean-day")!, "이에요")
+                } else {
+                    return (UIImage(named: "clean-night")!, "이에요")
+                }
+            }
         }
     }
     
-    var conditionOnCompleted: (() -> ()) = { }
+    var sunriseTime: String = ""
+    var sunsetTime: String = ""
+    
+    var sunriseNum: Int = 0
+    var sunsetNum: Int = 0
+    var sunTimeSplit: Int = 0
+    
+    var nextSunriseTime: String = ""
+    
+    var estimated: Int = 0 {
+        didSet {
+            updateSunriseInfoString()
+            updateSunImage()
+        }
+    }
+    
+    var sunriseInfoString: String = ""
+
+    func updateSunriseInfoString() {
+        switch estimated {
+        case ..<0:
+            sunriseInfoString = "내일은 오늘보다 \(-estimated)분 일찍 해가 뜰 예정이에요"
+        case 0:
+            sunriseInfoString = "내일도 오늘과 같은 시간에 해가 뜰 예정이에요"
+        default:
+            sunriseInfoString = "내일은 오늘보다 \(estimated)분 늦게 해가 뜰 예정이에요"
+        }
+    }
+    
+    var sunImage: UIImage = UIImage(named: "_air-good")! {
+        didSet {
+            estimatedOnCompleted()
+        }
+    }
+
+    var estimatedOnCompleted: (() -> ()) = { }
+
+    var now: Int {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "hh:mm a"
+        let formatted = dateFormatter.string(from: Date())
+        return timeInMinutes(time: formatted)
+    }
+
+    func updateSunImage() {
+        switch now {
+        case sunriseNum..<sunriseNum + sunTimeSplit:
+            sunImage = UIImage(named: "_air-good")!
+        case sunriseNum + sunTimeSplit..<(sunriseNum + sunTimeSplit * 2):
+            sunImage = UIImage(named: "_air-good")!
+        case sunriseNum + sunTimeSplit * 2..<(sunriseNum + sunTimeSplit * 3):
+            sunImage = UIImage(named: "_air-good")!
+        case sunriseNum + sunTimeSplit * 3..<(sunriseNum + sunTimeSplit * 4):
+            sunImage = UIImage(named: "_air-good")!
+        case sunriseNum + sunTimeSplit * 4..<(sunriseNum + sunTimeSplit * 5):
+            sunImage = UIImage(named: "_air-good")!
+        case sunriseNum + sunTimeSplit * 5..<(sunriseNum + sunTimeSplit * 6):
+            sunImage = UIImage(named: "_air-good")!
+        case sunriseNum + sunTimeSplit * 6..<(sunriseNum + sunTimeSplit * 7):
+            sunImage = UIImage(named: "_air-good")!
+        case sunriseNum + sunTimeSplit * 7..<(sunriseNum + sunTimeSplit * 8):
+            sunImage = UIImage(named: "_air-good")!
+        case sunriseNum + sunTimeSplit * 8..<(sunriseNum + sunTimeSplit * 9):
+            sunImage = UIImage(named: "_air-good")!
+        default:
+            sunImage = UIImage(named: "_air-good")!
+        }
+    }
     
     override init() {
         super.init()
@@ -150,13 +211,13 @@ class HomeViewModel: NSObject, CLLocationManagerDelegate {
                 if error != nil { return }
                 
                 if let placemark = placemarks?.first {
-                    
+    
                     let x = placemark.location?.coordinate.latitude ?? 0
                     let y = placemark.location?.coordinate.longitude ?? 0
                     userLocationPoint = (x, y)
                     
                     var address = ""
-                    
+
                     if let administrativeArea = placemark.administrativeArea {
                         address += "\(administrativeArea) "
                     }
@@ -178,11 +239,8 @@ class HomeViewModel: NSObject, CLLocationManagerDelegate {
             }
         }
         userLocationManager.stopUpdatingLocation()
-        
+
     }
-    
-    
-    
     func getWeatherData() {
         let dispatchGroup = DispatchGroup()
         let currentTime = DateFormatter()
@@ -246,8 +304,6 @@ class HomeViewModel: NSObject, CLLocationManagerDelegate {
         let minute = Int(components[1].prefix(2)) ?? 0
         let isPM = time.contains("PM")
         return ((isPM ? 12 : 0) + hour) * 60 + minute
-        =======
-        >>>>>>> dev
     }
     
     func saveCurrentBookMark() {
@@ -259,7 +315,7 @@ class HomeViewModel: NSObject, CLLocationManagerDelegate {
             }
         }
     }
-    
+
     // MARK: - loadRecentSearch UserDefault에 최근 검색 결과 로드
     func loadCurrentBookMark(){
         if let savedData = UserDefaults.standard.object(forKey: "bookMark") as? Data {
@@ -289,7 +345,7 @@ class HomeViewModel: NSObject, CLLocationManagerDelegate {
             }
         }
     }
-    
+
     
     // MARK: - deleteRecentSearch UserDefault에서 최근 결과 삭제
     func deleteCurrentBookMark(){
@@ -299,7 +355,7 @@ class HomeViewModel: NSObject, CLLocationManagerDelegate {
         bookMarkSearchModel.remove(at: index)
         isBookmarked = false
         isNotified = false
-        //        UserDefaults.standard.removeObject(forKey: "bookMark")
+//        UserDefaults.standard.removeObject(forKey: "bookMark")
         let encoder = JSONEncoder()
         if let encoded = try? encoder.encode(bookMarkSearchModel){
             UserDefaults.standard.setValue(encoded, forKey: "bookMark")

@@ -102,7 +102,7 @@ class TomorrowTimeWeatherCollectionView: UICollectionView, UICollectionViewDeleg
 
     // MARK: - CollectionView 프로토콜
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 8
+        return hourlyWeatherData.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

@@ -1,10 +1,3 @@
-//
-//  HomeViewController.swift
-//  helloWeather
-//
-//  Created by Sam.Lee on 5/13/24.
-//
-
 import UIKit
 import SnapKit
 import SkeletonView
@@ -12,7 +5,8 @@ import Lottie
 
 class HomeViewController: UIViewController {
     
-    var homeViewModel = HomeViewModel()
+    let homeViewModel = HomeViewModel()
+    
     var bookmarkButton: UIButton = {
         let button = UIButton()
         button.imageView?.contentMode = .scaleAspectFit
@@ -24,14 +18,10 @@ class HomeViewController: UIViewController {
     var notificationButton: UIButton = {
         let button = UIButton()
         button.imageView?.contentMode = .scaleAspectFit
-
-        button.setBackgroundImage(UIImage(systemName: "bell"), for: .normal)
-        button.tintColor = .clear
         button.addTarget(self, action: #selector(notificationButtonTapped), for: .touchUpInside)
         return button
     }()
     
-
     var rssIcon = UIImageView(image: UIImage(named: "rss"))
     
     var lastUpdateLabel: UILabel = {
@@ -51,7 +41,7 @@ class HomeViewController: UIViewController {
     var todayLabel: UILabel = {
         let label = UILabel()
         label.text = "오늘은"
-        label.font = .systemFont(ofSize: 36, weight: .ultraLight)
+        label.font = UIFont(name: "GmarketSansTTFLight", size: 32)
         return label
     }()
     
@@ -86,7 +76,7 @@ class HomeViewController: UIViewController {
     }()
     
     lazy var stackView: UIStackView = {
-       let stview = UIStackView(arrangedSubviews: [todayLabel, secondLabel, thirdLabel])
+        let stview = UIStackView(arrangedSubviews: [todayLabel, secondLabel, thirdLabel])
         stview.spacing = 10
         stview.axis = .vertical
         stview.alignment = .leading
@@ -98,7 +88,6 @@ class HomeViewController: UIViewController {
         let label = UILabel()
         label.text = ""
         label.font = UIFont(name: "GmarketSansTTFBold", size: 136)
-
         return label
     }()
     
@@ -109,15 +98,11 @@ class HomeViewController: UIViewController {
         return label
     }()
     
-    var scrollAnimation: UIImage = {
-        let image = UIImage()
-        return image
+    var scrollAnimation: LottieAnimationView = {
+        let lottie = LottieAnimationView(name: "Scroll")
+        lottie.alpha = 1
+        return lottie
     }()
-    var emptyView1 = UIView()
-    var emptyView2 = UIView()
-    var emptyView3 = UIView()
-    var emptyView4 = UIView()
-    var emptyView5 = UIView()
     
     var emptyView1 = UIView()
     var emptyView2 = UIView()
@@ -176,7 +161,7 @@ class HomeViewController: UIViewController {
     }
     
     func setupNaviBar() {
-
+        
         homeViewModel.addressOnCompleted = { [unowned self] address in
             let titleView = UIView()
             
@@ -197,7 +182,7 @@ class HomeViewController: UIViewController {
                 stview.alignment = .center
                 return stview
             }()
-                    
+            
             titleView.addSubview(stackView)
             stackView.snp.makeConstraints {
                 $0.centerX.centerY.equalTo(titleView)
@@ -212,7 +197,9 @@ class HomeViewController: UIViewController {
     }
     
     @objc func searchButtonTapped() {
-        print(#function)
+        let searchVC = SearchViewController()
+        searchVC.delegate = self
+        self.navigationController?.pushViewController(searchVC, animated: false)
     }
     
     func setupSecondLabel() {
@@ -220,10 +207,10 @@ class HomeViewController: UIViewController {
             thermometerIcon.image = homeViewModel.compareDescription.1
             
             let yesterday = NSAttributedString(string: homeViewModel.yesterdayString, attributes: [
-                NSAttributedString.Key.font: UIFont.systemFont(ofSize: 36, weight: .ultraLight)
+                NSAttributedString.Key.font: UIFont(name: "GmarketSansTTFLight", size: 32)
             ])
             let compare = NSAttributedString(string: homeViewModel.compareDescription.0, attributes: [
-                NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 36)
+                NSAttributedString.Key.font: UIFont(name: "GmarketSansTTFBold", size: 32)
             ])
             let compareStr = NSMutableAttributedString()
             compareStr.append(yesterday)
@@ -235,14 +222,14 @@ class HomeViewController: UIViewController {
     }
     
     func setupThirdLabel() {
-        homeViewModel.conditionOnCompleted = { [unowned self] in
-            weatherIcon.image = homeViewModel.condition.icon
+        homeViewModel.estimatedOnCompleted = { [unowned self] in
+            weatherIcon.image = homeViewModel.condition.detail(sunrise: homeViewModel.sunriseNum, sunset: homeViewModel.sunsetNum, now: homeViewModel.now).icon
             
             let condition = NSAttributedString(string: homeViewModel.condition.rawValue, attributes: [
-                NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 36)
+                NSAttributedString.Key.font: UIFont(name: "GmarketSansTTFBold", size: 32)
             ])
-            let verb = NSAttributedString(string: homeViewModel.condition.verb, attributes: [
-                NSAttributedString.Key.font: UIFont.systemFont(ofSize: 36, weight: .ultraLight)
+            let verb = NSAttributedString(string: homeViewModel.condition.detail(sunrise: homeViewModel.sunriseNum, sunset: homeViewModel.sunsetNum, now: homeViewModel.now).verb, attributes: [
+                NSAttributedString.Key.font: UIFont(name: "GmarketSansTTFLight", size: 32)
             ])
             let weatherStr = NSMutableAttributedString()
             weatherStr.append(condition)
@@ -302,8 +289,8 @@ class HomeViewController: UIViewController {
         scrollAnimation.loopMode = .repeat(4)
         scrollAnimation.play { _ in
             UIView.animate(withDuration: 0.5, animations: {
-            self.scrollAnimation.alpha = 1
-          }, completion: nil)
+                self.scrollAnimation.alpha = 1
+            }, completion: nil)
         }
         
         [emptyView1, emptyView2, emptyView3,emptyView4, emptyView5].forEach{
@@ -348,12 +335,6 @@ class HomeViewController: UIViewController {
             $0?.isSkeletonable = true
             $0?.skeletonCornerRadius = 20
         }
-
-//        notificationButton.snp.makeConstraints {
-//            $0.centerY.equalTo(bookmarkButton)
-//            $0.leading.equalTo(bookmarkButton.snp.leading)
-//            $0.width.height.equalTo(24)
-//        }
         
     }
     
@@ -402,7 +383,7 @@ class HomeViewController: UIViewController {
             let bookMarkImage = UIImageView()
             bookMarkImage.image = .popupBookmark1
             showCustomAlert(image: bookMarkImage.image!, message: "북마크 페이지에서 삭제했어요.")
-        
+            
             self.homeViewModel.deleteCurrentBookMark()
         }
     }
@@ -468,4 +449,3 @@ extension HomeViewController : TransferDataToMainDelegate {
         self.navigationItem.leftBarButtonItem?.isHidden = true
     }
 }
-

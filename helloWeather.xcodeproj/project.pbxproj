@@ -97,7 +97,6 @@
 		14E83D932BF79FF5004CAD62 /* DeleteAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E83D922BF79FF5004CAD62 /* DeleteAlertView.swift */; };
 		14E83D962BF7B6FE004CAD62 /* EmptySearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E83D952BF7B6FE004CAD62 /* EmptySearchView.swift */; };
 		453593562BF8F637004BA149 /* WeatherDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453593552BF8F637004BA149 /* WeatherDetailViewModel.swift */; };
-		45C5268C2BFAF36200AA53E3 /* DGCharts in Frameworks */ = {isa = PBXBuildFile; productRef = 45C5268B2BFAF36200AA53E3 /* DGCharts */; };
 		45C526902BFC4A8E00AA53E3 /* FirstDayAfterTomorrowCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C5268F2BFC4A8E00AA53E3 /* FirstDayAfterTomorrowCollectionViewCell.swift */; };
 		45C526942BFC4AEE00AA53E3 /* DATomorrowTimeCelsiusCollectionview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C526932BFC4AEE00AA53E3 /* DATomorrowTimeCelsiusCollectionview.swift */; };
 		45D70DBD2BF3145C00942DC1 /* WeatherDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D70DBC2BF3145C00942DC1 /* WeatherDetailViewController.swift */; };
@@ -288,7 +287,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				45C5268C2BFAF36200AA53E3 /* DGCharts in Frameworks */,
 				1445AF582BF3203E0018AE3F /* RxCocoa in Frameworks */,
 				14D0852E2BF909D300C9B985 /* SkeletonView in Frameworks */,
 				1445AF532BF2F0630018AE3F /* RAMAnimatedTabBarController in Frameworks */,
@@ -656,7 +654,6 @@
 				1445AF572BF3203E0018AE3F /* RxCocoa */,
 				1445AF592BF3203E0018AE3F /* RxSwift */,
 				14D0852D2BF909D300C9B985 /* SkeletonView */,
-				45C5268B2BFAF36200AA53E3 /* DGCharts */,
 				B6EADA312BFDA951006DA323 /* Tabman */,
 				B6EADA342BFDAA00006DA323 /* Lottie */,
 			);
@@ -1281,11 +1278,6 @@
 			package = 14D0852A2BF8F07600C9B985 /* XCRemoteSwiftPackageReference "SkeletonView" */;
 			productName = SkeletonView;
 		};
-		45C5268B2BFAF36200AA53E3 /* DGCharts */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 45C5268A2BFAF36200AA53E3 /* XCRemoteSwiftPackageReference "Charts" */;
-			productName = DGCharts;
-		};
 		45D70DBF2BF3262300942DC1 /* SwiftUICharts */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 45D70DBE2BF3262300942DC1 /* XCRemoteSwiftPackageReference "ChartView" */;
@@ -1301,7 +1293,6 @@
 			package = B6EADA332BFDA9FF006DA323 /* XCRemoteSwiftPackageReference "lottie-spm" */;
 			productName = Lottie;
 		};
-
 /* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 146580BF2BF1E7EA0093AA81 /* Project object */;
