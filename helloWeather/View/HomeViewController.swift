@@ -7,7 +7,6 @@
 
 import UIKit
 import SnapKit
-import Lottie
 
 class HomeViewController: UIViewController {
     
@@ -16,45 +15,25 @@ class HomeViewController: UIViewController {
     var bookmarkButton: UIButton = {
         let button = UIButton()
         button.imageView?.contentMode = .scaleAspectFit
-        button.setBackgroundImage(UIImage(named: "bookmark_S-0"), for: .normal)
-        button.addTarget(self, action: #selector(bookmarkButtonTapped), for: .touchUpInside)
+        button.setBackgroundImage(UIImage(systemName: "bookmark"), for: .normal)
+        button.tintColor = .black
+        button.addTarget(HomeViewController.self, action: #selector(bookmarkButtonTapped), for: .touchUpInside)
         return button
     }()
     
     var notificationButton: UIButton = {
         let button = UIButton()
         button.imageView?.contentMode = .scaleAspectFit
-        button.addTarget(self, action: #selector(notificationButtonTapped), for: .touchUpInside)
         button.setBackgroundImage(UIImage(systemName: "bell"), for: .normal)
         button.tintColor = .clear
         button.addTarget(HomeViewController.self, action: #selector(notificationButtonTapped), for: .touchUpInside)
         return button
     }()
     
-    var rssIcon = UIImageView(image: UIImage(named: "rss"))
-    
-    var lastUpdateLabel: UILabel = {
-        let label = UILabel()
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "hh:mm a"
-        let formatted = dateFormatter.string(from: Date())
-        label.text = "마지막 업데이트 \(formatted)"
-        label.font = UIFont(name: "Pretendard-Regular", size: 14)
-        label.textColor = #colorLiteral(red: 0.3960784078, green: 0.3960784078, blue: 0.3960784078, alpha: 1)
-        return label
-    }()
-    
-    lazy var updateStackView: UIStackView = {
-        let stview = UIStackView(arrangedSubviews: [rssIcon, lastUpdateLabel])
-        stview.axis = .horizontal
-        stview.spacing = 3
-        return stview
-    }()
-    
     var todayLabel: UILabel = {
         let label = UILabel()
         label.text = "오늘은"
-        label.font = UIFont(name: "GmarketSansTTFLight", size: 32)
+        label.font = .systemFont(ofSize: 36, weight: .ultraLight)
         return label
     }()
     
@@ -99,22 +78,21 @@ class HomeViewController: UIViewController {
     
     var temperatureLabel: UILabel = {
         let label = UILabel()
-        label.text = ""
-        label.font = UIFont(name: "Montserrat-Black", size: 136)
+        label.text = "23"
+        label.font = .systemFont(ofSize: 120, weight: .heavy)
         return label
     }()
     
     var unitLabel: UILabel = {
         let label = UILabel()
         label.text = "º"
-        label.font = UIFont(name: "Montserrat-Black", size: 136)
+        label.font = .systemFont(ofSize: 120, weight: .heavy)
         return label
     }()
     
-    var scrollAnimation: LottieAnimationView = {
-        let lottie = LottieAnimationView(name: "Scroll")
-        lottie.alpha = 1
-        return lottie
+    var scrollAnimation: UIImage = {
+        let image = UIImage()
+        return image
     }()
     
     override func viewDidLoad() {
@@ -127,41 +105,25 @@ class HomeViewController: UIViewController {
     }
     
     func setupNaviBar() {
+        
+        
         homeViewModel.addressOnCompleted = { [unowned self] address in
-            let titleView = UIView()
-            
-            let imageView = UIImageView(image: UIImage(named: "navigation"))
-            imageView.contentMode = .scaleAspectFit
-            
-            let titleLabel: UILabel = {
-                let label = UILabel()
-                label.text = address
-                label.font = .boldSystemFont(ofSize: 16)
-                return label
-            }()
-            
-            let stackView: UIStackView = {
-                let stview = UIStackView(arrangedSubviews: [imageView, titleLabel])
-                stview.axis = .horizontal
-                stview.spacing = 2
-                stview.alignment = .center
-                return stview
-            }()
-                    
-            titleView.addSubview(stackView)
-            stackView.snp.makeConstraints {
-                $0.centerX.centerY.equalTo(titleView)
-            }
-            titleView.sizeToFit()
-            self.navigationItem.titleView = titleView
+            self.navigationItem.title = address
         }
-        let searchButton = UIBarButtonItem(image: UIImage(named: "search-0"), style: .plain, target: self, action: #selector(searchButtonTapped))
-        searchButton.tintColor = .black
-        navigationItem.rightBarButtonItem = searchButton
+        
+        
+        
+        
+        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonTapped))
+        addButton.tintColor = .black
+        navigationItem.rightBarButtonItem = addButton
+
+        
     }
     
-    @objc func searchButtonTapped() {
-        print(#function)
+    @objc func addButtonTapped() {
+        self.navigationController?.pushViewController(SearchViewController(), animated: false)
+        
     }
     
     func setupSecondLabel() {
@@ -169,29 +131,29 @@ class HomeViewController: UIViewController {
             thermometerIcon.image = homeViewModel.compareDescription.1
             
             let yesterday = NSAttributedString(string: homeViewModel.yesterdayString, attributes: [
-                NSAttributedString.Key.font: UIFont(name: "GmarketSansTTFLight", size: 32)
+                NSAttributedString.Key.font: UIFont.systemFont(ofSize: 36, weight: .ultraLight)
             ])
             let compare = NSAttributedString(string: homeViewModel.compareDescription.0, attributes: [
-                NSAttributedString.Key.font: UIFont(name: "GmarketSansTTFBold", size: 32)
+                NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 36)
             ])
             let compareStr = NSMutableAttributedString()
             compareStr.append(yesterday)
             compareStr.append(compare)
             compareLabel.attributedText = compareStr
             
-            temperatureLabel.text = String(Int(homeViewModel.todayFeelsLike)) + "º"
+            temperatureLabel.text = String(Int(homeViewModel.todayFeelsLike))
         }
     }
     
     func setupThirdLabel() {
-        homeViewModel.estimatedOnCompleted = { [unowned self] in
-            weatherIcon.image = homeViewModel.condition.detail(sunrise: homeViewModel.sunriseNum, sunset: homeViewModel.sunsetNum, now: homeViewModel.now).icon
+        homeViewModel.conditionOnCompleted = { [unowned self] in
+            weatherIcon.image = homeViewModel.condition.icon
             
             let condition = NSAttributedString(string: homeViewModel.condition.rawValue, attributes: [
-                NSAttributedString.Key.font: UIFont(name: "GmarketSansTTFBold", size: 32)
+                NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 36)
             ])
-            let verb = NSAttributedString(string: homeViewModel.condition.detail(sunrise: homeViewModel.sunriseNum, sunset: homeViewModel.sunsetNum, now: homeViewModel.now).verb, attributes: [
-                NSAttributedString.Key.font: UIFont(name: "GmarketSansTTFLight", size: 32)
+            let verb = NSAttributedString(string: homeViewModel.condition.verb, attributes: [
+                NSAttributedString.Key.font: UIFont.systemFont(ofSize: 36, weight: .ultraLight)
             ])
             let weatherStr = NSMutableAttributedString()
             weatherStr.append(condition)
@@ -201,12 +163,6 @@ class HomeViewController: UIViewController {
     }
     
     func setupAutoLayout() {
-         
-        view.addSubview(updateStackView)
-        updateStackView.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(128)
-            $0.leading.equalToSuperview().offset(32)
-        }
         
         view.addSubview(stackView)
         stackView.snp.makeConstraints {
@@ -225,14 +181,14 @@ class HomeViewController: UIViewController {
         view.addSubview(temperatureLabel)
         temperatureLabel.snp.makeConstraints {
             $0.top.equalTo(stackView.snp.bottom).offset(108)
-            $0.leading.equalToSuperview().offset(140)
+            $0.leading.equalToSuperview().offset(149)
         }
         
-//        view.addSubview(unitLabel)
-//        unitLabel.snp.makeConstraints {
-//            $0.top.equalTo(stackView.snp.bottom).offset(112)
-//            $0.leading.equalTo(temperatureLabel.snp.trailing).inset(3)
-//        }
+        view.addSubview(unitLabel)
+        unitLabel.snp.makeConstraints {
+            $0.top.equalTo(stackView.snp.bottom).offset(112)
+            $0.leading.equalTo(temperatureLabel.snp.trailing).offset(4)
+        }
         
         view.addSubview(notificationButton)
         view.addSubview(bookmarkButton)
@@ -249,19 +205,6 @@ class HomeViewController: UIViewController {
         
         
         
-        }
-        
-        view.addSubview(scrollAnimation)
-        scrollAnimation.snp.makeConstraints {
-            $0.bottom.equalToSuperview().inset(96)
-            $0.centerX.equalToSuperview()
-        }
-        
-        scrollAnimation.loopMode = .repeat(4)
-        scrollAnimation.play { _ in
-            UIView.animate(withDuration: 0.5, animations: {
-            self.scrollAnimation.alpha = 1
-          }, completion: nil)
         }
     }
     
@@ -286,21 +229,19 @@ class HomeViewController: UIViewController {
     @objc func bookmarkButtonTapped() {
         if !homeViewModel.isBookmarked {
             homeViewModel.isBookmarked = true
-            bookmarkButton.setBackgroundImage(UIImage(named: "bookmark_S-1"), for: .normal)
-
-            UIView.animate(withDuration: 0.5, animations: {
-                self.notificationButton.setBackgroundImage(UIImage(named: "notification_S-0"), for: .normal)
+            
+            UIView.animate(withDuration: 0.3, animations: {
+                self.notificationButton.tintColor = .black
                 self.notificationButton.snp.updateConstraints {
-                    $0.top.equalToSuperview().offset(160)
+                    $0.leading.equalTo(self.bookmarkButton.snp.leading).offset(-32)
                 }
                 self.view.layoutIfNeeded()
             })
             self.homeViewModel.saveCurrentBookMark()
         } else {
             homeViewModel.isBookmarked = false
-            bookmarkButton.setBackgroundImage(UIImage(named: "bookmark_S-0"), for: .normal)
-            UIView.animate(withDuration: 0.5, animations: {
-                self.notificationButton.setBackgroundImage(nil, for: .normal)
+            UIView.animate(withDuration: 0.3, animations: {
+                self.notificationButton.tintColor = .clear
             }) { _ in
                 self.notificationButton.snp.updateConstraints {
                     $0.leading.equalTo(self.bookmarkButton).offset(0)
