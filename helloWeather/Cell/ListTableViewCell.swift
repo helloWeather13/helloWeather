@@ -14,7 +14,7 @@ import SkeletonView
 class ListTableViewCell: UITableViewCell {
     
     static var identifier = "ListTableViewCell"
-    
+    weak var tempListViewController: UIViewController?
     var cityLabel = UILabel()
     var conditionLabel = UILabel()
     var temperatureLabel = UILabel()
@@ -26,6 +26,7 @@ class ListTableViewCell: UITableViewCell {
     var deleteButton = UIButton()
     var disposeBag = DisposeBag()
     var isAlarm = false
+    var isBeingDragged = false
     
     //    var weatherAPIModel : WeatherAPIModel?
     
@@ -51,9 +52,35 @@ class ListTableViewCell: UITableViewCell {
         super.layoutSubviews()
 
         contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 0, left: 0, bottom: 16, right: 0))
-        contentView.layer.cornerRadius = 8
-        contentView.layer.borderWidth = 1
-        contentView.layer.borderColor = UIColor(red: 0.93, green: 0.93, blue: 0.93, alpha: 1.00).cgColor
+        contentView.layer.cornerRadius = 15
+        contentView.clipsToBounds = true
+        
+        // 드래그가 진행중인 경우 셀의 테두리를 사라지게합니다.
+        if isBeingDragged {
+            contentView.layer.borderWidth = 0
+        } else {
+            contentView.layer.borderWidth = 1
+            contentView.layer.borderColor = UIColor(red: 0.93, green: 0.93, blue: 0.93, alpha: 1.00).cgColor
+        }
+    }
+    // 터치이벤트가 아닌 드래그에 정상적으로 동작하게 하게 위해 필요한 메서드 3종세트
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
+        
+        isBeingDragged = true
+    }
+
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesEnded(touches, with: event)
+        
+        isBeingDragged = false
+    }
+
+    
+    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesCancelled(touches, with: event)
+        
+        isBeingDragged = false
     }
 
     
@@ -93,14 +120,24 @@ class ListTableViewCell: UITableViewCell {
     }
     
     @objc func alarmImageViewTapped() {
+        guard let viewController = tempListViewController else { return }
+        
         if isAlarm {
             alarmImageView.image = .alarm0
+            let alarmImageYellow = UIImageView()
+            alarmImageYellow.image = .popupNotification1
             isAlarm = false
-        } else {
+            viewController.showCustomAlert(image: alarmImageYellow.image!, message: "비소식 알림을 껐어요.")
+        }
+        else {
             alarmImageView.image = .alarm1
+            let alarmImageYellow = UIImageView()
+            alarmImageYellow.image = .popupNotification
             isAlarm = true
+            viewController.showCustomAlert(image: alarmImageYellow.image!, message: "비소식 1시간 전에 알림을 울려요.")
         }
     }
+    
     func configureUI(weatherAPIModel : WeatherAPIModel, searchModel : SearchModel) {
         let swipeGestureLeft = UISwipeGestureRecognizer(target: self, action: #selector(didSwipeCellLeft))
         swipeGestureLeft.direction = .left
@@ -109,10 +146,8 @@ class ListTableViewCell: UITableViewCell {
         let swipeGestureRight = UISwipeGestureRecognizer(target: self, action: #selector(didSwipeCellRight))
         swipeGestureRight.direction = .right
         self.addGestureRecognizer(swipeGestureRight)
-        
 
-        viewContainer.layer.masksToBounds = true
-        deleteButton.setImage(UIImage(named: "trash"), for: .normal)
+        deleteButton.setImage(UIImage(systemName: "trash.fill"), for: .normal)
         deleteButton.isHidden = true
         deleteView.backgroundColor = .red
         cityLabel.text = searchModel.city + ","
@@ -171,11 +206,11 @@ class ListTableViewCell: UITableViewCell {
     
     func setupAlarmImageView() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(alarmImageViewTapped))
-                alarmImageView.addGestureRecognizer(tapGesture)
-                alarmImageView.isUserInteractionEnabled = true
+        alarmImageView.addGestureRecognizer(tapGesture)
+        alarmImageView.isUserInteractionEnabled = true
     }
     func makeConstraints(){
-    
+        contentView.addSubview(viewContainer)
         [cityLabel, conditionLabel,temperatureLabel,weatherImage,minMaxTempLabel,alarmImageView].forEach{
             viewContainer.addSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
@@ -186,7 +221,6 @@ class ListTableViewCell: UITableViewCell {
         contentView.addSubview(viewContainer)
         contentView.addSubview(deleteView)
         deleteView.addSubview(deleteButton)
-
         
         viewContainer.snp.makeConstraints{
             $0.bottom.top.leading.equalToSuperview()
@@ -194,9 +228,8 @@ class ListTableViewCell: UITableViewCell {
         }
 
         cityLabel.snp.makeConstraints{
-            $0.leading.equalTo(viewContainer.snp.leading).offset(16)
+            $0.leading.equalToSuperview().offset(16)
             $0.top.equalTo(viewContainer).offset(16)
-            
         }
         conditionLabel.snp.makeConstraints{
             $0.leading.equalTo(cityLabel.snp.trailing).offset(5)
@@ -236,5 +269,52 @@ class ListTableViewCell: UITableViewCell {
 
 
 extension Reactive where Base: ListTableViewCell {
+    var deleteViewTapped: Observable<Void> {
+        let gestureRecognizer = UITapGestureRecognizer()
+        base.deleteView.addGestureRecognizer(gestureRecognizer)
+        return gestureRecognizer.rx.event.map { _ in () }
+    }
+}
+
+extension Reactive where Base: ListTableViewCell {
     var buttonTapped: ControlEvent<Void> { base.deleteButton.rx.tap }
+}
+
+class CustomAlertView: UIView {
+    private let imageView = UIImageView()
+    private let messageLabel = UILabel()
+    
+    init(image: UIImage, message: String) {
+        super.init(frame: .zero)
+        
+        // 이미지 뷰 설정
+        imageView.image = image
+        imageView.contentMode = .scaleAspectFit
+        addSubview(imageView)
+        
+        // 메시지 라벨 설정
+        messageLabel.text = message
+        messageLabel.textAlignment = .center
+        addSubview(messageLabel)
+        
+        // 오토레이아웃 설정
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        messageLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            imageView.topAnchor.constraint(equalTo: self.topAnchor, constant: 20),
+            imageView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            imageView.widthAnchor.constraint(equalToConstant: 40),
+            imageView.heightAnchor.constraint(equalToConstant: 40),
+            
+            messageLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 10),
+            messageLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
+            messageLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
+            messageLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -20)
+        ])
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 }

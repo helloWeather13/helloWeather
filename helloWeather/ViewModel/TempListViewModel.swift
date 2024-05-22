@@ -64,6 +64,12 @@ class TempListViewModel: NSObject, CLLocationManagerDelegate {
         snapshot.appendItems(items)
         dataSource?.apply(snapshot, animatingDifferences: false)
     }
+    func moveBookMark(from sourceIndex: Int, to destinationIndex: Int) {
+        let movedItem = bookMarkModel.remove(at: sourceIndex)
+        bookMarkModel.insert(movedItem, at: destinationIndex)
+        updateBookMark()
+        applySnapshot()
+    }
     
     // CLLocationManagerDelegate 메서드
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {

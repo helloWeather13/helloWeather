@@ -216,7 +216,6 @@ class HomeViewModel: NSObject, CLLocationManagerDelegate {
                 UserDefaults.standard.setValue(encoded, forKey: "bookMark")
             }
         }
-        
     }
 
     // MARK: - loadRecentSearch UserDefault에 최근 검색 결과 로드
