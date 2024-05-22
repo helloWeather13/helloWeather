@@ -120,6 +120,7 @@
 		9A5ACD9B2BF7B42B00DE586F /* DustGroupStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5ACD9A2BF7B42B00DE586F /* DustGroupStruct.swift */; };
 		9A5ACD9D2BF893BA00DE586F /* ChartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5ACD9C2BF893BA00DE586F /* ChartViewModel.swift */; };
 		9A5ACD9F2BF8B41100DE586F /* LineModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5ACD9E2BF8B41100DE586F /* LineModel.swift */; };
+		9A5D54252BFE058900E672D5 /* CustomToggleView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5D54242BFE058900E672D5 /* CustomToggleView2.swift */; };
 		9A8DF86C2BF6C4A3009F0DAB /* ChatModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8DF86B2BF6C4A3009F0DAB /* ChatModel.swift */; };
 		9A8DF86E2BF6CB26009F0DAB /* ChatModel2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8DF86D2BF6CB26009F0DAB /* ChatModel2.swift */; };
 		9A8DF8712BF6E51E009F0DAB /* FineListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8DF8702BF6E51E009F0DAB /* FineListView.swift */; };
@@ -269,6 +270,7 @@
 		9A5ACD9A2BF7B42B00DE586F /* DustGroupStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DustGroupStruct.swift; sourceTree = "<group>"; };
 		9A5ACD9C2BF893BA00DE586F /* ChartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartViewModel.swift; sourceTree = "<group>"; };
 		9A5ACD9E2BF8B41100DE586F /* LineModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineModel.swift; sourceTree = "<group>"; };
+		9A5D54242BFE058900E672D5 /* CustomToggleView2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomToggleView2.swift; sourceTree = "<group>"; };
 		9A8DF86B2BF6C4A3009F0DAB /* ChatModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatModel.swift; sourceTree = "<group>"; };
 		9A8DF86D2BF6CB26009F0DAB /* ChatModel2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatModel2.swift; sourceTree = "<group>"; };
 		9A8DF8702BF6E51E009F0DAB /* FineListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FineListView.swift; sourceTree = "<group>"; };
@@ -604,6 +606,7 @@
 				9A8DF86F2BF6E4D2009F0DAB /* FineList */,
 				9A8DF86A2BF6C48E009F0DAB /* Chat */,
 				9ABC1E272BF4BAAF006A626C /* Chart */,
+				9A5D54242BFE058900E672D5 /* CustomToggleView2.swift */,
 			);
 			path = FineDust;
 			sourceTree = "<group>";
@@ -838,6 +841,7 @@
 				45C526902BFC4A8E00AA53E3 /* FirstDayAfterTomorrowCollectionViewCell.swift in Sources */,
 				9ABC1E292BF4BAD2006A626C /* ChartModel.swift in Sources */,
 				453593562BF8F637004BA149 /* WeatherDetailViewModel.swift in Sources */,
+				9A5D54252BFE058900E672D5 /* CustomToggleView2.swift in Sources */,
 				14450E9F2BF45381006A02F7 /* RecentSearchTableViewCell.swift in Sources */,
 				9A5ACD9D2BF893BA00DE586F /* ChartViewModel.swift in Sources */,
 				45C526942BFC4AEE00AA53E3 /* DATomorrowTimeCelsiusCollectionview.swift in Sources */,

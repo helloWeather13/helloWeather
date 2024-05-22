@@ -56,6 +56,10 @@ class WeatherDetailViewModel {
         self.userLocationPoint = userLocationPoint
     }
     
+    func changeToggle(){
+        
+    }
+    
     // 시간별 날씨 정보 가져오기
     func fetchHourlyWeather() -> Observable<[HourlyWeather]> {
         let location = SearchModel(keyWord: "", fullAddress: "", lat: userLocationPoint.0, lon: userLocationPoint.1, city: "")

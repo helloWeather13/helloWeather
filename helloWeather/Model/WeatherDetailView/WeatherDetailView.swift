@@ -143,7 +143,7 @@ class WeatherDetailView: UIView {
         return collectionView
     }()
     
-    
+    let customToggleView: CustomToggleView2
     // 날씨 stack
     let bottomScrollView: UIScrollView = {
         let scroll = UIScrollView()
@@ -162,7 +162,6 @@ class WeatherDetailView: UIView {
     
     // 주간 날씨
     lazy var weekCollectionView = WeekCollectionView(viewModel: weatherDetailViewModel)
-    
     // 습도
     lazy var humidityCollectionView = HumidityCollectionView(viewModel: weatherDetailViewModel)
     
@@ -204,6 +203,7 @@ class WeatherDetailView: UIView {
     
     // MARK: - override
     override init(frame: CGRect) {
+        self.customToggleView = CustomToggleView2(viewModel: weatherDetailViewModel)
         super.init(frame: frame)
         
         self.backgroundColor = .white
@@ -276,7 +276,7 @@ class WeatherDetailView: UIView {
         
         scrollView.addSubview(contentView)
         
-        [firstStackView, secondStackView, thirdStackView, fourthStackView, fifthStackView, topScrollView, bottomScrollView, weekCollectionView, humidityCollectionView, changeButton1].forEach {
+        [firstStackView, secondStackView, thirdStackView, fourthStackView, fifthStackView, topScrollView, bottomScrollView, weekCollectionView, humidityCollectionView, customToggleView].forEach {
             contentView.addSubview($0)
         }
         
@@ -410,12 +410,11 @@ class WeatherDetailView: UIView {
             make.bottom.equalToSuperview().offset(-20)
         }
         
-        // Buttons Constraints
-        changeButton1.snp.makeConstraints { make in
+        customToggleView.snp.makeConstraints { make in
             make.top.equalTo(firstStackView.snp.top)
-            make.leading.equalTo(firstStackView.snp.trailing).offset(158)
-            make.width.equalTo(54)
-            make.height.equalTo(30)
+            make.leading.equalTo(firstStackView.snp.trailing).offset(100)
+            make.width.equalTo(100)
+            make.height.equalTo(60)
         }
     }
 }
