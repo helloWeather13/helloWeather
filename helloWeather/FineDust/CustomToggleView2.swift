@@ -77,6 +77,7 @@ class CustomToggleView2: UIView {
     }
     
     @objc private func toggleSwitch() {
+        isOn.toggle()
         viewModel.toggleTemperatureUnit()
     }
     

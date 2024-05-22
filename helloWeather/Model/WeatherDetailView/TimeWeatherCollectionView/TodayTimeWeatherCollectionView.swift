@@ -63,21 +63,13 @@ class TodayTimeWeatherCollectionView: UICollectionView, UICollectionViewDelegate
             })
             .disposed(by: disposeBag)
         
-//        viewModel?.temperatureUnitSubject1
-//            .subscribe(onNext: { [weak self] _ in
-//                self?.updateCellTemperatureLabels()
-//            })
-//            .disposed(by: disposeBag)
+
         viewModel?.temperatureUnitSubject2
             .subscribe(onNext: { [weak self] _ in
                 self?.updateCellTemperatureLabels()
             })
             .disposed(by: disposeBag)
-//        viewModel?.temperatureUnitSubject3
-//            .subscribe(onNext: { [weak self] _ in
-//                self?.updateCellTemperatureLabels()
-//            })
-//            .disposed(by: disposeBag)
+
     }
     
     // MARK: - SetupWeatherImage
