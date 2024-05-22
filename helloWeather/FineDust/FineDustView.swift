@@ -14,7 +14,7 @@ struct ScrollChartView: View {
     var body: some View {
         ScrollView {
             LineChartView()
-                .frame(height: 900)
+                .frame(height: 1100)
         }
     }
 }

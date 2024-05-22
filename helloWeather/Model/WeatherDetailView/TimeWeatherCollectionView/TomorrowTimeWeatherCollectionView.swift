@@ -124,6 +124,8 @@ class TomorrowTimeWeatherCollectionView: UICollectionView, UICollectionViewDeleg
             cell.timeLabel.textColor = .mygray
             cell.celsiusLabel.textColor = .mygray
         }
+
+        
         return cell
     }
     
