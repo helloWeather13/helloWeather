@@ -1,7 +1,11 @@
 {
   "images" : [
     {
+<<<<<<<< HEAD:helloWeather/Util/Assets.xcassets/Icons/Face/umm.imageset/Contents.json
       "filename" : "umm.png",
+========
+      "filename" : "time.svg",
+>>>>>>>> dev:helloWeather/Util/Assets.xcassets/Icons/time.imageset/Contents.json
       "idiom" : "universal",
       "scale" : "1x"
     },

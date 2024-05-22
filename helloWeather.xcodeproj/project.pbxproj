@@ -1301,6 +1301,7 @@
 			package = B6EADA332BFDA9FF006DA323 /* XCRemoteSwiftPackageReference "lottie-spm" */;
 			productName = Lottie;
 		};
+
 /* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 146580BF2BF1E7EA0093AA81 /* Project object */;

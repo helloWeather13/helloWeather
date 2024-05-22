@@ -1,7 +1,11 @@
 {
   "images" : [
     {
+<<<<<<<< HEAD:helloWeather/Util/Assets.xcassets/Icons/time.imageset/Contents.json
       "filename" : "time.svg",
+========
+      "filename" : "delete.svg",
+>>>>>>>> dev:helloWeather/Util/Assets.xcassets/Icons/delete.imageset/Contents.json
       "idiom" : "universal",
       "scale" : "1x"
     },
