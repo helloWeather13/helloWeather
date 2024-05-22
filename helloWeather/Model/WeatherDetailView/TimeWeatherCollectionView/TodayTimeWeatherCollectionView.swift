@@ -13,18 +13,10 @@ class TodayTimeWeatherCollectionView: UICollectionView, UICollectionViewDelegate
     
     private var viewModel: WeatherDetailViewModel?
     private var disposeBag = DisposeBag()
-    private var hourlyWeatherData: [WeatherDetailViewModel.HourlyWeather] = []
+    var hourlyWeatherData: [WeatherDetailViewModel.HourlyWeather] = []
     
     var weatherIconTestNames: [String] = ["rainy"]
     var weatherIconTestData: [UIImage] = []
-    
-//    private let gradientLayer: CAGradientLayer = {
-//        let layer = CAGradientLayer()
-//        layer.colors = [UIColor.white.cgColor, UIColor.clear.cgColor]
-//        layer.startPoint = CGPoint(x: 0.5, y: 0.5)
-//        layer.endPoint = CGPoint(x: 1.0, y: 0.5)
-//        return layer
-//    }()
     
     init(viewModel: WeatherDetailViewModel) {
         self.viewModel = viewModel
@@ -37,21 +29,10 @@ class TodayTimeWeatherCollectionView: UICollectionView, UICollectionViewDelegate
         self.dataSource = self
         self.register(SecondLeftCollectionViewCell.self, forCellWithReuseIdentifier: SecondLeftCollectionViewCell.identifier)
         self.showsHorizontalScrollIndicator = false
-        
-        if let rainyImage = UIImage(named: "rainy") {
-            weatherIconTestData = Array(repeating: rainyImage, count: 8)
-        }
-        
+            
         bindViewModel()
         
-//        self.layer.mask = gradientLayer
-        
     }
-    
-//    override func layoutSubviews() {
-//        super.layoutSubviews()
-//        gradientLayer.frame = CGRect(x: 0, y: 0, width: 393, height: self.bounds.height)
-//    }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -62,42 +43,58 @@ class TodayTimeWeatherCollectionView: UICollectionView, UICollectionViewDelegate
         viewModel?.fetchHourlyWeather()
             .subscribe(onNext: { [weak self] hourlyWeather in
                 let now = Calendar.current.component(.hour, from: Date())
-                var shouldIncludeNextDay = false
-//                var shouldUpdateTomorrow = false
+                var isFirst21Found = false
                 
-                if let lastHour = hourlyWeather.last?.time, lastHour == "21시" {
-                    shouldIncludeNextDay = true
-//                    shouldUpdateTomorrow = true
-                }
-                
-                self?.hourlyWeatherData = hourlyWeather.filter { hourlyWeather in
-                    guard let hour = Int(hourlyWeather.time.replacingOccurrences(of: "시", with: "")) else {
-                        return false
-                    }
-                    
-                    // 현재 시간부터 먼저 선택
-                    if hour == now {
-                        return true
-                    }
-                    
-                    // 3의 배수 시간만 선택
-                    if hour % 3 == 0 {
-                        return true
-                    }
-                    
-                    // 다음 날의 데이터가 필요한 경우 0시부터의 값을 반환
-                    if shouldIncludeNextDay && hour == 0 {
-                        return true
-                    }
-                    
-                    return false
-                }
+                self?.hourlyWeatherData = hourlyWeather.filter { hourlyData in
+                               guard let hour = Int(hourlyData.time.replacingOccurrences(of: "시", with: "")) else {
+                                   return false
+                               }
+                               
+                               // 첫 번째 21시 이후 값은 버림
+                               if !isFirst21Found && hour == 21 {
+                                   isFirst21Found = true
+                                   return true // 21시 자신을 포함해서 반환
+                               }
+                               return !isFirst21Found && hour % 3 == 0
+                           }
+                if let hourlyWeatherData = self?.hourlyWeatherData {
+                              print("오늘 날씨 확인: \(hourlyWeatherData)")
+                          }
                 self?.reloadData()
                 self?.updateCollectionViewSize()
 
             })
             .disposed(by: disposeBag)
     }
+    
+    // MARK: - SetupWeatherImage
+    
+    func setupWeatherImage(data: WeatherDetailViewModel.HourlyWeather , cell: SecondLeftCollectionViewCell) {
+        switch data.condition  {
+        case "맑음", "대체로 맑음", "화창함":
+            cell.weatherIcon.image = UIImage(named: "clean")
+        case "흐린", "흐림", "구름 낀":
+            cell.weatherIcon.image = UIImage(named: "cloudStrong")
+        case "안개":
+            cell.weatherIcon.image = UIImage(named: "cloud")
+        case "짧은 소나기", "가벼운 비":
+            cell.weatherIcon.image = UIImage(named: "rainWeak")
+        case "보통 비", "근처 곳곳에 비", "비", "소나기":
+            cell.weatherIcon.image = UIImage(named: "rainSrong")
+        case "폭우":
+            cell.weatherIcon.image = UIImage(named: "rainSrong")
+        case "낙뢰":
+            cell.weatherIcon.image = UIImage(named: "thunder")
+        case "뇌우":
+            cell.weatherIcon.image = UIImage(named: "storm")
+        case "눈":
+            cell.weatherIcon.image = UIImage(named: "snow")
+        default:
+            cell.weatherIcon.image = UIImage(named: "searchImage")
+        }
+    }
+    
+    
     
     // MARK: - Collectionview 프로토콜
     
@@ -109,14 +106,13 @@ class TodayTimeWeatherCollectionView: UICollectionView, UICollectionViewDelegate
         let cell  = collectionView.dequeueReusableCell(withReuseIdentifier: SecondLeftCollectionViewCell.identifier, for: indexPath) as! SecondLeftCollectionViewCell
         
         let hourlyWeather = hourlyWeatherData[indexPath.item]
+        cell.configureConstraints(data: hourlyWeather)
+        
         cell.celsiusLabel.text = hourlyWeather.tempC
         cell.timeLabel.text = hourlyWeather.time
         
-        
-//        cell.celsiusLabel.text = "\(indexPath.item * 5)°"
-//        
-//        let hour = (indexPath.item * 3) % 24
-//        cell.timeLabel.text = "\(hour)시"
+        setupWeatherImage(data: hourlyWeather, cell: cell)
+        cell.weatherIcon.contentMode = .scaleAspectFit
         
         if indexPath.item < weatherIconTestData.count {
             cell.weatherIcon.image = weatherIconTestData[indexPath.item]
@@ -132,8 +128,7 @@ class TodayTimeWeatherCollectionView: UICollectionView, UICollectionViewDelegate
             cell.timeLabel.textColor = .mygray
             cell.celsiusLabel.textColor = .mygray
         }
-        
-        
+         
         return cell
     }
     
