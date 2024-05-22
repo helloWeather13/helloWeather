@@ -142,7 +142,7 @@ class TomorrowTimeWeatherCollectionView: UICollectionView, UICollectionViewDeleg
     }
 
     private func updateCellTemperatureLabels() {
-        for case let cell as SecondLeftCollectionViewCell in self.visibleCells {
+        for case let cell as SecondRightCollectionViewCell in self.visibleCells {
             guard let indexPath = self.indexPath(for: cell) else { continue }
             let hourlyWeather = hourlyWeatherData[indexPath.item]
             if let temperatureUnit2 = viewModel?.temperatureUnit2 {
