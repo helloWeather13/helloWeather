@@ -1,5 +1,5 @@
 {
-  "originHash" : "86437625f4ab2e8ed6dd4520947d96bcab2edab898092a56495ebee6137a0a6d",
+  "originHash" : "b294303d648781cb5fcc22eb16aa8142e396ddbae8eb4080d7103ed43512e526",
   "pins" : [
     {
       "identity" : "alamofire",
@@ -20,6 +20,15 @@
       }
     },
     {
+      "identity" : "charts",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/ChartsOrg/Charts.git",
+      "state" : {
+        "revision" : "dd9c72e3d7e751e769971092a6bd72d39198ae63",
+        "version" : "5.1.0"
+      }
+    },
+    {
       "identity" : "chartview",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/AppPear/ChartView.git",
@@ -35,6 +44,12 @@
       "state" : {
         "revision" : "1d29eccc24cc8b75bff9f6804155112c0ffc9605",
         "version" : "4.4.3"
+      "identity" : "iqkeyboardmanager",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/hackiftekhar/IQKeyboardManager.git",
+      "state" : {
+        "revision" : "19e111f9246b3407fe0c334dc78fa890c40d8c67",
+        "version" : "7.0.3"
       }
     },
     {
@@ -44,6 +59,15 @@
       "state" : {
         "revision" : "b06a8c8596e4c3e8e7788e08e720e3248563ce6a",
         "version" : "6.7.1"
+      }
+    },
+    {
+      "identity" : "skeletonview",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Juanpe/SkeletonView.git",
+      "state" : {
+        "revision" : "2f5274827d310e32c09325dd3e0007120940988e",
+        "version" : "1.31.0"
       }
     },
     {

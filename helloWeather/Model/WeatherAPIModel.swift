@@ -17,7 +17,7 @@ struct Current: Codable { // 현재 시간 기준
     let feelslikeC, feelslikeF: Double // 현재 체감온도 온도 C 섭씨, F 화씨
     let airQuality: AirQuality // 현재 공기 오염도, 미세먼지 + 초미세먼지만 나옴
     let uv: Double // 자외선
-
+    
     enum CodingKeys: String, CodingKey {
         case lastUpdated = "last_updated"
         case tempC = "temp_c"
@@ -36,6 +36,33 @@ struct Current: Codable { // 현재 시간 기준
 // MARK: - Condition
 struct Condition: Codable {
     let text: String // 날씨 컨디션 : 맑음, 등등
+    
+    func change() -> String {
+        switch self.text {
+        case "흐린", "구름 낀", "안개":
+            return "흐림"
+        case "맑음", "화창함":
+            return "맑음"
+        case "대체로 맑음":
+            return "대체로 맑음"
+        case "가벼운 소나기":
+            return "짧은 소나기"
+        case "곳곳에 가벼운 이슬비":
+            return "가벼운 비"
+        case "근처 곳곳에 비", "비":
+            return "비"
+        case "보통 또는 심한 소나기":
+            return "소나기"
+        case "폭우":
+            return "폭우"
+        case "근처에 천둥 발생":
+            return "낙뢰"
+        case "천둥을 동반한 보통 또는 심한 비":
+            return "뇌우"
+        default:
+            return ""
+        }
+    }
 }
 
 // MARK: - Forecast
@@ -48,17 +75,18 @@ struct Forecastday: Codable { // 하루 기준으로 나오는 정보
     let date: String // 날짜 String
     let day: Day // 하루 날씨 정보
     let astro: Astro // 일출 정보 용
+    let airQuality: AirQuality? // 미세먼지 정보
     let hour: [Hour] // 하루를 24시간으로 쪼개서 각각의 날씨 정보
     enum CodingKeys: String, CodingKey {
-        case date, day, astro, hour
-       
+        case date, day, astro, airQuality, hour
+        
     }
 }
 
 // MARK: - Astro
 struct Astro: Codable {
     let sunrise, sunset: String // 일몰, 일출 시간 String
-
+    
     enum CodingKeys: String, CodingKey {
         case sunrise, sunset
     }
@@ -67,11 +95,19 @@ struct Astro: Codable {
 struct AirQuality : Codable { //
     let micro : Double? // 초미세먼지 정도
     let fine : Double? // 미세먼지 정도
+    let o3 : Double? // 오존3
+    let co : Double? // 일산화 탄소
+    let no2 : Double? // 이산화질소
+    let so2 : Double? // 이산화황
+    
     enum CodingKeys: String, CodingKey {
         case micro = "pm10"
         case fine = "pm2_5"
+        case o3 = "o3"
+        case co = "co"
+        case no2 = "no2"
+        case so2 = "so2"
     }
-    
 }
 // MARK: - Day
 struct Day: Codable {
@@ -83,7 +119,7 @@ struct Day: Codable {
     let condition: Condition // 날씨 컨디션 : 맑음, 등등
     let airQuality: AirQuality? // 공기 오염도, 미세먼지 + 초미세먼지만 나옴
     let uv: Int // 자외선 수치
-
+    
     enum CodingKeys: String, CodingKey {
         case maxtempC = "maxtemp_c"
         case maxtempF = "maxtemp_f"
@@ -114,8 +150,8 @@ struct Hour: Codable {
     let humidity, cloud: Int // 습도 구름 0-100
     let feelslikeC, feelslikeF: Double // 체감온도 온도 C 섭씨, F 화씨
     let willItRain, chanceOfRain, willItSnow, chanceOfSnow: Int
+    let airQuality: AirQuality?
     let uv: Int
-
     enum CodingKeys: String, CodingKey {
         case time
         case tempC = "temp_c"
@@ -131,7 +167,7 @@ struct Hour: Codable {
         case chanceOfRain = "chance_of_rain"
         case willItSnow = "will_it_snow"
         case chanceOfSnow = "chance_of_snow"
+        case airQuality = "air_quality"
         case uv
     }
 }
-

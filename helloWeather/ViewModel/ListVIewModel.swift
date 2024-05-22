@@ -23,6 +23,7 @@ class ListViewModel {
     let group = DispatchGroup()
     var searchModel : [SearchModel] = []
     var weatherAPIModel : [WeatherAPIModel] = []
+
     
     // MVVM 아키텍처를 따르기 위해 변경사항을 감지하고 이를 뷰에 반영하기 위한 코드
     @Published var items: [(SearchModel,WeatherAPIModel)] = []

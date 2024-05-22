@@ -10,9 +10,6 @@ class TabViewModel{
         TabModel(title: "알람", image: UIImage(named: "tabBar01-0")!,selectedImage: UIImage(named: "tabBar01-0")!, vc: TempListViewController()),
         TabModel(title: "날씨", image: UIImage(named: "tabBar01-0")!,selectedImage: UIImage(named: "tabBar01-0")!, vc: WeatherDetailViewController()),
         TabModel(title: "미세먼지", image: UIImage(named: "tabBar01-0")!,selectedImage: UIImage(named: "tabBar01-0")!, vc: UIHostingController(rootView: LineChartView())),
-        
-        
-        
     ]
     var navs : [UINavigationController] = []
     

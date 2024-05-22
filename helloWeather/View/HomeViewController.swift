@@ -25,6 +25,9 @@ class HomeViewController: UIViewController {
         let button = UIButton()
         button.imageView?.contentMode = .scaleAspectFit
         button.addTarget(self, action: #selector(notificationButtonTapped), for: .touchUpInside)
+        button.setBackgroundImage(UIImage(systemName: "bell"), for: .normal)
+        button.tintColor = .clear
+        button.addTarget(HomeViewController.self, action: #selector(notificationButtonTapped), for: .touchUpInside)
         return button
     }()
     
@@ -86,7 +89,7 @@ class HomeViewController: UIViewController {
     }()
     
     lazy var stackView: UIStackView = {
-       let stview = UIStackView(arrangedSubviews: [todayLabel, secondLabel, thirdLabel])
+        let stview = UIStackView(arrangedSubviews: [todayLabel, secondLabel, thirdLabel])
         stview.spacing = 10
         stview.axis = .vertical
         stview.alignment = .leading
@@ -120,10 +123,10 @@ class HomeViewController: UIViewController {
         setupSecondLabel()
         setupThirdLabel()
         setupAutoLayout()
+        bind()
     }
-
+    
     func setupNaviBar() {
-
         homeViewModel.addressOnCompleted = { [unowned self] address in
             let titleView = UIView()
             
@@ -152,7 +155,6 @@ class HomeViewController: UIViewController {
             titleView.sizeToFit()
             self.navigationItem.titleView = titleView
         }
-        
         let searchButton = UIBarButtonItem(image: UIImage(named: "search-0"), style: .plain, target: self, action: #selector(searchButtonTapped))
         searchButton.tintColor = .black
         navigationItem.rightBarButtonItem = searchButton
@@ -233,17 +235,20 @@ class HomeViewController: UIViewController {
 //        }
         
         view.addSubview(notificationButton)
-        notificationButton.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(128)
+        view.addSubview(bookmarkButton)
+        bookmarkButton.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(124)
             $0.trailing.equalToSuperview().inset(32)
+            $0.width.height.equalTo(24)
+            
+        notificationButton.snp.makeConstraints {
+            $0.centerY.equalTo(bookmarkButton)
+            $0.leading.equalTo(bookmarkButton.snp.leading)
             $0.width.height.equalTo(24)
         }
         
-        view.addSubview(bookmarkButton)
-        bookmarkButton.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(128)
-            $0.trailing.equalToSuperview().inset(32)
-            $0.width.height.equalTo(24)
+        
+        
         }
         
         view.addSubview(scrollAnimation)
@@ -260,6 +265,24 @@ class HomeViewController: UIViewController {
         }
     }
     
+    func bind(){
+        self.homeViewModel.bookMarkDidChanged = { isBookmarked in
+            if isBookmarked {
+                self.bookmarkButton.setBackgroundImage(UIImage(systemName: "bookmark.fill"), for: .normal)
+            }else{
+                self.bookmarkButton.setBackgroundImage(UIImage(systemName: "bookmark"), for: .normal)
+            }
+            self.bookmarkButton.superview?.layoutIfNeeded()
+        }
+        self.homeViewModel.notfiedDiDChanged = { isnotified in
+            if isnotified {
+                self.notificationButton.setBackgroundImage(UIImage(systemName: "bell.fill"), for: .normal)
+            }else{
+                self.notificationButton.setBackgroundImage(UIImage(systemName: "bell"), for: .normal)
+            }
+            self.notificationButton.superview?.layoutIfNeeded()
+        }
+    }
     @objc func bookmarkButtonTapped() {
         if !homeViewModel.isBookmarked {
             homeViewModel.isBookmarked = true
@@ -272,6 +295,7 @@ class HomeViewController: UIViewController {
                 }
                 self.view.layoutIfNeeded()
             })
+            self.homeViewModel.saveCurrentBookMark()
         } else {
             homeViewModel.isBookmarked = false
             bookmarkButton.setBackgroundImage(UIImage(named: "bookmark_S-0"), for: .normal)
@@ -279,17 +303,18 @@ class HomeViewController: UIViewController {
                 self.notificationButton.setBackgroundImage(nil, for: .normal)
             }) { _ in
                 self.notificationButton.snp.updateConstraints {
-                    $0.top.equalToSuperview().offset(128)
+                    $0.leading.equalTo(self.bookmarkButton).offset(0)
                 }
                 UIView.animate(withDuration: 0.3) {
                     self.view.layoutIfNeeded()
                 }
             }
+            self.homeViewModel.deleteCurrentBookMark()
         }
     }
     
     @objc func notificationButtonTapped() {
-        print(#function)
+        self.homeViewModel.changeNotiCurrentBookMark()
     }
     
 }

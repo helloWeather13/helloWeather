@@ -24,6 +24,7 @@ class RecentSearchTableViewCell: UITableViewCell {
         fatalError("init(Coder:) has not been implemented")
     }
     func configureUI(text : String){
+        
         titleLabel.text = text
         titleLabel.font = .boldSystemFont(ofSize: 16)
         [timeImageview, titleLabel,goImageView].forEach{

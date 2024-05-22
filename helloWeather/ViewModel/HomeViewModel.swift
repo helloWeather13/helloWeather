@@ -12,15 +12,26 @@ class HomeViewModel: NSObject, CLLocationManagerDelegate {
     
     let webServiceManager = WebServiceManager.shared
     let userLocationManager = CLLocationManager()
-    
-    var isBookmarked = false
-    
+    var currentSearchModel : SearchModel?
+    var bookMarkSearchModel : [SearchModel] = []
+    var isBookmarked = false {
+        didSet {
+            bookMarkDidChanged(isBookmarked)
+        }
+    }
+    var isNotified = false {
+        didSet {
+            notfiedDiDChanged(isNotified)
+        }
+    }
+    var isNotification = false
     var userLocationAddress: String = "" {
         didSet {
             addressOnCompleted(userLocationAddress)
         }
     }
-    
+    var notfiedDiDChanged : ((Bool) -> ()) = { _ in }
+    var bookMarkDidChanged: ((Bool) -> ()) = { _ in }
     var addressOnCompleted: ((String) -> ()) = { _ in }
     
     var userLocationPoint: (Double, Double) = (0, 0) {
@@ -173,6 +184,7 @@ class HomeViewModel: NSObject, CLLocationManagerDelegate {
     override init() {
         super.init()
         getUserLocation()
+        loadCurrentBookMark()
     }
     
     func getUserLocation() {
@@ -181,22 +193,20 @@ class HomeViewModel: NSObject, CLLocationManagerDelegate {
         userLocationManager.desiredAccuracy = kCLLocationAccuracyBest
         userLocationManager.requestWhenInUseAuthorization()
         userLocationManager.startUpdatingLocation()
-        
         let geocoder = CLGeocoder()
         let location = self.userLocationManager.location
-        
         if let location = location {
             geocoder.reverseGeocodeLocation(location) { [unowned self] (placemarks, error) in
                 if error != nil { return }
                 
                 if let placemark = placemarks?.first {
-    
+                    
                     let x = placemark.location?.coordinate.latitude ?? 0
                     let y = placemark.location?.coordinate.longitude ?? 0
                     userLocationPoint = (x, y)
                     
                     var address = ""
-
+                    
                     if let administrativeArea = placemark.administrativeArea {
                         address += "\(administrativeArea) "
                     }
@@ -209,6 +219,10 @@ class HomeViewModel: NSObject, CLLocationManagerDelegate {
                         address += "\(subLocality)"
                     }
                     userLocationAddress = address
+                    self.currentSearchModel?.fullAddress = address
+                    self.currentSearchModel?.city = address
+                    self.isBookmarked = self.isCurrentLocationBookMarked()
+                    loadNotification()
                 } else {
                     print("No location")
                 }
@@ -277,4 +291,76 @@ class HomeViewModel: NSObject, CLLocationManagerDelegate {
         let isPM = time.contains("PM")
         return ((isPM ? 12 : 0) + hour) * 60 + minute
     }
+    
+    func saveCurrentBookMark() {
+        if !isCurrentLocationBookMarked() {
+            bookMarkSearchModel.append(currentSearchModel!)
+            let encoder = JSONEncoder()
+            if let encoded = try? encoder.encode(bookMarkSearchModel){
+                UserDefaults.standard.setValue(encoded, forKey: "bookMark")
+            }
+        }
+        
+    }
+
+    // MARK: - loadRecentSearch UserDefault에 최근 검색 결과 로드
+    func loadCurrentBookMark(){
+        if let savedData = UserDefaults.standard.object(forKey: "bookMark") as? Data {
+            let decoder = JSONDecoder()
+            if let savedObject = try? decoder.decode([SearchModel].self, from: savedData) {
+                self.bookMarkSearchModel = savedObject
+            }
+        }
+    }
+    func isCurrentLocationBookMarked() -> Bool{
+        if let currentSearchModel {
+            if self.bookMarkSearchModel.contains(where: {
+                $0.fullAddress == currentSearchModel.fullAddress
+            }){
+                return true
+            }else{
+                return false
+            }
+        }
+        return false
+    }
+    
+    func loadNotification(){
+        if let currentSearchModel {
+            if isCurrentLocationBookMarked(){
+                self.isNotified = currentSearchModel.notification
+            }
+        }
+    }
+
+    
+    // MARK: - deleteRecentSearch UserDefault에서 최근 결과 삭제
+    func deleteCurrentBookMark(){
+        guard let index = bookMarkSearchModel.firstIndex(where: {
+            $0.fullAddress == currentSearchModel?.fullAddress
+        }) else {return}
+        bookMarkSearchModel.remove(at: index)
+        isBookmarked = false
+        isNotified = false
+//        UserDefaults.standard.removeObject(forKey: "bookMark")
+        let encoder = JSONEncoder()
+        if let encoded = try? encoder.encode(bookMarkSearchModel){
+            UserDefaults.standard.setValue(encoded, forKey: "bookMark")
+        }
+        
+    }
+    
+    func changeNotiCurrentBookMark(){
+        self.isNotified = !isNotified
+        guard let index = bookMarkSearchModel.firstIndex(where: {
+            $0.fullAddress == currentSearchModel?.fullAddress
+        }) else {return}
+        bookMarkSearchModel[index].notification = isNotified
+        let encoder = JSONEncoder()
+        if let encoded = try? encoder.encode(bookMarkSearchModel){
+            UserDefaults.standard.setValue(encoded, forKey: "bookMark")
+        }
+    }
+    
+    
 }
