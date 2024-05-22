@@ -11,16 +11,9 @@ import RxCocoa
 
 class TodayTimeCelsiusCollectionView: UICollectionView, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
-    //    private let gradientLayer: CAGradientLayer = {
-    //            let layer = CAGradientLayer()
-    //            layer.colors = [UIColor.white.cgColor, UIColor.clear.cgColor]
-    //            layer.startPoint = CGPoint(x: 0.5, y: 0.5)
-    //            layer.endPoint = CGPoint(x: 1.0, y: 0.5)
-    //            return layer
-    //        }()
     private var viewModel: WeatherDetailViewModel?
     private var disposeBag = DisposeBag()
-    private var hourlyWeatherData: [WeatherDetailViewModel.HourlyWeather] = []
+    var hourlyWeatherData: [WeatherDetailViewModel.HourlyWeather] = []
     
     weak var tomorrowCollectionView: TomorrowTimeCelsiusCollectionView?
     
@@ -57,43 +50,22 @@ class TodayTimeCelsiusCollectionView: UICollectionView, UICollectionViewDelegate
         viewModel?.fetchHourlyWeather()
             .subscribe(onNext: { [weak self] hourlyWeather in
                 let now = Calendar.current.component(.hour, from: Date())
-                var shouldIncludeNextDay = false
-                var shouldUpdateTomorrow = false
+                var isFirst21Found = false
                 
-                // 마지막 시간이 23시인지 확인하고, 다음 날의 데이터가 필요한 경우를 설정
-                if let lastHour = hourlyWeather.last?.time, lastHour == "21시" {
-                    shouldIncludeNextDay = true
-                    shouldUpdateTomorrow = true
-                }
-                
-                self?.hourlyWeatherData = hourlyWeather.filter { hourlyWeather in
-                    guard let hour = Int(hourlyWeather.time.replacingOccurrences(of: "시", with: "")) else {
-                        return false
-                    }
-                    
-                    // 현재 시간부터 먼저 선택
-                    if hour == now {
-                        return true
-                    }
-                    
-                    // 3의 배수 시간만 선택
-                    if hour % 3 == 0 {
-                        return true
-                    }
-                    
-                    // 다음 날의 데이터가 필요한 경우 0시부터의 값을 반환
-                    if shouldIncludeNextDay && hour == 0 {
-                        return true
-                    }
-                    
-                    return false
-                }
+                self?.hourlyWeatherData = hourlyWeather.filter { hourlyData in
+                               guard let hour = Int(hourlyData.time.replacingOccurrences(of: "시", with: "")) else {
+                                   return false
+                               }
+                               
+                               // 첫 번째 21시 이후 값은 버림
+                               if !isFirst21Found && hour == 21 {
+                                   isFirst21Found = true
+                                   return true // 21시 자신을 포함해서 반환
+                               }
+                               return !isFirst21Found && hour % 3 == 0
+                           }
                 self?.reloadData()
                 self?.updateCollectionViewSize()
-                
-                if shouldUpdateTomorrow {
-                    self?.tomorrowCollectionView?.updateTomorrowData(with: hourlyWeather)
-                }
             })
             .disposed(by: disposeBag)
     }
@@ -107,14 +79,10 @@ class TodayTimeCelsiusCollectionView: UICollectionView, UICollectionViewDelegate
         let cell  = collectionView.dequeueReusableCell(withReuseIdentifier: FirstLeftCollectionViewCell.identifier, for: indexPath) as! FirstLeftCollectionViewCell
         
         let hourlyWeather = hourlyWeatherData[indexPath.item]
+        cell.configureConstraints(data: hourlyWeather)
+        
         cell.celsiusLabel.text = hourlyWeather.feelslikeC
         cell.timeLabel.text = hourlyWeather.time
-        
-        //        cell.celsiusLabel.text = feelslikeCData.value
-        //        cell.celsiusLabel.text = "\(indexPath.item * 5)°"
-        
-        //        let hour = (indexPath.item * 3) % 24
-        //            cell.timeLabel.text = "\(hour)시"
         
         if indexPath.item == 0 {
             cell.timeLabel.text = "지금"
@@ -147,7 +115,5 @@ class TodayTimeCelsiusCollectionView: UICollectionView, UICollectionViewDelegate
             make.top.leading.bottom.equalToSuperview()
         }
     }
-    
-    
     
 }

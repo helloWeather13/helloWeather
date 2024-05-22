@@ -30,6 +30,7 @@ class WeatherDetailViewModel {
         let tempC: String // 온도 (Celsius)
         let tempF: String
         let humidity: String
+        let condition: String
     }
     
     // 일일 날씨 정보(요일, 날짜, 온도)
@@ -61,23 +62,38 @@ class WeatherDetailViewModel {
         
         return Observable.create { observer in
             self.weatherManager.getForecastWeather(searchModel: location) { data in
-                if let hourlyData = data.forecast.forecastday.first?.hour.prefix(27) {
-                    let currentHour = Calendar.current.component(.hour, from: Date())
-                    let hourlyWeather = hourlyData.enumerated().map { index, hourlyData in
-                        let hour = (currentHour + index) % 24 // 현재 시간에 인덱스를 더한 값 (24시간 기준)
-                        let formattedHour = "\(hour)시"
-                        // 온도 정보에서 소수점 뒤의 수를 제외하고 반환
-                        let feelslikeCTemperature = Int(hourlyData.feelslikeC)
-                        let feelslikeFTemperature = Int(hourlyData.feelslikeF)
-                        let tempCTemperature = Int(hourlyData.tempC)
-                        let tempFTemperature = Int(hourlyData.tempF)
-                        
-                        return HourlyWeather(time: formattedHour, feelslikeC: "\(feelslikeCTemperature)°", feelslikeF: "\(feelslikeFTemperature)°", tempC: "\(tempCTemperature)°", tempF: "\(tempFTemperature)°", humidity: "\(hourlyData.humidity)%")
+                let currentHour = Calendar.current.component(.hour, from: Date())
+                var hourlyWeather: [HourlyWeather] = []
+                
+                // 오늘, 내일, 모레의 시간별 날씨 정보 가져오기
+                for dayOffset in 0..<3 {
+                    if let hourlyData = data.forecast.forecastday[safe: dayOffset]?.hour {
+                        for (index, hourlyData) in hourlyData.enumerated() {
+                            let hour = (currentHour + index) % 24 // 현재 시간에 인덱스를 더한 값 (24시간 기준)
+                            let formattedHour = "\(hour)시"
+                            // 온도 정보에서 소수점 뒤의 수를 제외하고 반환
+                            let feelslikeCTemperature = Int(hourlyData.feelslikeC)
+                            let feelslikeFTemperature = Int(hourlyData.feelslikeF)
+                            let tempCTemperature = Int(hourlyData.tempC)
+                            let tempFTemperature = Int(hourlyData.tempF)
+                            
+                            let condition = hourlyData.condition.text
+                            
+                            let hourlyWeatherData = HourlyWeather(
+                                time: formattedHour,
+                                feelslikeC: "\(feelslikeCTemperature)°",
+                                feelslikeF: "\(feelslikeFTemperature)°",
+                                tempC: "\(tempCTemperature)°",
+                                tempF: "\(tempFTemperature)°",
+                                humidity: "\(hourlyData.humidity)%", 
+                                condition: "\(condition)"
+                            )
+                            hourlyWeather.append(hourlyWeatherData)
+                        }
                     }
-                    observer.onNext(hourlyWeather)
-                } else {
-                    observer.onNext([])
                 }
+                
+                observer.onNext(hourlyWeather)
                 observer.onCompleted()
             }
             return Disposables.create()
