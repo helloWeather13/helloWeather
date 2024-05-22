@@ -77,7 +77,7 @@ class TempListViewController: UIViewController {
                     return UITableViewCell()
                 }
                 cell.configure(searchModel: listWeather)
-                
+
                 cell.rx.buttonTapped
                     .subscribe (onNext: { [ weak self ] in
                         self?.configureAlert()
@@ -86,6 +86,7 @@ class TempListViewController: UIViewController {
                     .disposed(by: cell.disposeBag)
                 
                 cell.selectionStyle = .none
+                
                 return cell
             }
         })
@@ -192,20 +193,9 @@ extension TempListViewController: UITableViewDelegate {
         
         guard let item = self.viewModel.dataSource?.itemIdentifier(for: indexPath) else { return }
             switch item {
-            case .listWeather(let searchModel):
-                // 클릭한 셀 정보 출력 (임시)
-                print("\(searchModel.fullAddress)의 메인 화면으로 이동합니다.")
-                
+            case .currentWeather(let currentSearchModel) :
                 // 0.2초의 딜레이 후에 탭바 전환
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                    if let windowScene = UIApplication.shared.connectedScenes.first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene,
-                       let tabBarController = windowScene.windows.first(where: { $0.isKeyWindow })?.rootViewController as? UITabBarController {
-                        
-                        // 탭바 전환 애니메이션 설정
-                        UIView.transition(with: tabBarController.view, duration: 0.2, options: .transitionCrossDissolve, animations: {
-                            tabBarController.selectedIndex = 0 // 변경할 탭의 인덱스
-                        }, completion: nil)
-                    }
                     // 클릭한 셀의 애니메이션
                     if let cell = tableView.cellForRow(at: indexPath) {
                         UIView.animate(withDuration: 0.15, animations: {
@@ -216,28 +206,26 @@ extension TempListViewController: UITableViewDelegate {
                             }
                         }
                     }
+                    NotificationCenter.default.post(name: NSNotification.Name("SwitchTabNotification"), object: currentSearchModel, userInfo: nil)
                 }
-                
-            default:
-                break
-            }
-        
-        guard let item = self.viewModel.dataSource?.itemIdentifier(for: indexPath) else { return }
-        switch item {
-        case .listWeather(_):
-            // 셀을 클릭하면 애니메이션을 적용
-            if let cell = tableView.cellForRow(at: indexPath) {
-                UIView.animate(withDuration: 0.15, animations: {
-                    cell.transform = CGAffineTransform(scaleX: 1.05, y: 1.05)
-                }) { _ in
-                    UIView.animate(withDuration: 0.15) {
-                        cell.transform = .identity
+            case .listWeather(let searchModel):
+                // 0.2초의 딜레이 후에 탭바 전환
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                    // 클릭한 셀의 애니메이션
+                    if let cell = tableView.cellForRow(at: indexPath) {
+                        UIView.animate(withDuration: 0.15, animations: {
+                            cell.transform = CGAffineTransform(scaleX: 1.05, y: 1.05)
+                        }) { _ in
+                            UIView.animate(withDuration: 0.15) {
+                                cell.transform = .identity
+                            }
+                        }
                     }
+                    NotificationCenter.default.post(name: NSNotification.Name("SwitchTabNotification"), object: searchModel, userInfo: nil)
                 }
+            case .space:
+                return
             }
-        default:
-            break
-        }
     }
     
     func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {

@@ -7,17 +7,17 @@
 
 import UIKit
 import SnapKit
+import SkeletonView
 
 class HomeViewController: UIViewController {
     
-    let homeViewModel = HomeViewModel()
-    
+    var homeViewModel = HomeViewModel()
     var bookmarkButton: UIButton = {
         let button = UIButton()
         button.imageView?.contentMode = .scaleAspectFit
         button.setBackgroundImage(UIImage(systemName: "bookmark"), for: .normal)
         button.tintColor = .black
-        button.addTarget(HomeViewController.self, action: #selector(bookmarkButtonTapped), for: .touchUpInside)
+        button.addTarget(self, action: #selector(bookmarkButtonTapped), for: .touchUpInside)
         return button
     }()
     
@@ -26,7 +26,7 @@ class HomeViewController: UIViewController {
         button.imageView?.contentMode = .scaleAspectFit
         button.setBackgroundImage(UIImage(systemName: "bell"), for: .normal)
         button.tintColor = .clear
-        button.addTarget(HomeViewController.self, action: #selector(notificationButtonTapped), for: .touchUpInside)
+        button.addTarget(self, action: #selector(notificationButtonTapped), for: .touchUpInside)
         return button
     }()
     
@@ -94,9 +94,15 @@ class HomeViewController: UIViewController {
         let image = UIImage()
         return image
     }()
+    var emptyView1 = UIView()
+    var emptyView2 = UIView()
+    var emptyView3 = UIView()
+    var emptyView4 = UIView()
+    var emptyView5 = UIView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupNotificationCenter()
         setupNaviBar()
         setupSecondLabel()
         setupThirdLabel()
@@ -104,25 +110,44 @@ class HomeViewController: UIViewController {
         bind()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        emptyView5.isHidden = false
+        [view,emptyView1,emptyView2,emptyView3,emptyView4,emptyView5].forEach{
+            $0?.showAnimatedSkeleton()
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now()+0.1, execute: {
+            [self.view,self.emptyView1,self.emptyView2,self.emptyView3,self.emptyView4,self.emptyView5].forEach{
+                $0?.hideSkeleton(transition: .crossDissolve(0.25))
+                
+            }
+            self.emptyView5.isHidden = true
+        })
+       
+    }
+    override func viewDidDisappear(_ animated: Bool) {
+        emptyView5.isHidden = true
+        [view,emptyView1,emptyView2,emptyView3,emptyView4,emptyView5].forEach{
+            $0?.showAnimatedSkeleton()
+        }
+    }
+    func setupNotificationCenter(){
+        NotificationCenter.default.addObserver(self, selector: #selector(dataRecevied(notification:)), name: NSNotification.Name("SwitchTabNotification"), object: nil)
+    }
     func setupNaviBar() {
-        
-        
         homeViewModel.addressOnCompleted = { [unowned self] address in
             self.navigationItem.title = address
         }
-        
-        
-        
-        
         let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonTapped))
         addButton.tintColor = .black
         navigationItem.rightBarButtonItem = addButton
-
-        
     }
     
     @objc func addButtonTapped() {
-        self.navigationController?.pushViewController(SearchViewController(), animated: false)
+        let searchVC = SearchViewController()
+        searchVC.delegate = self
+        self.navigationController?.pushViewController(searchVC, animated: false)
         
     }
     
@@ -196,16 +221,52 @@ class HomeViewController: UIViewController {
             $0.top.equalToSuperview().offset(124)
             $0.trailing.equalToSuperview().inset(32)
             $0.width.height.equalTo(24)
-            
+        }
         notificationButton.snp.makeConstraints {
             $0.centerY.equalTo(bookmarkButton)
             $0.leading.equalTo(bookmarkButton.snp.leading)
             $0.width.height.equalTo(24)
         }
         
-        
-        
+        [emptyView1, emptyView2, emptyView3,emptyView4, emptyView5].forEach{
+            self.view.addSubview($0)
+            $0.translatesAutoresizingMaskIntoConstraints = false
         }
+        
+        emptyView1.snp.makeConstraints{
+            $0.leading.equalToSuperview().offset(30)
+            $0.top.equalTo(stackView.snp.top)
+            $0.width.equalTo(100)
+            $0.height.equalTo(42)
+        }
+        emptyView2.snp.makeConstraints{
+            $0.leading.equalToSuperview().offset(30)
+            $0.top.equalTo(emptyView1.snp.bottom).offset(2)
+            $0.width.equalTo(300)
+            $0.height.equalTo(42)
+        }
+        emptyView3.snp.makeConstraints{
+            $0.leading.equalToSuperview().offset(30)
+            $0.top.equalTo(emptyView2.snp.bottom).offset(2)
+            $0.width.equalTo(300)
+            $0.height.equalTo(42)
+        }
+        emptyView4.snp.makeConstraints{
+            $0.width.equalTo(220)
+            $0.height.equalTo(120)
+            $0.trailing.equalToSuperview().offset(-30)
+            $0.top.equalTo(stackView.snp.bottom).offset(108)
+        }
+        emptyView5.snp.makeConstraints{
+            $0.centerY.centerX.equalTo(bookmarkButton)
+            $0.width.height.equalTo(40)
+        }
+        [view,emptyView1,emptyView2,emptyView3,emptyView4,emptyView5].forEach{
+            $0?.isSkeletonable = true
+            $0?.skeletonCornerRadius = 20
+        }
+        
+        
     }
     
     func bind(){
@@ -258,4 +319,46 @@ class HomeViewController: UIViewController {
         self.homeViewModel.changeNotiCurrentBookMark()
     }
     
+    @objc func dataRecevied(notification: Notification){
+        guard let newSearchModel = notification.object as? SearchModel else{
+            return
+        }
+        self.homeViewModel.currentSearchModel = newSearchModel
+        createBackButton()
+    }
+    func createBackButton(){
+        let backButton = UIView()
+        backButton.frame = CGRect(x: 0, y: 0, width: 24, height: 24)
+        backButton.isUserInteractionEnabled = true // Enable user interaction
+
+        // Create the label for the button
+        let backImage = UIImageView()
+        backImage.image = UIImage(named: "chevron-left")
+        
+        backButton.addSubview(backImage)
+        // Add constraints to the label
+        backImage.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+
+        // Add a tap gesture recognizer to the deleteButton
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(backButtonTap))
+        backButton.addGestureRecognizer(tapGesture)
+
+        // Create the UIBarButtonItem with the custom view
+        let barButton = UIBarButtonItem(customView: backButton)
+        navigationItem.leftBarButtonItem = barButton
+    }
+}
+
+extension HomeViewController : TransferDataToMainDelegate {
+    func searchDidTouched(searchModel: SearchModel) {
+        self.homeViewModel.currentSearchModel = searchModel
+        createBackButton()
+    }
+    
+    @objc func backButtonTap(){
+        self.homeViewModel.getUserLocation()
+        self.navigationItem.leftBarButtonItem?.isHidden = true
+    }
 }

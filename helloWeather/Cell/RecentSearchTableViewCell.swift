@@ -31,12 +31,12 @@ class RecentSearchTableViewCell: UITableViewCell {
             self.addSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
-        timeImageview.image = UIImage(systemName: "clock")
+        timeImageview.image = UIImage(named: "history")
         timeImageview.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.2)
         timeImageview.contentMode = .center
         timeImageview.tintColor = UIColor(red: 0, green: 0, blue: 0, alpha:0.09)
         timeImageview.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.02)
-        goImageView.image = UIImage(systemName: "arrow.up.right")
+        goImageView.image = UIImage(named: "link")
         goImageView.backgroundColor = .clear
         goImageView.tintColor = UIColor(red: 0, green: 0, blue: 0, alpha:0.06)
         goImageView.contentMode = .scaleAspectFit
