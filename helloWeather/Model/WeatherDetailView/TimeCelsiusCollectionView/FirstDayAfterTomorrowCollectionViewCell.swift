@@ -1,8 +1,8 @@
 //
-//  FirstRightCollectionViewCell.swift
+//  FirstDayAfterTomorrowCollectionViewCell.swift
 //  helloWeather
 //
-//  Created by 이유진 on 5/14/24.
+//  Created by 이유진 on 5/21/24.
 //
 
 import UIKit
@@ -10,37 +10,38 @@ import SnapKit
 import SwiftUI
 import SwiftUICharts
 
-class FirstRightCollectionViewCell: UICollectionViewCell {
+class FirstDayAfterTomorrowCollectionViewCell: UICollectionViewCell {
+   
+    static let identifier = String(describing: FirstDayAfterTomorrowCollectionViewCell.self)
     
-    static let identifier = String(describing: FirstRightCollectionViewCell.self)
-    
-    var stackView: UIStackView = {
+    lazy var stackView: UIStackView = {
         let stack = UIStackView()
         stack.axis = .vertical
         stack.spacing = 8
         return stack
     }()
-    var stackView2: UIStackView = {
+    lazy var stackView2: UIStackView = {
         let stack = UIStackView()
         stack.axis = .vertical
         stack.spacing = 15
         return stack
     }()
     
-    var celsiusLabel: UILabel = {
+    lazy var celsiusLabel: UILabel = {
         let label = UILabel()
         label.text = "17"
         label.font = UIFont.systemFont(ofSize: 15, weight: .regular)
         label.textAlignment = .center
         return label
     }()
-    var timeLabel: UILabel = {
+    lazy var timeLabel: UILabel = {
         let label = UILabel()
-        label.text = ""
+        label.text = "3시"
         label.font = UIFont.systemFont(ofSize: 11, weight: .regular)
         label.textAlignment = .center
         return label
     }()
+    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -50,20 +51,21 @@ class FirstRightCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configureConstraints(data : WeatherDetailViewModel.HourlyWeather) {
+    func configureConstraints(data: WeatherDetailViewModel.HourlyWeather) {
         
-        let barChartCellWrapper = BarChartCellWrapper5(
-            //높이
-            value: changeDataToHeight(data: data),
-            index: 0,
-            width: 60,
-            numberOfDataPoints: 10,
-            accentColor: .gray,
-            touchLocation: .constant(-1.0)
-        )
+        // BarChart
+         let barChartCellWrapper = BarChartCellWrapper(
+             //높이
+             value: changeDataToHeight(data: data),
+             index: 0,
+             width: 60,
+             numberOfDataPoints: 10,
+             accentColor: .gray,
+             touchLocation: .constant(-1.0)
+         )
         
         contentView.addSubview(stackView2)
-        [celsiusLabel,barChartCellWrapper].forEach {
+        [celsiusLabel, barChartCellWrapper].forEach {
             stackView.addArrangedSubview($0)
         }
         
@@ -82,39 +84,40 @@ class FirstRightCollectionViewCell: UICollectionViewCell {
         timeLabel.snp.makeConstraints { make in
             make.height.equalTo(timeLabel.font.pointSize)
         }
-    }
-    
-    func changeDataToHeight(data: WeatherDetailViewModel.HourlyWeather) -> Double{
-        var height: Double = 0.0
-        if let tempC = Double(data.tempC.dropLast()) {
-            switch tempC {
-            case ..<0:
-                height = 0.1
-            case 0..<10:
-                height = 0.2
-            case 10..<15:
-                height = 0.3
-            case 15..<20:
-                height = 0.4
-            case 20..<25:
-                height = 0.5
-            case 25..<30:
-                height = 0.6
-            case 30..<35:
-                height = 0.7
-            case 35..<40:
-                height = 0.8
-            default:
-                height = 0.9
+
+        func changeDataToHeight(data: WeatherDetailViewModel.HourlyWeather) -> Double{
+            var height: Double = 0.0
+            if let tempC = Double(data.tempC.dropLast()) {
+                switch tempC {
+                case ..<0:
+                    height = 0.1
+                case 0..<10:
+                    height = 0.2
+                case 10..<15:
+                    height = 0.3
+                case 15..<20:
+                    height = 0.4
+                case 20..<25:
+                    height = 0.5
+                case 25..<30:
+                    height = 0.6
+                case 30..<35:
+                    height = 0.7
+                case 35..<40:
+                    height = 0.8
+                default:
+                    height = 0.9
+                }
             }
+            return height
         }
-        return height
+        
     }
     
 }
 
 
-class BarChartCellWrapper5: UIView {
+class BarChartCellWrapper7: UIView {
     private var hostingController: UIHostingController<BarChartCell>?
     
     init(value: Double, index: Int = 0, width: Float, numberOfDataPoints: Int, accentColor: Color, touchLocation: Binding<CGFloat>) {
@@ -143,7 +146,7 @@ class BarChartCellWrapper5: UIView {
 }
 
 
-public struct BarChartCell5: View {
+public struct BarChartCell7: View {
     public var value: Double
     public var index: Int = 0
     public var width: Float
@@ -179,3 +182,4 @@ public struct BarChartCell5: View {
         }
     }
 }
+
