@@ -1,7 +1,7 @@
 import UIKit
 import SnapKit
 
-class CustomToggleView2: UIView {
+class CustomToggleView4: UIView {
     private let viewModel: WeatherDetailViewModel
     private var isOn: Bool = false {
         didSet {
@@ -79,7 +79,6 @@ class CustomToggleView2: UIView {
     @objc private func toggleSwitch() {
         isOn.toggle()
         viewModel.toggleTemperatureUnit()
-        print("toggle")
     }
     
     private func updateToggleState() {

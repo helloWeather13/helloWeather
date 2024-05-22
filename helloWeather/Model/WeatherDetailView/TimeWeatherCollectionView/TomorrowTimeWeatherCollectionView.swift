@@ -17,9 +17,6 @@ class TomorrowTimeWeatherCollectionView: UICollectionView, UICollectionViewDeleg
     
     weak var todayCollectionView: TodayTimeWeatherCollectionView?
     
-    var weatherIconTestNames: [String] = ["rainy"]
-    var weatherIconTestData: [UIImage] = []
-    
     init(viewModel: WeatherDetailViewModel, todayCollectionView: TodayTimeWeatherCollectionView) {
         self.viewModel = viewModel
         self.todayCollectionView = todayCollectionView

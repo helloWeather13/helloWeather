@@ -41,6 +41,12 @@ class WeekCollectionView: UICollectionView, UICollectionViewDelegate, UICollecti
                     self?.reloadData()
                 })
                 .disposed(by: disposeBag)
+        
+        viewModel?.temperatureUnitSubject
+            .subscribe(onNext: { [weak self] _ in
+                self?.updateCellTemperatureLabels()
+            })
+            .disposed(by: disposeBag)
         }
     
     // MARK: - SetupWeatherImage
@@ -83,8 +89,16 @@ class WeekCollectionView: UICollectionView, UICollectionViewDelegate, UICollecti
         
         cell.weekLabel.text = dailyWeather.dayOfWeek
         cell.dateLabel.text = dailyWeather.date
-        cell.maxCelsiusLabel.text = dailyWeather.mintempC
-        cell.minCelsiusLabel.text = dailyWeather.maxtempC
+        
+        // ViewModel에서 현재 온도 단위 가져오기
+        var temperatureUnit = viewModel?.temperatureUnit ?? .fahrenheit
+        if temperatureUnit == .celsius {
+            cell.maxCelsiusLabel.text = dailyWeather.mintempC
+            cell.minCelsiusLabel.text = dailyWeather.maxtempC
+        } else {
+            cell.maxCelsiusLabel.text = dailyWeather.mintempF
+            cell.minCelsiusLabel.text = dailyWeather.maxtempF
+        }
           
         setupWeatherImage(data: dailyWeather, cell: cell)
         cell.weatherIcon.contentMode = .scaleAspectFit
@@ -123,5 +137,16 @@ class WeekCollectionView: UICollectionView, UICollectionViewDelegate, UICollecti
         return CGSize(width: width, height: height)
     }
     
+    private func updateCellTemperatureLabels() {
+        for case let cell as WeekCollectionViewCell in self.visibleCells {
+            guard let indexPath = self.indexPath(for: cell) else { continue }
+            let dailyWeather = dailyWeatherData[indexPath.item]
+            if let temperatureUnit = viewModel?.temperatureUnit {
+                cell.maxCelsiusLabel.text = (temperatureUnit == .celsius) ? dailyWeather.mintempC : dailyWeather.mintempF
+                cell.minCelsiusLabel.text = (temperatureUnit == .celsius) ? dailyWeather.maxtempC :
+                dailyWeather.maxtempF
+            }
+        }
+    }
     
 }

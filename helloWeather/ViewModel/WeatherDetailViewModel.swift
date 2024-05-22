@@ -16,6 +16,12 @@ class WeatherDetailViewModel {
         let fetchWeatherTrigger = PublishSubject<Void>()
     }
     
+    enum TemperatureUnit {
+        case celsius
+        case fahrenheit
+    }
+    
+    
     // 전달데이터
     struct Output {
         let hourlyWeather: Observable<[HourlyWeather]> // 시간별 날씨 정보
@@ -49,6 +55,11 @@ class WeatherDetailViewModel {
     private let weatherManager: WebServiceManager
     private let userLocationPoint: (Double, Double)
     private var disposeBag = DisposeBag()
+    
+    var temperatureUnit: TemperatureUnit = .celsius
+    let temperatureUnitSubject = BehaviorSubject<TemperatureUnit>(value: .celsius)
+    
+    
     
     // 다른 파일에서 인스턴스 생성할 때 실행되는 내용들
     init(weatherManager: WebServiceManager, userLocationPoint: (Double, Double)) {
@@ -166,5 +177,13 @@ class WeatherDetailViewModel {
             return Disposables.create()
         }
     }
+    
+    // 온도 단위 토글
+    func toggleTemperatureUnit() {
+            temperatureUnit = (temperatureUnit == .celsius) ? .fahrenheit : .celsius
+            // 온도 단위 변경을 UI에 알리는 Observable 업데이트
+            temperatureUnitSubject.onNext(temperatureUnit)
+        print(temperatureUnit)
+        }
     
 }

@@ -53,19 +53,25 @@ class TodayTimeCelsiusCollectionView: UICollectionView, UICollectionViewDelegate
                 var isFirst21Found = false
                 
                 self?.hourlyWeatherData = hourlyWeather.filter { hourlyData in
-                               guard let hour = Int(hourlyData.time.replacingOccurrences(of: "시", with: "")) else {
-                                   return false
-                               }
-                               
-                               // 첫 번째 21시 이후 값은 버림
-                               if !isFirst21Found && hour == 21 {
-                                   isFirst21Found = true
-                                   return true // 21시 자신을 포함해서 반환
-                               }
-                               return !isFirst21Found && hour % 3 == 0
-                           }
+                    guard let hour = Int(hourlyData.time.replacingOccurrences(of: "시", with: "")) else {
+                        return false
+                    }
+                    
+                    // 첫 번째 21시 이후 값은 버림
+                    if !isFirst21Found && hour == 21 {
+                        isFirst21Found = true
+                        return true // 21시 자신을 포함해서 반환
+                    }
+                    return !isFirst21Found && hour % 3 == 0
+                }
                 self?.reloadData()
                 self?.updateCollectionViewSize()
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel?.temperatureUnitSubject
+            .subscribe(onNext: { [weak self] _ in
+                self?.updateCellTemperatureLabels()
             })
             .disposed(by: disposeBag)
     }
@@ -81,7 +87,13 @@ class TodayTimeCelsiusCollectionView: UICollectionView, UICollectionViewDelegate
         let hourlyWeather = hourlyWeatherData[indexPath.item]
         cell.configureConstraints(data: hourlyWeather)
         
-        cell.celsiusLabel.text = hourlyWeather.feelslikeC
+        // ViewModel에서 현재 온도 단위 가져오기
+        var temperatureUnit = viewModel?.temperatureUnit ?? .fahrenheit
+        if temperatureUnit == .celsius {
+            cell.celsiusLabel.text = hourlyWeather.feelslikeC
+        } else {
+            cell.celsiusLabel.text = hourlyWeather.feelslikeF
+        }
         cell.timeLabel.text = hourlyWeather.time
         
         if indexPath.item == 0 {
@@ -113,6 +125,16 @@ class TodayTimeCelsiusCollectionView: UICollectionView, UICollectionViewDelegate
             make.width.equalTo(totalWidth)
             make.height.equalTo(119)
             make.top.leading.bottom.equalToSuperview()
+        }
+    }
+    
+    private func updateCellTemperatureLabels() {
+        for case let cell as FirstLeftCollectionViewCell in self.visibleCells {
+            guard let indexPath = self.indexPath(for: cell) else { continue }
+            let hourlyWeather = hourlyWeatherData[indexPath.item]
+            if let temperatureUnit = viewModel?.temperatureUnit {
+                cell.celsiusLabel.text = (temperatureUnit == .celsius) ? hourlyWeather.feelslikeC : hourlyWeather.feelslikeF
+            }
         }
     }
     

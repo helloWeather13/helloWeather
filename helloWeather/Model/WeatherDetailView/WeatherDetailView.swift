@@ -143,7 +143,6 @@ class WeatherDetailView: UIView {
         return collectionView
     }()
     
-    let customToggleView: CustomToggleView2
     // 날씨 stack
     let bottomScrollView: UIScrollView = {
         let scroll = UIScrollView()
@@ -165,45 +164,18 @@ class WeatherDetailView: UIView {
     // 습도
     lazy var humidityCollectionView = HumidityCollectionView(viewModel: weatherDetailViewModel)
     
-    // MARK: - Toggle Button
-    
-    let changeButton1: UIView = {
-        let view = UIView()
-        view.backgroundColor = .lightGray
-        view.layer.cornerRadius = 8
-        return view
-    }()
-    
-    let fLabel: UILabel = {
-        let label = UILabel()
-        label.text = "°F"
-        label.textAlignment = .center
-        label.textColor = .mygray
-        label.font = UIFont.systemFont(ofSize: 13, weight: .regular)
-        return label
-    }()
-    
-    let cLabel: UILabel = {
-        let label = UILabel()
-        label.text = "°C"
-        label.textAlignment = .center
-        label.textColor = .mygray
-        label.font = UIFont.systemFont(ofSize: 13, weight: .regular)
-        return label
-    }()
-    
-    let toggleKnob: UIView = {
-        let view = UIView()
-        view.backgroundColor = .white
-        view.layer.cornerRadius = 8
-        return view
-    }()
-    
-    var isToggleOn = false
+    // MARK: - C/F ChangeToggle
+    let customToggleView: CustomToggleView2
+    let customToggleView2: CustomToggleView2
+    let customToggleView3: CustomToggleView2
     
     // MARK: - override
     override init(frame: CGRect) {
+        
         self.customToggleView = CustomToggleView2(viewModel: weatherDetailViewModel)
+        self.customToggleView2 = CustomToggleView2(viewModel: weatherDetailViewModel)
+        self.customToggleView3 = CustomToggleView2(viewModel: weatherDetailViewModel)
+        
         super.init(frame: frame)
         
         self.backgroundColor = .white
@@ -215,59 +187,8 @@ class WeatherDetailView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - ToggleButton 설정
-    private func configureCustomToggleButton() {
-        
-            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(toggleButtonTapped))
-            changeButton1.addGestureRecognizer(tapGesture)
-            
-        changeButton1.snp.makeConstraints { make in
-                make.width.equalTo(100)
-                make.height.equalTo(30)
-                make.center.equalTo(self)  // You can adjust this position
-            }
-            
-            fLabel.snp.makeConstraints { make in
-                make.leading.top.bottom.equalToSuperview()
-                make.width.equalToSuperview().multipliedBy(0.5)
-            }
-            
-            cLabel.snp.makeConstraints { make in
-                make.trailing.top.bottom.equalToSuperview()
-                make.width.equalToSuperview().multipliedBy(0.5)
-            }
-            
-            toggleKnob.snp.makeConstraints { make in
-                make.top.bottom.equalToSuperview().inset(2)
-                make.width.equalTo(changeButton1.snp.height).offset(-4)
-                make.leading.equalToSuperview().offset(2)
-            }
-        }
-        
-        @objc private func toggleButtonTapped() {
-            isToggleOn.toggle()
-            
-            UIView.animate(withDuration: 0.3) {
-                if self.isToggleOn {
-                    self.toggleKnob.snp.remakeConstraints { make in
-                        make.top.bottom.equalToSuperview().inset(2)
-                        make.trailing.equalToSuperview().inset(2)
-                    }
-                    self.changeButton1.backgroundColor = .blue
-                } else {
-                    self.toggleKnob.snp.remakeConstraints { make in
-                        make.top.bottom.equalToSuperview().inset(2)
-                        make.width.equalTo(self.changeButton1.snp.height).offset(0)
-                        make.leading.equalToSuperview().offset(2)
-                    }
-                    self.changeButton1.backgroundColor = .gray
-                }
-                self.layoutIfNeeded()
-            }
-        }
     
-    
-    
+    // MARK: - func
     
     // ScrollView 설정
     private func configureScrollView() {
@@ -276,7 +197,7 @@ class WeatherDetailView: UIView {
         
         scrollView.addSubview(contentView)
         
-        [firstStackView, secondStackView, thirdStackView, fourthStackView, fifthStackView, topScrollView, bottomScrollView, weekCollectionView, humidityCollectionView, customToggleView].forEach {
+        [firstStackView, secondStackView, thirdStackView, fourthStackView, fifthStackView, topScrollView, bottomScrollView, weekCollectionView, humidityCollectionView, customToggleView, customToggleView2, customToggleView3].forEach {
             contentView.addSubview($0)
         }
         
@@ -288,9 +209,6 @@ class WeatherDetailView: UIView {
         addressLabel.snp.makeConstraints { make in
             make.top.equalTo(self).offset(68)
             make.centerX.equalTo(self)
-        }
-        [fLabel, cLabel, toggleKnob].forEach {
-            changeButton1.addSubview($0)
         }
         
         scrollView.snp.makeConstraints { make in
@@ -411,10 +329,24 @@ class WeatherDetailView: UIView {
         }
         
         customToggleView.snp.makeConstraints { make in
-            make.top.equalTo(firstStackView.snp.top)
-            make.leading.equalTo(firstStackView.snp.trailing).offset(100)
-            make.width.equalTo(100)
-            make.height.equalTo(60)
+            make.top.equalToSuperview()
+            make.trailing.equalToSuperview()
+            make.width.equalTo(54)
+            make.height.equalTo(30)
+        }
+        
+        customToggleView2.snp.makeConstraints { make in
+            make.top.equalTo(secondStackView.snp.top)
+            make.trailing.equalToSuperview()
+            make.width.equalTo(54)
+            make.height.equalTo(30)
+        }
+        
+        customToggleView3.snp.makeConstraints { make in
+            make.top.equalTo(thirdStackView.snp.top)
+            make.trailing.equalToSuperview()
+            make.width.equalTo(54)
+            make.height.equalTo(30)
         }
     }
 }
