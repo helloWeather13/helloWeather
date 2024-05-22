@@ -44,7 +44,6 @@ class CurrentWeatherTableViewCell: UITableViewCell {
         contentView.layer.cornerRadius = 8
         contentView.layer.borderWidth = 1
         contentView.layer.borderColor = UIColor(red: 0.93, green: 0.93, blue: 0.93, alpha: 1.00).cgColor
-        contentView.clipsToBounds = true
         
     }
     

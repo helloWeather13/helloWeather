@@ -13,8 +13,6 @@ class WeatherDetailViewController: UIViewController {
         super.viewDidLoad()
         
         self.view.backgroundColor = .white
-        
-        
         let weatherDetailView = WeatherDetailView(frame: self.view.bounds)
         self.view = weatherDetailView
     }

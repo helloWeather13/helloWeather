@@ -49,14 +49,13 @@ class ListTableViewCell: UITableViewCell {
     }
     override func layoutSubviews() {
         super.layoutSubviews()
-        
+
         contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 0, left: 0, bottom: 16, right: 0))
         contentView.layer.cornerRadius = 8
         contentView.layer.borderWidth = 1
         contentView.layer.borderColor = UIColor(red: 0.93, green: 0.93, blue: 0.93, alpha: 1.00).cgColor
-        contentView.clipsToBounds = true
-        
     }
+
     
     func configure(searchModel: SearchModel){
         self.makeConstraints()
@@ -111,9 +110,9 @@ class ListTableViewCell: UITableViewCell {
         swipeGestureRight.direction = .right
         self.addGestureRecognizer(swipeGestureRight)
         
-        
 
-        deleteButton.setImage(UIImage(systemName: "trash.fill"), for: .normal)
+        viewContainer.layer.masksToBounds = true
+        deleteButton.setImage(UIImage(named: "trash"), for: .normal)
         deleteButton.isHidden = true
         deleteView.backgroundColor = .red
         cityLabel.text = searchModel.city + ","
@@ -126,7 +125,7 @@ class ListTableViewCell: UITableViewCell {
         temperatureLabel.text = String(Int(weatherAPIModel.current?.feelslikeC ?? 0)) + "°"
         temperatureLabel.font = .boldSystemFont(ofSize: 42)
         temperatureLabel.sizeToFit()
-//        weatherImage.image = UIImage(named: "rainy")
+        weatherImage.image = UIImage(named: "rainy")
         weatherImage.contentMode = .scaleAspectFit
         minMaxTempLabel.text = String(Int(weatherAPIModel.forecast.forecastday[0].day.maxtempC)) + "°" + "/ " + String(Int(weatherAPIModel.forecast.forecastday[0].day.mintempC)) + "°"
         minMaxTempLabel.textColor = .secondaryLabel
@@ -177,24 +176,25 @@ class ListTableViewCell: UITableViewCell {
     }
     func makeConstraints(){
     
-        contentView.addSubview(viewContainer)
-        
         [cityLabel, conditionLabel,temperatureLabel,weatherImage,minMaxTempLabel,alarmImageView].forEach{
             viewContainer.addSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
             $0.tintColor = .label
+            $0.layer.masksToBounds = true
         }
+        
+        contentView.addSubview(viewContainer)
         contentView.addSubview(deleteView)
         deleteView.addSubview(deleteButton)
-        guard let superview = self.superview else { return }
 
         
         viewContainer.snp.makeConstraints{
             $0.bottom.top.leading.equalToSuperview()
             $0.trailing.equalToSuperview()
         }
+
         cityLabel.snp.makeConstraints{
-            $0.leading.equalTo(superview.snp.trailing).offset(16)
+            $0.leading.equalTo(viewContainer.snp.leading).offset(16)
             $0.top.equalTo(viewContainer).offset(16)
             
         }
@@ -215,7 +215,6 @@ class ListTableViewCell: UITableViewCell {
         weatherImage.snp.makeConstraints{
             $0.width.height.equalTo(36)
             $0.trailing.equalTo(viewContainer).offset(-16)
-//            $0.top.equalTo(alarmImageView.snp.bottom).inset(-19)
             $0.bottom.equalTo(viewContainer).offset(-16)
             
         }

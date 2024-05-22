@@ -37,7 +37,13 @@ class HomeViewModel: NSObject, CLLocationManagerDelegate {
     
     let webServiceManager = WebServiceManager.shared
     let userLocationManager = CLLocationManager()
-    var currentSearchModel : SearchModel?
+    var currentSearchModel : SearchModel? {
+        didSet{
+            if currentSearchModel?.city != "" || currentSearchModel?.fullAddress != ""{
+                self.getCurrentWeather()
+            }
+        }
+    }
     var bookMarkSearchModel : [SearchModel] = []
     var isBookmarked = false {
         didSet {
@@ -50,9 +56,9 @@ class HomeViewModel: NSObject, CLLocationManagerDelegate {
         }
     }
     var isNotification = false
-    var userLocationAddress: String = "" {
+    var userLocationAddress: String? {
         didSet {
-            addressOnCompleted(userLocationAddress)
+            addressOnCompleted(userLocationAddress!)
         }
     }
     var notfiedDiDChanged : ((Bool) -> ()) = { _ in }
@@ -65,8 +71,10 @@ class HomeViewModel: NSObject, CLLocationManagerDelegate {
             let currentTime = DateFormatter()
             currentTime.dateFormat = "HH"
             let currentHour = Int(currentTime.string(from: Date()))!
-            self.currentSearchModel = SearchModel(keyWord: "", fullAddress: "", lat: userLocationPoint.0, lon: userLocationPoint.1, city: "")
-            
+            if self.currentSearchModel == nil {
+                self.currentSearchModel = SearchModel(keyWord: "", fullAddress: "" , lat: userLocationPoint.0, lon: userLocationPoint.1, city: "")
+            }
+           
             dispatchGroup.enter()
             webServiceManager.getForecastWeather(searchModel: self.currentSearchModel!) { [unowned self] data in
                 if let currentData = data.current {
@@ -156,6 +164,12 @@ class HomeViewModel: NSObject, CLLocationManagerDelegate {
         
     }
     
+    func getCurrentWeather(){
+        userLocationAddress = self.currentSearchModel?.fullAddress ?? ""
+        userLocationPoint = (self.currentSearchModel?.lat ?? 0 , self.currentSearchModel?.lon ?? 0)
+        self.isBookmarked = self.isCurrentLocationBookMarked()
+        loadNotification()
+    }
     func getUserLocation() {
         let geocoder = CLGeocoder()
         let location = self.userLocationManager.location
@@ -167,7 +181,7 @@ class HomeViewModel: NSObject, CLLocationManagerDelegate {
                     
                     let x = placemark.location?.coordinate.latitude ?? 0
                     let y = placemark.location?.coordinate.longitude ?? 0
-                    userLocationPoint = (x, y)
+                    
                     
                     var address = ""
                     
@@ -183,8 +197,8 @@ class HomeViewModel: NSObject, CLLocationManagerDelegate {
                         address += "\(subLocality)"
                     }
                     userLocationAddress = address
-                    self.currentSearchModel?.fullAddress = address
-                    self.currentSearchModel?.city = address
+                    self.currentSearchModel = SearchModel(keyWord: "", fullAddress: address, lat: x, lon: y, city: address)
+                    userLocationPoint = (x, y)
                     self.isBookmarked = self.isCurrentLocationBookMarked()
                     loadNotification()
                 } else {
