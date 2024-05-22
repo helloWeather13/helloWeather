@@ -711,9 +711,7 @@
 				45D70DBE2BF3262300942DC1 /* XCRemoteSwiftPackageReference "ChartView" */,
 				1445AF512BF2F0630018AE3F /* XCRemoteSwiftPackageReference "animated-tab-bar" */,
 				1445AF562BF3203D0018AE3F /* XCRemoteSwiftPackageReference "RxSwift" */,
-				14E83D972BF7C10D004CAD62 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
 				14D0852A2BF8F07600C9B985 /* XCRemoteSwiftPackageReference "SkeletonView" */,
-				45C5268A2BFAF36200AA53E3 /* XCRemoteSwiftPackageReference "Charts" */,
 				B69CA1272BFDA7F90068BFA8 /* XCRemoteSwiftPackageReference "Tabman" */,
 				B6EADA332BFDA9FF006DA323 /* XCRemoteSwiftPackageReference "lottie-spm" */,
 			);
@@ -1203,22 +1201,6 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 1.31.0;
-			};
-		};
-		14E83D972BF7C10D004CAD62 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/hackiftekhar/IQKeyboardManager.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 7.0.3;
-			};
-		};
-		45C5268A2BFAF36200AA53E3 /* XCRemoteSwiftPackageReference "Charts" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/ChartsOrg/Charts.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 5.1.0;
 			};
 		};
 		45D70DBE2BF3262300942DC1 /* XCRemoteSwiftPackageReference "ChartView" */ = {
