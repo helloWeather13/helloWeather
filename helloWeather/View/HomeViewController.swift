@@ -11,7 +11,6 @@ import SnapKit
 class HomeViewController: UIViewController {
     
     let homeViewModel = HomeViewModel()
-    
     var bookmarkButton: UIButton = {
         let button = UIButton()
         button.imageView?.contentMode = .scaleAspectFit
@@ -104,7 +103,11 @@ class HomeViewController: UIViewController {
         setupAutoLayout()
         bind()
     }
-    
+    override func viewWillAppear(_ animated: Bool) {
+        if let existingAlertView = view.subviews.first(where: { $0.tag == 999 }) {
+            existingAlertView.removeFromSuperview()
+        }
+    }
     func setupNaviBar() {
         homeViewModel.addressOnCompleted = { [unowned self] address in
             self.navigationItem.title = address
@@ -218,19 +221,26 @@ class HomeViewController: UIViewController {
         }
     }
     @objc func bookmarkButtonTapped() {
+        
         if !homeViewModel.isBookmarked {
             homeViewModel.isBookmarked = true
             
+            let bookMarkImage = UIImageView()
+            bookMarkImage.image = .popupBookmark
+            showCustomAlert(image: bookMarkImage.image!, message: "북마크 페이지에 추가했어요.")
             UIView.animate(withDuration: 0.3, animations: {
                 self.notificationButton.tintColor = .black
                 self.notificationButton.snp.updateConstraints {
                     $0.leading.equalTo(self.bookmarkButton.snp.leading).offset(-32)
                 }
-                self.view.layoutIfNeeded()
+//                self.view.layoutIfNeeded()
             })
             self.homeViewModel.saveCurrentBookMark()
         } else {
             homeViewModel.isBookmarked = false
+            let bookMarkImage = UIImageView()
+            bookMarkImage.image = .popupBookmark1
+            showCustomAlert(image: bookMarkImage.image!, message: "북마크 페이지에서 삭제했어요.")
             UIView.animate(withDuration: 0.3, animations: {
                 self.notificationButton.tintColor = .clear
             }) { _ in
@@ -247,6 +257,20 @@ class HomeViewController: UIViewController {
     
     @objc func notificationButtonTapped() {
         self.homeViewModel.changeNotiCurrentBookMark()
+        if !homeViewModel.isNotified {
+            
+            let alarmImageYellow = UIImageView()
+            alarmImageYellow.image = .popupNotification1
+            homeViewModel.isNotified = false
+            showCustomAlert(image: alarmImageYellow.image!, message: "비소식 알림을 껐어요.")
+        }
+        else {
+            
+            let alarmImageYellow = UIImageView()
+            alarmImageYellow.image = .popupNotification
+            homeViewModel.isNotified = true
+            showCustomAlert(image: alarmImageYellow.image!, message: "비소식 1시간 전에 알림을 울려요.")
+        }
     }
     
 }

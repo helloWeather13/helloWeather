@@ -52,7 +52,7 @@ class ListTableViewCell: UITableViewCell {
         super.layoutSubviews()
         
         contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 0, left: 0, bottom: 16, right: 0))
-        contentView.layer.cornerRadius = 8
+        contentView.layer.cornerRadius = 15
         contentView.clipsToBounds = true
         
         // 드래그가 진행중인 경우 셀의 테두리를 사라지게합니다.
@@ -127,7 +127,6 @@ class ListTableViewCell: UITableViewCell {
             alarmImageYellow.image = .popupNotification1
             isAlarm = false
             viewController.showCustomAlert(image: alarmImageYellow.image!, message: "비소식 알림을 껐어요.")
-//            popUpAlert(message: "비소식 알림을 껐어요.")
         }
         else {
             alarmImageView.image = .alarm1
@@ -135,26 +134,9 @@ class ListTableViewCell: UITableViewCell {
             alarmImageYellow.image = .popupNotification
             isAlarm = true
             viewController.showCustomAlert(image: alarmImageYellow.image!, message: "비소식 1시간 전에 알림을 울려요.")
-//            popUpAlert(message: "비소식 1시간 전에 알림을 울려요.")
         }
     }
     
-//    func popUpAlert(message: String) {
-//        let alert = UIAlertController(title: "", message: message, preferredStyle: .alert)
-//     
-//        
-//        // 현재 활성화된 씬의 창 목록에서 첫 번째 창을 선택하여 알림을 표시합니다.
-//        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-//           let rootViewController = windowScene.windows.first?.rootViewController {
-//            rootViewController.present(alert, animated: true, completion: nil)
-//        }
-//        
-//        // 일정 시간이 지난 후 알림을 자동으로 닫습니다.
-//        Timer.scheduledTimer(withTimeInterval: 1.0 , repeats: false) { _ in
-//            alert.dismiss(animated: true, completion: nil)
-//        }
-//    }
-
     func configureUI(weatherAPIModel : WeatherAPIModel, searchModel : SearchModel) {
         let swipeGestureLeft = UISwipeGestureRecognizer(target: self, action: #selector(didSwipeCellLeft))
         swipeGestureLeft.direction = .left

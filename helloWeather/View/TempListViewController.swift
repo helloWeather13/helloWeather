@@ -27,6 +27,9 @@ class TempListViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.viewModel.applySnapshot()
+        if let existingAlertView = view.subviews.first(where: { $0.tag == 999 }) {
+            existingAlertView.removeFromSuperview()
+        }
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -287,7 +290,7 @@ extension TempListViewController: UITableViewDragDelegate {
         
         dragItem.previewProvider = {
             let dragPreviewParams = UIDragPreviewParameters()
-            dragPreviewParams.visiblePath = UIBezierPath(roundedRect:cellInsetContents, cornerRadius: 8.0)
+            dragPreviewParams.visiblePath = UIBezierPath(roundedRect:cellInsetContents, cornerRadius: 15.0)
             return UIDragPreview(view: cell.contentView, parameters: dragPreviewParams)
         }
         return [dragItem]
@@ -332,9 +335,14 @@ extension TempListViewController: UITableViewDropDelegate {
 }
 extension UIViewController {
     func showCustomAlert(image: UIImage, message: String) {
+        
+        if let existingAlertView = view.subviews.first(where: { $0.tag == 999 }) {
+            existingAlertView.removeFromSuperview()
+        }
+        
         // 사용자 정의 팝업 뷰를 만듭니다.
-        //        let customAlertView = UIView(frame: CGRect(x: 20, y: UIScreen.main.bounds.height, width: UIScreen.main.bounds.width - 40, height: 100))
         let customAlertView = UIView()
+        customAlertView.tag = 999
         customAlertView.backgroundColor = UIColor.black
         customAlertView.layer.cornerRadius = 8
         customAlertView.layer.shadowColor = UIColor.black.cgColor
@@ -342,10 +350,11 @@ extension UIViewController {
         customAlertView.layer.shadowOffset = CGSize(width: 0, height: 5)
         customAlertView.layer.shadowRadius = 8
         
+        
         // 이미지 뷰 설정
         let imageView = UIImageView(image: image)
         imageView.contentMode = .scaleAspectFit
-        //        customAlertView.addSubview(imageView)
+        customAlertView.addSubview(imageView)
         
         // 메시지 레이블 설정
         let messageLabel = UILabel()
@@ -353,89 +362,38 @@ extension UIViewController {
         messageLabel.textColor = .white
         messageLabel.textAlignment = .center
         messageLabel.numberOfLines = 0
-        //        customAlertView.addSubview(messageLabel)
+        customAlertView.addSubview(messageLabel)
         
-        let stackView: UIStackView = {
-            let stackView = UIStackView()
-            stackView.axis = .horizontal
-            stackView.alignment = .fill
-            stackView.distribution = .fillProportionally
-            stackView.addArrangedSubview(imageView)
-            stackView.addArrangedSubview(messageLabel)
-            return stackView
-        }()
-        customAlertView.addSubview(stackView)
         self.view.addSubview(customAlertView)
         
-        customAlertView.snp.makeConstraints { make in
-            make.bottom.equalTo(self.view.snp.bottom).inset(90)
-            make.centerX.equalToSuperview()
-            make.height.equalTo(40).priority(.high)
-            make.leading.greaterThanOrEqualTo(self.view.snp.leading).offset(20)
-            make.trailing.lessThanOrEqualTo(self.view.snp.trailing).offset(-20)
-        }
-        stackView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
-        // 이미지 뷰와 메시지 레이블의 비율 설정
-        imageView.setContentHuggingPriority(.defaultLow, for: .horizontal)
-        messageLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-        
-        imageView.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
-        messageLabel.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
-        
-        // 이미지 뷰의 최대 너비를 설정하여 크기 조정
         imageView.snp.makeConstraints { make in
-            make.width.equalTo(stackView.snp.width).multipliedBy(0.2).priority(.high)
-            make.height.lessThanOrEqualTo(20) // 이미지 뷰의 최대 높이 제한
+            make.leading.equalToSuperview().inset(10)
+            make.centerY.equalToSuperview()
+            make.width.equalTo(image.size.width)
         }
-        
-        // 메시지 레이블의 최소 너비를 설정하여 크기 조정
         messageLabel.snp.makeConstraints { make in
-            make.width.equalTo(stackView.snp.width).multipliedBy(0.8).priority(.high)
+            make.leading.equalTo(imageView.snp.trailing)
+            make.trailing.equalToSuperview().inset(10)
+            make.centerY.equalToSuperview()
         }
+        customAlertView.snp.makeConstraints { make in
+            make.bottom.equalTo(self.view.snp.bottom).inset(91)
+            make.centerX.equalToSuperview()
+            make.height.equalTo(max(image.size.height, 40))
+            make.width.equalTo(image.size.width + messageLabel.intrinsicContentSize.width + 30)
+        }
+        // 알럿 크기를 조절합니다.
+        customAlertView.transform = CGAffineTransform(scaleX: 0.98, y: 0.98)
         
-        //        imageView.snp.makeConstraints { make in
-        //            make.leading.equalToSuperview().inset(10)
-        //            make.centerY.equalToSuperview()
-        //        }
-        //        messageLabel.snp.makeConstraints { make in
-        //            make.leading.equalTo(imageView.snp.trailing).offset(1)
-        //            make.trailing.equalToSuperview().inset(10)
-        //            make.centerY.equalToSuperview()
-        //        }
-        
-        
-        //        NSLayoutConstraint.activate([
-        //            imageView.topAnchor.constraint(equalTo: customAlertView.topAnchor, constant: 10),
-        //            imageView.centerXAnchor.constraint(equalTo: customAlertView.centerXAnchor),
-        //            imageView.widthAnchor.constraint(equalToConstant: 40),
-        //            imageView.heightAnchor.constraint(equalToConstant: 40),
-        //
-        //            messageLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 10),
-        //            messageLabel.leadingAnchor.constraint(equalTo: customAlertView.leadingAnchor, constant: 10),
-        //            messageLabel.trailingAnchor.constraint(equalTo: customAlertView.trailingAnchor, constant: -10),
-        //            messageLabel.bottomAnchor.constraint(equalTo: customAlertView.bottomAnchor, constant: -10)
-        //        ])
-        
-        // 뷰 컨트롤러의 뷰에 사용자 정의 팝업 뷰를 추가합니다.
-        
-        
-        //        // 사용자 정의 팝업 뷰를 화면 아래로 이동시킵니다.
-        //        UIView.animate(withDuration: 0.5, animations: {
-        //            customAlertView.frame.origin.y -= 200
-        //        })
-        
-        // 일정 시간이 지난 후 사용자 정의 팝업 뷰를 자동으로 닫습니다.
-        //                Timer.scheduledTimer(withTimeInterval: 3, repeats: false) { _ in
-        //                    UIView.animate(withDuration: 0.5, animations: {
-        //                        customAlertView.frame.origin.y += customAlertView.frame.height
-        //                    }) { _ in
-        //                        customAlertView.removeFromSuperview()
-        //                    }
-        //                }
-        Timer.scheduledTimer(withTimeInterval: 3.0, repeats: false) { _ in
-            customAlertView.removeFromSuperview()
+        UIView.animate(withDuration: 0.8, delay: 0, options: [.curveEaseInOut]) {
+            customAlertView.transform = .identity
+        } completion: { _ in
+            Timer.scheduledTimer(withTimeInterval: 2, repeats: false) { _ in
+                
+                customAlertView.removeFromSuperview()
+            }
         }
     }
 }
+
+
