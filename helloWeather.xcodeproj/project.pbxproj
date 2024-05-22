@@ -91,7 +91,6 @@
 		14A1ACC52BFCFA4700CCFC1D /* Pretendard-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 148FCA322BFADF2D0042F1D9 /* Pretendard-Bold.ttf */; };
 		14B899B02BFD060D009F693D /* Nunito-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 14B899AF2BFD060D009F693D /* Nunito-Black.ttf */; };
 		14B899B12BFD060D009F693D /* Nunito-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 14B899AF2BFD060D009F693D /* Nunito-Black.ttf */; };
-		14B899B32BFD175C009F693D /* BarChartCell5.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B899B22BFD175C009F693D /* BarChartCell5.swift */; };
 		14B899B42BFD175C009F693D /* BarChartCell5.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B899B22BFD175C009F693D /* BarChartCell5.swift */; };
 		14D0852E2BF909D300C9B985 /* SkeletonView in Frameworks */ = {isa = PBXBuildFile; productRef = 14D0852D2BF909D300C9B985 /* SkeletonView */; };
 		14E83D912BF793CB004CAD62 /* TSBlurEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E83D902BF793CB004CAD62 /* TSBlurEffectView.swift */; };
@@ -804,7 +803,6 @@
 				146580CB2BF1E7EA0093AA81 /* AppDelegate.swift in Sources */,
 				1445AF5D2BF32C5A0018AE3F /* RelatedSearchTableViewCell.swift in Sources */,
 				146580ED2BF1E8D10093AA81 /* SearchViewController.swift in Sources */,
-				14B899B32BFD175C009F693D /* BarChartCell5.swift in Sources */,
 				9A5ACD982BF7B37C00DE586F /* FineDustUtil.swift in Sources */,
 				9A5ACD9B2BF7B42B00DE586F /* DustGroupStruct.swift in Sources */,
 				45D70DC22BF3325400942DC1 /* WeatherDetailView.swift in Sources */,
@@ -822,7 +820,6 @@
 				9A5ACD942BF7763600DE586F /* FineListViewModel.swift in Sources */,
 				9ABC1E212BF34BDC006A626C /* FineDustView.swift in Sources */,
 				9A8DF86C2BF6C4A3009F0DAB /* ChatModel.swift in Sources */,
-				146580E82BF1E8960093AA81 /* HomeViewController.swift in Sources */,
 				45C526902BFC4A8E00AA53E3 /* FirstDayAfterTomorrowCollectionViewCell.swift in Sources */,
 				9ABC1E292BF4BAD2006A626C /* ChartModel.swift in Sources */,
 				453593562BF8F637004BA149 /* WeatherDetailViewModel.swift in Sources */,
