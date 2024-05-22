@@ -109,10 +109,10 @@ class HomeViewController: UIViewController {
         setupAutoLayout()
         bind()
     }
-
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-       if let existingAlertView = view.subviews.first(where: { $0.tag == 999 }) {
+        if let existingAlertView = view.subviews.first(where: { $0.tag == 999 }) {
             existingAlertView.removeFromSuperview()
         }
         emptyView5.isHidden = false
@@ -127,7 +127,7 @@ class HomeViewController: UIViewController {
             }
             self.emptyView5.isHidden = true
         })
-       
+        
     }
     override func viewDidDisappear(_ animated: Bool) {
         emptyView5.isHidden = true
@@ -303,7 +303,7 @@ class HomeViewController: UIViewController {
                 self.notificationButton.snp.updateConstraints {
                     $0.leading.equalTo(self.bookmarkButton.snp.leading).offset(-32)
                 }
-//                self.view.layoutIfNeeded()
+                //                self.view.layoutIfNeeded()
             })
             self.homeViewModel.saveCurrentBookMark()
         } else {
@@ -354,7 +354,7 @@ class HomeViewController: UIViewController {
         let backButton = UIView()
         backButton.frame = CGRect(x: 0, y: 0, width: 24, height: 24)
         backButton.isUserInteractionEnabled = true // Enable user interaction
-
+        
         // Create the label for the button
         let backImage = UIImageView()
         backImage.image = UIImage(named: "chevron-left")
@@ -364,11 +364,11 @@ class HomeViewController: UIViewController {
         backImage.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
-
+        
         // Add a tap gesture recognizer to the deleteButton
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(backButtonTap))
         backButton.addGestureRecognizer(tapGesture)
-
+        
         // Create the UIBarButtonItem with the custom view
         let barButton = UIBarButtonItem(customView: backButton)
         navigationItem.leftBarButtonItem = barButton
