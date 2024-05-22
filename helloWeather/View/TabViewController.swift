@@ -16,6 +16,7 @@ class TabViewController: RAMAnimatedTabBarController  {
     override func viewDidLoad() {
         super.viewDidLoad()
         configure()
+        NotificationCenter.default.addObserver(self, selector: #selector(switchToMainTab), name: NSNotification.Name("SwitchTabNotification"), object: nil)
         //        deleteRecentSearch()
     }
     
@@ -28,23 +29,16 @@ class TabViewController: RAMAnimatedTabBarController  {
             $0.iconView!.icon.frame.origin.x = oldCenter
         }
         self.tabBar.configureMaterialBackground()
-//        self.tabBar.isTranslucent = false
-//        self.tabBar.tintColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.01)
-//        self.tabBar.isOpaque = true
-//        
-//        let appearance = UITabBarAppearance()
-//        appearance.configureWithOpaqueBackground()
-//        appearance.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1)
-//        tabBar.standardAppearance = appearance
-//        tabBar.scrollEdgeAppearance = appearance
     }
     
-    
+    @objc func switchToMainTab() {
+        self.selectedIndex = 0
+        self.tabViewModel.firstTab.playAnimation()
+        self.tabViewModel.secondTab.deselectedState()
+    }
     
     func deleteRecentSearch(){
-        //        recentSearch.removeAll()
         UserDefaults.standard.removeObject(forKey: "recentSearch")
-        //        self.applySnapshot()
     }
     
 }

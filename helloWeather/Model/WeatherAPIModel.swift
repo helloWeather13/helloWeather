@@ -36,7 +36,35 @@ struct Current: Codable { // 현재 시간 기준
 // MARK: - Condition
 struct Condition: Codable {
     let text: String // 날씨 컨디션 : 맑음, 등등
+    
+    func change() -> String {
+        switch self.text {
+        case "흐린", "구름 낀", "안개":
+            return "흐림"
+        case "맑음", "화창함":
+            return "맑음"
+        case "대체로 맑음":
+            return "대체로 맑음"
+        case "가벼운 소나기":
+            return "짧은 소나기"
+        case "곳곳에 가벼운 이슬비":
+            return "가벼운 비"
+        case "근처 곳곳에 비", "비":
+            return "비"
+        case "보통 또는 심한 소나기":
+            return "소나기"
+        case "폭우":
+            return "폭우"
+        case "근처에 천둥 발생":
+            return "낙뢰"
+        case "천둥을 동반한 보통 또는 심한 비":
+            return "뇌우"
+        default:
+            return ""
+        }
+    }
 }
+
 
 // MARK: - Forecast
 struct Forecast: Codable { // 미리 7일간의 데이터 저장용
@@ -51,7 +79,8 @@ struct Forecastday: Codable { // 하루 기준으로 나오는 정보
     let airQuality: AirQuality? // 미세먼지 정보
     let hour: [Hour] // 하루를 24시간으로 쪼개서 각각의 날씨 정보
     enum CodingKeys: String, CodingKey {
-        case date, day, astro, airQuality, hour
+        case date, day, hour, astro
+        case airQuality = "air_quality"
         
     }
 }

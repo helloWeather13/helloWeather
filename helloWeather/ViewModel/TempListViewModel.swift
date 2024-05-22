@@ -1,19 +1,30 @@
 import Foundation
 import UIKit
+import CoreLocation
 
+protocol TempListViewModelDelegate: AnyObject {
+    func didUpdateCurrentWeather(_ currentWeatherModel: SearchModel)
+}
 
-class TempListViewModel {
-    var currentWeatherModel : SearchModel = SearchModel(keyWord: "sda", fullAddress: "여의동", lat: 37.521715859, lon: 126.924290018, city: "여의동")
-    var bookMarkModel : [SearchModel] = []
-    var weatherAPIModel : [WeatherAPIModel] = []
-    var willDeleteSearchModel : SearchModel?
+class TempListViewModel: NSObject, CLLocationManagerDelegate {
+    var currentWeatherModel: SearchModel = SearchModel(keyWord: "", fullAddress: "", lat: 1.0, lon: 1.0, city: "")
+    var bookMarkModel: [SearchModel] = []
+    var weatherAPIModel: [WeatherAPIModel] = []
+    var willDeleteSearchModel: SearchModel?
     
-    //    init(){
-    //        loadBookMark()
-    //        applySnapshot()
-    //    }
-    func loadBookMark(){
-        // RecentSearch가 아니라 바껴야 함
+    // CLLocationManager 인스턴스 추가
+    let locationManager = CLLocationManager()
+    
+    override init() {
+        super.init()
+        locationManager.delegate = self
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
+        loadBookMark()
+        applySnapshot()
+    }
+    
+    func loadBookMark() {
         if let savedData = UserDefaults.standard.object(forKey: "bookMark") as? Data {
             let decoder = JSONDecoder()
             if let savedObject = try? decoder.decode([SearchModel].self, from: savedData) {
@@ -21,22 +32,23 @@ class TempListViewModel {
             }
         }
     }
-    func deleteBookMark(){
+    
+    func deleteBookMark() {
         guard let index = bookMarkModel.firstIndex(where: {
             $0.fullAddress == willDeleteSearchModel?.fullAddress
-        }) else {return}
+        }) else { return }
         bookMarkModel.remove(at: index)
         updateBookMark()
         self.applySnapshot()
     }
     
     func updateBookMark() {
-        // RecentSearch가 아니라 바껴야 함
         let encoder = JSONEncoder()
-        if let encoded = try? encoder.encode(self.bookMarkModel){
+        if let encoded = try? encoder.encode(self.bookMarkModel) {
             UserDefaults.standard.setValue(encoded, forKey: "bookMark")
         }
     }
+    
     var dataSource: UITableViewDiffableDataSource<ListViewSection, ListViewSectionItem>?
     
     func applySnapshot() {
@@ -46,9 +58,9 @@ class TempListViewModel {
         snapshot.appendSections([.space])
         snapshot.appendItems([.space])
         snapshot.appendSections([.listWeather])
-        let items:[ListViewSectionItem] = bookMarkModel.map({
+        let items: [ListViewSectionItem] = bookMarkModel.map {
             .listWeather($0)
-        })
+        }
         snapshot.appendItems(items)
         dataSource?.apply(snapshot, animatingDifferences: false)
     }
@@ -58,4 +70,42 @@ class TempListViewModel {
         updateBookMark()
         applySnapshot()
     }
+    
+    // CLLocationManagerDelegate 메서드
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let location = locations.last else { return }
+        let geocoder = CLGeocoder()
+        geocoder.reverseGeocodeLocation(location) { [weak self] (placemarks, error) in
+            if let error = error {
+                print("주소 불러오기 실패했지뭐얌 끼얏호우: \(error)")
+                return
+            }
+            
+            guard let self = self, let placemark = placemarks?.first else { return }
+            
+            let address = [
+                placemark.administrativeArea,
+                placemark.subAdministrativeArea,
+                placemark.locality,
+                placemark.subLocality
+            ].compactMap { $0 }.joined(separator: " ")
+            
+            self.currentWeatherModel = SearchModel(
+                keyWord: "",
+                fullAddress: address,
+                lat: location.coordinate.latitude,
+                lon: location.coordinate.longitude,
+                city: address
+            )
+            
+            self.applySnapshot()
+            self.delegate?.didUpdateCurrentWeather(self.currentWeatherModel)
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print("Failed to get user location: \(error)")
+    }
+    
+    weak var delegate: TempListViewModelDelegate?
 }

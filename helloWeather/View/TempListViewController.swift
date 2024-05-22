@@ -101,6 +101,7 @@ class TempListViewController: UIViewController {
                     .disposed(by: cell.disposeBag)
                 
                 cell.selectionStyle = .none
+                
                 return cell
             }
         })
@@ -222,8 +223,21 @@ extension TempListViewController: UITableViewDelegate {
                     }) { _ in
                         UIView.animate(withDuration: 0.15) {
                             selectedCell.transform = .identity
+            switch item {
+            case .currentWeather(let currentSearchModel) :
+                // 0.2초의 딜레이 후에 탭바 전환
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                    // 클릭한 셀의 애니메이션
+                    if let cell = tableView.cellForRow(at: indexPath) {
+                        UIView.animate(withDuration: 0.15, animations: {
+                            cell.transform = CGAffineTransform(scaleX: 1.05, y: 1.05)
+                        }) { _ in
+                            UIView.animate(withDuration: 0.15) {
+                                cell.transform = .identity
+                            }
                         }
                     }
+                    NotificationCenter.default.post(name: NSNotification.Name("SwitchTabNotification"), object: currentSearchModel, userInfo: nil)
                 }
             }
             
@@ -241,12 +255,24 @@ extension TempListViewController: UITableViewDelegate {
                 }) { _ in
                     UIView.animate(withDuration: 0.15) {
                         cell.transform = .identity
+            case .listWeather(let searchModel):
+                // 0.2초의 딜레이 후에 탭바 전환
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                    // 클릭한 셀의 애니메이션
+                    if let cell = tableView.cellForRow(at: indexPath) {
+                        UIView.animate(withDuration: 0.15, animations: {
+                            cell.transform = CGAffineTransform(scaleX: 1.05, y: 1.05)
+                        }) { _ in
+                            UIView.animate(withDuration: 0.15) {
+                                cell.transform = .identity
+                            }
+                        }
                     }
+                    NotificationCenter.default.post(name: NSNotification.Name("SwitchTabNotification"), object: searchModel, userInfo: nil)
                 }
+            case .space:
+                return
             }
-        default:
-            break
-        }
     }
     
     func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {

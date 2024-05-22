@@ -11,10 +11,13 @@ import RxSwift
 import SnapKit
 import MapKit
 
+protocol TransferDataToMainDelegate {
+    func searchDidTouched(searchModel : SearchModel)
+}
 class SearchViewController: UIViewController {
     var viewModel = SearchViewModel()
     var disposeBag = DisposeBag()
-    
+    var delegate : TransferDataToMainDelegate?
     var searchBar: UISearchBar!
     var titleLabel : UILabel!
     var tableView: UITableView!
@@ -26,6 +29,7 @@ class SearchViewController: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         configure()
         searchBarConfigure()
         tableViewConfigure()
@@ -189,7 +193,7 @@ class SearchViewController: UIViewController {
         searchBar.searchTextField.layer.borderWidth = 1
         searchBar.searchTextField.layer.cornerRadius = 10
         searchBar.enablesReturnKeyAutomatically = false
-        searchBar.setLeftImage(UIImage(systemName: "fan.floor")!)
+        searchBar.setLeftImage(UIImage(named: "search-1")!)
         searchBar.rx.text.orEmpty
             .skip(1)
             .debounce(.milliseconds(300), scheduler: MainScheduler.instance)
@@ -241,11 +245,13 @@ extension SearchViewController : UITableViewDelegate {
         guard let item = self.viewModel.dataSource?.itemIdentifier(for: indexPath) else { return }
         switch item {
         case.recentSearch(let recentSearch):
-            self.viewModel.getWeatherResult(searchModel: recentSearch)
+            self.delegate?.searchDidTouched(searchModel: recentSearch)
+            navigationController?.popViewController(animated: false)
         case .relatedSearch(let relatedSearch):
+            self.delegate?.searchDidTouched(searchModel: relatedSearch)
             self.searchBar.resignFirstResponder()
             self.viewModel.appendRecentSearch(data: relatedSearch)
-            //            self.viewModel.getWeatherResult(searchModel: relatedSearch)
+            navigationController?.popViewController(animated: false)
         }
     }
     
