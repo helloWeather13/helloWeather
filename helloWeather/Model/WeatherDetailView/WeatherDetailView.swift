@@ -223,13 +223,8 @@ class WeatherDetailView: UIView {
     
     private func configureConstraints() {
         
-        addressLabel.snp.makeConstraints { make in
-            make.top.equalTo(self).offset(68)
-            make.centerX.equalTo(self)
-        }
-        
         scrollView.snp.makeConstraints { make in
-            make.top.equalTo(addressLabel.snp.bottom).offset(76)
+            make.top.equalToSuperview().offset(130)
             make.leading.equalToSuperview().offset(20)
             make.trailing.equalToSuperview().inset(20)
             make.bottom.equalToSuperview()

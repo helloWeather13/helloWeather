@@ -57,6 +57,8 @@ class WeatherDetailViewModel {
     private var disposeBag = DisposeBag()
     
     var temperatureUnit: TemperatureUnit = .celsius
+    var temperatureUnit2: TemperatureUnit = .celsius
+    var temperatureUnit3: TemperatureUnit = .celsius
     let temperatureUnitSubject = BehaviorSubject<TemperatureUnit>(value: .celsius)
     
     
@@ -183,7 +185,18 @@ class WeatherDetailViewModel {
             temperatureUnit = (temperatureUnit == .celsius) ? .fahrenheit : .celsius
             // 온도 단위 변경을 UI에 알리는 Observable 업데이트
             temperatureUnitSubject.onNext(temperatureUnit)
-        print(temperatureUnit)
+        }
+    
+    func toggleTemperatureUnit2() {
+            temperatureUnit2 = (temperatureUnit2 == .celsius) ? .fahrenheit : .celsius
+            // 온도 단위 변경을 UI에 알리는 Observable 업데이트
+            temperatureUnitSubject.onNext(temperatureUnit2)
+        }
+    
+    func toggleTemperatureUnit3() {
+            temperatureUnit3 = (temperatureUnit3 == .celsius) ? .fahrenheit : .celsius
+            // 온도 단위 변경을 UI에 알리는 Observable 업데이트
+            temperatureUnitSubject.onNext(temperatureUnit3)
         }
     
 }

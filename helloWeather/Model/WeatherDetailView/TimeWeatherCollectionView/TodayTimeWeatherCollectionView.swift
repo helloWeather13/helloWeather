@@ -112,8 +112,8 @@ class TodayTimeWeatherCollectionView: UICollectionView, UICollectionViewDelegate
         cell.configureConstraints(data: hourlyWeather)
         
         // ViewModel에서 현재 온도 단위 가져오기
-        var temperatureUnit = viewModel?.temperatureUnit ?? .fahrenheit
-        if temperatureUnit == .celsius {
+        let temperatureUnit2 = viewModel?.temperatureUnit2 ?? .fahrenheit
+        if temperatureUnit2 == .celsius {
             cell.celsiusLabel.text = hourlyWeather.tempC
         } else {
             cell.celsiusLabel.text = hourlyWeather.tempF
@@ -159,8 +159,8 @@ class TodayTimeWeatherCollectionView: UICollectionView, UICollectionViewDelegate
         for case let cell as SecondLeftCollectionViewCell in self.visibleCells {
             guard let indexPath = self.indexPath(for: cell) else { continue }
             let hourlyWeather = hourlyWeatherData[indexPath.item]
-            if let temperatureUnit = viewModel?.temperatureUnit {
-                cell.celsiusLabel.text = (temperatureUnit == .celsius) ? hourlyWeather.feelslikeC : hourlyWeather.feelslikeF
+            if let temperatureUnit2 = viewModel?.temperatureUnit2 {
+                cell.celsiusLabel.text = (temperatureUnit2 == .celsius) ? hourlyWeather.feelslikeC : hourlyWeather.feelslikeF
             }
         }
     }

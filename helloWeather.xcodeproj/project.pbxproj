@@ -97,8 +97,6 @@
 		14E83D932BF79FF5004CAD62 /* DeleteAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E83D922BF79FF5004CAD62 /* DeleteAlertView.swift */; };
 		14E83D962BF7B6FE004CAD62 /* EmptySearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E83D952BF7B6FE004CAD62 /* EmptySearchView.swift */; };
 		453593562BF8F637004BA149 /* WeatherDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453593552BF8F637004BA149 /* WeatherDetailViewModel.swift */; };
-		45B332E42BFE561C00002B9D /* CustomToggleView3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B332E32BFE561C00002B9D /* CustomToggleView3.swift */; };
-		45B332E62BFE563300002B9D /* CustomToggleView4.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B332E52BFE563300002B9D /* CustomToggleView4.swift */; };
 		45C526902BFC4A8E00AA53E3 /* FirstDayAfterTomorrowCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C5268F2BFC4A8E00AA53E3 /* FirstDayAfterTomorrowCollectionViewCell.swift */; };
 		45D70DBD2BF3145C00942DC1 /* WeatherDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D70DBC2BF3145C00942DC1 /* WeatherDetailViewController.swift */; };
 		45D70DC02BF3262300942DC1 /* SwiftUICharts in Frameworks */ = {isa = PBXBuildFile; productRef = 45D70DBF2BF3262300942DC1 /* SwiftUICharts */; };
@@ -249,8 +247,6 @@
 		14E83D922BF79FF5004CAD62 /* DeleteAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAlertView.swift; sourceTree = "<group>"; };
 		14E83D952BF7B6FE004CAD62 /* EmptySearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptySearchView.swift; sourceTree = "<group>"; };
 		453593552BF8F637004BA149 /* WeatherDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDetailViewModel.swift; sourceTree = "<group>"; };
-		45B332E32BFE561C00002B9D /* CustomToggleView3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomToggleView3.swift; sourceTree = "<group>"; };
-		45B332E52BFE563300002B9D /* CustomToggleView4.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomToggleView4.swift; sourceTree = "<group>"; };
 		45C5268F2BFC4A8E00AA53E3 /* FirstDayAfterTomorrowCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstDayAfterTomorrowCollectionViewCell.swift; sourceTree = "<group>"; };
 		45D70DBC2BF3145C00942DC1 /* WeatherDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDetailViewController.swift; sourceTree = "<group>"; };
 		45D70DC12BF3325400942DC1 /* WeatherDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDetailView.swift; sourceTree = "<group>"; };
@@ -608,8 +604,6 @@
 				9A8DF86A2BF6C48E009F0DAB /* Chat */,
 				9ABC1E272BF4BAAF006A626C /* Chart */,
 				9A5D54242BFE058900E672D5 /* CustomToggleView2.swift */,
-				45B332E32BFE561C00002B9D /* CustomToggleView3.swift */,
-				45B332E52BFE563300002B9D /* CustomToggleView4.swift */,
 			);
 			path = FineDust;
 			sourceTree = "<group>";
@@ -809,9 +803,7 @@
 				45D70DE52BF5460500942DC1 /* HumidityCollectionView.swift in Sources */,
 				45D70DE72BF5469700942DC1 /* HumidityCollectionViewCell.swift in Sources */,
 				52AB828C2BF7EFFE00612D95 /* SpaceCellViewModel.swift in Sources */,
-				45B332E42BFE561C00002B9D /* CustomToggleView3.swift in Sources */,
 				45D70DC82BF3342E00942DC1 /* SecondRightCollectionViewCell.swift in Sources */,
-				45B332E62BFE563300002B9D /* CustomToggleView4.swift in Sources */,
 				45D70DCF2BF3402A00942DC1 /* FirstRightCollectionViewCell.swift in Sources */,
 				45D70DDB2BF4DBFD00942DC1 /* TomorrowTimeCelsiusCollectionView.swift in Sources */,
 				45D70DCA2BF3344000942DC1 /* WeekCollectionViewCell.swift in Sources */,

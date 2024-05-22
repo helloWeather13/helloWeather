@@ -60,11 +60,14 @@ class TomorrowTimeWeatherCollectionView: UICollectionView, UICollectionViewDeleg
                 let requiredCellCount = min(8, max(0, 16 - todayCellCount))
                 nextDayHourlyWeather = Array(nextDayHourlyWeather.prefix(requiredCellCount))
                 
-//                print("필터링된 데이터: \(nextDayHourlyWeather)")
-//                print("오늘 데이터: \(todayCellCount)")
-//                print("내일 데이터: \(requiredCellCount)")
                 self.hourlyWeatherData = nextDayHourlyWeather
                 self.reloadData()
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel?.temperatureUnitSubject
+            .subscribe(onNext: { [weak self] _ in
+                self?.updateCellTemperatureLabels()
             })
             .disposed(by: disposeBag)
     }
@@ -108,7 +111,13 @@ class TomorrowTimeWeatherCollectionView: UICollectionView, UICollectionViewDeleg
         let hourlyWeather = hourlyWeatherData[indexPath.item]
         cell.configureConstraints(data: hourlyWeather)
         
-        cell.celsiusLabel.text = hourlyWeather.tempC
+        // ViewModel에서 현재 온도 단위 가져오기
+        let temperatureUnit2 = viewModel?.temperatureUnit2 ?? .fahrenheit
+        if temperatureUnit2 == .celsius {
+            cell.celsiusLabel.text = hourlyWeather.tempC
+        } else {
+            cell.celsiusLabel.text = hourlyWeather.tempF
+        }
         cell.timeLabel.text = hourlyWeather.time
         
         setupWeatherImage(data: hourlyWeather, cell: cell)
@@ -132,4 +141,13 @@ class TomorrowTimeWeatherCollectionView: UICollectionView, UICollectionViewDeleg
         return CGSize(width: width, height: height)
     }
 
+    private func updateCellTemperatureLabels() {
+        for case let cell as SecondLeftCollectionViewCell in self.visibleCells {
+            guard let indexPath = self.indexPath(for: cell) else { continue }
+            let hourlyWeather = hourlyWeatherData[indexPath.item]
+            if let temperatureUnit2 = viewModel?.temperatureUnit2 {
+                cell.celsiusLabel.text = (temperatureUnit2 == .celsius) ? hourlyWeather.feelslikeC : hourlyWeather.feelslikeF
+            }
+        }
+    }
 }

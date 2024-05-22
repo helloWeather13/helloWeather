@@ -88,7 +88,7 @@ class TodayTimeCelsiusCollectionView: UICollectionView, UICollectionViewDelegate
         cell.configureConstraints(data: hourlyWeather)
         
         // ViewModel에서 현재 온도 단위 가져오기
-        var temperatureUnit = viewModel?.temperatureUnit ?? .fahrenheit
+        let temperatureUnit = viewModel?.temperatureUnit ?? .fahrenheit
         if temperatureUnit == .celsius {
             cell.celsiusLabel.text = hourlyWeather.feelslikeC
         } else {

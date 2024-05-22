@@ -91,8 +91,8 @@ class WeekCollectionView: UICollectionView, UICollectionViewDelegate, UICollecti
         cell.dateLabel.text = dailyWeather.date
         
         // ViewModel에서 현재 온도 단위 가져오기
-        var temperatureUnit = viewModel?.temperatureUnit ?? .fahrenheit
-        if temperatureUnit == .celsius {
+        var temperatureUnit3 = viewModel?.temperatureUnit3 ?? .fahrenheit
+        if temperatureUnit3 == .celsius {
             cell.maxCelsiusLabel.text = dailyWeather.mintempC
             cell.minCelsiusLabel.text = dailyWeather.maxtempC
         } else {
@@ -141,9 +141,9 @@ class WeekCollectionView: UICollectionView, UICollectionViewDelegate, UICollecti
         for case let cell as WeekCollectionViewCell in self.visibleCells {
             guard let indexPath = self.indexPath(for: cell) else { continue }
             let dailyWeather = dailyWeatherData[indexPath.item]
-            if let temperatureUnit = viewModel?.temperatureUnit {
-                cell.maxCelsiusLabel.text = (temperatureUnit == .celsius) ? dailyWeather.mintempC : dailyWeather.mintempF
-                cell.minCelsiusLabel.text = (temperatureUnit == .celsius) ? dailyWeather.maxtempC :
+            if let temperatureUnit3 = viewModel?.temperatureUnit3 {
+                cell.maxCelsiusLabel.text = (temperatureUnit3 == .celsius) ? dailyWeather.mintempC : dailyWeather.mintempF
+                cell.minCelsiusLabel.text = (temperatureUnit3 == .celsius) ? dailyWeather.maxtempC :
                 dailyWeather.maxtempF
             }
         }
