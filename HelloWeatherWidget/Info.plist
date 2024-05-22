@@ -9,6 +9,10 @@
 		<string>Pretendard-ExtraLight.ttf</string>
 		<string>Pretendard-Light.ttf</string>
 		<string>Pretendard-Regular.ttf</string>
+		<string>Montserrat-ExtraBold.ttf</string>
+		<string>Pretendard-Bold.ttf</string>
+		<string>Pretendard-Regular.ttf</string>
+		<string>Nunito-Black.ttf</string>
 	</array>
 	<key>NSExtension</key>
 	<dict>

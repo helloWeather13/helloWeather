@@ -87,6 +87,12 @@
 		148FCA572BFADF2E0042F1D9 /* Pretendard-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 148FCA372BFADF2D0042F1D9 /* Pretendard-Regular.ttf */; };
 		148FCA582BFADF2E0042F1D9 /* Pretendard-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 148FCA382BFADF2D0042F1D9 /* Pretendard-SemiBold.ttf */; };
 		148FCA592BFADF2E0042F1D9 /* Pretendard-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 148FCA392BFADF2D0042F1D9 /* Pretendard-Thin.ttf */; };
+		14A1ACC42BFCF2B200CCFC1D /* Montserrat-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 148FCA222BFADF2D0042F1D9 /* Montserrat-ExtraBold.ttf */; };
+		14A1ACC52BFCFA4700CCFC1D /* Pretendard-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 148FCA322BFADF2D0042F1D9 /* Pretendard-Bold.ttf */; };
+		14B899B02BFD060D009F693D /* Nunito-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 14B899AF2BFD060D009F693D /* Nunito-Black.ttf */; };
+		14B899B12BFD060D009F693D /* Nunito-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 14B899AF2BFD060D009F693D /* Nunito-Black.ttf */; };
+		14B899B32BFD175C009F693D /* BarChartCell5.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B899B22BFD175C009F693D /* BarChartCell5.swift */; };
+		14B899B42BFD175C009F693D /* BarChartCell5.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B899B22BFD175C009F693D /* BarChartCell5.swift */; };
 		14D0852E2BF909D300C9B985 /* SkeletonView in Frameworks */ = {isa = PBXBuildFile; productRef = 14D0852D2BF909D300C9B985 /* SkeletonView */; };
 		14E83D912BF793CB004CAD62 /* TSBlurEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E83D902BF793CB004CAD62 /* TSBlurEffectView.swift */; };
 		14E83D932BF79FF5004CAD62 /* DeleteAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E83D922BF79FF5004CAD62 /* DeleteAlertView.swift */; };
@@ -229,6 +235,8 @@
 		148FCA392BFADF2D0042F1D9 /* Pretendard-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Thin.ttf"; sourceTree = "<group>"; };
 		148FCA5F2BFB63AF0042F1D9 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		148FCA612BFB63AF0042F1D9 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		14B899AF2BFD060D009F693D /* Nunito-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Nunito-Black.ttf"; sourceTree = "<group>"; };
+		14B899B22BFD175C009F693D /* BarChartCell5.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarChartCell5.swift; sourceTree = "<group>"; };
 		14E83D902BF793CB004CAD62 /* TSBlurEffectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TSBlurEffectView.swift; sourceTree = "<group>"; };
 		14E83D922BF79FF5004CAD62 /* DeleteAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAlertView.swift; sourceTree = "<group>"; };
 		14E83D952BF7B6FE004CAD62 /* EmptySearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptySearchView.swift; sourceTree = "<group>"; };
@@ -422,6 +430,7 @@
 				1485D6F12BFC4BC400D69ABF /* HelloWeatherWidget.swift */,
 				1485D6F32BFC4BC600D69ABF /* Assets.xcassets */,
 				1485D6F52BFC4BC600D69ABF /* Info.plist */,
+				14B899B22BFD175C009F693D /* BarChartCell5.swift */,
 			);
 			path = HelloWeatherWidget;
 			sourceTree = "<group>";
@@ -480,6 +489,7 @@
 		148FCA3B2BFADF2D0042F1D9 /* Font */ = {
 			isa = PBXGroup;
 			children = (
+				14B899AF2BFD060D009F693D /* Nunito-Black.ttf */,
 				148FCA1D2BFADF2D0042F1D9 /* GmarketSans */,
 				148FCA302BFADF2D0042F1D9 /* Montserrat */,
 				148FCA3A2BFADF2D0042F1D9 /* Pretendard */,
@@ -716,6 +726,7 @@
 				148FCA522BFADF2E0042F1D9 /* Pretendard-Bold.ttf in Resources */,
 				148FCA512BFADF2E0042F1D9 /* Pretendard-Black.ttf in Resources */,
 				148FCA3D2BFADF2E0042F1D9 /* GmarketSansTTFLight.ttf in Resources */,
+				14B899B02BFD060D009F693D /* Nunito-Black.ttf in Resources */,
 				148FCA562BFADF2E0042F1D9 /* Pretendard-Medium.ttf in Resources */,
 				146580D72BF1E7EB0093AA81 /* Base in Resources */,
 				148FCA432BFADF2E0042F1D9 /* Montserrat-ExtraBold.ttf in Resources */,
@@ -739,10 +750,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				1485D70D2BFCA4A700D69ABF /* Pretendard-Light.ttf in Resources */,
+				14B899B12BFD060D009F693D /* Nunito-Black.ttf in Resources */,
 				1485D70E2BFCA59900D69ABF /* Pretendard-Regular.ttf in Resources */,
 				1485D70B2BFCA36800D69ABF /* Pretendard-Medium.ttf in Resources */,
 				1485D7092BFC9C6D00D69ABF /* Assets.xcassets in Resources */,
+				14A1ACC52BFCFA4700CCFC1D /* Pretendard-Bold.ttf in Resources */,
 				1485D70C2BFCA4A400D69ABF /* Pretendard-ExtraLight.ttf in Resources */,
+				14A1ACC42BFCF2B200CCFC1D /* Montserrat-ExtraBold.ttf in Resources */,
 				1485D6F42BFC4BC600D69ABF /* Assets.xcassets in Resources */,
 				1485D70A2BFC9D1C00D69ABF /* GmarketSansTTFBold.ttf in Resources */,
 			);
@@ -780,6 +794,7 @@
 				146580CB2BF1E7EA0093AA81 /* AppDelegate.swift in Sources */,
 				1445AF5D2BF32C5A0018AE3F /* RelatedSearchTableViewCell.swift in Sources */,
 				146580ED2BF1E8D10093AA81 /* SearchViewController.swift in Sources */,
+				14B899B32BFD175C009F693D /* BarChartCell5.swift in Sources */,
 				9A5ACD982BF7B37C00DE586F /* FineDustUtil.swift in Sources */,
 				9A5ACD9B2BF7B42B00DE586F /* DustGroupStruct.swift in Sources */,
 				45D70DC22BF3325400942DC1 /* WeatherDetailView.swift in Sources */,
@@ -823,6 +838,7 @@
 			files = (
 				1485D6FF2BFC4DD200D69ABF /* LocationManager.swift in Sources */,
 				1485D6F02BFC4BC400D69ABF /* HelloWeatherWidgetBundle.swift in Sources */,
+				14B899B42BFD175C009F693D /* BarChartCell5.swift in Sources */,
 				1485D6F22BFC4BC400D69ABF /* HelloWeatherWidget.swift in Sources */,
 				1485D7052BFC844D00D69ABF /* WidgetModel.swift in Sources */,
 				1485D7002BFC503600D69ABF /* SearchModel.swift in Sources */,

@@ -79,3 +79,10 @@ struct WidgetHour: Codable {
         case airQuality = "air_quality"
     }
 }
+
+
+struct CurrentWeather {
+    let temp : String
+    let image : String
+    let time : String
+}
