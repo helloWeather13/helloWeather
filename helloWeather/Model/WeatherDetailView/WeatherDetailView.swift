@@ -194,7 +194,7 @@ class WeatherDetailView: UIView {
         
         super.init(frame: frame)
         
-        self.backgroundColor = .white
+        self.backgroundColor = .clear
         configureScrollView()
         configureConstraints()
         setupSunData()
@@ -224,7 +224,7 @@ class WeatherDetailView: UIView {
     private func configureConstraints() {
         
         scrollView.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(130)
+            make.top.equalToSuperview().offset(80)
             make.leading.equalToSuperview().offset(20)
             make.trailing.equalToSuperview().inset(20)
             make.bottom.equalToSuperview()
@@ -347,24 +347,24 @@ class WeatherDetailView: UIView {
         }
     
         sunGraph.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(14)
+            make.top.equalToSuperview().offset(10)
             make.centerX.equalToSuperview()
-            make.height.equalTo(115)
-            make.width.equalTo(270)
+            make.height.equalTo(154)
+            make.width.equalTo(300)
         }
         
         sunriseLabel.snp.makeConstraints { make in
-            make.top.equalTo(sunGraph.snp.bottom).offset(5)
+            make.top.equalTo(sunGraph.snp.bottom).inset(12)
             make.leading.equalToSuperview().offset(45)
         }
         
         sunsetLabel.snp.makeConstraints { make in
-            make.top.equalTo(sunGraph.snp.bottom).offset(5)
+            make.top.equalTo(sunGraph.snp.bottom).inset(12)
             make.trailing.equalToSuperview().inset(45)
         }
         
         sunriseInfoLabel.snp.makeConstraints { make in
-            make.top.equalTo(sunsetLabel.snp.bottom).offset(38)
+            make.top.equalTo(sunsetLabel.snp.bottom).offset(34)
             make.centerX.equalTo(sunView)
         }
         

@@ -302,7 +302,7 @@ class HomeViewController: UIViewController {
             $0.centerX.equalToSuperview()
         }
         
-        scrollAnimation.loopMode = .repeat(4)
+        scrollAnimation.loopMode = .loop
         scrollAnimation.play { _ in
             UIView.animate(withDuration: 0.5, animations: {
                 self.scrollAnimation.alpha = 1
@@ -310,7 +310,7 @@ class HomeViewController: UIViewController {
         }
     }
     
-    func bind(){
+    func bind() {
         self.homeViewModel.bookMarkDidChanged = { isBookmarked in
             if isBookmarked {
                 self.bookmarkButton.setBackgroundImage(UIImage(named: "bookmark_S-1"), for: .normal)
