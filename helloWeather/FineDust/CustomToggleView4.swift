@@ -37,7 +37,7 @@ class CustomToggleView4: UIView {
     }
     
     private func setupView() {
-        backgroundRectangle.backgroundColor = UIColor.lightGray.withAlphaComponent(0.4)
+        backgroundRectangle.backgroundColor = .mylightgray
         backgroundRectangle.layer.cornerRadius = 10
         addSubview(backgroundRectangle)
         
@@ -96,9 +96,9 @@ class CustomToggleView4: UIView {
             } else {
                 self.toggleLeadingConstraint?.update(offset: 4)
             }
-            self.leftLabel.textColor = self.isOn ? .gray : .black
+            self.leftLabel.textColor = self.isOn ? .mymediumgray : .black
             self.leftLabel.font = self.isOn ? .systemFont(ofSize: 13, weight: .medium) : .systemFont(ofSize: 13, weight: .bold)
-            self.rightLabel.textColor = self.isOn ? .black : .gray
+            self.rightLabel.textColor = self.isOn ? .black : .mymediumgray
             self.rightLabel.font = self.isOn ? .systemFont(ofSize: 13, weight: .bold) : .systemFont(ofSize: 13, weight: .medium)
             self.layoutIfNeeded()
         }
