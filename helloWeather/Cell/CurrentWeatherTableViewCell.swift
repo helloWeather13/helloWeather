@@ -13,6 +13,7 @@ class CurrentWeatherTableViewCell: UITableViewCell {
     
     static var identifier = "CurrentWeatherTableViewCell"
     
+    weak var tempListViewController: UIViewController?
     var cityLabel = UILabel()
     var conditionLabel = UILabel()
     var temperatureLabel = UILabel()
@@ -23,6 +24,8 @@ class CurrentWeatherTableViewCell: UITableViewCell {
     var temperatureTextLabel = UILabel()
     var dustLabel = UILabel()
     var currentLocationImageView = UIImageView()
+    
+    var isBookmarked = false
     
     
     //    var weatherAPIModel : WeatherAPIModel?
@@ -84,6 +87,10 @@ class CurrentWeatherTableViewCell: UITableViewCell {
         currentLocationImageView.image = UIImage.location
         setupWeatherImage()
         
+        isBookmarked = searchModel.notification
+        alarmImageView.image = isBookmarked ? .bookmarkS0 : .bookmarkS1
+        setupAlarmImageView()
+        
         let yesterdayTemp = historyAPIModel.forecast.forecastday[0].day.avgtempC
         let difference = Int(todayTemp - yesterdayTemp)
         if difference < 0 {
@@ -94,7 +101,35 @@ class CurrentWeatherTableViewCell: UITableViewCell {
             temperatureTextLabel.text = "어제랑 기온이 같음"
         }
         temperatureTextLabel.font = .systemFont(ofSize: 11)
-        dustLabel.text = "미세 \(String((weatherAPIModel.current?.airQuality.fine)!))ㆍ초미세 \(String((weatherAPIModel.current?.airQuality.micro)!))"
+//        dustLabel.text = "미세 \(String((weatherAPIModel.current?.airQuality.fine)!))ㆍ초미세 \(String((weatherAPIModel.current?.airQuality.micro)!))"
+        let mise = Double((weatherAPIModel.current?.airQuality.fine!)!)
+        let chomise = Double((weatherAPIModel.current?.airQuality.micro)!)
+        
+        switch mise {
+        case 0..<30:
+            dustLabel.text = "미세 좋음"
+        case 30..<80:
+            dustLabel.text = "미세 보통"
+        case 81..<150:
+            dustLabel.text = "미세 나쁨"
+        case 150...:
+            dustLabel.text = "미세 매우 나쁨"
+        default:
+            dustLabel.text = "미세 실패"
+        }
+        
+        switch chomise {
+        case 0..<15:
+            dustLabel.text = "\(dustLabel.text!) · 초미세 좋음"
+        case 15..<35:
+            dustLabel.text = "\(dustLabel.text!) · 초미세 보통"
+        case 35..<75:
+            dustLabel.text = "\(dustLabel.text!) · 초미세 나쁨"
+        case 75...:
+            dustLabel.text = "\(dustLabel.text!) · 초미세 매우 나쁨"
+        default:
+            dustLabel.text = "\(dustLabel.text!) · 초미세 실패"
+        }
         dustLabel.font = .systemFont(ofSize: 11)
         self.makeConstraints()
     }
@@ -120,6 +155,12 @@ class CurrentWeatherTableViewCell: UITableViewCell {
         default:
             weatherImage.image = UIImage(named: "searchImage")
         }
+    }
+    
+    func setupAlarmImageView() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(alarmImageViewTapped))
+        alarmImageView.addGestureRecognizer(tapGesture)
+        alarmImageView.isUserInteractionEnabled = true
     }
     
     func makeConstraints() {
@@ -221,6 +262,25 @@ class CurrentWeatherTableViewCell: UITableViewCell {
             $0.top.equalTo(weatherImage.snp.bottom).offset(4)
             $0.centerX.equalTo(weatherImage)
             $0.bottom.equalTo(viewContainer).offset(-16)
+        }
+    }
+    
+    @objc func alarmImageViewTapped() {
+        guard let viewController = tempListViewController else { return }
+        
+        if isBookmarked {
+            alarmImageView.image = .alarm0
+            let alarmImageYellow = UIImageView()
+            alarmImageYellow.image = .popupNotification1
+            isBookmarked = false
+            viewController.showCustomAlert(image: alarmImageYellow.image!, message: "비소식 알림을 껐어요.")
+        }
+        else {
+            alarmImageView.image = .alarm1
+            let alarmImageYellow = UIImageView()
+            alarmImageYellow.image = .popupNotification
+            isBookmarked = true
+            viewController.showCustomAlert(image: alarmImageYellow.image!, message: "비소식 1시간 전에 알림을 울려요.")
         }
     }
 }

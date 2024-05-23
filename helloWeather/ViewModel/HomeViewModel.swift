@@ -307,6 +307,7 @@ class HomeViewModel: NSObject, CLLocationManagerDelegate {
     }
     
     func saveCurrentBookMark() {
+        loadCurrentBookMark()
         if !isCurrentLocationBookMarked() {
             bookMarkSearchModel.append(currentSearchModel!)
             let encoder = JSONEncoder()
