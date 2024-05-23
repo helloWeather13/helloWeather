@@ -154,11 +154,11 @@ class ListTableViewCell: UITableViewCell {
         deleteButton.isHidden = true
         deleteView.backgroundColor = .myred
         cityLabel.text = searchModel.city + ","
-        cityLabel.font = .boldSystemFont(ofSize: 13)
+        cityLabel.font = UIFont(name: "Pretendard-Medium", size: 13)
         cityLabel.sizeToFit()
 //        conditionLabel.text = weatherAPIModel.current?.condition.text
         conditionLabel.text = weatherAPIModel.current?.condition.change()
-        conditionLabel.font = .systemFont(ofSize: 13)
+        conditionLabel.font = UIFont(name: "Pretendard-Medium", size: 13)
         conditionLabel.sizeToFit()
         temperatureLabel.text = String(Int(weatherAPIModel.current?.feelslikeC ?? 0)) + "°"
         temperatureLabel.font = UIFont(name: "GmarketSansTTFBold", size: 42)
@@ -167,7 +167,7 @@ class ListTableViewCell: UITableViewCell {
         weatherImage.contentMode = .scaleAspectFit
         minMaxTempLabel.text = String(Int(weatherAPIModel.forecast.forecastday[0].day.maxtempC)) + "°" + "/ " + String(Int(weatherAPIModel.forecast.forecastday[0].day.mintempC)) + "°"
         minMaxTempLabel.textColor = .secondaryLabel
-        minMaxTempLabel.font = .systemFont(ofSize: 12)
+        minMaxTempLabel.font = UIFont(name: "Pretendard-Medium", size: 12)
         minMaxTempLabel.sizeToFit()
         isAlarm = searchModel.notification
         alarmImageView.image = isAlarm ? .alarm1 : .alarm0

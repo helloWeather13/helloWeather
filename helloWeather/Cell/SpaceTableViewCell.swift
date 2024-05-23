@@ -29,8 +29,9 @@ class SpaceTableViewCell: UITableViewCell {
         self.addSubview(emptyView)
         emptyView.addSubview(lineView)
         emptyView.addSubview(alarmDescriptionLabel)
+        alarmDescriptionLabel.font = UIFont(name: "Pretendard-Medium", size: 13)
         
-        emptyView.backgroundColor = .yellow
+        emptyView.backgroundColor = UIColor(red: 0.988, green: 0.988, blue: 0.992, alpha: 1)
         
         lineView.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.05)
         

@@ -69,19 +69,19 @@ class CurrentWeatherTableViewCell: UITableViewCell {
         cityLabel.font = UIFont(name: "Pretendard-Bold", size: 13)
         cityLabel.sizeToFit()
         conditionLabel.text = weatherAPIModel.current?.condition.change()
-        conditionLabel.font = .systemFont(ofSize: 13)
+        conditionLabel.font = UIFont(name: "Pretendard-Medium", size: 13)
         conditionLabel.sizeToFit()
         let todayTemp = weatherAPIModel.current?.feelslikeC ?? 0
         temperatureLabel.text = String(Int(weatherAPIModel.current?.feelslikeC ?? 0)) + "°"
         temperatureLabel.font = UIFont(name: "GmarketSansTTFBold", size: 42)
         temperatureLabel.sizeToFit()
 //        weatherImage.image = UIImage(named: "cloud")
-        minMaxTempLabel.text = String(Int(weatherAPIModel.forecast.forecastday[0].day.maxtempC)) + "°" + "/" + String(Int(weatherAPIModel.forecast.forecastday[0].day.mintempC)) + "°"
+        minMaxTempLabel.text = String(Int(weatherAPIModel.forecast.forecastday[0].day.maxtempC)) + "°" + "/ " + String(Int(weatherAPIModel.forecast.forecastday[0].day.mintempC)) + "°"
         minMaxTempLabel.textColor = .secondaryLabel
         minMaxTempLabel.font = UIFont(name: "Pretendard-Medium", size: 12)
         minMaxTempLabel.sizeToFit()
-        dustLabel.font = UIFont(name: "Pretendard-Medium", size: 13)
-        temperatureTextLabel.font = UIFont(name: "Pretendard-Medium", size: 13)
+        dustLabel.font = UIFont(name: "Pretendard-Medium", size: 11)
+        temperatureTextLabel.font = UIFont(name: "Pretendard-Medium", size: 11)
         alarmImageView.image = UIImage.bookmarkDefault
         currentLocationImageView.image = UIImage.navigation
         setupWeatherImage()
