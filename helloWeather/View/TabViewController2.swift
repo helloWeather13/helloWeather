@@ -11,48 +11,41 @@ import UIKit
 import SwiftUI
 
 class TabViewController2: TabmanViewController {
-    
+
     private var viewControllers = [WeatherDetailViewController(), UIHostingController(rootView: ScrollChartView())]
-    
+
     let homeViewModel = HomeViewModel()
     
     override func viewDidLoad() {
-        
         super.viewDidLoad()
+        
         setupNaviBar()
+        
         self.dataSource = self
+
         let bar = TMBar.ButtonBar()
-        bar.layout.transitionStyle = .snap
+        bar.layout.transitionStyle = .snap // Customize
         bar.layout.contentInset = UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: 0.0)
         bar.layout.interButtonSpacing = 0
         bar.layout.alignment = .centerDistributed
         bar.layout.contentMode = .fit
+        //bar.layout.
         bar.indicator.tintColor = .black
+
         
         bar.buttons.customize { (button) in
-            button.tintColor = UIColor(red: 0.988, green: 0.988, blue: 0.992, alpha: 1)
+            button.tintColor = .gray
             button.selectedTintColor = .black
-            
-            // Adding underline to the unselected button
-            let underlineView = UIView()
-            underlineView.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.05)
-            underlineView.translatesAutoresizingMaskIntoConstraints = false
-            button.addSubview(underlineView)
-            
-            NSLayoutConstraint.activate([
-                underlineView.heightAnchor.constraint(equalToConstant: 1),
-                underlineView.leadingAnchor.constraint(equalTo: button.leadingAnchor),
-                underlineView.trailingAnchor.constraint(equalTo: button.trailingAnchor),
-                underlineView.topAnchor.constraint(equalTo: button.bottomAnchor, constant: 3)
-            ])
         }
+
         addBar(bar, dataSource: self, at: .top)
     }
     
     func setupNaviBar() {
-        
+
         homeViewModel.addressOnCompleted = { [unowned self] address in
             let titleView = UIView()
+            
             let imageView = UIImageView(image: UIImage(named: "navigation"))
             imageView.contentMode = .scaleAspectFit
             
@@ -70,7 +63,7 @@ class TabViewController2: TabmanViewController {
                 stview.alignment = .center
                 return stview
             }()
-            
+                    
             titleView.addSubview(stackView)
             stackView.snp.makeConstraints {
                 $0.centerX.centerY.equalTo(titleView)
@@ -82,20 +75,20 @@ class TabViewController2: TabmanViewController {
 }
 
 extension TabViewController2: PageboyViewControllerDataSource, TMBarDataSource {
-    
+
     func numberOfViewControllers(in pageboyViewController: PageboyViewController) -> Int {
         return viewControllers.count
     }
-    
+
     func viewController(for pageboyViewController: PageboyViewController,
                         at index: PageboyViewController.PageIndex) -> UIViewController? {
         return viewControllers[index]
     }
-    
+
     func defaultPage(for pageboyViewController: PageboyViewController) -> PageboyViewController.Page? {
         return nil
     }
-    
+
     func barItem(for bar: TMBar, at index: Int) -> TMBarItemable {
         switch index {
         case 0 :
