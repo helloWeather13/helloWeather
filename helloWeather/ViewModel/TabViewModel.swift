@@ -57,10 +57,6 @@ class TabViewModel{
         
         nav.tabBarItem.title = nil
 //        nav.viewControllers.first?.navigationItem.title = tab.title
-        let standard = UINavigationBarAppearance()
-        standard.backgroundColor = UIColor(red: 0.988, green: 0.988, blue: 0.992, alpha: 1)
-        nav.navigationBar.scrollEdgeAppearance = standard
-        nav.navigationBar.standardAppearance = standard
         return nav
     }
 

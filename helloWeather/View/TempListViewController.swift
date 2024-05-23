@@ -8,6 +8,7 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import SnapKit
 
 class TempListViewController: UIViewController {
     
@@ -20,6 +21,7 @@ class TempListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.backgroundColor = UIColor(red: 0.988, green: 0.988, blue: 0.992, alpha: 1)
         tableViewConfigure()
         configureAlert()
         configurerefreshControl()
@@ -47,22 +49,45 @@ class TempListViewController: UIViewController {
     
     override func setupAlertViewConstraints(_ customAlertView: UIView, image: UIImage, messageLabel: UILabel) {
         customAlertView.snp.makeConstraints { make in
-          make.bottom.equalTo(view.snp.bottom).inset(91)
-          make.centerX.equalToSuperview()
-          make.height.equalTo(max(image.size.height, 40))
-          make.width.equalTo(image.size.width + messageLabel.intrinsicContentSize.width + 30)
+            make.bottom.equalTo(view.snp.bottom).inset(91)
+            make.centerX.equalToSuperview()
+            make.height.equalTo(max(image.size.height, 40))
+            make.width.equalTo(image.size.width + messageLabel.intrinsicContentSize.width + 30)
         }
-      }
+    }
     
     func setupNavbar(){
+        let standard = UINavigationBarAppearance()
+        standard.backgroundColor = UIColor(red: 0.988, green: 0.988, blue: 0.992, alpha: 1)
+        standard.shadowImage = UIImage()
+        standard.shadowColor = UIColor(red: 0.988, green: 0.988, blue: 0.992, alpha: 1)
+        self.navigationController?.navigationBar.scrollEdgeAppearance = standard
+        self.navigationController?.navigationBar.standardAppearance = standard
+        
+        let emptyView : UIView = {
+            let view = UIView()
+            view.backgroundColor = UIColor(red: 0.988, green: 0.988, blue: 0.992, alpha: 1)
+            return view
+        }()
+        
+        emptyView.snp.makeConstraints{
+            $0.height.equalTo(30)
+            $0.width.equalTo(283)
+        }
+        
         let titleLabel: UILabel = {
             let label = UILabel()
-            label.text = "나의 관심 지역"
+            label.text = "경기 광명시 철산동"
             label.font = UIFont(name: "Pretendard-SemiBold", size: 18)
             return label
         }()
         titleLabel.sizeToFit()
-        self.navigationItem.titleView = titleLabel
+        emptyView.addSubview(titleLabel)
+        titleLabel.snp.makeConstraints{
+            $0.centerX.equalToSuperview()
+            $0.centerY.equalToSuperview().offset(5)
+        }
+        self.navigationItem.titleView = emptyView
         let searchButton = UIBarButtonItem(image: UIImage(named: "search-0"), style: .plain, target: self, action: #selector(searchButtonTapped))
         searchButton.tintColor = .black
         navigationItem.rightBarButtonItem = searchButton
