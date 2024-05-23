@@ -34,7 +34,7 @@ class SectionHeaderView : UITableViewHeaderFooterView{
                 make.height.equalTo(32)
             }
             button.setTitle("지우기", for: .normal)
-            button.titleLabel?.font = UIFont.systemFont(ofSize: 13)
+            button.titleLabel?.font = UIFont(name: "Pretendard-SemiBold", size: 13)
             button.setTitleColor(.secondaryLabel, for: .normal)
             button.tintColor = .systemGray
             button.snp.makeConstraints{
@@ -54,7 +54,7 @@ class SectionHeaderView : UITableViewHeaderFooterView{
                 make.height.equalTo(32)
             }
         }
-        titleLabel.font = .boldSystemFont(ofSize: 20)
+        titleLabel.font = UIFont(name: "Pretendard-Bold", size: 20)
     }
     func configureFooter(section: Int){
         if section == 1{

@@ -27,7 +27,6 @@ class ListTableViewCell: UITableViewCell {
     var disposeBag = DisposeBag()
     var isAlarm = false
     var isBeingDragged = false
-    
     //    var weatherAPIModel : WeatherAPIModel?
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {

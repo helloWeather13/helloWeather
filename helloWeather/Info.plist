@@ -9,6 +9,11 @@
 		<string>Pretendard-Regular.ttf</string>
 		<string>Montserrat-Regular.ttf</string>
 		<string>GmarketSansTTFLight.ttf</string>
+		<string>Pretendard-Bold.ttf</string>
+		<string>Pretendard-SemiBold.ttf</string>
+		<string>Pretendard-Regular.ttf</string>
+        <string>Pretendard-Medium.ttf</string>
+		<string></string>
 	</array>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>&quot;현재 위치 사용을 허용하시겠습니까?&quot;</string>
