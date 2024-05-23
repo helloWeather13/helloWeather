@@ -54,6 +54,7 @@ class ListTableViewCell: UITableViewCell {
         contentView.layer.cornerRadius = 15
         contentView.clipsToBounds = true
         
+        
         // 드래그가 진행중인 경우 셀의 테두리를 사라지게합니다.
         if isBeingDragged {
             contentView.layer.borderWidth = 0
@@ -93,7 +94,7 @@ class ListTableViewCell: UITableViewCell {
     @objc func didSwipeCellLeft(){
         UIView.animate(withDuration: 0.3) {
             self.viewContainer.snp.updateConstraints {
-                $0.trailing.equalToSuperview().offset(-70)
+                $0.trailing.equalToSuperview().offset(-56)
             }
             self.deleteButton.isHidden = false
             self.viewContainer.superview?.layoutIfNeeded()
@@ -146,9 +147,12 @@ class ListTableViewCell: UITableViewCell {
         swipeGestureRight.direction = .right
         self.addGestureRecognizer(swipeGestureRight)
 
-        deleteButton.setImage(UIImage(systemName: "trash.fill"), for: .normal)
+        viewContainer.layer.cornerRadius = 15
+        viewContainer.clipsToBounds = true
+        viewContainer.backgroundColor = UIColor(red: 0.93, green: 0.93, blue: 0.93, alpha: 1.00)
+        deleteButton.setImage(UIImage(named: "trash"), for: .normal)
         deleteButton.isHidden = true
-        deleteView.backgroundColor = .red
+        deleteView.backgroundColor = .myred
         cityLabel.text = searchModel.city + ","
         cityLabel.font = .boldSystemFont(ofSize: 13)
         cityLabel.sizeToFit()
@@ -169,6 +173,7 @@ class ListTableViewCell: UITableViewCell {
         alarmImageView.image = isAlarm ? .alarm1 : .alarm0
         setupAlarmImageView()
         setupWeatherImage()
+        contentView.backgroundColor = .myred
     }
     // 흐린 -> 흐림
     // 맑음, 화창함 -> 맑음
@@ -263,6 +268,7 @@ class ListTableViewCell: UITableViewCell {
             $0.centerX.centerY.equalToSuperview()
             $0.width.height.equalTo(24)
         }
+       
     }
 }
 
