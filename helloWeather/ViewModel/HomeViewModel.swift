@@ -177,7 +177,7 @@ class HomeViewModel: NSObject, CLLocationManagerDelegate {
         case sunriseNum + sunTimeSplit * 7..<(sunriseNum + sunTimeSplit * 8):
             sunImage = UIImage(named: "SunRise09")!
         case sunriseNum + sunTimeSplit * 8..<(sunriseNum + sunTimeSplit * 9):
-            sunImage = UIImage(named: "SunRise010")!
+            sunImage = UIImage(named: "SunRise10")!
         default:
             sunImage = UIImage(named: "SunRise01")!
         }

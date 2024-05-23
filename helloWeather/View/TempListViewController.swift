@@ -24,6 +24,11 @@ class TempListViewController: UIViewController {
         configureAlert()
         configurerefreshControl()
         setupNavbar()
+        tableView.backgroundColor = UIColor(red: 0.988, green: 0.988, blue: 0.992, alpha: 1)
+        tableView.separatorColor = UIColor(red: 0.988, green: 0.988, blue: 0.992, alpha: 1)
+        tableView.sectionIndexColor = UIColor(red: 0.988, green: 0.988, blue: 0.992, alpha: 1)
+        tableView.sectionIndexTrackingBackgroundColor = UIColor(red: 0.988, green: 0.988, blue: 0.992, alpha: 1)
+        
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -111,6 +116,7 @@ class TempListViewController: UIViewController {
                 let spaceCellViewModel = SpaceCellViewModel()
                 cell.configure(with: spaceCellViewModel)
                 cell.selectionStyle = .none
+                cell.backgroundColor = UIColor(red: 0.988, green: 0.988, blue: 0.992, alpha: 1)
                 return cell
             case .listWeather(let listWeather):
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: ListTableViewCell.identifier, for: indexPath) as? ListTableViewCell else {
@@ -132,6 +138,7 @@ class TempListViewController: UIViewController {
                     .disposed(by: cell.disposeBag)
                 
                 cell.selectionStyle = .none
+                cell.backgroundColor = UIColor(red: 0.988, green: 0.988, blue: 0.992, alpha: 1)
                 
                 return cell
             }
