@@ -26,7 +26,8 @@ class RecentSearchTableViewCell: UITableViewCell {
     func configureUI(text : String){
         
         titleLabel.text = text
-        titleLabel.font = .boldSystemFont(ofSize: 16)
+        titleLabel.font = UIFont(name: "Pretendard-SemiBold", size: 16)
+        titleLabel.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.8)
         [timeImageview, titleLabel,goImageView].forEach{
             self.addSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
@@ -38,8 +39,8 @@ class RecentSearchTableViewCell: UITableViewCell {
         timeImageview.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.02)
         goImageView.image = UIImage(named: "link")
         goImageView.backgroundColor = .clear
-        goImageView.tintColor = UIColor(red: 0, green: 0, blue: 0, alpha:0.06)
-        goImageView.contentMode = .scaleAspectFit
+        goImageView.tintColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.06)
+        goImageView.contentMode = .center
         timeImageview.snp.makeConstraints{
             $0.leading.equalToSuperview()
             $0.width.equalTo(54)
