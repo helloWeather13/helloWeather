@@ -41,13 +41,13 @@ class WeekCollectionViewCell: UICollectionViewCell {
     
     let weekLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 11, weight: .medium)
+        label.font = UIFont(name: "Pretendard-Regular", size: 11)
         label.textAlignment = .center
         return label
     }()
     let dateLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 11, weight: .medium)
+        label.font = UIFont(name: "Pretendard-Regular", size: 11)
         label.textAlignment = .center
         return label
     }()
@@ -59,13 +59,13 @@ class WeekCollectionViewCell: UICollectionViewCell {
     }()
     let minCelsiusLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 11, weight: .medium)
+        label.font = UIFont(name: "Pretendard-Regular", size: 11)
         label.textAlignment = .center
         return label
     }()
     let maxCelsiusLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 11, weight: .medium)
+        label.font = UIFont(name: "Pretendard-Regular", size: 11)
         label.textAlignment = .center
         return label
     }()
@@ -78,14 +78,14 @@ class WeekCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configureConstraints(data: WeatherDetailViewModel.DailyWeather) {
+    func configureConstraints(data: WeatherDetailViewModel.DailyWeather, isFirstCell: Bool) {
         
         let barChartCellWrapper = BarChartCellWrapper3 (
             value: changeDataToHeight(data: data),
             index: 0,
             width: 60,
             numberOfDataPoints: 10,
-            accentColor: .gray,
+            accentColor: isFirstCell ? .mygray : .mylightgray,
             touchLocation: .constant(-1.0)
         )
         
@@ -216,7 +216,7 @@ public struct BarChartCell3: View {
         .frame(width: CGFloat(self.cellWidth))
         .scaleEffect(CGSize(width: 1, height: self.scaleValue), anchor: .bottom)
         .onAppear {
-            withAnimation(Animation.spring().delay(self.touchLocation < 0 ?  Double(self.index) * 0.04 : 0)) { // 애니메이션 적용
+            withAnimation(Animation.spring().delay(self.touchLocation < 0 ?  Double(self.index) * 0.02 : 0)) { // 애니메이션 적용
                 self.scaleValue = self.value
             }
         }

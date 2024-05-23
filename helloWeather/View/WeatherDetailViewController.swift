@@ -18,4 +18,12 @@ class WeatherDetailViewController: UIViewController {
         self.view = weatherDetailView
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+            super.viewWillAppear(animated)
+            self.view.subviews.forEach { $0.removeFromSuperview() }
+            
+            let weatherDetailView = WeatherDetailView(frame: self.view.bounds)
+            self.view.addSubview(weatherDetailView)
+        }
+    
 }

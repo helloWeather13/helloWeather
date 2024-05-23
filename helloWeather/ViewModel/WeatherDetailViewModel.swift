@@ -81,25 +81,31 @@ class WeatherDetailViewModel {
     // 시간별 날씨 정보 가져오기
     func fetchHourlyWeather() -> Observable<[HourlyWeather]> {
         let location = SearchModel(keyWord: "", fullAddress: "", lat: userLocationPoint.0, lon: userLocationPoint.1, city: "")
-        
         return Observable.create { observer in
             self.weatherManager.getForecastWeather(searchModel: location) { data in
                 let currentHour = Calendar.current.component(.hour, from: Date())
                 var hourlyWeather: [HourlyWeather] = []
                 
-                // 오늘, 내일, 모레의 시간별 날씨 정보 가져오기
-                for dayOffset in 0..<3 {
+                // 오늘, 내일의 시간별 날씨 정보 가져오기
+                for dayOffset in 0..<2 {
                     if let hourlyData = data.forecast.forecastday[safe: dayOffset]?.hour {
-                        for (index, hourlyData) in hourlyData.enumerated() {
-                            let hour = (currentHour + index) % 24 // 현재 시간에 인덱스를 더한 값 (24시간 기준)
-                            let formattedHour = "\(hour)시"
-                            // 온도 정보에서 소수점 뒤의 수를 제외하고 반환
-                            let feelslikeCTemperature = Int(hourlyData.feelslikeC)
-                            let feelslikeFTemperature = Int(hourlyData.feelslikeF)
-                            let tempCTemperature = Int(hourlyData.tempC)
-                            let tempFTemperature = Int(hourlyData.tempF)
+                        // 시작 시간과 종료 시간을 올바르게 설정
+                        let startHour = (dayOffset == 0) ? currentHour : 0
+                        let endHour = (dayOffset == 0) ? 24 : 24 + currentHour
+                        
+                        for index in startHour..<endHour {
+                            // 24시간 형식으로 유지
+                            let hourIndex = index % 24
+                            let hourData = hourlyData[hourIndex] // 해당 시간대의 날씨 정보 가져오기
+                            let formattedHour = "\(hourIndex)시"
                             
-                            let condition = hourlyData.condition.text
+                            // 온도 정보에서 소수점 뒤의 수를 제외하고 반환
+                            let feelslikeCTemperature = Int(hourData.feelslikeC)
+                            let feelslikeFTemperature = Int(hourData.feelslikeF)
+                            let tempCTemperature = Int(hourData.tempC)
+                            let tempFTemperature = Int(hourData.tempF)
+                            
+                            let condition = hourData.condition.text
                             
                             let hourlyWeatherData = HourlyWeather(
                                 time: formattedHour,
@@ -107,7 +113,7 @@ class WeatherDetailViewModel {
                                 feelslikeF: "\(feelslikeFTemperature)°",
                                 tempC: "\(tempCTemperature)°",
                                 tempF: "\(tempFTemperature)°",
-                                humidity: "\(hourlyData.humidity)%",
+                                humidity: "\(hourData.humidity)%",
                                 condition: "\(condition)"
                             )
                             hourlyWeather.append(hourlyWeatherData)
@@ -154,10 +160,10 @@ class WeatherDetailViewModel {
                         return DailyWeather(
                             date: formattedDate,
                             dayOfWeek: formattedDay,
-                            maxtempC: "\(forecastDay.day.maxtempC)°",
-                            maxtempF: "\(forecastDay.day.maxtempF)°",
-                            mintempC: "\(forecastDay.day.mintempC)°",
-                            mintempF: "\(forecastDay.day.mintempF)°",
+                            maxtempC: "\(Int(forecastDay.day.maxtempC))°",
+                            maxtempF: "\(Int(forecastDay.day.maxtempF))°",
+                            mintempC: "\(Int(forecastDay.day.mintempC))°",
+                            mintempF: "\(Int(forecastDay.day.mintempF))°",
                             avgtempC: "\(forecastDay.day.avgtempC)°",
                             avgtempF: "\(forecastDay.day.avgtempF)°",
                             conditionText: forecastDay.day.condition.text

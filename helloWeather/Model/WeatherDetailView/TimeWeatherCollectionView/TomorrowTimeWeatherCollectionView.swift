@@ -122,15 +122,8 @@ class TomorrowTimeWeatherCollectionView: UICollectionView, UICollectionViewDeleg
         
         setupWeatherImage(data: hourlyWeather, cell: cell)
         cell.weatherIcon.contentMode = .scaleAspectFit
-        
-        if indexPath.item == 0 {
-            cell.timeLabel.textColor = .myblack
-            cell.timeLabel.font = UIFont.systemFont(ofSize: 12, weight: .regular)
-        } else {
-            cell.timeLabel.textColor = .mygray
-            cell.celsiusLabel.textColor = .mygray
-        }
-
+        cell.timeLabel.textColor = .mygray
+        cell.celsiusLabel.textColor = .mygray
         
         return cell
     }
