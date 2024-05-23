@@ -184,7 +184,6 @@ public struct Line3: View {
                         self.showFull = true
                     }
                     doubleTest = divideSecondValuesIntoTenSections(data.onlyPoints().map { ("", $0) })
-                    print(doubleTest)
                 }
                 .onDisappear {
                     withAnimation {

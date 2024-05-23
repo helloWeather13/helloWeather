@@ -281,8 +281,6 @@ class FineListViewModel: ObservableObject {
                         print("No forecast data available")
                     }
                     flag = true
-                    print(date1)
-                    print(simplify(values: date1).count)
                     //updateGradient(with: simplify(values: date1))
                 }
                 

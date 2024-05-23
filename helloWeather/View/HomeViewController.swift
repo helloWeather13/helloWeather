@@ -141,7 +141,6 @@ class HomeViewController: UIViewController {
         if let existingAlertView = view.subviews.first(where: { $0.tag == 999 }) {
             existingAlertView.removeFromSuperview()
         }
-        print(homeViewModel.loadCurrentBookMark())
         
     }
     override func setupAlertViewConstraints(_ customAlertView: UIView, image: UIImage, messageLabel: UILabel) {

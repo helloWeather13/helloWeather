@@ -41,7 +41,6 @@ struct Provider: TimelineProvider {
         }.resume()
         
         dispatchGroup.notify(queue: .main) {
-            print(todayData?.forecast.forecastday[0].hour[23].condition.text)
             completion(todayData, yesterDayData)
         }
     }

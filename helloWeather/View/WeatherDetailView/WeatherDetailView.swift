@@ -239,7 +239,7 @@ class WeatherDetailView: UIView {
             make.top.equalToSuperview()
             make.leading.equalToSuperview().offset(20)
             make.trailing.equalToSuperview().inset(20)
-            make.bottom.equalToSuperview().inset(100)
+            make.height.equalTo(752)
         }
         
         contentView.snp.makeConstraints { make in

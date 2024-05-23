@@ -98,9 +98,9 @@ class HomeViewModel: NSObject, CLLocationManagerDelegate {
             switch self {
             case .rain:
                 if sunrise < now && now < sunset {
-                    return (UIImage(named: "rainSrnog-day")!, "이 있어요")
+                    return (UIImage(named: "rainSrong-day")!, "이 있어요")
                 } else {
-                    return (UIImage(named: "rainSrnog-night")!, "이 있어요")
+                    return (UIImage(named: "rainSrong-night")!, "이 있어요")
                 }
             case .snow:
                 if sunrise < now && now < sunset {
@@ -348,10 +348,16 @@ class HomeViewModel: NSObject, CLLocationManagerDelegate {
     
     func getSearchModelFromUserDefault(searchModel: SearchModel){
         loadCurrentBookMark()
-        guard let index = bookMarkSearchModel.firstIndex(where: {
+        if let index = bookMarkSearchModel.firstIndex(where: {
             $0.fullAddress == searchModel.fullAddress
-        }) else {return}
-        self.currentSearchModel = bookMarkSearchModel[index]
+        }){
+            self.currentSearchModel = bookMarkSearchModel[index]
+        }else{
+            self.currentSearchModel = searchModel 
+        }
+        
+        
+        
     }
     
     func loadNotification(){
