@@ -224,7 +224,7 @@ class WeatherDetailView: UIView {
     private func configureConstraints() {
         
         scrollView.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(130)
+            make.top.equalToSuperview()
             make.leading.equalToSuperview().offset(20)
             make.trailing.equalToSuperview().inset(20)
             make.bottom.equalToSuperview()
@@ -261,7 +261,7 @@ class WeatherDetailView: UIView {
         
         // Constraints
         firstStackView.snp.makeConstraints { make in
-            make.top.equalToSuperview()
+            make.top.equalToSuperview().offset(35)
             make.leading.equalToSuperview()
         }
         
@@ -319,7 +319,7 @@ class WeatherDetailView: UIView {
         }
         
         fourthStackView.snp.makeConstraints { make in
-            make.top.equalTo(weekCollectionView.snp.bottom).offset(70)
+            make.top.equalTo(weekCollectionView.snp.bottom).offset(65)
             make.leading.equalToSuperview()
         }
         humidityCollectionView.snp.makeConstraints { make in
@@ -372,7 +372,7 @@ class WeatherDetailView: UIView {
         // Toggle
         
         customToggleView.snp.makeConstraints { make in
-            make.top.equalToSuperview()
+            make.top.equalToSuperview().offset(35)
             make.trailing.equalToSuperview()
             make.width.equalTo(54)
             make.height.equalTo(30)
