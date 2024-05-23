@@ -22,13 +22,6 @@ class WeatherDetailView: UIView {
     let contentView = UIView()
     
     // MARK: - SubtitleLabels
-    let addressLabel: UILabel = {
-        let label = UILabel()
-        label.text = "서울시 강남구 역삼동"
-        label.font = UIFont.systemFont(ofSize: 18, weight: .bold)
-        label.textAlignment = .center
-        return label
-    }()
     
     // 체감온도 stack
     let firstStackView: UIStackView = {
@@ -39,7 +32,7 @@ class WeatherDetailView: UIView {
     let timeCelsiusLabel: UILabel = {
         let label = UILabel()
         label.text = "시간대별 체감온도"
-        label.font = UIFont.systemFont(ofSize: 19, weight: .bold)
+        label.font = UIFont(name: "Pretendard-SemiBold", size: 19)
         return label
     }()
     let timeCelsiusIcon: UIImageView = {
@@ -56,7 +49,7 @@ class WeatherDetailView: UIView {
     let timeWeather: UILabel = {
         let label = UILabel()
         label.text = "시간대별 날씨"
-        label.font = UIFont.systemFont(ofSize: 19, weight: .bold)
+        label.font = UIFont(name: "Pretendard-SemiBold", size: 19)
         return label
     }()
     let timeWeatherIcon: UIImageView = {
@@ -73,7 +66,7 @@ class WeatherDetailView: UIView {
     let weekWeatherLabel: UILabel = {
         let label = UILabel()
         label.text = "주간 날씨 예보"
-        label.font = UIFont.systemFont(ofSize: 19, weight: .bold)
+        label.font = UIFont(name: "Pretendard-SemiBold", size: 19)
         return label
     }()
     let weekWeatherIcon: UIImageView = {
@@ -89,7 +82,7 @@ class WeatherDetailView: UIView {
     let humidityLabel: UILabel = {
         let label = UILabel()
         label.text = "시간대별 습도"
-        label.font = UIFont.systemFont(ofSize: 19, weight: .bold)
+        label.font = UIFont(name: "Pretendard-SemiBold", size: 19)
         return label
     }()
     let humidityIcon: UIImageView = {
@@ -105,7 +98,7 @@ class WeatherDetailView: UIView {
     let sunLabel: UILabel = {
         let label = UILabel()
         label.text = "일출일몰"
-        label.font = UIFont.systemFont(ofSize: 19, weight: .bold)
+        label.font = UIFont(name: "Pretendard-SemiBold", size: 19)
         return label
     }()
     let sunGraph: UIImageView = {
@@ -115,20 +108,20 @@ class WeatherDetailView: UIView {
     let sunriseLabel: UILabel = {
         let label = UILabel()
         label.text = ""
-        label.font = .systemFont(ofSize: 12)
+        label.font = UIFont(name: "Pretendard-Regular", size: 12)
         return label
     }()
     let sunsetLabel: UILabel = {
         let label = UILabel()
         label.text = ""
-        label.font = .systemFont(ofSize: 12)
+        label.font = UIFont(name: "Pretendard-Regular", size: 12)
         return label
     }()
     let sunriseInfoLabel: UILabel = {
         let label = UILabel()
         label.text = ""
         label.textColor = .gray
-        label.font = .systemFont(ofSize: 13)
+        label.font = UIFont(name: "Pretendard-Regular", size: 13)
         return label
     }()
     
@@ -209,7 +202,6 @@ class WeatherDetailView: UIView {
     
     // ScrollView 설정
     private func configureScrollView() {
-        self.addSubview(addressLabel)
         self.addSubview(scrollView)
         
         scrollView.addSubview(contentView)
@@ -227,7 +219,7 @@ class WeatherDetailView: UIView {
             make.top.equalToSuperview()
             make.leading.equalToSuperview().offset(20)
             make.trailing.equalToSuperview().inset(20)
-            make.bottom.equalToSuperview()
+            make.bottom.equalToSuperview().inset(100)
         }
         
         contentView.snp.makeConstraints { make in
@@ -337,29 +329,30 @@ class WeatherDetailView: UIView {
         sunView.snp.makeConstraints { make in
             make.top.equalTo(sunLabel.snp.bottom).offset(16)
             make.centerX.equalToSuperview()
-            make.bottom.equalToSuperview().inset(78)
+            make.bottom.equalToSuperview().inset(50)
             make.height.equalTo(206)
             make.width.equalTo(393)
         }
         
-        [sunGraph, sunriseLabel, sunsetLabel, sunriseInfoLabel].forEach {
+        [sunGraph, sunriseLabel, sunsetLabel].forEach {
             sunView.addSubview($0)
         }
+        sunView.addSubview(sunriseInfoLabel)
     
         sunGraph.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(14)
+            make.top.equalToSuperview()
             make.centerX.equalToSuperview()
-            make.height.equalTo(115)
+            make.height.equalTo(135)
             make.width.equalTo(270)
         }
         
         sunriseLabel.snp.makeConstraints { make in
-            make.top.equalTo(sunGraph.snp.bottom).offset(5)
+            make.top.equalTo(sunGraph.snp.bottom)
             make.leading.equalToSuperview().offset(45)
         }
         
         sunsetLabel.snp.makeConstraints { make in
-            make.top.equalTo(sunGraph.snp.bottom).offset(5)
+            make.top.equalTo(sunGraph.snp.bottom)
             make.trailing.equalToSuperview().inset(45)
         }
         

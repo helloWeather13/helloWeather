@@ -30,13 +30,13 @@ class HumidityCollectionViewCell: UICollectionViewCell {
     
     let percentLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 15, weight: .regular)
+        label.font = UIFont(name: "Pretendard-Regular", size: 12)
         label.textAlignment = .center
         return label
     }()
     let timeLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 11, weight: .regular)
+        label.font = UIFont(name: "Pretendard-Regular", size: 11)
         label.textAlignment = .center
         return label
     }()

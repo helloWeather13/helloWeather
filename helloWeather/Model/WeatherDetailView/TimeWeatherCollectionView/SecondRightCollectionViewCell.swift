@@ -29,7 +29,7 @@ class SecondRightCollectionViewCell: UICollectionViewCell {
     
     var celsiusLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 15, weight: .regular)
+        label.font = UIFont(name: "Pretendard-Regular", size: 15)
         label.textAlignment = .center
         return label
     }()
@@ -39,7 +39,7 @@ class SecondRightCollectionViewCell: UICollectionViewCell {
     }()
     var timeLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 11, weight: .regular)
+        label.font = UIFont(name: "Pretendard-Regular", size: 11)
         label.textAlignment = .center
         return label
     }()

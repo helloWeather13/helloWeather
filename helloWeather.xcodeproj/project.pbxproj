@@ -538,10 +538,21 @@
 			path = Font;
 			sourceTree = "<group>";
 		};
+		45BEA2692BFF46F800851CB6 /* CustomToggle */ = {
+			isa = PBXGroup;
+			children = (
+				9A5D54242BFE058900E672D5 /* CustomToggleView2.swift */,
+				9A5D54262BFE7B3200E672D5 /* CustomToggleView3.swift */,
+				9A5D54282BFE7B4700E672D5 /* CustomToggleView4.swift */,
+			);
+			path = CustomToggle;
+			sourceTree = "<group>";
+		};
 		45D70DCB2BF3344500942DC1 /* WeatherDetailView */ = {
 			isa = PBXGroup;
 			children = (
 				45D70DC12BF3325400942DC1 /* WeatherDetailView.swift */,
+				45BEA2692BFF46F800851CB6 /* CustomToggle */,
 				45D70DD32BF350AF00942DC1 /* TimeCelsiusCollectionView */,
 				45D70DD22BF3509D00942DC1 /* TimeWeatherCollectionView */,
 				45D70DD42BF350E100942DC1 /* WeekCollectionView */,
@@ -627,9 +638,6 @@
 				9A8DF86F2BF6E4D2009F0DAB /* FineList */,
 				9A8DF86A2BF6C48E009F0DAB /* Chat */,
 				9ABC1E272BF4BAAF006A626C /* Chart */,
-				9A5D54242BFE058900E672D5 /* CustomToggleView2.swift */,
-				9A5D54262BFE7B3200E672D5 /* CustomToggleView3.swift */,
-				9A5D54282BFE7B4700E672D5 /* CustomToggleView4.swift */,
 			);
 			path = FineDust;
 			sourceTree = "<group>";

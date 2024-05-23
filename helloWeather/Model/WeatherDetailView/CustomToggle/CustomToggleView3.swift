@@ -1,7 +1,14 @@
+//
+//  CustomToggleView3.swift
+//  helloWeather
+//
+//  Created by 김태담 on 5/23/24.
+//
+
+import Foundation
 import UIKit
 import SnapKit
-
-class CustomToggleView2: UIView {
+class CustomToggleView3: UIView {
     private let viewModel: WeatherDetailViewModel
     private var isOn: Bool = false {
         didSet {
@@ -38,12 +45,12 @@ class CustomToggleView2: UIView {
         addSubview(toggleRectangle)
         
         leftLabel.text = "°C"
-        leftLabel.font = UIFont.systemFont(ofSize: 13, weight: .bold)
+        leftLabel.font = UIFont(name: "Pretendard-SemiBold", size: 13)
         leftLabel.textAlignment = .center
         addSubview(leftLabel)
         
         rightLabel.text = "°F"
-        rightLabel.font = UIFont.systemFont(ofSize: 13, weight: .bold)
+        rightLabel.font = UIFont(name: "Pretendard-SemiBold", size: 13)
         rightLabel.textAlignment = .center
         addSubview(rightLabel)
         
@@ -78,7 +85,7 @@ class CustomToggleView2: UIView {
     
     @objc private func toggleSwitch() {
         isOn.toggle()
-        viewModel.toggleTemperatureUnit()
+        viewModel.toggleTemperatureUnit2()
     }
     
     private func updateToggleState() {

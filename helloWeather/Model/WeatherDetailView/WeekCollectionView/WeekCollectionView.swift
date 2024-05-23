@@ -108,20 +108,20 @@ class WeekCollectionView: UICollectionView, UICollectionViewDelegate, UICollecti
         if indexPath.item == 0 {
             cell.weekLabel.textColor = .myblack
             cell.weekLabel.text = "오늘"
-            cell.weekLabel.font = UIFont.systemFont(ofSize: 11, weight: .medium)
+            cell.weekLabel.font = UIFont(name: "Pretendard-medium", size: 11)
             cell.dateLabel.textColor = .myblack
-            cell.dateLabel.font = UIFont.systemFont(ofSize: 10, weight: .medium)
-            cell.minCelsiusLabel.font = UIFont.systemFont(ofSize: 10, weight: .medium)
-            cell.maxCelsiusLabel.font = UIFont.systemFont(ofSize: 10, weight: .medium)
+            if cell.weekLabel.text == "토" || cell.weekLabel.text == "일" {
+                cell.weekLabel.textColor = .myred
+                cell.dateLabel.textColor = .myred
+            }
+            cell.dateLabel.font = UIFont(name: "Pretendard-medium", size: 10)
+            cell.minCelsiusLabel.font = UIFont(name: "Pretendard-medium", size: 10)
+            cell.maxCelsiusLabel.font = UIFont(name: "Pretendard-medium", size: 10)
         } else {
             cell.weekLabel.textColor = .mygray
-            cell.weekLabel.font = UIFont.systemFont(ofSize: 11, weight: .regular)
             cell.dateLabel.textColor = .mygray
-            cell.dateLabel.font = UIFont.systemFont(ofSize: 10, weight: .regular)
             cell.minCelsiusLabel.textColor = .mygray
-            cell.minCelsiusLabel.font = UIFont.systemFont(ofSize: 10, weight: .regular)
             cell.maxCelsiusLabel.textColor = .mygray
-            cell.maxCelsiusLabel.font = UIFont.systemFont(ofSize: 10, weight: .regular)
         }
         
         if cell.weekLabel.text == "토" || cell.weekLabel.text == "일" {

@@ -41,13 +41,13 @@ class WeekCollectionViewCell: UICollectionViewCell {
     
     let weekLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 11, weight: .medium)
+        label.font = UIFont(name: "Pretendard-Regular", size: 11)
         label.textAlignment = .center
         return label
     }()
     let dateLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 11, weight: .medium)
+        label.font = UIFont(name: "Pretendard-Regular", size: 11)
         label.textAlignment = .center
         return label
     }()
@@ -59,13 +59,13 @@ class WeekCollectionViewCell: UICollectionViewCell {
     }()
     let minCelsiusLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 11, weight: .medium)
+        label.font = UIFont(name: "Pretendard-Regular", size: 11)
         label.textAlignment = .center
         return label
     }()
     let maxCelsiusLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 11, weight: .medium)
+        label.font = UIFont(name: "Pretendard-Regular", size: 11)
         label.textAlignment = .center
         return label
     }()
@@ -85,7 +85,7 @@ class WeekCollectionViewCell: UICollectionViewCell {
             index: 0,
             width: 60,
             numberOfDataPoints: 10,
-            accentColor: isFirstCell ? .mygray : .mylightgray ,
+            accentColor: isFirstCell ? .mygray : .mylightgray,
             touchLocation: .constant(-1.0)
         )
         

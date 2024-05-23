@@ -1,5 +1,5 @@
 //
-//  CustomToggleView3.swift
+//  CustomToggle4.swift
 //  helloWeather
 //
 //  Created by 김태담 on 5/23/24.
@@ -8,7 +8,8 @@
 import Foundation
 import UIKit
 import SnapKit
-class CustomToggleView3: UIView {
+
+class CustomToggleView4: UIView {
     private let viewModel: WeatherDetailViewModel
     private var isOn: Bool = false {
         didSet {
@@ -45,12 +46,12 @@ class CustomToggleView3: UIView {
         addSubview(toggleRectangle)
         
         leftLabel.text = "°C"
-        leftLabel.font = UIFont.systemFont(ofSize: 13, weight: .bold)
+        leftLabel.font = UIFont(name: "Pretendard-SemiBold", size: 13)
         leftLabel.textAlignment = .center
         addSubview(leftLabel)
         
         rightLabel.text = "°F"
-        rightLabel.font = UIFont.systemFont(ofSize: 13, weight: .bold)
+        rightLabel.font = UIFont(name: "Pretendard-SemiBold", size: 13)
         rightLabel.textAlignment = .center
         addSubview(rightLabel)
         
@@ -85,7 +86,7 @@ class CustomToggleView3: UIView {
     
     @objc private func toggleSwitch() {
         isOn.toggle()
-        viewModel.toggleTemperatureUnit2()
+        viewModel.toggleTemperatureUnit3()
     }
     
     private func updateToggleState() {
@@ -96,9 +97,9 @@ class CustomToggleView3: UIView {
                 self.toggleLeadingConstraint?.update(offset: 4)
             }
             self.leftLabel.textColor = self.isOn ? .mymediumgray : .black
-            self.leftLabel.font = self.isOn ? .systemFont(ofSize: 13, weight: .medium) : .systemFont(ofSize: 13, weight: .bold)
+            self.leftLabel.font = self.isOn ? UIFont(name: "Pretendard-Medium", size: 13) : UIFont(name: "Pretendard-semibold", size: 13)
             self.rightLabel.textColor = self.isOn ? .black : .mymediumgray
-            self.rightLabel.font = self.isOn ? .systemFont(ofSize: 13, weight: .bold) : .systemFont(ofSize: 13, weight: .medium)
+            self.rightLabel.font = self.isOn ? UIFont(name: "Pretendard-semibold", size: 13) : UIFont(name: "Pretendard-Medium", size: 13)
             self.layoutIfNeeded()
         }
     }
