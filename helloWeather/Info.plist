@@ -5,6 +5,7 @@
 	<key>UIAppFonts</key>
 	<array>
 		<string>GmarketSansTTFBold.ttf</string>
+		<string>Nunito-Black.ttf</string>
 		<string>Montserrat-Black.ttf</string>
 		<string>Pretendard-Regular.ttf</string>
 		<string>Montserrat-Regular.ttf</string>
