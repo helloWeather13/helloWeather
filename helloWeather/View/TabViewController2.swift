@@ -36,6 +36,7 @@ class TabViewController2: TabmanViewController {
         bar.buttons.customize { (button) in
             button.tintColor = .gray
             button.selectedTintColor = .black
+            button.backgroundColor = UIColor(red: 0.988, green: 0.988, blue: 0.992, alpha: 1)
         }
 
         addBar(bar, dataSource: self, at: .top)
