@@ -24,7 +24,7 @@ class RecentSearchTableViewCell: UITableViewCell {
         fatalError("init(Coder:) has not been implemented")
     }
     func configureUI(text : String){
-        
+        self.backgroundColor = UIColor(red: 0.988, green: 0.988, blue: 0.992, alpha: 1)
         titleLabel.text = text
         titleLabel.font = UIFont(name: "Pretendard-SemiBold", size: 16)
         titleLabel.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.8)
@@ -33,7 +33,6 @@ class RecentSearchTableViewCell: UITableViewCell {
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
         timeImageview.image = UIImage(named: "history")
-        timeImageview.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.2)
         timeImageview.contentMode = .center
         timeImageview.tintColor = UIColor(red: 0, green: 0, blue: 0, alpha:0.09)
         timeImageview.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.02)

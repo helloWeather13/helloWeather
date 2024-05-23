@@ -77,7 +77,7 @@ class TempListViewModel: NSObject, CLLocationManagerDelegate {
         let geocoder = CLGeocoder()
         geocoder.reverseGeocodeLocation(location) { [weak self] (placemarks, error) in
             if let error = error {
-                print("주소 불러오기 실패했지뭐얌 끼얏호우: \(error)")
+                print("\(error)")
                 return
             }
             

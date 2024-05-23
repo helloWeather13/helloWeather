@@ -20,7 +20,7 @@ class HomeViewModel: NSObject, CLLocationManagerDelegate {
     }
     var isNotified = false {
         didSet {
-            notfiedDiDChanged(isNotified)
+            notfiedDiDChanged(isNotified, isBookmarked)
         }
     }
     var isNotification = false
@@ -32,7 +32,7 @@ class HomeViewModel: NSObject, CLLocationManagerDelegate {
         }
     }
     
-    var notfiedDiDChanged : ((Bool) -> ()) = { _ in }
+    var notfiedDiDChanged : ((Bool, Bool) -> ()) = { _,_  in }
     var bookMarkDidChanged: ((Bool) -> ()) = { _ in }
     var addressOnCompleted: ((String) -> ()) = { _ in }
     
@@ -193,7 +193,7 @@ class HomeViewModel: NSObject, CLLocationManagerDelegate {
         userLocationAddress = self.currentSearchModel?.fullAddress ?? ""
         userLocationPoint = (self.currentSearchModel?.lat ?? 0 , self.currentSearchModel?.lon ?? 0)
         self.isBookmarked = self.isCurrentLocationBookMarked()
-        loadNotification()
+
     }
     
     func getUserLocation() {
@@ -230,8 +230,11 @@ class HomeViewModel: NSObject, CLLocationManagerDelegate {
                         address += "\(subLocality)"
                     }
                     userLocationAddress = address
-                    self.currentSearchModel = SearchModel(keyWord: "", fullAddress: address, lat: x, lon: y, city: address)
-                    self.isBookmarked = self.isCurrentLocationBookMarked()
+                    
+                    var searchModel : SearchModel = SearchModel(keyWord: "", fullAddress: address, lat: x, lon: y, city: address)
+                    
+                    self.getSearchModelFromUserDefault(searchModel: searchModel)
+                    
                     loadNotification()
                 } else {
                     print("No location")
@@ -324,6 +327,7 @@ class HomeViewModel: NSObject, CLLocationManagerDelegate {
                 self.bookMarkSearchModel = savedObject
             }
         }
+        
     }
     func isCurrentLocationBookMarked() -> Bool{
         if let currentSearchModel {
@@ -338,7 +342,16 @@ class HomeViewModel: NSObject, CLLocationManagerDelegate {
         return false
     }
     
+    func getSearchModelFromUserDefault(searchModel: SearchModel){
+        loadCurrentBookMark()
+        guard let index = bookMarkSearchModel.firstIndex(where: {
+            $0.fullAddress == searchModel.fullAddress
+        }) else {return}
+        self.currentSearchModel = bookMarkSearchModel[index]
+    }
+    
     func loadNotification(){
+        loadCurrentBookMark()
         if let currentSearchModel {
             if isCurrentLocationBookMarked(){
                 self.isNotified = currentSearchModel.notification

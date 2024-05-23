@@ -187,7 +187,7 @@ class WeatherDetailView: UIView {
         
         super.init(frame: frame)
         
-        self.backgroundColor = .white
+        self.backgroundColor = .clear
         configureScrollView()
         configureConstraints()
         setupSunData()
@@ -357,7 +357,7 @@ class WeatherDetailView: UIView {
         }
         
         sunriseInfoLabel.snp.makeConstraints { make in
-            make.top.equalTo(sunsetLabel.snp.bottom).offset(38)
+            make.top.equalTo(sunsetLabel.snp.bottom).offset(34)
             make.centerX.equalTo(sunView)
         }
         

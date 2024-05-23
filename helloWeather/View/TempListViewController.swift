@@ -24,6 +24,11 @@ class TempListViewController: UIViewController {
         configureAlert()
         configurerefreshControl()
         setupNavbar()
+        tableView.backgroundColor = UIColor(red: 0.988, green: 0.988, blue: 0.992, alpha: 1)
+        tableView.separatorColor = UIColor(red: 0.988, green: 0.988, blue: 0.992, alpha: 1)
+        tableView.sectionIndexColor = UIColor(red: 0.988, green: 0.988, blue: 0.992, alpha: 1)
+        tableView.sectionIndexTrackingBackgroundColor = UIColor(red: 0.988, green: 0.988, blue: 0.992, alpha: 1)
+        
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -41,7 +46,7 @@ class TempListViewController: UIViewController {
     
     override func setupAlertViewConstraints(_ customAlertView: UIView, image: UIImage, messageLabel: UILabel) {
         customAlertView.snp.makeConstraints { make in
-          make.bottom.equalTo(view.snp.bottom).inset(91)
+          make.bottom.equalTo(view.snp.bottom).inset(20)
           make.centerX.equalToSuperview()
           make.height.equalTo(max(image.size.height, 40))
           make.width.equalTo(image.size.width + messageLabel.intrinsicContentSize.width + 30)
@@ -64,7 +69,8 @@ class TempListViewController: UIViewController {
     
     @objc func searchButtonTapped() {
         let searchVC = SearchViewController()
-        searchVC.delegate = HomeViewController()
+        searchVC.isMain = false
+        searchVC.delegate = self
         self.navigationController?.pushViewController(searchVC, animated: false)
         (self.navigationController?.parent as? MainViewController)?.scrollView.isScrollEnabled = false
     }
@@ -110,13 +116,16 @@ class TempListViewController: UIViewController {
                 // SpaceCellViewModel 생성 및 설정
                 let spaceCellViewModel = SpaceCellViewModel()
                 cell.configure(with: spaceCellViewModel)
+                
                 cell.selectionStyle = .none
+                cell.backgroundColor = UIColor(red: 0.988, green: 0.988, blue: 0.992, alpha: 1)
                 return cell
             case .listWeather(let listWeather):
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: ListTableViewCell.identifier, for: indexPath) as? ListTableViewCell else {
                     return UITableViewCell()
                 }
                 cell.configure(searchModel: listWeather)
+                cell.delegete = self
                 cell.tempListViewController = self
                 cell.rx.deleteViewTapped
                     .subscribe(onNext: { [weak self] in
@@ -132,6 +141,7 @@ class TempListViewController: UIViewController {
                     .disposed(by: cell.disposeBag)
                 
                 cell.selectionStyle = .none
+                cell.backgroundColor = UIColor(red: 0.988, green: 0.988, blue: 0.992, alpha: 1)
                 
                 return cell
             }
@@ -427,3 +437,18 @@ extension UIViewController {
 }
 
 
+extension TempListViewController : TransferDataToMainDelegate {
+    func searchDidTouched(searchModel: SearchModel, isCurrent: Bool, isMain: Bool) {
+        if !isMain{
+            NotificationCenter.default.post(name: NSNotification.Name("SwitchTabNotification"), object: searchModel, userInfo: nil)
+        }
+    }
+}
+
+extension TempListViewController : alarmDelegate {
+    func alarmDidTouched() {
+        viewModel.bookMarkModel = []
+        self.viewModel.loadBookMark()
+        self.viewModel.applySnapshot()
+    }
+}

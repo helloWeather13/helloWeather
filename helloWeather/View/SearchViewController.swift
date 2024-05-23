@@ -12,7 +12,7 @@ import SnapKit
 import MapKit
 
 protocol TransferDataToMainDelegate {
-    func searchDidTouched(searchModel : SearchModel, isCurrent: Bool)
+    func searchDidTouched(searchModel : SearchModel, isCurrent: Bool, isMain : Bool)
 }
 class SearchViewController: UIViewController {
     var viewModel = SearchViewModel()
@@ -22,10 +22,17 @@ class SearchViewController: UIViewController {
     var titleLabel : UILabel!
     var tableView: UITableView!
     let emptyView = EmptySearchView()
+    var isMain = true
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         searchBar.becomeFirstResponder()
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.popViewController(animated: false)
+        
+        
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,7 +44,14 @@ class SearchViewController: UIViewController {
     }
     
     func configure() {
-        self.view.backgroundColor = .systemBackground
+        let standard = UINavigationBarAppearance()
+        standard.backgroundColor = UIColor(red: 0.988, green: 0.988, blue: 0.992, alpha: 1)
+        standard.shadowImage = UIImage()
+        standard.shadowColor = UIColor(red: 0.988, green: 0.988, blue: 0.992, alpha: 1)
+        self.navigationController?.navigationBar.scrollEdgeAppearance = standard
+        self.navigationController?.navigationBar.standardAppearance = standard
+        
+        self.view.backgroundColor = UIColor(red: 0.988, green: 0.988, blue: 0.992, alpha: 1)
         self.navigationItem.hidesBackButton = true
 
         // Create a custom button view
@@ -80,13 +94,15 @@ class SearchViewController: UIViewController {
         self.emptyView.isHidden = true
     }
     func tableViewConfigure(){
-        tableView = UITableView(frame: .zero, style: .plain)
+        tableView = UITableView(frame: .zero, style: .grouped)
         tableView.delegate = self
         tableView.register(RelatedSearchTableViewCell.self, forCellReuseIdentifier: RelatedSearchTableViewCell.identifier)
         tableView.register(RecentSearchTableViewCell.self, forCellReuseIdentifier: RecentSearchTableViewCell.identifier)
         tableView.register(SectionHeaderView.self, forHeaderFooterViewReuseIdentifier: SectionHeaderView.identifier)
         tableView.separatorStyle = .none
-        tableView.sectionHeaderTopPadding = 12
+        tableView.sectionHeaderTopPadding = 6
+        tableView.backgroundColor = UIColor(red: 0.988, green: 0.988, blue: 0.992, alpha: 1)
+        tableView.layer.borderWidth = 0
         configureDiffableDataSource()
         self.view.addSubview(tableView)
         tableView.snp.makeConstraints{make in
@@ -121,7 +137,7 @@ class SearchViewController: UIViewController {
     func searchBarConfigure(){
         searchBar = UISearchBar()
         searchBar.delegate = self
-        searchBar.placeholder = "어느 지역의 날씨가 궁금하세요?"
+        searchBar.placeholder = "어느 지역의 날씨가 궁금해요?"
         searchBar.setValue("취소", forKey: "cancelButtonText")
         searchBar.showsCancelButton = false
         searchBar.tintColor = UIColor.label
@@ -192,7 +208,7 @@ class SearchViewController: UIViewController {
     func searchBarTextFieldConfigure(){
         searchBar.searchTextField.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.01)
         searchBar.searchTextField.font = UIFont.systemFont(ofSize: 14)
-        searchBar.searchTextField.layer.borderColor = UIColor(red: 0, green: 0, blue: 0, alpha:0.06).cgColor
+        searchBar.searchTextField.layer.borderColor = UIColor(red: 0, green: 0, blue: 0, alpha:0.02).cgColor
         searchBar.searchTextField.layer.borderWidth = 1
         searchBar.searchTextField.layer.cornerRadius = 10
         searchBar.enablesReturnKeyAutomatically = false
@@ -249,10 +265,10 @@ extension SearchViewController : UITableViewDelegate {
         guard let item = self.viewModel.dataSource?.itemIdentifier(for: indexPath) else { return }
         switch item {
         case.recentSearch(let recentSearch):
-            self.delegate?.searchDidTouched(searchModel: recentSearch, isCurrent: false)
+            self.delegate?.searchDidTouched(searchModel: recentSearch, isCurrent: false, isMain: self.isMain)
             navigationController?.popViewController(animated: false)
         case .relatedSearch(let relatedSearch):
-            self.delegate?.searchDidTouched(searchModel: relatedSearch, isCurrent: false)
+            self.delegate?.searchDidTouched(searchModel: relatedSearch, isCurrent: false, isMain: self.isMain)
             self.searchBar.resignFirstResponder()
             self.viewModel.appendRecentSearch(data: relatedSearch)
             navigationController?.popViewController(animated: false)
