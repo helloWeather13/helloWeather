@@ -88,7 +88,8 @@ class HumidityCollectionView: UICollectionView, UICollectionViewDelegate, UIColl
         let cell  = collectionView.dequeueReusableCell(withReuseIdentifier: HumidityCollectionViewCell.identifier, for: indexPath) as! HumidityCollectionViewCell
         
         let hourlyWeather = hourlyWeatherData[indexPath.item]
-        cell.configureConstraints(data: hourlyWeather)
+        let isFirstCell = indexPath.item == 0
+        cell.configureConstraints(data: hourlyWeather, isFirstCell: isFirstCell)
         
         cell.percentLabel.text = hourlyWeather.humidity
         cell.timeLabel.text = hourlyWeather.time
@@ -96,13 +97,12 @@ class HumidityCollectionView: UICollectionView, UICollectionViewDelegate, UIColl
         if indexPath.item == 0 {
             cell.timeLabel.text = "지금"
             cell.timeLabel.textColor = .myblack
-            cell.timeLabel.font = UIFont.systemFont(ofSize: 12, weight: .regular)
-            cell.percentLabel.font = UIFont.systemFont(ofSize: 15, weight: .semibold)
+            cell.timeLabel.font = UIFont(name: "Pretendard-medium", size: 11)
+            cell.percentLabel.font = UIFont(name: "Pretendard-semibold", size: 15)
             cell.percentLabel.textColor = .myblack
         } else {
             cell.timeLabel.textColor = .mygray
             cell.percentLabel.textColor = .mygray
-            cell.percentLabel.font = UIFont.systemFont(ofSize: 12, weight: .regular)
         }
         
         

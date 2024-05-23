@@ -1,7 +1,15 @@
+//
+//  CustomToggle4.swift
+//  helloWeather
+//
+//  Created by 김태담 on 5/23/24.
+//
+
+import Foundation
 import UIKit
 import SnapKit
 
-class CustomToggleView2: UIView {
+class CustomToggleView4: UIView {
     private let viewModel: WeatherDetailViewModel
     private var isOn: Bool = false {
         didSet {
@@ -29,7 +37,7 @@ class CustomToggleView2: UIView {
     }
     
     private func setupView() {
-        backgroundRectangle.backgroundColor = UIColor.lightGray.withAlphaComponent(0.4)
+        backgroundRectangle.backgroundColor = .mylightgray
         backgroundRectangle.layer.cornerRadius = 10
         addSubview(backgroundRectangle)
         
@@ -38,12 +46,12 @@ class CustomToggleView2: UIView {
         addSubview(toggleRectangle)
         
         leftLabel.text = "°C"
-        leftLabel.font = UIFont.systemFont(ofSize: 13, weight: .bold)
+        leftLabel.font = UIFont(name: "Pretendard-SemiBold", size: 13)
         leftLabel.textAlignment = .center
         addSubview(leftLabel)
         
         rightLabel.text = "°F"
-        rightLabel.font = UIFont.systemFont(ofSize: 13, weight: .bold)
+        rightLabel.font = UIFont(name: "Pretendard-SemiBold", size: 13)
         rightLabel.textAlignment = .center
         addSubview(rightLabel)
         
@@ -78,7 +86,7 @@ class CustomToggleView2: UIView {
     
     @objc private func toggleSwitch() {
         isOn.toggle()
-        viewModel.toggleTemperatureUnit()
+        viewModel.toggleTemperatureUnit3()
     }
     
     private func updateToggleState() {
@@ -88,10 +96,10 @@ class CustomToggleView2: UIView {
             } else {
                 self.toggleLeadingConstraint?.update(offset: 4)
             }
-            self.leftLabel.textColor = self.isOn ? .gray : .black
-            self.leftLabel.font = self.isOn ? .systemFont(ofSize: 13, weight: .medium) : .systemFont(ofSize: 13, weight: .bold)
-            self.rightLabel.textColor = self.isOn ? .black : .gray
-            self.rightLabel.font = self.isOn ? .systemFont(ofSize: 13, weight: .bold) : .systemFont(ofSize: 13, weight: .medium)
+            self.leftLabel.textColor = self.isOn ? .mymediumgray : .black
+            self.leftLabel.font = self.isOn ? UIFont(name: "Pretendard-Medium", size: 13) : UIFont(name: "Pretendard-semibold", size: 13)
+            self.rightLabel.textColor = self.isOn ? .black : .mymediumgray
+            self.rightLabel.font = self.isOn ? UIFont(name: "Pretendard-semibold", size: 13) : UIFont(name: "Pretendard-Medium", size: 13)
             self.layoutIfNeeded()
         }
     }

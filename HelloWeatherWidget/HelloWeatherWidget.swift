@@ -306,7 +306,9 @@ struct HelloWeatherWidgetEntryView : View {
                         HStack(alignment: .top, spacing: 2){
                             Image("navigation")
                                 .resizable()
+                                .renderingMode(.template)
                                 .aspectRatio(contentMode: .fill)
+                                .foregroundColor(Color(UIColor.label))
                                 .frame(width: 12,height: 17)
                             Text("\(entry.location.fullAddress),")
                                 .fontWithLineHeight(font: UIFont(name: "Pretendard-Bold", size: 13)!, lineHeight: 16)
@@ -353,7 +355,9 @@ struct HelloWeatherWidgetEntryView : View {
                             HStack(alignment: .center, spacing: 2){
                                 Image("navigation")
                                     .resizable()
+                                    .renderingMode(.template)
                                     .aspectRatio(contentMode: .fill)
+                                    .foregroundColor(Color(UIColor.label))
                                     .frame(width: 12,height: 17)
                                 Text("\(entry.location.fullAddress),")
                                     .fontWithLineHeight(font: UIFont(name: "Pretendard-Bold", size: 16)!, lineHeight: 17)
@@ -411,7 +415,9 @@ struct HelloWeatherWidgetEntryView : View {
                                 HStack(alignment: .center, spacing: 2){
                                     Image("navigation")
                                         .resizable()
+                                        .renderingMode(.template)
                                         .aspectRatio(contentMode: .fill)
+                                        .foregroundColor(Color(UIColor.label))
                                         .frame(width: 12,height: 17)
                                     Text("\(entry.location.fullAddress),")
                                         .fontWithLineHeight(font: UIFont(name: "Pretendard-Bold", size: 16)!, lineHeight: 17)
@@ -458,7 +464,7 @@ struct HelloWeatherWidgetEntryView : View {
                    
                 }
                 
-            }.background(Color(uiColor: UIColor(red: 0.99, green: 0.99, blue: 0.99, alpha: 1.00)))
+            }.widgetBackground(Color(uiColor: UIColor(red: 0.99, green: 0.99, blue: 0.99, alpha: 1.00)))
             
             VStack{
                 Divider()
@@ -563,7 +569,6 @@ struct HelloWeatherWidgetEntryView : View {
                 }
             }
             .frame(height: 195)
-            .background(Color.white)
             .widgetBackground(Color(uiColor: UIColor(red: 1, green: 1, blue: 1, alpha: 1.00)))
         default:
             VStack {

@@ -29,7 +29,7 @@ class SecondLeftCollectionViewCell: UICollectionViewCell {
     
     var celsiusLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 15, weight: .regular)
+        label.font = UIFont(name: "Pretendard-Regular", size: 15)
         label.textAlignment = .center
         return label
     }()
@@ -40,7 +40,7 @@ class SecondLeftCollectionViewCell: UICollectionViewCell {
     var timeLabel: UILabel = {
         let label = UILabel()
         label.text = ""
-        label.font = UIFont.systemFont(ofSize: 11, weight: .regular)
+        label.font = UIFont(name: "Pretendard-Regular", size: 11)
         label.textAlignment = .center
         return label
     }()
@@ -53,7 +53,7 @@ class SecondLeftCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configureConstraints(data: WeatherDetailViewModel.HourlyWeather) {
+    func configureConstraints(data: WeatherDetailViewModel.HourlyWeather, isFirstCell: Bool) {
         
         let barChartCellWrapper = BarChartCellWrapper2(
             //높이
@@ -61,7 +61,7 @@ class SecondLeftCollectionViewCell: UICollectionViewCell {
             index: 0,
             width: 60,
             numberOfDataPoints: 10,
-            accentColor: .gray,
+            accentColor: isFirstCell ? .mygray : .mylightgray,
             touchLocation: .constant(-1.0)
         )
         
@@ -176,7 +176,7 @@ public struct BarChartCell2: View {
         .frame(width: CGFloat(self.cellWidth))
         .scaleEffect(CGSize(width: 15, height: self.scaleValue), anchor: .bottom)
         .onAppear {
-            withAnimation(Animation.spring().delay(self.touchLocation < 0 ?  Double(self.index) * 0.04 : 0)) {
+            withAnimation(Animation.spring().delay(self.touchLocation < 0 ?  Double(self.index) * 0.02 : 0)) {
                 self.scaleValue = self.value
             }
         }

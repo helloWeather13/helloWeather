@@ -85,7 +85,8 @@ class TodayTimeCelsiusCollectionView: UICollectionView, UICollectionViewDelegate
         let cell  = collectionView.dequeueReusableCell(withReuseIdentifier: FirstLeftCollectionViewCell.identifier, for: indexPath) as! FirstLeftCollectionViewCell
         
         let hourlyWeather = hourlyWeatherData[indexPath.item]
-        cell.configureConstraints(data: hourlyWeather)
+        let isFirstCell = indexPath.item == 0
+        cell.configureConstraints(data: hourlyWeather, isFirstCell: isFirstCell)
         
         // ViewModel에서 현재 온도 단위 가져오기
         let temperatureUnit = viewModel?.temperatureUnit ?? .fahrenheit
@@ -99,8 +100,8 @@ class TodayTimeCelsiusCollectionView: UICollectionView, UICollectionViewDelegate
         if indexPath.item == 0 {
             cell.timeLabel.text = "지금"
             cell.timeLabel.textColor = .myblack
-            cell.timeLabel.font = UIFont.systemFont(ofSize: 12, weight: .regular)
-            cell.celsiusLabel.font = UIFont.systemFont(ofSize: 20, weight: .regular)
+            cell.timeLabel.font = UIFont(name: "Pretendard-Semibold", size: 11)
+            cell.celsiusLabel.font = UIFont(name: "Pretendard-Semibold", size: 20)
         } else {
             cell.timeLabel.textColor = .mygray
             cell.celsiusLabel.textColor = .mygray
