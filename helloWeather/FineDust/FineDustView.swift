@@ -1,27 +1,19 @@
-//
-//  FineDustView.swift
-//  helloWeather
-//
-//  Created by 김태담 on 5/14/24.
-//
-
 import Foundation
 import SwiftUI
 import Charts
 
 struct ScrollChartView: View {
 
+    let homeViewModel: HomeViewModel
+    
+    init(homeViewModel: HomeViewModel) {
+        self.homeViewModel = homeViewModel
+    }
+
     var body: some View {
         ScrollView {
-            LineChartView()
+            LineChartView(homeViewModel: homeViewModel)
                 .frame(height: 1100)
         }
     }
 }
-
-#Preview {
-    VStack {
-        ScrollChartView()
-    }
-}
-

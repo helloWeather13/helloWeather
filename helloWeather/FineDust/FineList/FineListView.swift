@@ -1,3 +1,4 @@
+
 import SwiftUI
 
 struct FineListView: View {
@@ -15,7 +16,7 @@ struct FineListView: View {
             HStack {
                 Spacer()
                 Text("주간 미세먼지")
-                    .font(.system(size: CGFloat(titleFontSize), weight: .medium))
+                    .font(.custom("Pretendard-Regular", size: 19))
                 //.font(.custom("Pretendard", size: titleFontSize))
                     .padding(.leading, 22)
                     .padding(.top, 16)
@@ -24,7 +25,6 @@ struct FineListView: View {
                 }
                 Toggle("", isOn: $isToggleOn)
                     .toggleStyle(CustomToggleStyle(viewModel: viewModel))
-                    .opacity(0.7)
                     .padding(.trailing, 8)
                     .padding(.top, 16)
             }
@@ -33,10 +33,10 @@ struct FineListView: View {
                 VStack {
                     Text("오늘")
                         .foregroundColor(isWeekend(date: day1) ? .red : .black)
-                        .font(.system(size: 11, weight: .medium))
+                        .font(.custom("Pretendard-Regular", size: 11))
                         //.opacity(isWeekend(date: day1) ? 1 : 0.8)
                     Text(createTimeFormatter().string(from: day1))
-                        .font(.system(size: 11, weight: .medium))
+                        .font(.custom("Pretendard-Regular", size: 11))
                         .foregroundColor(isWeekend(date: day1) ? .red : .black)
                         //.opacity(isWeekend(date: day1) ? 1 : 0.8)
                         .padding(.bottom, 2)
@@ -45,18 +45,18 @@ struct FineListView: View {
                         .aspectRatio(contentMode: .fit)
                         .frame(width: CGFloat(titleFontSize * 2), height: CGFloat(titleFontSize * 2))
                     Text(viewModel.faceType1.rawValue)
-                        .font(.system(size: 11, weight: .medium))
+                        .font(.custom("Pretendard-Regular", size: 11))
                         //.foregroundColor(viewModel.faceType1.color)
                 }
                 Spacer()
                 VStack {
                     Text(formattedDateWithWeekdays(date: day2!))
                         .foregroundColor(isWeekend(date: day2!) ? .red : .black)
-                        .font(.system(size: 11, weight: .medium))
+                        .font(.custom("Pretendard-Regular", size: 11))
                         .opacity(isWeekend(date: day2!) ? 1 : 0.7)
                     Text(createTimeFormatter().string(from: day2!))
                         .foregroundColor(isWeekend(date: day2!) ? .red : .black)
-                        .font(.system(size: 11, weight: .medium))
+                        .font(.custom("Pretendard-Regular", size: 11))
                         .opacity(isWeekend(date: day2!) ? 1 : 0.7)
                         .padding(.bottom, 2)
                     viewModel.faceType2.image
@@ -64,7 +64,7 @@ struct FineListView: View {
                         .aspectRatio(contentMode: .fit)
                         .frame(width: CGFloat(titleFontSize * 2), height: CGFloat(titleFontSize * 2))
                     Text(viewModel.faceType2.rawValue)
-                        .font(.system(size: 11, weight: .medium))
+                        .font(.custom("Pretendard-Regular", size: 11))
                         .opacity(0.7)
                         //.foregroundColor(viewModel.faceType2.color)
                 }
@@ -72,10 +72,10 @@ struct FineListView: View {
                 VStack {
                     Text(formattedDateWithWeekdays(date: day3!))
                         .foregroundColor(isWeekend(date: day3!) ? .red : .black)
-                        .font(.system(size: 11, weight: .medium))
+                        .font(.custom("Pretendard-Regular", size: 11))
                         .opacity(isWeekend(date: day3!) ? 1 : 0.7)
                     Text(createTimeFormatter().string(from: day3!))
-                        .font(.system(size: 11, weight: .medium))
+                        .font(.custom("Pretendard-Regular", size: 11))
                         .opacity(isWeekend(date: day3!) ? 1 : 0.7)
                         .foregroundColor(isWeekend(date: day3!) ? .red : .black)
                         .padding(.bottom, 2)
@@ -84,7 +84,7 @@ struct FineListView: View {
                         .aspectRatio(contentMode: .fit)
                         .frame(width: CGFloat(titleFontSize * 2), height: CGFloat(titleFontSize * 2))
                     Text(viewModel.faceType3.rawValue)
-                        .font(.system(size: 11, weight: .medium))
+                        .font(.custom("Pretendard-Regular", size: 11))
                         .opacity(0.7)
                         //.opacity(isWeekend(date: day3!) ? 1 : 0.7)
                         //.foregroundColor(viewModel.faceType3.color)
@@ -92,11 +92,11 @@ struct FineListView: View {
                 Spacer()
                 VStack {
                     Text(formattedDateWithWeekdays(date: day4!))
-                        .font(.system(size: 11, weight: .medium))
+                        .font(.custom("Pretendard-Regular", size: 11))
                         .foregroundColor(isWeekend(date: day4!) ? .red : .black)
                         .opacity(isWeekend(date: day4!) ? 1 : 0.7)
                     Text(createTimeFormatter().string(from: day4!))
-                        .font(.system(size: 11, weight: .medium))
+                        .font(.custom("Pretendard-Regular", size: 11))
                         .opacity(isWeekend(date: day4!) ? 1 : 0.7)
                         .foregroundColor(isWeekend(date: day4!) ? .red : .black)
                         .padding(.bottom, 2)
@@ -105,7 +105,7 @@ struct FineListView: View {
                         .aspectRatio(contentMode: .fit)
                         .frame(width: CGFloat(titleFontSize * 2), height: CGFloat(titleFontSize * 2))
                     Text(viewModel.faceType4.rawValue)
-                        .font(.system(size: 11, weight: .medium))
+                        .font(.custom("Pretendard-Regular", size: 11))
                         .opacity(0.7)
                         //.opacity(isWeekend(date: day4!) ? 1 : 0.7)
                         //.foregroundColor(viewModel.faceType4.color)
@@ -130,7 +130,7 @@ struct CustomToggleStyle: ToggleStyle {
                 Rectangle()
                     .frame(width: 90, height: 30)
                     .foregroundColor(.gray)
-                    .opacity(0.4)
+                    .opacity(0.1)
                     .cornerRadius(10)
                 Rectangle()
                     .cornerRadius(6)
@@ -141,15 +141,15 @@ struct CustomToggleStyle: ToggleStyle {
                     .animation(.easeInOut(duration: 0.1), value: configuration.isOn)
                 HStack {
                     Text("미세")
-                        .foregroundColor(configuration.isOn ? .white : .black)
-                        .font(.system(size: 12, weight: .bold))
+                        .foregroundColor(configuration.isOn ? .gray : .black)
+                        .font(.custom("Pretendard-Regular", size: 12))
                         .padding(.leading, 14)
                     
                     Spacer()
                     
                     Text("초미세")
-                        .foregroundColor(configuration.isOn ? .black : .white)
-                        .font(.system(size: 12, weight: .bold))
+                        .foregroundColor(configuration.isOn ? .black : .gray)
+                        .font(.custom("Pretendard-Regular", size: 12))
                         .padding(.trailing, 8)
                 }
                 .frame(width: 90, height: 30)
@@ -162,5 +162,3 @@ struct CustomToggleStyle: ToggleStyle {
         .padding()
     }
 }
-
-
