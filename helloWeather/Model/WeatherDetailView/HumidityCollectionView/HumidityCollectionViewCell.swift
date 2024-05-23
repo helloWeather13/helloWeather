@@ -170,7 +170,7 @@ public struct BarChartCell4: View {
         .frame(width: CGFloat(self.cellWidth))
         .scaleEffect(CGSize(width: 1, height: self.scaleValue), anchor: .bottom)
         .onAppear {
-            withAnimation(Animation.spring().delay(self.touchLocation < 0 ?  Double(self.index) * 0.04 : 0)) { // 애니메이션 적용
+            withAnimation(Animation.spring().delay(self.touchLocation < 0 ?  Double(self.index) * 0.02 : 0)) { // 애니메이션 적용
                 self.scaleValue = self.value
             }
         }

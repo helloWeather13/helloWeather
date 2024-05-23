@@ -176,7 +176,7 @@ public struct BarChartCell6: View {
         .frame(width: CGFloat(self.cellWidth))
         .scaleEffect(CGSize(width: 1, height: self.scaleValue), anchor: .bottom)
         .onAppear {
-            withAnimation(Animation.spring().delay(self.touchLocation < 0 ?  Double(self.index) * 0.04 : 0)) {
+            withAnimation(Animation.spring().delay(self.touchLocation < 0 ?  Double(self.index) * 0.02 : 0)) {
                 self.scaleValue = self.value
             }
         }
