@@ -133,7 +133,7 @@ class WeatherDetailView: UIView {
     }()
     
     // MARK: - 이부분이 데이터 넘기는 겁니다~~
-    let weatherDetailViewModel = WeatherDetailViewModel(weatherManager: WebServiceManager.shared, userLocationPoint: (35.8563, 129.2134))
+    let weatherDetailViewModel = WeatherDetailViewModel(weatherManager: WebServiceManager.shared, userLocationPoint: (35.86, 129.21))
     
     // MARK: - CollectionView
     // 체감온도 stack
