@@ -4,41 +4,48 @@ import CoreLocation
 
 struct Provider: TimelineProvider {
     
-    func fetchWeather(searchModel: SearchModel, completion: @escaping (WidgetModel?,WidgetModel?) -> Void) {
+    func fetchWeather(searchModel: SearchModel, completion: @escaping (WidgetModel?, WidgetModel?) -> Void) {
         let apiKey = "c9b70526c91341798a493546241305"
-        let urlStringForcast = "https://api.weatherapi.com/v1/forecast.json?q=\(searchModel.lat),\(searchModel.lon)&days=7&aqi=yes&lang=ko&key=\(apiKey)"
+        let urlStringForcast = "https://api.weatherapi.com/v1/forecast.json?q=\(searchModel.lat),\(searchModel.lon)&days=2&aqi=yes&lang=ko&key=\(apiKey)"
         
-        guard let yesterday = Calendar.getYesterday() else {return}
+        guard let yesterday = Calendar.getYesterday() else { return }
         
         let urlStringHistory = "https://api.weatherapi.com/v1/history.json?q=\(searchModel.lat),\(searchModel.lon)&dt=\(yesterday)&lang=ko&key=\(apiKey)"
         
-        guard let urlForcast = URL(string: urlStringForcast), let urlHistory = URL(string:urlStringHistory) else {
-            completion(nil,nil)
+        guard let urlForcast = URL(string: urlStringForcast), let urlHistory = URL(string: urlStringHistory) else {
+            completion(nil, nil)
             return
         }
         
-        var todayData : WidgetModel?
-        var yesterDayData : WidgetModel?
+        var todayData: WidgetModel?
+        var yesterDayData: WidgetModel?
         
+        let dispatchGroup = DispatchGroup()
+        
+        dispatchGroup.enter()
         URLSession.shared.dataTask(with: urlForcast) { data, response, error in
+            defer { dispatchGroup.leave() }
             guard let data = data, error == nil else {
-                completion(nil,nil)
                 return
             }
-            let weatherData = try? JSONDecoder().decode(WidgetModel.self, from: data)
-            todayData = weatherData
+            todayData = try? JSONDecoder().decode(WidgetModel.self, from: data)
         }.resume()
         
+        dispatchGroup.enter()
         URLSession.shared.dataTask(with: urlHistory) { data, response, error in
+            defer { dispatchGroup.leave() }
             guard let data = data, error == nil else {
-                completion(nil,nil)
                 return
             }
-            let weatherDataYesterday = try? JSONDecoder().decode(WidgetModel.self, from: data)
-            yesterDayData = weatherDataYesterday
-            completion(todayData,yesterDayData)
+            yesterDayData = try? JSONDecoder().decode(WidgetModel.self, from: data)
         }.resume()
+        
+        dispatchGroup.notify(queue: .main) {
+            print(todayData?.forecast.forecastday[0].hour[23].condition.text)
+            completion(todayData, yesterDayData)
+        }
     }
+
     
     func placeholder(in context: Context) -> SimpleEntry {
         let defaultSearchModel = SearchModel(keyWord: "", fullAddress: "Loading...", lat: 0, lon: 0, city: "Loading...")
@@ -54,7 +61,7 @@ struct Provider: TimelineProvider {
                 completion(entry)
             }
         } else {
-            let defaultSearchModel = SearchModel(keyWord: "", fullAddress: "No location", lat: 0, lon: 0, city: "No location")
+            let defaultSearchModel = SearchModel(keyWord: "", fullAddress: "서울시", lat: 0, lon: 0, city: "서울시")
             let entry = SimpleEntry(date: Date(), location: defaultSearchModel, forecast: nil, yesterday: nil)
             completion(entry)
         }
@@ -68,7 +75,7 @@ struct Provider: TimelineProvider {
                 var entries: [SimpleEntry] = []
                 
                 // Create entries for the next 24 hours, updating every hour
-                for hourOffset in 0 ... 24 {
+                for hourOffset in 0 ..< 1 {
                     let entryDate = Calendar.current.date(byAdding: .hour, value: hourOffset, to: Date())!
                     let entry = SimpleEntry(date: entryDate, location: currentSearchModel, forecast: weatherDataForecast,yesterday: weatherDataHistory)
                     entries.append(entry)
@@ -95,22 +102,36 @@ struct SimpleEntry: TimelineEntry {
 
 struct HelloWeatherWidgetEntryView : View {
     var entry: Provider.Entry
-    var dust : String {
-        var dustString = "미세 "
+    var dust : (String,String) {
+        var dustString1 = "미세 "
+        var dustString2 = "초미세 "
         let fine = Int(entry.forecast?.current?.airQuality.fine ?? -1)
+        let micro = Int(entry.forecast?.current?.airQuality.micro ?? -1)
         switch fine{
         case ...30:
-            dustString += "좋음"
+            dustString1 += "좋음"
         case 31...80:
-            dustString += "보통"
+            dustString1 += "보통"
         case 81...150:
-            dustString += "나쁨"
+            dustString1 += "나쁨"
         case 151...:
-            dustString += "매우나쁨"
+            dustString1 += "매우나쁨"
         default:
-            dustString += "오류"
+            dustString1 += "오류"
         }
-        return dustString
+        switch micro{
+        case ...30:
+            dustString2 += "좋음"
+        case 31...80:
+            dustString2 += "보통"
+        case 81...150:
+            dustString2 += "나쁨"
+        case 151...:
+            dustString2 += "매우나쁨"
+        default:
+            dustString2 += "오류"
+        }
+        return (dustString1, dustString2)
     }
     var condition : (text: String , icon : String){
         var condition = ("", "")
@@ -120,7 +141,7 @@ struct HelloWeatherWidgetEntryView : View {
         let currentHour = Int(currentTime.string(from: Date()))!
 //        print(currentConditon)
         switch currentConditon{
-        case "흐린":
+        case "흐린", "구름 낀":
             condition = ("흐림","cloudStrong-day")
         case "맑음", "화창함":
             condition = ("맑음",currentHour > 18 ? "clean-night" : "clean-day")
@@ -135,13 +156,15 @@ struct HelloWeatherWidgetEntryView : View {
         case "보통 또는 심한 소나기":
             condition = ("소나기",currentHour > 18 ? "rainSrong-night" : "rainSrong-day")
         case "폭우":
-            condition = ("폭우",currentHour > 18 ? "downpour-night" : "_downpour-day")
+            condition = ("폭우","drops_L")
         case "근처에 천둥 발생":
             condition = ("낙뢰",currentHour > 18 ? "thunder-night" : "thunder-day")
         case "천둥을 동반한 보통 또는 심한 비":
             condition = ("뇌우",currentHour > 18 ? "storm-night" : "storm-day")
+        case "안개":
+            condition = ("안개", "fog_L")
         default:
-            condition = (currentConditon ?? "맑음" ,currentHour > 18 ? "snow-night" : "snow-day")
+            condition = (currentConditon ?? "맑음" ,currentHour > 18 ? "clean-night" : "clean-day")
             
             
         }
@@ -175,6 +198,14 @@ struct HelloWeatherWidgetEntryView : View {
         return formatter
     }
     var timeWeather : [CurrentWeather]{
+        if entry.forecast?.forecast.forecastday[0].hour[0].feelslikeC == nil{
+            return [CurrentWeather(temp: "18°", image: "cloudStrong", time: "지금"),
+                    CurrentWeather(temp: "19°", image: "clean", time: "17시"),
+                    CurrentWeather(temp: "18°", image: "clean", time: "18시"),
+                    CurrentWeather(temp: "18°", image: "clean", time: "19시"),
+                    CurrentWeather(temp: "20°", image: "clean", time: "20시"),
+                    CurrentWeather(temp: "19°", image: "cloudStrong", time: "21시"),]
+        }
         var currentWeather : [CurrentWeather] = []
         
         let currentTime = DateFormatter()
@@ -182,44 +213,54 @@ struct HelloWeatherWidgetEntryView : View {
         let currentHour = Int(currentTime.string(from: Date()))!
         var day = 0
         var hour = currentHour
+        
         while currentWeather.count < 6 {
             var temp = ""
             var image = ""
             var time = ""
             
-            if let feelsLike = entry.forecast?.forecast.forecastday[day].hour[hour].feelslikeC {
-                temp = String(Int(feelsLike)) + "°"
-                switch entry.forecast?.forecast.forecastday[day].hour[hour].condition.text{
-                case "흐린":
-                    image = "cloudStrong"
-                case "맑음", "화창함":
-                    image = "clean"
-                case "대체로맑음":
-                    image = "clean"
-                case "가벼운 소나기":
-                    image = "rainWeak"
-                case "곳곳에 가벼운 이슬비":
-                    image = "rainWeak"
-                case "근처 곳곳에 비":
-                    image = "rainSrong"
-                case "보통 또는 심한 소나기":
-                    image = "rainSrong"
-                case "폭우":
-                    image = "downpour"
-                case "근처에 천둥 발생":
-                    image = "thunder"
-                case "천둥을 동반한 보통 또는 심한 비":
-                    image = "storm"
-                default:
-                    image = "snow"
+            if hour < 24 {
+                if let feelsLike = entry.forecast?.forecast.forecastday[day].hour[hour].feelslikeC,
+                   let text = entry.forecast?.forecast.forecastday[day].hour[hour].condition.text{
+                    temp = String(Int(feelsLike)) + "°"
+                    switch text{
+                    case "흐린" , "구름 낀":
+                        image = "cloudStrong"
+                    case "맑음", "화창함":
+                        image = "clean"
+                    case "대체로맑음":
+                        image = "clean"
+                    case "가벼운 소나기":
+                        image = "rainWeak"
+                    case "곳곳에 가벼운 이슬비":
+                        image = "rainWeak"
+                    case "근처 곳곳에 비":
+                        image = "rainSrong"
+                    case "보통 또는 심한 소나기":
+                        image = "rainSrong"
+                    case "폭우":
+                        image = "drops"
+                    case "근처에 천둥 발생":
+                        image = "thunder"
+                    case "천둥을 동반한 보통 또는 심한 비":
+                        image = "storm"
+                    case "안개":
+                        image = "fog"
+                    default:
+                        image = "snow"
+                    }
+                    if hour == currentHour {
+                        time = "지금"
+                    }else{
+                        time = "\(hour)시"
+                    }
+                    currentWeather.append(CurrentWeather(temp: temp, image: image, time: time))
+                    hour += 1
                 }
-                if hour == currentHour {
-                    time = "지금"
-                }else{
-                    time = "\(hour)시"
+                else{
+                    currentWeather.append(CurrentWeather(temp: "temp", image: "clean", time: "time"))
+                    hour += 1
                 }
-                currentWeather.append(CurrentWeather(temp: temp, image: image, time: time))
-                hour += 1
             }else{
                 day = 1
                 hour = 0
@@ -257,101 +298,59 @@ struct HelloWeatherWidgetEntryView : View {
     var body: some View {
         switch family{
         case .systemSmall:
-            VStack(alignment: .leading, spacing: 7){
-                VStack(alignment: .leading , spacing: 4){
-                    HStack(alignment: .top, spacing: 2){
-                        Image("navigation")
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
-                            .frame(width: 12,height: 17)
-                        Text("\(entry.location.fullAddress),")
-                            .fontWithLineHeight(font: UIFont(name: "Pretendard-Bold", size: 13)!, lineHeight: 16)
-                            .kerning(0.08)
-                        Text("\(condition.text)")
-                            .fontWithLineHeight(font: UIFont(name: "Pretendard-Regular", size: 13)!, lineHeight: 16)
-                            .kerning(0.08)
-                        Spacer()
-                    }
-                    
-                    Text("\(Int(entry.forecast?.current?.feelslikeC ?? 0))°")
-                        .fontWithLineHeight(font: UIFont(name: "Nunito-Black", size: 62)!, lineHeight: 62)
-                        .kerning(-0.6)
-                }
-                HStack(){
-                    VStack(alignment: .leading, spacing: 4){
-                        Text("\(compare)")
-                            .fontWithLineHeight(font: UIFont(name: "Pretendard-Medium", size: 11)!, lineHeight: 13)
-                            .kerning(0.07)
-                        Text("\(dust)")
-                            .fontWithLineHeight(font: UIFont(name: "Pretendard-Medium", size: 11)!, lineHeight: 13)
-                            .kerning(0.07)
-                    }
-                    Spacer()
-                    HStack(alignment: .center){
-                        Image("\(condition.icon)")
-                            .frame(width: 36,height: 36)
-                            .aspectRatio(contentMode: .fit)
-                        
-                    }
-                }
-                
-            }
-            .widgetBackground(Color(uiColor: UIColor(red: 0.99, green: 0.99, blue: 0.99, alpha: 1.00)))
-            
-        case .systemMedium:
             HStack{
-                VStack (alignment: .leading, spacing: 13) {
+                Spacer(minLength: 16)
+                VStack(alignment: .leading, spacing: 7){
+                    Spacer(minLength: 16)
                     VStack(alignment: .leading , spacing: 4){
-                        HStack(alignment: .center, spacing: 2){
+                        HStack(alignment: .top, spacing: 2){
                             Image("navigation")
                                 .resizable()
                                 .aspectRatio(contentMode: .fill)
                                 .frame(width: 12,height: 17)
                             Text("\(entry.location.fullAddress),")
-                                .fontWithLineHeight(font: UIFont(name: "Pretendard-Bold", size: 16)!, lineHeight: 17)
+                                .fontWithLineHeight(font: UIFont(name: "Pretendard-Bold", size: 13)!, lineHeight: 16)
                                 .kerning(0.08)
                             Text("\(condition.text)")
-                                .fontWithLineHeight(font: UIFont(name: "Pretendard-Regular", size: 16)!, lineHeight: 17)
+                                .fontWithLineHeight(font: UIFont(name: "Pretendard-Regular", size: 13)!, lineHeight: 16)
                                 .kerning(0.08)
-                        }
-                        HStack{
-                            Text("\(Int(entry.forecast?.current?.feelslikeC ?? 0))°")
-                                .fontWithLineHeight(font: UIFont(name: "Nunito-Black", size: 62)!, lineHeight: 62)
-                                .kerning(0.05)
+                            Spacer()
                         }
                         
+                        Text("\(Int(entry.forecast?.current?.feelslikeC ?? 19))°")
+                            .fontWithLineHeight(font: UIFont(name: "Nunito-Black", size: 62)!, lineHeight: 62)
+                            .kerning(-0.6)
                     }
-                    VStack(alignment: .leading, spacing: 4){
-                        Text("\(compare)")
-                            .fontWithLineHeight(font: UIFont(name: "Pretendard-Medium", size: 11)!, lineHeight: 13)
-                            .kerning(0.07)
-                        Text("\(dust)")
-                            .fontWithLineHeight(font: UIFont(name: "Pretendard-Medium", size: 11)!, lineHeight: 13)
-                            .kerning(0.07)
-                    }
-                }
-                Spacer()
-                VStack(alignment: .trailing, spacing: 4){
                     HStack(){
-                        Image("\(condition.icon)")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 36,height: 36)
+                        VStack(alignment: .leading, spacing: 4){
+                            Text("\(compare)")
+                                .fontWithLineHeight(font: UIFont(name: "Pretendard-Medium", size: 11)!, lineHeight: 13)
+                                .kerning(0.07)
+                            Text("\(dust.0)")
+                                .fontWithLineHeight(font: UIFont(name: "Pretendard-Medium", size: 11)!, lineHeight: 13)
+                                .kerning(0.07)
+                        }
+                        Spacer()
+                        HStack(alignment: .center){
+                            Image("\(condition.icon)")
+                                .frame(width: 36,height: 36)
+                                .aspectRatio(contentMode: .fit)
+                            
+                        }
                     }
-                    
-                    Text("\(Int(entry.forecast?.forecast.forecastday[0].day.maxtempC ?? 0))° / \(Int(entry.forecast?.forecast.forecastday[0].day.mintempC ?? 0))°")
-                        .fontWithLineHeight(font: UIFont(name: "Pretendard-Regular", size: 13)!, lineHeight: 13)
-                        .kerning(0.07)
-                    Spacer()
+                    Spacer(minLength: 16)
                 }
+                Spacer(minLength: 16)
             }.widgetBackground(Color(uiColor: UIColor(red: 0.99, green: 0.99, blue: 0.99, alpha: 1.00)))
             
-        case .systemLarge:
+        case .systemMedium:
             VStack{
+                Spacer(minLength: 16)
                 HStack{
+                    Spacer(minLength: 16)
                     VStack (alignment: .leading, spacing: 13) {
                         VStack(alignment: .leading , spacing: 4){
-                            HStack(alignment: .top, spacing: 2){
+                            HStack(alignment: .center, spacing: 2){
                                 Image("navigation")
                                     .resizable()
                                     .aspectRatio(contentMode: .fill)
@@ -362,11 +361,13 @@ struct HelloWeatherWidgetEntryView : View {
                                 Text("\(condition.text)")
                                     .fontWithLineHeight(font: UIFont(name: "Pretendard-Regular", size: 16)!, lineHeight: 17)
                                     .kerning(0.08)
+                                Spacer()
                             }
                             HStack{
-                                Text("\(Int(entry.forecast?.current?.feelslikeC ?? 0))°")
+                                Text("\(Int(entry.forecast?.current?.feelslikeC ?? 19))°")
                                     .fontWithLineHeight(font: UIFont(name: "Nunito-Black", size: 62)!, lineHeight: 62)
                                     .kerning(0.05)
+                                Spacer()
                             }
                             
                         }
@@ -374,12 +375,12 @@ struct HelloWeatherWidgetEntryView : View {
                             Text("\(compare)")
                                 .fontWithLineHeight(font: UIFont(name: "Pretendard-Medium", size: 11)!, lineHeight: 13)
                                 .kerning(0.07)
-                            Text("\(dust)")
+                            Text("\(dust.0)")
                                 .fontWithLineHeight(font: UIFont(name: "Pretendard-Medium", size: 11)!, lineHeight: 13)
                                 .kerning(0.07)
                         }
                     }
-                    Spacer()
+                    Spacer(minLength: 72)
                     VStack(alignment: .trailing, spacing: 4){
                         HStack(){
                             Image("\(condition.icon)")
@@ -388,115 +389,181 @@ struct HelloWeatherWidgetEntryView : View {
                                 .frame(width: 36,height: 36)
                         }
                         
-                        Text("\(Int(entry.forecast?.forecast.forecastday[0].day.maxtempC ?? 0))° / \(Int(entry.forecast?.forecast.forecastday[0].day.mintempC ?? 0))°")
+                        Text("\(Int(entry.forecast?.forecast.forecastday[0].day.maxtempC ?? 26))° / \(Int(entry.forecast?.forecast.forecastday[0].day.mintempC ?? 19))°")
                             .fontWithLineHeight(font: UIFont(name: "Pretendard-Regular", size: 13)!, lineHeight: 13)
                             .kerning(0.07)
                         Spacer()
                     }
-                    
+                    Spacer(minLength: 16)
                 }
-                Spacer()
+                Spacer(minLength: 16)
+            }
+            .widgetBackground(Color(uiColor: UIColor(red: 0.99, green: 0.99, blue: 0.99, alpha: 1.00)))
+            
+        case .systemLarge:
+            HStack{
+                VStack{
+                    Spacer(minLength: 10)
+                    HStack{
+                        Spacer(minLength: 16)
+                        VStack (alignment: .leading, spacing: 13) {
+                            VStack(alignment: .leading , spacing: 4){
+                                HStack(alignment: .center, spacing: 2){
+                                    Image("navigation")
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fill)
+                                        .frame(width: 12,height: 17)
+                                    Text("\(entry.location.fullAddress),")
+                                        .fontWithLineHeight(font: UIFont(name: "Pretendard-Bold", size: 16)!, lineHeight: 17)
+                                        .kerning(0.08)
+                                    Text("\(condition.text)")
+                                        .fontWithLineHeight(font: UIFont(name: "Pretendard-Regular", size: 16)!, lineHeight: 17)
+                                        .kerning(0.08)
+                                    Spacer()
+                                }
+                                HStack{
+                                    Text("\(Int(entry.forecast?.current?.feelslikeC ?? 19))°")
+                                        .fontWithLineHeight(font: UIFont(name: "Nunito-Black", size: 62)!, lineHeight: 62)
+                                        .kerning(0.05)
+                                    Spacer()
+                                }
+                                
+                            }
+                            VStack(alignment: .leading, spacing: 4){
+                                Text("\(compare)")
+                                    .fontWithLineHeight(font: UIFont(name: "Pretendard-Medium", size: 11)!, lineHeight: 13)
+                                    .kerning(0.07)
+                                Text("\(dust.0) · \(dust.1)")
+                                    .fontWithLineHeight(font: UIFont(name: "Pretendard-Medium", size: 11)!, lineHeight: 13)
+                                    .kerning(0.07)
+                            }
+                        }
+                        Spacer(minLength: 72)
+                        VStack(alignment: .trailing, spacing: 4){
+                            HStack(){
+                                Image("\(condition.icon)")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 36,height: 36)
+                            }
+                            
+                            Text("\(Int(entry.forecast?.forecast.forecastday[0].day.maxtempC ?? 26))° / \(Int(entry.forecast?.forecast.forecastday[0].day.mintempC ?? 19))°")
+                                .fontWithLineHeight(font: UIFont(name: "Pretendard-Regular", size: 13)!, lineHeight: 13)
+                                .kerning(0.07)
+                            Spacer()
+                        }
+                        Spacer(minLength: 16)
+                    }
+                    Spacer(minLength: 16)
+                   
+                }
+                
+            }.background(Color(uiColor: UIColor(red: 0.99, green: 0.99, blue: 0.99, alpha: 1.00)))
+            
+            VStack{
                 Divider()
-                Spacer()
                 HStack(){
-                    Spacer()
+                    Spacer(minLength: 16)
                     VStack(alignment: .center){
+                        Spacer(minLength: 22)
                         Text("\(timeWeather[0].temp)")
                             .fontWithLineHeight(font: UIFont(name: "Pretendard-Regular", size: 20)!, lineHeight: 20)
                             .kerning(0.24)
-                        Spacer(minLength: 6)
+                        Spacer(minLength: 3)
                         BarChartCell5(value: changeDataToHeight(temp: timeWeather[0].temp), width: 50, numberOfDataPoints: 10, accentColor: .gray, touchLocation: .constant(-1.0))
-                        Spacer(minLength: 9)
+                        Spacer(minLength: 4)
                         Image(timeWeather[0].image)
                             .frame(width: 24, height: 24)
-                        Spacer(minLength: 16)
+                        Spacer(minLength: 22)
                         Text("\(timeWeather[0].time)")
                             .fontWithLineHeight(font: UIFont(name: "Pretendard-Regular", size: 11)!, lineHeight: 14.85)
+                        Spacer(minLength: 27)
                     }
-                    Spacer()
+                    Spacer(minLength: 16)
                     VStack(alignment: .center){
+                        Spacer(minLength: 22)
                         Text("\(timeWeather[1].temp)")
-                            .fontWithLineHeight(font: UIFont(name: "Pretendard-Regular", size: 16)!, lineHeight: 17)
-                            .foregroundColor(Color(uiColor: UIColor(red: 0, green: 0, blue: 0, alpha: 0.6)))
+                            .fontWithLineHeight(font: UIFont(name: "Pretendard-Regular", size: 15)!, lineHeight: 20)
                             .kerning(0.24)
-                        Spacer(minLength: 6)
-                        BarChartCell5(value: changeDataToHeight(temp: timeWeather[1].temp), width: 50, numberOfDataPoints: 10, accentColor: Color(uiColor: UIColor(red: 0.92, green: 0.92, blue: 0.92, alpha: 1.00)), touchLocation: .constant(-1.0))
-                        Spacer(minLength: 9)
+                        Spacer(minLength: 3)
+                        BarChartCell5(value: changeDataToHeight(temp: timeWeather[1].temp), width: 50, numberOfDataPoints: 10, accentColor: .gray, touchLocation: .constant(-1.0))
+                        Spacer(minLength: 4)
                         Image(timeWeather[1].image)
                             .frame(width: 24, height: 24)
-                        Spacer(minLength: 16)
+                        Spacer(minLength: 22)
                         Text("\(timeWeather[1].time)")
                             .fontWithLineHeight(font: UIFont(name: "Pretendard-Regular", size: 11)!, lineHeight: 14.85)
-                            .foregroundColor(Color(uiColor: UIColor(red: 0, green: 0, blue: 0, alpha: 0.6)))
+                        Spacer(minLength: 27)
                     }
-                    Spacer()
+                    Spacer(minLength: 16)
                     VStack(alignment: .center){
+                        Spacer(minLength: 22)
                         Text("\(timeWeather[2].temp)")
-                            .fontWithLineHeight(font: UIFont(name: "Pretendard-Regular", size: 16)!, lineHeight: 17)
-                            .foregroundColor(Color(uiColor: UIColor(red: 0, green: 0, blue: 0, alpha: 0.6)))
+                            .fontWithLineHeight(font: UIFont(name: "Pretendard-Regular", size: 15)!, lineHeight: 20)
                             .kerning(0.24)
-                        Spacer(minLength: 6)
-                        BarChartCell5(value: changeDataToHeight(temp: timeWeather[2].temp), width: 50, numberOfDataPoints: 10, accentColor: Color(uiColor: UIColor(red: 0.92, green: 0.92, blue: 0.92, alpha: 1.00)), touchLocation: .constant(-1.0))
-                        Spacer(minLength: 9)
+                        Spacer(minLength: 3)
+                        BarChartCell5(value: changeDataToHeight(temp: timeWeather[2].temp), width: 50, numberOfDataPoints: 10, accentColor: .gray, touchLocation: .constant(-1.0))
+                        Spacer(minLength: 4)
                         Image(timeWeather[2].image)
                             .frame(width: 24, height: 24)
-                        Spacer(minLength: 16)
+                        Spacer(minLength: 22)
                         Text("\(timeWeather[2].time)")
                             .fontWithLineHeight(font: UIFont(name: "Pretendard-Regular", size: 11)!, lineHeight: 14.85)
-                            .foregroundColor(Color(uiColor: UIColor(red: 0, green: 0, blue: 0, alpha: 0.6)))
+                        Spacer(minLength: 27)
                     }
-                    Spacer()
+                    Spacer(minLength: 16)
                     VStack(alignment: .center){
+                        Spacer(minLength: 22)
                         Text("\(timeWeather[3].temp)")
-                            .fontWithLineHeight(font: UIFont(name: "Pretendard-Regular", size: 16)!, lineHeight: 17)
-                            .foregroundColor(Color(uiColor: UIColor(red: 0, green: 0, blue: 0, alpha: 0.6)))
+                            .fontWithLineHeight(font: UIFont(name: "Pretendard-Regular", size: 15)!, lineHeight: 20)
                             .kerning(0.24)
-                        Spacer(minLength: 6)
-                        BarChartCell5(value: changeDataToHeight(temp: timeWeather[3].temp), width: 50, numberOfDataPoints: 10, accentColor: Color(uiColor: UIColor(red: 0.92, green: 0.92, blue: 0.92, alpha: 1.00)), touchLocation: .constant(-1.0))
-                        Spacer(minLength: 9)
+                        Spacer(minLength: 3)
+                        BarChartCell5(value: changeDataToHeight(temp: timeWeather[3].temp), width: 50, numberOfDataPoints: 10, accentColor: .gray, touchLocation: .constant(-1.0))
+                        Spacer(minLength: 4)
                         Image(timeWeather[3].image)
                             .frame(width: 24, height: 24)
-                        Spacer(minLength: 16)
+                        Spacer(minLength: 22)
                         Text("\(timeWeather[3].time)")
                             .fontWithLineHeight(font: UIFont(name: "Pretendard-Regular", size: 11)!, lineHeight: 14.85)
-                            .foregroundColor(Color(uiColor: UIColor(red: 0, green: 0, blue: 0, alpha: 0.6)))
+                        Spacer(minLength: 27)
                     }
-                    Spacer()
+                    Spacer(minLength: 16)
                     VStack(alignment: .center){
+                        Spacer(minLength: 22)
                         Text("\(timeWeather[4].temp)")
-                            .fontWithLineHeight(font: UIFont(name: "Pretendard-Regular", size: 16)!, lineHeight: 17)
-                            .foregroundColor(Color(uiColor: UIColor(red: 0, green: 0, blue: 0, alpha: 0.6)))
+                            .fontWithLineHeight(font: UIFont(name: "Pretendard-Regular", size: 15)!, lineHeight: 20)
                             .kerning(0.24)
-                        Spacer(minLength: 6)
-                        BarChartCell5(value: changeDataToHeight(temp: timeWeather[4].temp), width: 50, numberOfDataPoints: 10, accentColor: Color(uiColor: UIColor(red: 0.92, green: 0.92, blue: 0.92, alpha: 1.00)), touchLocation: .constant(-1.0))
-                        Spacer(minLength: 9)
+                        Spacer(minLength: 3)
+                        BarChartCell5(value: changeDataToHeight(temp: timeWeather[4].temp), width: 50, numberOfDataPoints: 10, accentColor: .gray, touchLocation: .constant(-1.0))
+                        Spacer(minLength: 4)
                         Image(timeWeather[4].image)
                             .frame(width: 24, height: 24)
-                        Spacer(minLength: 16)
+                        Spacer(minLength: 22)
                         Text("\(timeWeather[4].time)")
                             .fontWithLineHeight(font: UIFont(name: "Pretendard-Regular", size: 11)!, lineHeight: 14.85)
-                            .foregroundColor(Color(uiColor: UIColor(red: 0, green: 0, blue: 0, alpha: 0.6)))
+                        Spacer(minLength: 27)
                     }
-                    Spacer()
+                    Spacer(minLength: 16)
                     VStack(alignment: .center){
+                        Spacer(minLength: 22)
                         Text("\(timeWeather[5].temp)")
-                            .fontWithLineHeight(font: UIFont(name: "Pretendard-Regular", size: 16)!, lineHeight: 17)
-                            .foregroundColor(Color(uiColor: UIColor(red: 0, green: 0, blue: 0, alpha: 0.6)))
+                            .fontWithLineHeight(font: UIFont(name: "Pretendard-Regular", size: 15)!, lineHeight: 20)
                             .kerning(0.24)
-                        Spacer(minLength: 6)
-                        BarChartCell5(value: changeDataToHeight(temp: timeWeather[5].temp), width: 50, numberOfDataPoints: 10, accentColor: Color(uiColor: UIColor(red: 0.92, green: 0.92, blue: 0.92, alpha: 1.00)), touchLocation: .constant(-1.0))
-                        Spacer(minLength: 9)
+                        Spacer(minLength: 3)
+                        BarChartCell5(value: changeDataToHeight(temp: timeWeather[5].temp), width: 50, numberOfDataPoints: 10, accentColor: .gray, touchLocation: .constant(-1.0))
+                        Spacer(minLength: 4)
                         Image(timeWeather[5].image)
                             .frame(width: 24, height: 24)
-                        Spacer(minLength: 16)
+                        Spacer(minLength: 22)
                         Text("\(timeWeather[5].time)")
                             .fontWithLineHeight(font: UIFont(name: "Pretendard-Regular", size: 11)!, lineHeight: 14.85)
-                            .foregroundColor(Color(uiColor: UIColor(red: 0, green: 0, blue: 0, alpha: 0.6)))
+                        Spacer(minLength: 27)
                     }
-                    Spacer()
+                    Spacer(minLength: 16)
                 }
-                Spacer()
             }
+            .frame(height: 195)
+            .background(Color.white)
             .widgetBackground(Color(uiColor: UIColor(red: 1, green: 1, blue: 1, alpha: 1.00)))
         default:
             VStack {
@@ -533,7 +600,7 @@ struct HelloWeatherWidget: Widget {
         .configurationDisplayName("Weather Widget")
         .description("Displays the current weather for your location.")
         .supportedFamilies([.systemSmall, .systemMedium, .systemLarge])
-        //        .contentMarginsDisabled()
+        .contentMarginsDisabled()
     }
 }
 

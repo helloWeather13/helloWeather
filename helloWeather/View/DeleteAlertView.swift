@@ -46,12 +46,14 @@ class DeleteAlertView: UIView {
         configureView()
         titleLabel.text = "삭제 하실건가요?"
         titleLabel.textAlignment = .center
-        titleLabel.font = .boldSystemFont(ofSize: 16)
+        titleLabel.font = UIFont(name: "Pretendard-SemiBold", size: 16)
         cancelButton.setTitle("취소", for: .normal)
-        cancelButton.setTitleColor(.label, for: .normal)
+        cancelButton.titleLabel?.font = UIFont(name: "Pretendard-Bold", size: 15)
+        cancelButton.setTitleColor(.black, for: .normal)
         deleteButton.setTitle("삭제", for: .normal)
-        deleteButton.setTitleColor(.systemBackground, for: .normal)
-        deleteButton.backgroundColor = .label
+        deleteButton.titleLabel?.font = UIFont(name: "Pretendard-Bold", size: 15)
+        deleteButton.setTitleColor(.white, for: .normal)
+        deleteButton.backgroundColor = UIColor(red: 0.04, green: 0.04, blue: 0.04, alpha: 1.0)
         [cancelButton,deleteButton].forEach{
             $0.layer.cornerRadius = 5
             $0.clipsToBounds = true

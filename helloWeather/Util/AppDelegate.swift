@@ -1,5 +1,6 @@
 import UIKit
 import CoreLocation
+import WidgetKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -38,6 +39,7 @@ extension AppDelegate: CLLocationManagerDelegate {
                 let searchModel = SearchModel(keyWord: "", fullAddress: address, lat: lat, lon: lon, city: address)
                 let userDefaults = UserDefaults(suiteName: "group.com.seungwon.helloWeather")
                 userDefaults?.set(try? PropertyListEncoder().encode(searchModel), forKey: "currentSearchModel")
+                WidgetCenter.shared.reloadTimelines(ofKind: "HelloWeatherWidget")
             }
         }
     }

@@ -26,6 +26,7 @@ public struct BarChartCell5: View {
         ZStack {
             RoundedRectangle(cornerRadius: 25)
                 .fill(accentColor)
+                .frame(height: 54)
         }
         .frame(width: CGFloat(self.cellWidth))
         .scaleEffect(CGSize(width: 1, height: self.scaleValue), anchor: .bottom)
