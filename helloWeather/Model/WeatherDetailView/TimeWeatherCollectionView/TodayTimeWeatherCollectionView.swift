@@ -54,7 +54,6 @@ class TodayTimeWeatherCollectionView: UICollectionView, UICollectionViewDelegate
                                }
                                return !isFirst21Found && hour % 3 == 0
                            }
-             
                 self?.reloadData()
                 self?.updateCollectionViewSize()
 

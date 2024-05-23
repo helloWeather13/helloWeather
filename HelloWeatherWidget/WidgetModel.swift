@@ -86,3 +86,4 @@ struct CurrentWeather {
     let image : String
     let time : String
 }
+
