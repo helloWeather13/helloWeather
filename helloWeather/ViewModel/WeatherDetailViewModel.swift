@@ -81,7 +81,6 @@ class WeatherDetailViewModel {
     // 시간별 날씨 정보 가져오기
     func fetchHourlyWeather() -> Observable<[HourlyWeather]> {
         let location = SearchModel(keyWord: "", fullAddress: "", lat: userLocationPoint.0, lon: userLocationPoint.1, city: "")
-        print(userLocationPoint)
         return Observable.create { observer in
             self.weatherManager.getForecastWeather(searchModel: location) { data in
                 let currentHour = Calendar.current.component(.hour, from: Date())
@@ -115,7 +114,6 @@ class WeatherDetailViewModel {
                                 condition: "\(condition)"
                             )
                             hourlyWeather.append(hourlyWeatherData)
-                            print(hourlyWeatherData)
                         }
                     }
                 }
