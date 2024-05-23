@@ -127,6 +127,7 @@ class CurrentWeatherTableViewCell: UITableViewCell {
         self.makeConstraints()
     }
     
+    
     func setupWeatherImage() {
         switch conditionLabel.text {
         case "맑음":
