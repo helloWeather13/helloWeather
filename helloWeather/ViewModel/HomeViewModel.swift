@@ -352,12 +352,11 @@ class HomeViewModel: NSObject, CLLocationManagerDelegate {
             $0.fullAddress == searchModel.fullAddress
         }){
             self.currentSearchModel = bookMarkSearchModel[index]
+            self.isNotified = self.currentSearchModel!.notification
         }else{
-            self.currentSearchModel = searchModel 
+            self.isNotified = false
+            self.currentSearchModel = searchModel
         }
-        
-        
-        
     }
     
     func loadNotification(){
