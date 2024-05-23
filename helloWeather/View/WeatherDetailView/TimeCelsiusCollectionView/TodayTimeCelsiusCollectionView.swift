@@ -107,6 +107,7 @@ class TodayTimeCelsiusCollectionView: UICollectionView, UICollectionViewDelegate
             cell.celsiusLabel.textColor = .mygray
         }
         
+        cell.backgroundColor = UIColor(red: 0.988, green: 0.988, blue: 0.992, alpha: 1)
         
         return cell
     }

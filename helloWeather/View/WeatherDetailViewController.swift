@@ -13,7 +13,7 @@ class WeatherDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = .white
+        self.view.backgroundColor = UIColor(red: 0.988, green: 0.988, blue: 0.992, alpha: 1)
         let weatherDetailView = WeatherDetailView(frame: self.view.bounds)
         self.view = weatherDetailView
     }

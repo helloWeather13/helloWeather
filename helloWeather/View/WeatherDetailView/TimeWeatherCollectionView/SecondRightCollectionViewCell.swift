@@ -133,6 +133,7 @@ class BarChartCellWrapper6: UIView {
     private func setupHostingController(value: Double, index: Int, width: Float, numberOfDataPoints: Int, accentColor: Color, touchLocation: Binding<CGFloat>) {
         let barChartCell = BarChartCell(value: value, index: index, width: width, numberOfDataPoints: numberOfDataPoints, accentColor: accentColor, touchLocation: touchLocation)
         let hostingController = UIHostingController(rootView: barChartCell)
+        hostingController.view.backgroundColor = UIColor(red: 0.988, green: 0.988, blue: 0.992, alpha: 1)
         self.hostingController = hostingController
         addSubview(hostingController.view)
         

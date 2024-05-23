@@ -1,8 +1,8 @@
 //
-//  leftCollectionViewCell.swift
+//  HumidityCollectionViewCell.swift
 //  helloWeather
 //
-//  Created by 이유진 on 5/14/24.
+//  Created by 이유진 on 5/16/24.
 //
 
 import UIKit
@@ -10,36 +10,32 @@ import SnapKit
 import SwiftUI
 import SwiftUICharts
 
-class SecondLeftCollectionViewCell: UICollectionViewCell {
+class HumidityCollectionViewCell: UICollectionViewCell {
     
-    static let identifier = String(describing: SecondLeftCollectionViewCell.self)
+    static let identifier = String(describing: HumidityCollectionViewCell.self)
     
-    var firstStackView: UIStackView = {
+    let stackView: UIStackView = {
         let stack = UIStackView()
         stack.axis = .vertical
-        stack.spacing = 10
-        return stack
-    }()
-    var secondStackView: UIStackView = {
-        let stack = UIStackView()
-        stack.axis = .vertical
-        stack.spacing = 20
+        stack.spacing = 8
         return stack
     }()
     
-    var celsiusLabel: UILabel = {
+    let stackView2: UIStackView = {
+        let stack = UIStackView()
+        stack.axis = .vertical
+        stack.spacing = 15
+        return stack
+    }()
+    
+    let percentLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "Pretendard-Regular", size: 15)
+        label.font = UIFont(name: "Pretendard-Regular", size: 12)
         label.textAlignment = .center
         return label
     }()
-    var weatherIcon: UIImageView = {
-        let image = UIImageView()
-        return image
-    }()
-    var timeLabel: UILabel = {
+    let timeLabel: UILabel = {
         let label = UILabel()
-        label.text = ""
         label.font = UIFont(name: "Pretendard-Regular", size: 11)
         label.textAlignment = .center
         return label
@@ -55,70 +51,67 @@ class SecondLeftCollectionViewCell: UICollectionViewCell {
     
     func configureConstraints(data: WeatherDetailViewModel.HourlyWeather, isFirstCell: Bool) {
         
-        let barChartCellWrapper = BarChartCellWrapper2(
-            //높이
+        let barChartCellWrapper = BarChartCellWrapper4 (
             value: changeDataToHeight(data: data),
             index: 0,
             width: 60,
             numberOfDataPoints: 10,
-            accentColor: isFirstCell ? .mygray : .mylightgray,
+            accentColor: isFirstCell ? .myblue : .mylightblue,
             touchLocation: .constant(-1.0)
         )
         
+        contentView.addSubview(stackView2)
+        stackView.addArrangedSubview(percentLabel)
+        stackView.addArrangedSubview(barChartCellWrapper)
         
-        [celsiusLabel, barChartCellWrapper, weatherIcon].forEach {
-            firstStackView.addArrangedSubview($0)
-        }
-        [firstStackView, timeLabel].forEach {
-            secondStackView.addArrangedSubview($0)
-        }
-        contentView.addSubview(secondStackView)
+        stackView2.addArrangedSubview(stackView)
+        stackView2.addArrangedSubview(timeLabel)
         
-        secondStackView.snp.makeConstraints { make in
+        stackView2.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
         
-        celsiusLabel.snp.makeConstraints { make in
-            make.height.equalTo(celsiusLabel.font.pointSize)
-        }
-        
-        weatherIcon.snp.makeConstraints { make in
-            make.height.equalTo(24)
+        percentLabel.snp.makeConstraints { make in
+            make.height.equalTo(percentLabel.font.pointSize)
         }
         
         func changeDataToHeight(data: WeatherDetailViewModel.HourlyWeather) -> Double{
             var height: Double = 0.0
-            if let tempC = Double(data.tempC.dropLast()) {
+            if let tempC = Double(data.humidity.dropLast()) {
                 switch tempC {
-                case ..<0:
-                    height = 0.1
-                case 0..<10:
+                case ..<10:
+                    height = 0.0
+                case 10..<20:
                     height = 0.2
-                case 10..<15:
+                case 20..<30:
                     height = 0.3
-                case 15..<20:
+                case 30..<40:
                     height = 0.4
-                case 20..<25:
+                case 40..<50:
                     height = 0.5
-                case 25..<30:
+                case 50..<60:
                     height = 0.6
-                case 30..<35:
+                case 60..<70:
                     height = 0.7
-                case 35..<40:
+                case 70..<80:
                     height = 0.8
-                default:
+                case 80..<90:
                     height = 0.9
+                default:
+                    height = 1.0
                 }
             }
             return height
         }
+        
+        
         
     }
     
 }
 
 
-class BarChartCellWrapper2: UIView {
+class BarChartCellWrapper4: UIView {
     private var hostingController: UIHostingController<BarChartCell>?
     
     init(value: Double, index: Int = 0, width: Float, numberOfDataPoints: Int, accentColor: Color, touchLocation: Binding<CGFloat>) {
@@ -133,6 +126,7 @@ class BarChartCellWrapper2: UIView {
     private func setupHostingController(value: Double, index: Int, width: Float, numberOfDataPoints: Int, accentColor: Color, touchLocation: Binding<CGFloat>) {
         let barChartCell = BarChartCell(value: value, index: index, width: width, numberOfDataPoints: numberOfDataPoints, accentColor: accentColor, touchLocation: touchLocation)
         let hostingController = UIHostingController(rootView: barChartCell)
+        hostingController.view.backgroundColor = UIColor(red: 0.988, green: 0.988, blue: 0.992, alpha: 1)
         self.hostingController = hostingController
         addSubview(hostingController.view)
         
@@ -146,7 +140,8 @@ class BarChartCellWrapper2: UIView {
     }
 }
 
-public struct BarChartCell2: View {
+
+public struct BarChartCell4: View {
     public var value: Double
     public var index: Int = 0
     public var width: Float
@@ -170,13 +165,13 @@ public struct BarChartCell2: View {
     
     public var body: some View {
         ZStack {
-            RoundedRectangle(cornerRadius: 25)
+            RoundedRectangle(cornerRadius: 10)
                 .fill(accentColor)
         }
         .frame(width: CGFloat(self.cellWidth))
-        .scaleEffect(CGSize(width: 15, height: self.scaleValue), anchor: .bottom)
+        .scaleEffect(CGSize(width: 1, height: self.scaleValue), anchor: .bottom)
         .onAppear {
-            withAnimation(Animation.spring().delay(self.touchLocation < 0 ?  Double(self.index) * 0.02 : 0)) {
+            withAnimation(Animation.spring().delay(self.touchLocation < 0 ?  Double(self.index) * 0.02 : 0)) { // 애니메이션 적용
                 self.scaleValue = self.value
             }
         }

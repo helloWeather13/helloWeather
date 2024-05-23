@@ -1,5 +1,5 @@
 //
-//  FirstLeftCollectionViewCell.swift
+//  FirstRightCollectionViewCell.swift
 //  helloWeather
 //
 //  Created by 이유진 on 5/14/24.
@@ -10,9 +10,9 @@ import SnapKit
 import SwiftUI
 import SwiftUICharts
 
-class FirstLeftCollectionViewCell: UICollectionViewCell {
+class FirstRightCollectionViewCell: UICollectionViewCell {
     
-    static let identifier = String(describing: FirstLeftCollectionViewCell.self)
+    static let identifier = String(describing: FirstRightCollectionViewCell.self)
     
     var stackView: UIStackView = {
         let stack = UIStackView()
@@ -29,14 +29,14 @@ class FirstLeftCollectionViewCell: UICollectionViewCell {
     
     var celsiusLabel: UILabel = {
         let label = UILabel()
-        label.text = "17"
+        label.text = ""
         label.font = UIFont(name: "Pretendard-Regular", size: 15)
         label.textAlignment = .center
         return label
     }()
     var timeLabel: UILabel = {
         let label = UILabel()
-        label.text = "3시"
+        label.text = ""
         label.font = UIFont(name: "Pretendard-Regular", size: 11)
         label.textAlignment = .center
         return label
@@ -50,22 +50,20 @@ class FirstLeftCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-   func configureConstraints(data : WeatherDetailViewModel.HourlyWeather, isFirstCell: Bool) {
-
-       // BarChart
-        let barChartCellWrapper = BarChartCellWrapper (
+    func configureConstraints(data : WeatherDetailViewModel.HourlyWeather) {
+        
+        let barChartCellWrapper = BarChartCellWrapper5(
+            //높이
             value: changeDataToHeight(data: data),
             index: 0,
             width: 60,
             numberOfDataPoints: 10,
-            accentColor: isFirstCell ? .mygray : .mylightgray,
+            accentColor: .mylightgray,
             touchLocation: .constant(-1.0)
         )
-       
-       
-       // Constraints
+        
         contentView.addSubview(stackView2)
-        [celsiusLabel, barChartCellWrapper].forEach {
+        [celsiusLabel,barChartCellWrapper].forEach {
             stackView.addArrangedSubview($0)
         }
         
@@ -84,40 +82,39 @@ class FirstLeftCollectionViewCell: UICollectionViewCell {
         timeLabel.snp.makeConstraints { make in
             make.height.equalTo(timeLabel.font.pointSize)
         }
-
-       func changeDataToHeight(data: WeatherDetailViewModel.HourlyWeather) -> Double{
-           var height: Double = 0.0
-           if let tempC = Double(data.tempC.dropLast()) {
-               switch tempC {
-               case ..<0:
-                   height = 0.1
-               case 0..<10:
-                   height = 0.2
-               case 10..<15:
-                   height = 0.3
-               case 15..<20:
-                   height = 0.4
-               case 20..<25:
-                   height = 0.5
-               case 25..<30:
-                   height = 0.6
-               case 30..<35:
-                   height = 0.7
-               case 35..<40:
-                   height = 0.8
-               default:
-                   height = 0.9
-               }
-           }
-           return height
-       }
-        
+    }
+    
+    func changeDataToHeight(data: WeatherDetailViewModel.HourlyWeather) -> Double{
+        var height: Double = 0.0
+        if let tempC = Double(data.tempC.dropLast()) {
+            switch tempC {
+            case ..<0:
+                height = 0.1
+            case 0..<10:
+                height = 0.2
+            case 10..<15:
+                height = 0.3
+            case 15..<20:
+                height = 0.4
+            case 20..<25:
+                height = 0.5
+            case 25..<30:
+                height = 0.6
+            case 30..<35:
+                height = 0.7
+            case 35..<40:
+                height = 0.8
+            default:
+                height = 0.9
+            }
+        }
+        return height
     }
     
 }
 
 
-class BarChartCellWrapper: UIView {
+class BarChartCellWrapper5: UIView {
     private var hostingController: UIHostingController<BarChartCell>?
     
     init(value: Double, index: Int = 0, width: Float, numberOfDataPoints: Int, accentColor: Color, touchLocation: Binding<CGFloat>) {
@@ -132,6 +129,7 @@ class BarChartCellWrapper: UIView {
     private func setupHostingController(value: Double, index: Int, width: Float, numberOfDataPoints: Int, accentColor: Color, touchLocation: Binding<CGFloat>) {
         let barChartCell = BarChartCell(value: value, index: index, width: width, numberOfDataPoints: numberOfDataPoints, accentColor: accentColor, touchLocation: touchLocation)
         let hostingController = UIHostingController(rootView: barChartCell)
+        hostingController.view.backgroundColor = UIColor(red: 0.988, green: 0.988, blue: 0.992, alpha: 1)
         self.hostingController = hostingController
         addSubview(hostingController.view)
         
@@ -145,7 +143,8 @@ class BarChartCellWrapper: UIView {
     }
 }
 
-public struct BarChartCell: View {
+
+public struct BarChartCell5: View {
     public var value: Double
     public var index: Int = 0
     public var width: Float
