@@ -89,12 +89,15 @@ class WeatherDetailViewModel {
                 // 오늘, 내일의 시간별 날씨 정보 가져오기
                 for dayOffset in 0..<2 {
                     if let hourlyData = data.forecast.forecastday[safe: dayOffset]?.hour {
+                        // 시작 시간과 종료 시간을 올바르게 설정
                         let startHour = (dayOffset == 0) ? currentHour : 0
-                        let endHour = (dayOffset == 0) ? 24 : currentHour
+                        let endHour = (dayOffset == 0) ? 24 : 24 + currentHour
                         
                         for index in startHour..<endHour {
-                            let hourData = hourlyData[index % hourlyData.count] // 해당 시간대의 날씨 정보 가져오기
-                            let formattedHour = "\(index)시"
+                            // 24시간 형식으로 유지
+                            let hourIndex = index % 24
+                            let hourData = hourlyData[hourIndex] // 해당 시간대의 날씨 정보 가져오기
+                            let formattedHour = "\(hourIndex)시"
                             
                             // 온도 정보에서 소수점 뒤의 수를 제외하고 반환
                             let feelslikeCTemperature = Int(hourData.feelslikeC)

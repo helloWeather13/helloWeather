@@ -45,7 +45,7 @@ class TomorrowTimeCelsiusCollectionView: UICollectionView, UICollectionViewDeleg
             .subscribe(onNext: { [weak self] hourlyWeather in
                 guard let self = self, let todayCollectionView = self.todayCollectionView else { return }
                 
-//                print("전체 데이터: \(hourlyWeather)")
+                print("전체 데이터: \(hourlyWeather)")
                 
                 // 첫 번째 0시의 인덱스 찾기
                 guard let firstZeroHourIndex = hourlyWeather.firstIndex(where: { $0.time.hasPrefix("0시") }) else { return }
@@ -55,15 +55,16 @@ class TomorrowTimeCelsiusCollectionView: UICollectionView, UICollectionViewDeleg
                     guard index % 3 == 0 else { return nil }
                     return hourlyData
                 } as [WeatherDetailViewModel.HourlyWeather]
+                print("내일 데이터1: \(nextDayHourlyWeather)")
                 
                 // TomorrowTimeCelsiusCollectionView 셀 개수 설정
                 let todayCellCount = todayCollectionView.hourlyWeatherData.count
                 let requiredCellCount = min(8, max(0, 16 - todayCellCount))
                 nextDayHourlyWeather = Array(nextDayHourlyWeather.prefix(requiredCellCount))
                 
-//                print("필터링된 데이터: \(nextDayHourlyWeather)")
+                print("필터링된 데이터: \(nextDayHourlyWeather)")
 //                print("오늘 데이터: \(todayCellCount)")
-//                print("내일 데이터: \(requiredCellCount)")
+                print("내일 데이터: \(requiredCellCount)")
                 self.hourlyWeatherData = nextDayHourlyWeather
                 self.reloadData()
             })
@@ -87,7 +88,7 @@ class TomorrowTimeCelsiusCollectionView: UICollectionView, UICollectionViewDeleg
         cell.configureConstraints(data: hourlyWeather)
         
         // ViewModel에서 현재 온도 단위 가져오기
-        var temperatureUnit = viewModel?.temperatureUnit ?? .fahrenheit
+        let temperatureUnit = viewModel?.temperatureUnit ?? .fahrenheit
         if temperatureUnit == .celsius {
             cell.celsiusLabel.text = hourlyWeather.feelslikeC
         } else {
