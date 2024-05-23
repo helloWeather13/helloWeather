@@ -18,11 +18,14 @@ class CurrentWeatherTableViewCell: UITableViewCell {
     var temperatureLabel = UILabel()
     var weatherImage = UIImageView()
     var minMaxTempLabel = UILabel()
-    var alarmImageView = UIImageView()
+    var bookmarkImageView = UIImageView()
+    private var isMarked = false
+    var homeViewModel = HomeViewModel()
     var viewContainer = UIView()
     var temperatureTextLabel = UILabel()
     var dustLabel = UILabel()
     var currentLocationImageView = UIImageView()
+    weak var tempListViewController: UIViewController? 
     
     
     //    var weatherAPIModel : WeatherAPIModel?
@@ -31,6 +34,7 @@ class CurrentWeatherTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 //        contentView.backgroundColor = UIColor(red: 0.0, green: 0.0, blue: 1.0, alpha: 1.0) // contentView 배경색을 파란색으로 설정
 //        viewContainer.backgroundColor = UIColor(red: 0.0, green: 0.0, blue: 1.0, alpha: 1.0) // viewContainer 배경색을 파란색으로 설정
+        setupBookmarkImageView()
     }
     
     required init?(coder : NSCoder){
@@ -59,7 +63,7 @@ class CurrentWeatherTableViewCell: UITableViewCell {
     func configureUI(weatherAPIModel : WeatherAPIModel, historyAPIModel :  WeatherAPIModel,searchModel : SearchModel) {
         
         contentView.addSubview(viewContainer)
-        [currentLocationImageView,cityLabel, conditionLabel,temperatureLabel,weatherImage,minMaxTempLabel,alarmImageView, temperatureTextLabel, dustLabel].forEach{
+        [currentLocationImageView,cityLabel, conditionLabel,temperatureLabel,weatherImage,minMaxTempLabel,bookmarkImageView, temperatureTextLabel, dustLabel].forEach{
             viewContainer.addSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
             $0.tintColor = .label
@@ -80,9 +84,9 @@ class CurrentWeatherTableViewCell: UITableViewCell {
         minMaxTempLabel.textColor = .secondaryLabel
         minMaxTempLabel.font = UIFont(name: "Pretendard-Medium", size: 12)
         minMaxTempLabel.sizeToFit()
+        bookmarkImageView.image = isMarked ? .bookmarkS1 : .bookmarkS0
         dustLabel.font = UIFont(name: "Pretendard-Medium", size: 11)
         temperatureTextLabel.font = UIFont(name: "Pretendard-Medium", size: 11)
-        alarmImageView.image = UIImage.bookmarkDefault
         currentLocationImageView.image = UIImage.navigation
         setupWeatherImage()
         
@@ -222,7 +226,7 @@ class CurrentWeatherTableViewCell: UITableViewCell {
         // alarmImageView는 너비와 높이가 24포인트로 고정되며,
         // viewContainer의 오른쪽에서 20포인트 안쪽으로 떨어져 있고,
         // viewContainer의 수직 중앙에서 55포인트 안쪽으로 떨어져 있습니다.
-        alarmImageView.snp.makeConstraints {
+        bookmarkImageView.snp.makeConstraints {
             $0.width.height.equalTo(16)
             $0.trailing.equalTo(viewContainer).offset(-16)
             $0.top.equalTo(viewContainer.snp.top).offset(16)
@@ -242,7 +246,7 @@ class CurrentWeatherTableViewCell: UITableViewCell {
             //            $0.top.equalTo(viewContainer).offset(32)
             $0.width.height.equalTo(36)
             $0.trailing.equalTo(viewContainer).offset(-16)
-            $0.top.equalTo(alarmImageView.snp.bottom).offset(36)
+            $0.top.equalTo(bookmarkImageView.snp.bottom).offset(36)
         }
 
         // minMaxTempLabel은 weatherImage의 아래쪽에서 5포인트 떨어져 있고,
@@ -253,4 +257,30 @@ class CurrentWeatherTableViewCell: UITableViewCell {
             $0.bottom.equalTo(viewContainer).offset(-16)
         }
     }
+    @objc func bookmarkImageViewTapped() {
+        guard let viewController = tempListViewController as? TempListViewController else { return }
+        
+        if !isMarked {
+            bookmarkImageView.image = .bookmarkS1
+            isMarked = true
+            let bookMarkImage = UIImageView()
+            bookMarkImage.image = .popupBookmark
+            viewController.showCustomAlert(image: bookMarkImage.image!, message: "북마크 페이지에 추가했어요.")
+            homeViewModel.saveCurrentBookMark()
+            
+        } else {
+            bookmarkImageView.image = .bookmarkS0
+            isMarked = false
+            let bookMarkImage = UIImageView()
+            bookMarkImage.image = .popupBookmark1
+            viewController.showCustomAlert(image: bookMarkImage.image!, message: "북마크 페이지에서 삭제했어요.")
+            homeViewModel.deleteCurrentBookMark()
+        }
+    }
+    func setupBookmarkImageView() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(bookmarkImageViewTapped))
+        bookmarkImageView.addGestureRecognizer(tapGesture)
+        bookmarkImageView.isUserInteractionEnabled = true
+    }
 }
+

@@ -1,10 +1,14 @@
 import UIKit
 import CoreLocation
+import RxSwift
+import RxCocoa
 
 class HomeViewModel: NSObject, CLLocationManagerDelegate {
     
     let webServiceManager = WebServiceManager.shared
     let userLocationManager = CLLocationManager()
+    let notificationStatusChanged = BehaviorRelay<Bool>(value: false)
+
     var currentSearchModel : SearchModel? {
         didSet{
             if currentSearchModel?.city != "" || currentSearchModel?.fullAddress != ""{
@@ -376,15 +380,26 @@ class HomeViewModel: NSObject, CLLocationManagerDelegate {
         
     }
     
-    func changeNotiCurrentBookMark(){
-        self.isNotified = !isNotified
-        guard let index = bookMarkSearchModel.firstIndex(where: {
-            $0.fullAddress == currentSearchModel?.fullAddress
-        }) else {return}
-        bookMarkSearchModel[index].notification = isNotified
-        let encoder = JSONEncoder()
-        if let encoded = try? encoder.encode(bookMarkSearchModel){
-            UserDefaults.standard.setValue(encoded, forKey: "bookMark")
+//    func changeNotiCurrentBookMark(){
+//        self.isNotified = !isNotified
+//        guard let index = bookMarkSearchModel.firstIndex(where: {
+//            $0.fullAddress == currentSearchModel?.fullAddress
+//        }) else {return}
+//        bookMarkSearchModel[index].notification = isNotified
+//        let encoder = JSONEncoder()
+//        if let encoded = try? encoder.encode(bookMarkSearchModel){
+//            UserDefaults.standard.setValue(encoded, forKey: "bookMark")
+//        }
+//    }
+    func changeNotiCurrentBookMark() {
+            self.isNotified = !isNotified
+            guard let index = bookMarkSearchModel.firstIndex(where: {
+                $0.fullAddress == currentSearchModel?.fullAddress
+            }) else {return}
+            bookMarkSearchModel[index].notification = isNotified
+            let encoder = JSONEncoder()
+            if let encoded = try? encoder.encode(bookMarkSearchModel) {
+                UserDefaults.standard.setValue(encoded, forKey: "bookMark")
+            }
         }
-    }
 }

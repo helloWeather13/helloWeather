@@ -8,7 +8,7 @@ protocol TempListViewModelDelegate: AnyObject {
 
 class TempListViewModel: NSObject, CLLocationManagerDelegate {
     var currentWeatherModel: SearchModel = SearchModel(keyWord: "", fullAddress: "", lat: 1.0, lon: 1.0, city: "")
-    var bookMarkModel: [SearchModel] = []
+    var bookMarkModel: [SearchModel] = [] 
     var weatherAPIModel: [WeatherAPIModel] = []
     var willDeleteSearchModel: SearchModel?
     
