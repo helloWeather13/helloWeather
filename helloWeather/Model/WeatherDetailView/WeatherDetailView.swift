@@ -10,7 +10,8 @@ import SnapKit
 
 class WeatherDetailView: UIView {
     
-    var homeViewModel = HomeViewModel()
+    let homeViewModel = HomeViewModel()
+
     
     // MARK: - Scroll
     let scrollView: UIScrollView = {
@@ -197,6 +198,7 @@ class WeatherDetailView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+
     
     // MARK: - func
     

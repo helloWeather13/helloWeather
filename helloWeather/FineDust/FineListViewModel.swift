@@ -1,3 +1,5 @@
+
+//finelistviewmodel
 import Foundation
 import SwiftUI
 import RxSwift
@@ -45,7 +47,7 @@ class FineListViewModel: ObservableObject {
         .init(color: .yellow, location: 0.7),
         .init(color: .red, location: 0.8),
         .init(color: .red, location: 0.9),
-        .init(color: .red, location: 1.0)
+        .init(color: Color(red: 85/255, green: 196/255, blue: 228/255), location: 1.0)
     ])
     @Published var draglocation: CGPoint = CGPoint()
     @Published var draglocation2: CGPoint = CGPoint()
@@ -103,64 +105,64 @@ class FineListViewModel: ObservableObject {
     private func updateChatColor(input : Double) {
         if input < 20 {
             chat1 = "아주 좋아요!"
-            chat1Color = .blue
+            chat1Color = Color(red: 85/255, green: 196/255, blue: 228/255)
         } else if input < 30 {
             chat1 = "좋아요!"
-            chat1Color = .green
+            chat1Color = Color(red: 0.373, green: 0.784, blue: 0.412, opacity: 1.0)
         } else if input < 40 {
             chat1 = "나빠요!"
-            chat1Color = .yellow
+            chat1Color = Color(red: 0.914, green: 0.392, blue: 0, opacity: 1.0)
         } else {
             chat1 = "아주 나빠요!"
-            chat1Color = .red
+            chat1Color = Color(red: 0.906, green: 0.271, blue: 0.31, opacity: 1.0)
         }
     }
     
     private func updateChatColor4(input : Double) {
         if input < 20 {
             chat2 = "아주 좋아요!"
-            chat2Color = .blue
+            chat2Color = Color(red: 85/255, green: 196/255, blue: 228/255)
         } else if input < 30 {
             chat2 = "좋아요!"
-            chat2Color = .green
+            chat2Color = Color(red: 0.373, green: 0.784, blue: 0.412, opacity: 1.0)
         } else if input < 40 {
             chat2 = "나빠요!"
-            chat2Color = .yellow
+            chat2Color = Color(red: 0.914, green: 0.392, blue: 0, opacity: 1.0)
         } else {
             chat2 = "아주 나빠요!"
-            chat2Color = .red
+            chat2Color = Color(red: 0.906, green: 0.271, blue: 0.31, opacity: 1.0)
         }
     }
     
     private func updateChat1Color() {
         if currentDataNumber < 20 {
             chat1 = "아주 좋아요!"
-            chat1Color = .blue
+            chat1Color = Color(red: 85/255, green: 196/255, blue: 228/255)
         } else if currentDataNumber < 30 {
             chat1 = "좋아요!"
-            chat1Color = .green
+            chat1Color = Color(red: 0.373, green: 0.784, blue: 0.412, opacity: 1.0)
         } else if currentDataNumber < 40 {
             chat1 = "나빠요!"
-            chat1Color = .yellow
+            chat1Color = Color(red: 0.914, green: 0.392, blue: 0, opacity: 1.0)
         } else {
             chat1 = "아주 나빠요!"
-            chat1Color = .red
+            chat1Color = Color(red: 0.906, green: 0.271, blue: 0.31, opacity: 1.0)
         }
     }
     
     private func updateChat2Color() {
         if currentDataNumber2 < 20 {
             chat2 = "아주 좋아요!"
-            chat2Color = .blue
+            chat2Color = Color(red: 85/255, green: 196/255, blue: 228/255)
         } else if currentDataNumber2 < 30 {
             chat2 = "좋아요!"
-            chat2Color = .green
+            chat2Color = Color(red: 0.373, green: 0.784, blue: 0.412, opacity: 1.0)
         } else if currentDataNumber2 < 40 {
             chat2 = "나빠요!"
-            chat2Color = .yellow
+            chat2Color = Color(red: 0.914, green: 0.392, blue: 0, opacity: 1.0)
         } else {
             chat2 = "아주 나빠요!"
-            chat2Color = .red
+            chat2Color = Color(red: 0.906, green: 0.271, blue: 0.31, opacity: 1.0)
         }
     }
     private func updateGradient(with values: [Double]) {
@@ -171,13 +173,13 @@ class FineListViewModel: ObservableObject {
         let colors: [Color] = values.map { value in
             switch value {
             case ..<20:
-                return .blue
+                return Color(red: 85/255, green: 196/255, blue: 228/255)
             case 20..<30:
-                return .green
+                return Color(red: 0.373, green: 0.784, blue: 0.412, opacity: 1.0)
             case 30..<40:
-                return .yellow
+                return Color(red: 0.914, green: 0.392, blue: 0, opacity: 1.0)
             default:
-                return .red
+                return Color(red: 0.906, green: 0.271, blue: 0.31, opacity: 1.0)
             }
         }
         
@@ -324,4 +326,3 @@ class FineListViewModel: ObservableObject {
         
     }
 }
-
