@@ -37,6 +37,7 @@ class TempListViewModel: NSObject, CLLocationManagerDelegate {
         guard let index = bookMarkModel.firstIndex(where: {
             $0.fullAddress == willDeleteSearchModel?.fullAddress
         }) else { return }
+        print("삭제하는 인덱스", index)
         bookMarkModel.remove(at: index)
         updateBookMark()
         self.applySnapshot()

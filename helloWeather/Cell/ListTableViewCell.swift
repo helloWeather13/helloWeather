@@ -13,6 +13,7 @@ import SkeletonView
 
 class ListTableViewCell: UITableViewCell {
     
+    
     static var identifier = "ListTableViewCell"
     weak var tempListViewController: UIViewController?
     var cityLabel = UILabel()
@@ -27,8 +28,11 @@ class ListTableViewCell: UITableViewCell {
     var disposeBag = DisposeBag()
     var isAlarm = false
     var isBeingDragged = false
+    var bookMarkModel : [SearchModel] = []
+    var searchModel : SearchModel?
+
     
-    //    var weatherAPIModel : WeatherAPIModel?
+    //var weatherAPIModel : WeatherAPIModel?
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -135,10 +139,28 @@ class ListTableViewCell: UITableViewCell {
             alarmImageYellow.image = .popupNotification
             isAlarm = true
             viewController.showCustomAlert(image: alarmImageYellow.image!, message: "비소식 1시간 전에 알림을 울려요.")
+            
+            if let savedData = UserDefaults.standard.object(forKey: "bookMark") as? Data {
+                let decoder = JSONDecoder()
+                if let savedObject = try? decoder.decode([SearchModel].self, from: savedData) {
+                    self.bookMarkModel = savedObject
+                }
+            }
+            guard let index = bookMarkModel.firstIndex(where: {
+                $0.fullAddress == searchModel!.fullAddress
+                }) else { return }
+            bookMarkModel[index].notification = true
+            let encoder = JSONEncoder()
+            if let encoded = try? encoder.encode(bookMarkModel){
+                UserDefaults.standard.setValue(encoded, forKey: "bookMark")
+            }
+            
         }
     }
-    
+
+
     func configureUI(weatherAPIModel : WeatherAPIModel, searchModel : SearchModel) {
+        self.searchModel = searchModel
         let swipeGestureLeft = UISwipeGestureRecognizer(target: self, action: #selector(didSwipeCellLeft))
         swipeGestureLeft.direction = .left
         self.addGestureRecognizer(swipeGestureLeft)
