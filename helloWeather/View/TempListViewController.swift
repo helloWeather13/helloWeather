@@ -14,7 +14,6 @@ class TempListViewController: UIViewController {
     var topView : UIView!
     var tableView: UITableView!
     var viewModel = TempListViewModel()
-    var viewModel2 = HomeViewModel()
     var disposedBag = DisposeBag()
     
     let refreshControl : UIRefreshControl = UIRefreshControl()

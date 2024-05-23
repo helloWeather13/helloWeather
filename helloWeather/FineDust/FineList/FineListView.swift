@@ -24,6 +24,7 @@ struct FineListView: View {
                 }
                 Toggle("", isOn: $isToggleOn)
                     .toggleStyle(CustomToggleStyle(viewModel: viewModel))
+                    .opacity(0.7)
                     .padding(.trailing, 8)
                     .padding(.top, 16)
             }
@@ -129,7 +130,7 @@ struct CustomToggleStyle: ToggleStyle {
                 Rectangle()
                     .frame(width: 90, height: 30)
                     .foregroundColor(.gray)
-                    .opacity(0.1)
+                    .opacity(0.4)
                     .cornerRadius(10)
                 Rectangle()
                     .cornerRadius(6)
@@ -140,12 +141,14 @@ struct CustomToggleStyle: ToggleStyle {
                     .animation(.easeInOut(duration: 0.1), value: configuration.isOn)
                 HStack {
                     Text("미세")
-                        .foregroundColor(configuration.isOn ? .gray : .black)
+                        .foregroundColor(configuration.isOn ? .white : .black)
                         .font(.system(size: 12, weight: .bold))
                         .padding(.leading, 14)
+                    
                     Spacer()
+                    
                     Text("초미세")
-                        .foregroundColor(configuration.isOn ? .black : .gray)
+                        .foregroundColor(configuration.isOn ? .black : .white)
                         .font(.system(size: 12, weight: .bold))
                         .padding(.trailing, 8)
                 }

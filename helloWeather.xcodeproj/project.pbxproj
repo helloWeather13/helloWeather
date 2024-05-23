@@ -360,6 +360,7 @@
 			isa = PBXGroup;
 			children = (
 				1485D7012BFC56A100D69ABF /* helloWeather.entitlements */,
+				9ABC1E1F2BF34BCF006A626C /* FineDust */,
 				1445AF5E2BF32F720018AE3F /* SectionItemModel */,
 				1445AF5B2BF32C2F0018AE3F /* Cell */,
 				146580FB2BF1F1560093AA81 /* Manager */,
@@ -375,7 +376,6 @@
 		146580E02BF1E82A0093AA81 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				9A5ACD992BF7B3FE00DE586F /* FineDustModels */,
 				453593552BF8F637004BA149 /* WeatherDetailViewModel.swift */,
 				146580E32BF1E8590093AA81 /* TabViewModel.swift */,
 				B687F6852BF4CC6000623F1D /* HomeViewModel.swift */,
@@ -389,11 +389,8 @@
 		146580E12BF1E8330093AA81 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				9ABC1E1F2BF34BCF006A626C /* FineDustModel */,
-				9A8DF86A2BF6C48E009F0DAB /* Chat */,
-				9ABC1E272BF4BAAF006A626C /* ChartModel */,
-				45D70DCB2BF3344500942DC1 /* WeatherDetailView */,
 				146580E52BF1E8740093AA81 /* TabModel.swift */,
+				45D70DCB2BF3344500942DC1 /* WeatherDetailView */,
 				146580FE2BF1F1C30093AA81 /* ApiModel.swift */,
 				146581042BF21EC40093AA81 /* WeatherAPIModel.swift */,
 				146581062BF240AF0093AA81 /* KakaoAddressModel.swift */,
@@ -406,7 +403,6 @@
 		146580E22BF1E83B0093AA81 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				9A8DF86F2BF6E4D2009F0DAB /* FineListView */,
 				146580D52BF1E7EB0093AA81 /* LaunchScreen.storyboard */,
 				B69CA1252BFDA27C0068BFA8 /* LaunchScreen.swift */,
 				146580DE2BF1E8160093AA81 /* TabViewController.swift */,
@@ -418,7 +414,6 @@
 				147EF86B2BF62AE4000DC8A8 /* TempListViewController.swift */,
 				14E83D922BF79FF5004CAD62 /* DeleteAlertView.swift */,
 				14E83D952BF7B6FE004CAD62 /* EmptySearchView.swift */,
-				9ABC1E252BF35C34006A626C /* FineDustModel.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -592,20 +587,21 @@
 			path = Chat;
 			sourceTree = "<group>";
 		};
-		9A8DF86F2BF6E4D2009F0DAB /* FineListView */ = {
+		9A8DF86F2BF6E4D2009F0DAB /* FineList */ = {
 			isa = PBXGroup;
 			children = (
-				9ABC1E202BF34BDC006A626C /* FineDustView.swift */,
 				9A8DF8702BF6E51E009F0DAB /* FineListView.swift */,
 				9A8DF8722BF70A99009F0DAB /* ValueListView.swift */,
 			);
-			path = FineListView;
+			path = FineList;
 			sourceTree = "<group>";
 		};
-		9ABC1E1F2BF34BCF006A626C /* FineDustModel */ = {
+		9ABC1E1F2BF34BCF006A626C /* FineDust */ = {
 			isa = PBXGroup;
 			children = (
 				9A5ACD972BF7B37C00DE586F /* FineDustUtil.swift */,
+				9ABC1E252BF35C34006A626C /* FineDustModel.swift */,
+				9ABC1E202BF34BDC006A626C /* FineDustView.swift */,
 				9A5ACD932BF7763600DE586F /* FineListViewModel.swift */,
 				9A5ACD992BF7B3FE00DE586F /* FineDustModels */,
 				9A8DF86F2BF6E4D2009F0DAB /* FineList */,
@@ -615,17 +611,17 @@
 				9A5D54262BFE7B3200E672D5 /* CustomToggleView3.swift */,
 				9A5D54282BFE7B4700E672D5 /* CustomToggleView4.swift */,
 			);
-			path = FineDustModel;
+			path = FineDust;
 			sourceTree = "<group>";
 		};
-		9ABC1E272BF4BAAF006A626C /* ChartModel */ = {
+		9ABC1E272BF4BAAF006A626C /* Chart */ = {
 			isa = PBXGroup;
 			children = (
 				9A5ACD9C2BF893BA00DE586F /* ChartViewModel.swift */,
 				9ABC1E282BF4BAD2006A626C /* ChartModel.swift */,
 				9A5ACD9E2BF8B41100DE586F /* LineModel.swift */,
 			);
-			path = ChartModel;
+			path = Chart;
 			sourceTree = "<group>";
 		};
 		B64E88152BF544180070C3EF /* Frameworks */ = {
