@@ -106,6 +106,7 @@ class TempListViewController: UIViewController {
                     return UITableViewCell()
                 }
                 cell.configure(searchModel: currentWeather)
+                cell.delegate = self
                 cell.tempListViewController = self
                 cell.backgroundColor = UIColor(red: 0.988, green: 0.988, blue: 0.992, alpha: 1)
                 cell.selectionStyle = .none
@@ -450,6 +451,13 @@ extension TempListViewController : TransferDataToMainDelegate {
 extension TempListViewController : alarmDelegate {
     func alarmDidTouched() {
         viewModel.bookMarkModel = []
+        self.viewModel.loadBookMark()
+        self.viewModel.applySnapshot()
+    }
+}
+
+extension TempListViewController: CurrentBookMarkDelegate {
+    func bookMarkTouched() {
         self.viewModel.loadBookMark()
         self.viewModel.applySnapshot()
     }

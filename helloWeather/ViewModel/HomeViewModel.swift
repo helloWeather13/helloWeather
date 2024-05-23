@@ -331,7 +331,6 @@ class HomeViewModel: NSObject, CLLocationManagerDelegate {
                 self.bookMarkSearchModel = savedObject
             }
         }
-        
     }
     func isCurrentLocationBookMarked() -> Bool{
         if let currentSearchModel {

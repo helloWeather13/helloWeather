@@ -9,6 +9,10 @@ import UIKit
 import SnapKit
 import RxSwift
 
+protocol CurrentBookMarkDelegate{
+    func bookMarkTouched()
+}
+
 class CurrentWeatherTableViewCell: UITableViewCell {
     
     static var identifier = "CurrentWeatherTableViewCell"
@@ -20,13 +24,13 @@ class CurrentWeatherTableViewCell: UITableViewCell {
     var minMaxTempLabel = UILabel()
     var bookmarkImageView = UIImageView()
     private var isMarked = false
-    var homeViewModel = HomeViewModel()
     var viewContainer = UIView()
     var temperatureTextLabel = UILabel()
     var dustLabel = UILabel()
     var currentLocationImageView = UIImageView()
     weak var tempListViewController: UIViewController? 
-    
+    var currentLocationSearchModel : SearchModel?
+    var delegate : CurrentBookMarkDelegate?
     
     //    var weatherAPIModel : WeatherAPIModel?
     
@@ -52,6 +56,7 @@ class CurrentWeatherTableViewCell: UITableViewCell {
     }
     
     func configure(searchModel: SearchModel){
+        currentLocationSearchModel = searchModel
         WebServiceManager.shared.getForecastWeather(searchModel: searchModel, completion: { foreCastdata in
             WebServiceManager.shared.getHistoryWeather(searchModel: searchModel, completion: { historyData in
                 self.configureUI(weatherAPIModel: foreCastdata, historyAPIModel: historyData, searchModel: searchModel)
@@ -258,6 +263,7 @@ class CurrentWeatherTableViewCell: UITableViewCell {
         }
     }
     @objc func bookmarkImageViewTapped() {
+        var currentBookMark = loadCurrentBookMark()
         guard let viewController = tempListViewController as? TempListViewController else { return }
         
         if !isMarked {
@@ -266,7 +272,11 @@ class CurrentWeatherTableViewCell: UITableViewCell {
             let bookMarkImage = UIImageView()
             bookMarkImage.image = .popupBookmark
             viewController.showCustomAlert(image: bookMarkImage.image!, message: "북마크 페이지에 추가했어요.")
-            homeViewModel.saveCurrentBookMark()
+            currentBookMark.insert(self.currentLocationSearchModel!, at: 0)
+            let encoder = JSONEncoder()
+            if let encoded = try? encoder.encode(currentBookMark){
+                UserDefaults.standard.setValue(encoded, forKey: "bookMark")
+            }
             
         } else {
             bookmarkImageView.image = .bookmarkS0
@@ -274,13 +284,30 @@ class CurrentWeatherTableViewCell: UITableViewCell {
             let bookMarkImage = UIImageView()
             bookMarkImage.image = .popupBookmark1
             viewController.showCustomAlert(image: bookMarkImage.image!, message: "북마크 페이지에서 삭제했어요.")
-            homeViewModel.deleteCurrentBookMark()
+            currentBookMark.removeAll(where: {
+                $0.fullAddress == currentLocationSearchModel?.fullAddress
+            })
+            let encoder = JSONEncoder()
+            if let encoded = try? encoder.encode(currentBookMark){
+                UserDefaults.standard.setValue(encoded, forKey: "bookMark")
+            }
         }
+        self.delegate?.bookMarkTouched()
     }
     func setupBookmarkImageView() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(bookmarkImageViewTapped))
         bookmarkImageView.addGestureRecognizer(tapGesture)
         bookmarkImageView.isUserInteractionEnabled = true
+    }
+    
+    func loadCurrentBookMark() -> [SearchModel]{
+        if let savedData = UserDefaults.standard.object(forKey: "bookMark") as? Data {
+            let decoder = JSONDecoder()
+            if let savedObject = try? decoder.decode([SearchModel].self, from: savedData) {
+                return savedObject
+            }
+        }
+        return []
     }
 }
 
