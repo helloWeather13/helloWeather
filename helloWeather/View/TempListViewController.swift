@@ -14,7 +14,6 @@ class TempListViewController: UIViewController {
     var topView : UIView!
     var tableView: UITableView!
     var viewModel = TempListViewModel()
-    var viewModel2 = HomeViewModel()
     var disposedBag = DisposeBag()
     
     let refreshControl : UIRefreshControl = UIRefreshControl()
@@ -24,6 +23,7 @@ class TempListViewController: UIViewController {
         tableViewConfigure()
         configureAlert()
         configurerefreshControl()
+        setupNavbar()
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -37,6 +37,36 @@ class TempListViewController: UIViewController {
         viewModel.bookMarkModel = []
         self.viewModel.loadBookMark()
         self.viewModel.applySnapshot()
+    }
+    
+    override func setupAlertViewConstraints(_ customAlertView: UIView, image: UIImage, messageLabel: UILabel) {
+        customAlertView.snp.makeConstraints { make in
+          make.bottom.equalTo(view.snp.bottom).inset(91)
+          make.centerX.equalToSuperview()
+          make.height.equalTo(max(image.size.height, 40))
+          make.width.equalTo(image.size.width + messageLabel.intrinsicContentSize.width + 30)
+        }
+      }
+    
+    func setupNavbar(){
+        let titleLabel: UILabel = {
+            let label = UILabel()
+            label.text = "나의 관심 지역"
+            label.font = UIFont(name: "Pretendard-SemiBold", size: 18)
+            return label
+        }()
+        titleLabel.sizeToFit()
+        self.navigationItem.titleView = titleLabel
+        let searchButton = UIBarButtonItem(image: UIImage(named: "search-0"), style: .plain, target: self, action: #selector(searchButtonTapped))
+        searchButton.tintColor = .black
+        navigationItem.rightBarButtonItem = searchButton
+    }
+    
+    @objc func searchButtonTapped() {
+        let searchVC = SearchViewController()
+        searchVC.delegate = HomeViewController()
+        self.navigationController?.pushViewController(searchVC, animated: false)
+        (self.navigationController?.parent as? MainViewController)?.scrollView.isScrollEnabled = false
     }
     
     func tableViewConfigure(){
@@ -216,7 +246,7 @@ extension TempListViewController: UITableViewDelegate {
                         }
                     }
                 }
-                NotificationCenter.default.post(name: NSNotification.Name("SwitchTabNotification"), object: currentSearchModel, userInfo: nil)
+                NotificationCenter.default.post(name: NSNotification.Name("SwitchTabNotificationCurrent"), object: currentSearchModel, userInfo: nil)
             }
         case .listWeather(let searchModel):
             // 0.2초의 딜레이 후에 탭바 전환
@@ -324,7 +354,7 @@ extension TempListViewController: UITableViewDropDelegate {
 }
 
 extension UIViewController {
-    func showCustomAlert(image: UIImage, message: String) {
+    @objc func showCustomAlert(image: UIImage, message: String) {
         
         if let existingAlertView = view.subviews.first(where: { $0.tag == 999 }) {
             existingAlertView.removeFromSuperview()
@@ -366,12 +396,13 @@ extension UIViewController {
             make.trailing.equalToSuperview().inset(10)
             make.centerY.equalToSuperview()
         }
-        customAlertView.snp.makeConstraints { make in
-            make.bottom.equalTo(self.view.snp.bottom).inset(91)
-            make.centerX.equalToSuperview()
-            make.height.equalTo(max(image.size.height, 40))
-            make.width.equalTo(image.size.width + messageLabel.intrinsicContentSize.width + 30)
-        }
+//        customAlertView.snp.makeConstraints { make in
+//            make.bottom.equalTo(self.view.snp.bottom).inset(91)
+//            make.centerX.equalToSuperview()
+//            make.height.equalTo(max(image.size.height, 40))
+//            make.width.equalTo(image.size.width + messageLabel.intrinsicContentSize.width + 30)
+//        }
+        setupAlertViewConstraints(customAlertView, image: image, messageLabel: messageLabel)
         // 알럿 크기를 조절합니다.
         customAlertView.transform = CGAffineTransform(scaleX: 0.98, y: 0.98)
         
@@ -384,6 +415,15 @@ extension UIViewController {
             }
         }
     }
+    
+    @objc func setupAlertViewConstraints(_ customAlertView: UIView, image: UIImage, messageLabel: UILabel) {
+        customAlertView.snp.makeConstraints { make in
+          make.bottom.equalTo(view.snp.bottom)
+          make.centerX.equalToSuperview()
+          make.height.equalTo(max(image.size.height, 40))
+          make.width.equalTo(image.size.width + messageLabel.intrinsicContentSize.width + 30)
+        }
+      }
 }
 
 

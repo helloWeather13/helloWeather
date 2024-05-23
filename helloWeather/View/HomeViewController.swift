@@ -114,11 +114,6 @@ class HomeViewController: UIViewController {
         return lottie
     }()
     
-    var emptyView1 = UIView()
-    var emptyView2 = UIView()
-    var emptyView3 = UIView()
-    var emptyView4 = UIView()
-    var emptyView5 = UIView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -134,33 +129,27 @@ class HomeViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        self.homeViewModel.loadNotification()
         if let existingAlertView = view.subviews.first(where: { $0.tag == 999 }) {
             existingAlertView.removeFromSuperview()
         }
-        emptyView5.isHidden = false
-        [view,emptyView1,emptyView2,emptyView3,emptyView4,emptyView5].forEach{
-            $0?.showAnimatedSkeleton()
-        }
-        
-        DispatchQueue.main.asyncAfter(deadline: .now()+0.1, execute: {
-            [self.view,self.emptyView1,self.emptyView2,self.emptyView3,self.emptyView4,self.emptyView5].forEach{
-                $0?.hideSkeleton(transition: .crossDissolve(0.25))
-                
-            }
-            self.emptyView5.isHidden = true
-        })
         
     }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        emptyView5.isHidden = true
-        [view,emptyView1,emptyView2,emptyView3,emptyView4,emptyView5].forEach{
-            $0?.showAnimatedSkeleton()
+    override func setupAlertViewConstraints(_ customAlertView: UIView, image: UIImage, messageLabel: UILabel) {
+          customAlertView.snp.makeConstraints { make in
+              make.bottom.equalTo(view.snp.bottom).inset(5)
+            make.centerX.equalToSuperview()
+            make.height.equalTo(max(image.size.height, 40))
+            make.width.equalTo(image.size.width + messageLabel.intrinsicContentSize.width + 30)
+          }
         }
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
     }
     
     func setupNotificationCenter(){
         NotificationCenter.default.addObserver(self, selector: #selector(dataRecevied(notification:)), name: NSNotification.Name("SwitchTabNotification"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(dataReceviedCurrent(notification:)), name: NSNotification.Name("SwitchTabNotificationCurrent"), object: nil)
     }
     
     func setupLastUpdateLabel() {
@@ -173,32 +162,46 @@ class HomeViewController: UIViewController {
     func setupNaviBar() {
         
         homeViewModel.addressOnCompleted = { [unowned self] address in
-            let titleView = UIView()
-            
-            let imageView = UIImageView(image: UIImage(named: "navigation"))
-            imageView.contentMode = .scaleAspectFit
-            
-            let titleLabel: UILabel = {
-                let label = UILabel()
-                label.text = address
-                label.font = .boldSystemFont(ofSize: 18)
-                return label
-            }()
-            
-            let stackView: UIStackView = {
-                let stview = UIStackView(arrangedSubviews: [imageView, titleLabel])
-                stview.axis = .horizontal
-                stview.spacing = 2
-                stview.alignment = .center
-                return stview
-            }()
-            
-            titleView.addSubview(stackView)
-            stackView.snp.makeConstraints {
-                $0.centerX.centerY.equalTo(titleView)
+            if self.homeViewModel.isCurrent {
+                let titleView = UIView()
+                
+                let imageView = UIImageView(image: UIImage(named: "navigation"))
+                imageView.contentMode = .scaleAspectFit
+                
+                let titleLabel: UILabel = {
+                    let label = UILabel()
+                    label.text = address
+                    label.font = UIFont(name: "Pretendard-SemiBold", size: 18)
+                    return label
+                }()
+                
+                let stackView: UIStackView = {
+                    let stview = UIStackView(arrangedSubviews: [imageView, titleLabel])
+                    stview.axis = .horizontal
+                    stview.spacing = 2
+                    stview.alignment = .center
+                    return stview
+                }()
+                
+                titleView.addSubview(stackView)
+                stackView.snp.makeConstraints {
+                    $0.centerX.centerY.equalTo(titleView)
+                }
+                titleView.sizeToFit()
+                self.navigationItem.titleView = titleView
+            }else{
+                
+                let titleLabel: UILabel = {
+                    let label = UILabel()
+                    label.text = address
+                    label.font = UIFont(name: "Pretendard-SemiBold", size: 18)
+                    return label
+                }()
+                
+                titleLabel.sizeToFit()
+                self.navigationItem.titleView = titleLabel
             }
-            titleView.sizeToFit()
-            self.navigationItem.titleView = titleView
+            
         }
         
         let searchButton = UIBarButtonItem(image: UIImage(named: "search-0"), style: .plain, target: self, action: #selector(searchButtonTapped))
@@ -305,50 +308,6 @@ class HomeViewController: UIViewController {
                 self.scrollAnimation.alpha = 1
             }, completion: nil)
         }
-        
-        [emptyView1, emptyView2, emptyView3,emptyView4, emptyView5].forEach{
-            self.view.addSubview($0)
-            $0.translatesAutoresizingMaskIntoConstraints = false
-        }
-        
-        emptyView1.snp.makeConstraints{
-            $0.leading.equalToSuperview().offset(30)
-            $0.top.equalTo(stackView.snp.top)
-            $0.width.equalTo(100)
-            $0.height.equalTo(42)
-        }
-        
-        emptyView2.snp.makeConstraints{
-            $0.leading.equalToSuperview().offset(30)
-            $0.top.equalTo(emptyView1.snp.bottom).offset(2)
-            $0.width.equalTo(300)
-            $0.height.equalTo(42)
-        }
-        
-        emptyView3.snp.makeConstraints{
-            $0.leading.equalToSuperview().offset(30)
-            $0.top.equalTo(emptyView2.snp.bottom).offset(2)
-            $0.width.equalTo(300)
-            $0.height.equalTo(42)
-        }
-        
-        emptyView4.snp.makeConstraints{
-            $0.width.equalTo(220)
-            $0.height.equalTo(120)
-            $0.trailing.equalToSuperview().offset(-30)
-            $0.top.equalTo(stackView.snp.bottom).offset(108)
-        }
-        
-        emptyView5.snp.makeConstraints{
-            $0.centerY.centerX.equalTo(bookmarkButton)
-            $0.width.height.equalTo(40)
-        }
-        
-        [view,emptyView1,emptyView2,emptyView3,emptyView4,emptyView5].forEach{
-            $0?.isSkeletonable = true
-            $0?.skeletonCornerRadius = 20
-        }
-        
     }
     
     func bind(){
@@ -424,8 +383,18 @@ class HomeViewController: UIViewController {
         guard let newSearchModel = notification.object as? SearchModel else{
             return
         }
+        self.homeViewModel.isCurrent = false
         self.homeViewModel.currentSearchModel = newSearchModel
+        
         createBackButton()
+    }
+    
+    @objc func dataReceviedCurrent(notification: Notification){
+        guard let newSearchModel = notification.object as? SearchModel else{
+            return
+        }
+        self.homeViewModel.isCurrent = true
+        self.homeViewModel.currentSearchModel = newSearchModel
     }
     func createBackButton(){
         let backButton = UIView()
@@ -453,12 +422,15 @@ class HomeViewController: UIViewController {
 }
 
 extension HomeViewController : TransferDataToMainDelegate {
-    func searchDidTouched(searchModel: SearchModel) {
+    func searchDidTouched(searchModel: SearchModel, isCurrent: Bool) {
+        self.homeViewModel.isCurrent = isCurrent
         self.homeViewModel.currentSearchModel = searchModel
+        (self.navigationController?.parent as? MainViewController)?.scrollView.isScrollEnabled = true
         createBackButton()
     }
     
     @objc func backButtonTap(){
+        self.homeViewModel.isCurrent = true
         self.homeViewModel.getUserLocation()
         self.navigationItem.leftBarButtonItem?.isHidden = true
     }

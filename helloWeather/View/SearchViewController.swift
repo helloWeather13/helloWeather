@@ -12,7 +12,7 @@ import SnapKit
 import MapKit
 
 protocol TransferDataToMainDelegate {
-    func searchDidTouched(searchModel : SearchModel)
+    func searchDidTouched(searchModel : SearchModel, isCurrent: Bool)
 }
 class SearchViewController: UIViewController {
     var viewModel = SearchViewModel()
@@ -48,8 +48,8 @@ class SearchViewController: UIViewController {
         // Create the label for the button
         let cancelText = UILabel()
         cancelText.text = "취소"
-        cancelText.font = .systemFont(ofSize: 18)
-        cancelText.textColor = .label
+        cancelText.font = UIFont(name: "Pretendard-SemiBold", size: 16)
+        cancelText.textColor = UIColor(red: 0.04, green: 0.04, blue: 0.04, alpha: 1.00)
         deleteButton.addSubview(cancelText)
 
         // Add constraints to the label
@@ -132,14 +132,16 @@ class SearchViewController: UIViewController {
     func configureAlert(){
         let backGroundView = UIView()
         backGroundView.backgroundColor = UIColor.black.withAlphaComponent(0.1)
-        backGroundView.frame = view.bounds
+        
         let blurVisualEffectView = TSBlurEffectView()
         blurVisualEffectView.intensity = 0.1
-        blurVisualEffectView.frame = view.bounds
+        
         let alertView = DeleteAlertView()
         let scenes = UIApplication.shared.connectedScenes
         let windowScene = scenes.first as? UIWindowScene
         if let window = windowScene?.windows.first {
+            backGroundView.frame = window.bounds
+            blurVisualEffectView.frame = window.bounds
             window.addSubview(backGroundView)
             backGroundView.alpha = 0
             backGroundView.addSubview(blurVisualEffectView)
@@ -194,6 +196,7 @@ class SearchViewController: UIViewController {
         searchBar.searchTextField.layer.borderWidth = 1
         searchBar.searchTextField.layer.cornerRadius = 10
         searchBar.enablesReturnKeyAutomatically = false
+        searchBar.tintColor = UIColor(red: 0.07, green: 0.49, blue: 1.00, alpha: 1.00)
         searchBar.setLeftImage(UIImage(named: "search-1")!)
         searchBar.rx.text.orEmpty
             .skip(1)
@@ -246,10 +249,10 @@ extension SearchViewController : UITableViewDelegate {
         guard let item = self.viewModel.dataSource?.itemIdentifier(for: indexPath) else { return }
         switch item {
         case.recentSearch(let recentSearch):
-            self.delegate?.searchDidTouched(searchModel: recentSearch)
+            self.delegate?.searchDidTouched(searchModel: recentSearch, isCurrent: false)
             navigationController?.popViewController(animated: false)
         case .relatedSearch(let relatedSearch):
-            self.delegate?.searchDidTouched(searchModel: relatedSearch)
+            self.delegate?.searchDidTouched(searchModel: relatedSearch, isCurrent: false)
             self.searchBar.resignFirstResponder()
             self.viewModel.appendRecentSearch(data: relatedSearch)
             navigationController?.popViewController(animated: false)

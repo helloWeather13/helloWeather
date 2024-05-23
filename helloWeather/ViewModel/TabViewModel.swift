@@ -9,8 +9,6 @@ class TabViewModel{
     var tabs : [TabModel] = [
         TabModel(title: "메인", image: UIImage(named: "tabBar01-0")!,selectedImage:UIImage(named: "tabBar01-1")!, vc: MainViewController()),
         TabModel(title: "알람", image: UIImage(named: "tabBar02-0")!,selectedImage: UIImage(named: "tabBar02-1")!, vc: TempListViewController()),
-        TabModel(title: "날씨", image: UIImage(named: "location_off")!,selectedImage: UIImage(named: "location_on")!, vc: WeatherDetailViewController()),
-        TabModel(title: "미세먼지", image: UIImage(named: "location_off")!,selectedImage: UIImage(named: "location_on")!, vc: UIHostingController(rootView: ScrollChartView())),
     ]
     var navs : [UINavigationController] = []
     

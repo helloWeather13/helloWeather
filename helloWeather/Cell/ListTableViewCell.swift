@@ -13,7 +13,6 @@ import SkeletonView
 
 class ListTableViewCell: UITableViewCell {
     
-    
     static var identifier = "ListTableViewCell"
     weak var tempListViewController: UIViewController?
     var cityLabel = UILabel()
@@ -28,11 +27,7 @@ class ListTableViewCell: UITableViewCell {
     var disposeBag = DisposeBag()
     var isAlarm = false
     var isBeingDragged = false
-    var bookMarkModel : [SearchModel] = []
-    var searchModel : SearchModel?
-
-    
-    //var weatherAPIModel : WeatherAPIModel?
+    //    var weatherAPIModel : WeatherAPIModel?
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -58,6 +53,7 @@ class ListTableViewCell: UITableViewCell {
         contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 0, left: 0, bottom: 16, right: 0))
         contentView.layer.cornerRadius = 15
         contentView.clipsToBounds = true
+        
         
         // 드래그가 진행중인 경우 셀의 테두리를 사라지게합니다.
         if isBeingDragged {
@@ -98,7 +94,7 @@ class ListTableViewCell: UITableViewCell {
     @objc func didSwipeCellLeft(){
         UIView.animate(withDuration: 0.3) {
             self.viewContainer.snp.updateConstraints {
-                $0.trailing.equalToSuperview().offset(-70)
+                $0.trailing.equalToSuperview().offset(-56)
             }
             self.deleteButton.isHidden = false
             self.viewContainer.superview?.layoutIfNeeded()
@@ -139,28 +135,10 @@ class ListTableViewCell: UITableViewCell {
             alarmImageYellow.image = .popupNotification
             isAlarm = true
             viewController.showCustomAlert(image: alarmImageYellow.image!, message: "비소식 1시간 전에 알림을 울려요.")
-            
-            if let savedData = UserDefaults.standard.object(forKey: "bookMark") as? Data {
-                let decoder = JSONDecoder()
-                if let savedObject = try? decoder.decode([SearchModel].self, from: savedData) {
-                    self.bookMarkModel = savedObject
-                }
-            }
-            guard let index = bookMarkModel.firstIndex(where: {
-                $0.fullAddress == searchModel!.fullAddress
-                }) else { return }
-            bookMarkModel[index].notification = true
-            let encoder = JSONEncoder()
-            if let encoded = try? encoder.encode(bookMarkModel){
-                UserDefaults.standard.setValue(encoded, forKey: "bookMark")
-            }
-            
         }
     }
-
-
+    
     func configureUI(weatherAPIModel : WeatherAPIModel, searchModel : SearchModel) {
-        self.searchModel = searchModel
         let swipeGestureLeft = UISwipeGestureRecognizer(target: self, action: #selector(didSwipeCellLeft))
         swipeGestureLeft.direction = .left
         self.addGestureRecognizer(swipeGestureLeft)
@@ -169,9 +147,12 @@ class ListTableViewCell: UITableViewCell {
         swipeGestureRight.direction = .right
         self.addGestureRecognizer(swipeGestureRight)
 
-        deleteButton.setImage(UIImage(systemName: "trash.fill"), for: .normal)
+        viewContainer.layer.cornerRadius = 15
+        viewContainer.clipsToBounds = true
+        viewContainer.backgroundColor = .white
+        deleteButton.setImage(UIImage(named: "trash"), for: .normal)
         deleteButton.isHidden = true
-        deleteView.backgroundColor = .red
+        deleteView.backgroundColor = .myred
         cityLabel.text = searchModel.city + ","
         cityLabel.font = .boldSystemFont(ofSize: 13)
         cityLabel.sizeToFit()
@@ -180,7 +161,7 @@ class ListTableViewCell: UITableViewCell {
         conditionLabel.font = .systemFont(ofSize: 13)
         conditionLabel.sizeToFit()
         temperatureLabel.text = String(Int(weatherAPIModel.current?.feelslikeC ?? 0)) + "°"
-        temperatureLabel.font = .boldSystemFont(ofSize: 42)
+        temperatureLabel.font = UIFont(name: "GmarketSansTTFBold", size: 42)
         temperatureLabel.sizeToFit()
         weatherImage.image = UIImage(named: "rainy")
         weatherImage.contentMode = .scaleAspectFit
@@ -192,6 +173,7 @@ class ListTableViewCell: UITableViewCell {
         alarmImageView.image = isAlarm ? .alarm1 : .alarm0
         setupAlarmImageView()
         setupWeatherImage()
+        contentView.backgroundColor = .myred
     }
     // 흐린 -> 흐림
     // 맑음, 화창함 -> 맑음
@@ -286,6 +268,7 @@ class ListTableViewCell: UITableViewCell {
             $0.centerX.centerY.equalToSuperview()
             $0.width.height.equalTo(24)
         }
+       
     }
 }
 

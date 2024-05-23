@@ -68,6 +68,12 @@ class TomorrowTimeCelsiusCollectionView: UICollectionView, UICollectionViewDeleg
                 self.reloadData()
             })
             .disposed(by: disposeBag)
+        
+        viewModel?.temperatureUnitSubject1
+            .subscribe(onNext: { [weak self] _ in
+                self?.updateCellTemperatureLabels()
+            })
+            .disposed(by: disposeBag)
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -80,7 +86,13 @@ class TomorrowTimeCelsiusCollectionView: UICollectionView, UICollectionViewDeleg
         let hourlyWeather = hourlyWeatherData[indexPath.item]
         cell.configureConstraints(data: hourlyWeather)
         
-        cell.celsiusLabel.text = hourlyWeather.feelslikeC
+        // ViewModel에서 현재 온도 단위 가져오기
+        var temperatureUnit = viewModel?.temperatureUnit ?? .fahrenheit
+        if temperatureUnit == .celsius {
+            cell.celsiusLabel.text = hourlyWeather.feelslikeC
+        } else {
+            cell.celsiusLabel.text = hourlyWeather.feelslikeF
+        }
         cell.timeLabel.text = hourlyWeather.time
         cell.celsiusLabel.textColor = .mygray
         cell.timeLabel.textColor = .mygray
@@ -94,4 +106,13 @@ class TomorrowTimeCelsiusCollectionView: UICollectionView, UICollectionViewDeleg
         return CGSize(width: width, height: height)
     }
     
+    private func updateCellTemperatureLabels() {
+        for case let cell as FirstRightCollectionViewCell in self.visibleCells {
+            guard let indexPath = self.indexPath(for: cell) else { continue }
+            let hourlyWeather = hourlyWeatherData[indexPath.item]
+            if let temperatureUnit = viewModel?.temperatureUnit {
+                cell.celsiusLabel.text = (temperatureUnit == .celsius) ? hourlyWeather.feelslikeC : hourlyWeather.feelslikeF
+            }
+        }
+    }
 }

@@ -73,15 +73,15 @@ class CurrentWeatherTableViewCell: UITableViewCell {
         conditionLabel.sizeToFit()
         let todayTemp = weatherAPIModel.current?.feelslikeC ?? 0
         temperatureLabel.text = String(Int(weatherAPIModel.current?.feelslikeC ?? 0)) + "°"
-        temperatureLabel.font = .boldSystemFont(ofSize: 42)
+        temperatureLabel.font = UIFont(name: "GmarketSansTTFBold", size: 42)
         temperatureLabel.sizeToFit()
 //        weatherImage.image = UIImage(named: "cloud")
-        minMaxTempLabel.text = String(Int(weatherAPIModel.forecast.forecastday[0].day.maxtempC)) + "°" + "/ " + String(Int(weatherAPIModel.forecast.forecastday[0].day.mintempC)) + "°"
+        minMaxTempLabel.text = String(Int(weatherAPIModel.forecast.forecastday[0].day.maxtempC)) + "°" + "/" + String(Int(weatherAPIModel.forecast.forecastday[0].day.mintempC)) + "°"
         minMaxTempLabel.textColor = .secondaryLabel
         minMaxTempLabel.font = .systemFont(ofSize: 12)
         minMaxTempLabel.sizeToFit()
         alarmImageView.image = UIImage.bookmarkDefault
-        currentLocationImageView.image = UIImage.location
+        currentLocationImageView.image = UIImage.navigation
         setupWeatherImage()
         
         let yesterdayTemp = historyAPIModel.forecast.forecastday[0].day.avgtempC
@@ -94,10 +94,39 @@ class CurrentWeatherTableViewCell: UITableViewCell {
             temperatureTextLabel.text = "어제랑 기온이 같음"
         }
         temperatureTextLabel.font = .systemFont(ofSize: 11)
-        dustLabel.text = "미세 \(String((weatherAPIModel.current?.airQuality.fine)!))ㆍ초미세 \(String((weatherAPIModel.current?.airQuality.micro)!))"
+//        dustLabel.text = "미세 \(String((weatherAPIModel.current?.airQuality.fine)!))ㆍ초미세 \(String((weatherAPIModel.current?.airQuality.micro)!))"
+        let mise = Double((weatherAPIModel.current?.airQuality.fine!)!)
+        let chomise = Double((weatherAPIModel.current?.airQuality.micro)!)
+        
+        switch mise {
+        case 0..<30:
+            dustLabel.text = "미세 좋음"
+        case 30..<80:
+            dustLabel.text = "미세 보통"
+        case 81..<150:
+            dustLabel.text = "미세 나쁨"
+        case 150...:
+            dustLabel.text = "미세 매우 나쁨"
+        default:
+            dustLabel.text = "미세 실패"
+        }
+        
+        switch chomise {
+        case 0..<15:
+            dustLabel.text = "\(dustLabel.text!) · 초미세 좋음"
+        case 15..<35:
+            dustLabel.text = "\(dustLabel.text!) · 초미세 보통"
+        case 35..<75:
+            dustLabel.text = "\(dustLabel.text!) · 초미세 나쁨"
+        case 75...:
+            dustLabel.text = "\(dustLabel.text!) · 초미세 매우 나쁨"
+        default:
+            dustLabel.text = "\(dustLabel.text!) · 초미세 실패"
+        }
         dustLabel.font = .systemFont(ofSize: 11)
         self.makeConstraints()
     }
+    
     
     func setupWeatherImage() {
         switch conditionLabel.text {

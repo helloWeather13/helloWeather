@@ -15,9 +15,6 @@ class TodayTimeWeatherCollectionView: UICollectionView, UICollectionViewDelegate
     private var disposeBag = DisposeBag()
     var hourlyWeatherData: [WeatherDetailViewModel.HourlyWeather] = []
     
-    var weatherIconTestNames: [String] = ["rainy"]
-    var weatherIconTestData: [UIImage] = []
-    
     init(viewModel: WeatherDetailViewModel) {
         self.viewModel = viewModel
         
@@ -58,13 +55,20 @@ class TodayTimeWeatherCollectionView: UICollectionView, UICollectionViewDelegate
                                return !isFirst21Found && hour % 3 == 0
                            }
                 if let hourlyWeatherData = self?.hourlyWeatherData {
-                              print("오늘 날씨 확인: \(hourlyWeatherData)")
                           }
                 self?.reloadData()
                 self?.updateCollectionViewSize()
 
             })
             .disposed(by: disposeBag)
+        
+
+        viewModel?.temperatureUnitSubject2
+            .subscribe(onNext: { [weak self] _ in
+                self?.updateCellTemperatureLabels()
+            })
+            .disposed(by: disposeBag)
+
     }
     
     // MARK: - SetupWeatherImage
@@ -108,16 +112,18 @@ class TodayTimeWeatherCollectionView: UICollectionView, UICollectionViewDelegate
         let hourlyWeather = hourlyWeatherData[indexPath.item]
         cell.configureConstraints(data: hourlyWeather)
         
-        cell.celsiusLabel.text = hourlyWeather.tempC
+        // ViewModel에서 현재 온도 단위 가져오기
+        let temperatureUnit2 = viewModel?.temperatureUnit2 ?? .fahrenheit
+        if temperatureUnit2 == .celsius {
+            cell.celsiusLabel.text = hourlyWeather.tempC
+        } else {
+            cell.celsiusLabel.text = hourlyWeather.tempF
+        }
         cell.timeLabel.text = hourlyWeather.time
         
         setupWeatherImage(data: hourlyWeather, cell: cell)
         cell.weatherIcon.contentMode = .scaleAspectFit
         
-        if indexPath.item < weatherIconTestData.count {
-            cell.weatherIcon.image = weatherIconTestData[indexPath.item]
-            cell.weatherIcon.contentMode = .scaleAspectFit
-        }
         
         if indexPath.item == 0 {
             cell.timeLabel.text = "지금"
@@ -147,6 +153,16 @@ class TodayTimeWeatherCollectionView: UICollectionView, UICollectionViewDelegate
             make.width.equalTo(totalWidth)
             make.height.equalTo(152)
             make.top.leading.bottom.equalToSuperview()
+        }
+    }
+    
+    private func updateCellTemperatureLabels() {
+        for case let cell as SecondLeftCollectionViewCell in self.visibleCells {
+            guard let indexPath = self.indexPath(for: cell) else { continue }
+            let hourlyWeather = hourlyWeatherData[indexPath.item]
+            if let temperatureUnit2 = viewModel?.temperatureUnit2 {
+                cell.celsiusLabel.text = (temperatureUnit2 == .celsius) ? hourlyWeather.feelslikeC : hourlyWeather.feelslikeF
+            }
         }
     }
 }

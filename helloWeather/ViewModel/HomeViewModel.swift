@@ -84,7 +84,7 @@ class HomeViewModel: NSObject, CLLocationManagerDelegate {
     }
     
     var condition: ConditionText = .none
-        
+    var isCurrent : Bool = true
     enum ConditionText: String {
         case rain = "비 소식"
         case snow = "눈 소식"
