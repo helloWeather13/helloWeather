@@ -88,7 +88,8 @@ class HumidityCollectionView: UICollectionView, UICollectionViewDelegate, UIColl
         let cell  = collectionView.dequeueReusableCell(withReuseIdentifier: HumidityCollectionViewCell.identifier, for: indexPath) as! HumidityCollectionViewCell
         
         let hourlyWeather = hourlyWeatherData[indexPath.item]
-        cell.configureConstraints(data: hourlyWeather)
+        let isFirstCell = indexPath.item == 0
+        cell.configureConstraints(data: hourlyWeather, isFirstCell: isFirstCell)
         
         cell.percentLabel.text = hourlyWeather.humidity
         cell.timeLabel.text = hourlyWeather.time

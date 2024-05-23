@@ -50,7 +50,7 @@ class FirstLeftCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-   func configureConstraints(data : WeatherDetailViewModel.HourlyWeather) {
+   func configureConstraints(data : WeatherDetailViewModel.HourlyWeather, isFirstCell: Bool) {
 
        // BarChart
         let barChartCellWrapper = BarChartCellWrapper (
@@ -58,7 +58,7 @@ class FirstLeftCollectionViewCell: UICollectionViewCell {
             index: 0,
             width: 60,
             numberOfDataPoints: 10,
-            accentColor: .gray,
+            accentColor: isFirstCell ? .mygray : .mylightgray,
             touchLocation: .constant(-1.0)
         )
        

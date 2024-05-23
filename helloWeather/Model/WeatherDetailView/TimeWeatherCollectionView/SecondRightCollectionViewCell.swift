@@ -61,7 +61,7 @@ class SecondRightCollectionViewCell: UICollectionViewCell {
             index: 0,
             width: 60,
             numberOfDataPoints: 10,
-            accentColor: .gray,
+            accentColor: .mylightgray,
             touchLocation: .constant(-1.0)
         )
         

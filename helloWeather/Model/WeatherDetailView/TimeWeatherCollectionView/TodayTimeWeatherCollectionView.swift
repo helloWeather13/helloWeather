@@ -110,7 +110,8 @@ class TodayTimeWeatherCollectionView: UICollectionView, UICollectionViewDelegate
         let cell  = collectionView.dequeueReusableCell(withReuseIdentifier: SecondLeftCollectionViewCell.identifier, for: indexPath) as! SecondLeftCollectionViewCell
         
         let hourlyWeather = hourlyWeatherData[indexPath.item]
-        cell.configureConstraints(data: hourlyWeather)
+        let isFirstCell = indexPath.item == 0
+        cell.configureConstraints(data: hourlyWeather, isFirstCell: isFirstCell)
         
         // ViewModel에서 현재 온도 단위 가져오기
         let temperatureUnit2 = viewModel?.temperatureUnit2 ?? .fahrenheit

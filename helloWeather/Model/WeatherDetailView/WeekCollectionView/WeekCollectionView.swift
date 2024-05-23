@@ -85,13 +85,14 @@ class WeekCollectionView: UICollectionView, UICollectionViewDelegate, UICollecti
         let cell  = collectionView.dequeueReusableCell(withReuseIdentifier: WeekCollectionViewCell.identifier, for: indexPath) as! WeekCollectionViewCell
         
         let dailyWeather = dailyWeatherData[indexPath.item]
-        cell.configureConstraints(data: dailyWeather)
+        let isFirstCell = indexPath.item == 0
+        cell.configureConstraints(data: dailyWeather, isFirstCell: isFirstCell)
         
         cell.weekLabel.text = dailyWeather.dayOfWeek
         cell.dateLabel.text = dailyWeather.date
         
         // ViewModel에서 현재 온도 단위 가져오기
-        var temperatureUnit3 = viewModel?.temperatureUnit3 ?? .fahrenheit
+        let temperatureUnit3 = viewModel?.temperatureUnit3 ?? .fahrenheit
         if temperatureUnit3 == .celsius {
             cell.maxCelsiusLabel.text = dailyWeather.mintempC
             cell.minCelsiusLabel.text = dailyWeather.maxtempC
