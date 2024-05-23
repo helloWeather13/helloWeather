@@ -25,7 +25,7 @@ class TabViewModel{
    
     
     private func createNav(with tab: TabModel) -> UINavigationController {
-        tab.vc.view.backgroundColor = .systemBackground
+        tab.vc.view.backgroundColor = UIColor(red: 0.988, green: 0.988, blue: 0.992, alpha: 1)
         let nav = UINavigationController(rootViewController: tab.vc)
         if tab.title == "메인"{
             firstTab = RAMAnimatedTabBarItem(title: "", image: tab.image, selectedImage: tab.selectedImage)
@@ -53,7 +53,10 @@ class TabViewModel{
         
         nav.tabBarItem.title = nil
 //        nav.viewControllers.first?.navigationItem.title = tab.title
-        nav.navigationBar.isTranslucent = true
+        let standard = UINavigationBarAppearance()
+        standard.backgroundColor = UIColor(red: 0.988, green: 0.988, blue: 0.992, alpha: 1)
+        nav.navigationBar.scrollEdgeAppearance = standard
+        nav.navigationBar.standardAppearance = standard
         return nav
     }
 

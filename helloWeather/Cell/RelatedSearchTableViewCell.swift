@@ -25,7 +25,7 @@ class RelatedSearchTableViewCell: UITableViewCell {
     func configureUI(text: String, keyword: String){
         self.addSubview(wordsLabel)
         self.addSubview(line)
-        
+        self.backgroundColor = UIColor(red: 0.988, green: 0.988, blue: 0.992, alpha: 1)
         wordsLabel.translatesAutoresizingMaskIntoConstraints = false
         wordsLabel.topInset = -20
         wordsLabel.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
