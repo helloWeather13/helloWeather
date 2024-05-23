@@ -66,7 +66,7 @@ class CurrentWeatherTableViewCell: UITableViewCell {
         }
         
         cityLabel.text = searchModel.city + ","
-        cityLabel.font = .boldSystemFont(ofSize: 13)
+        cityLabel.font = UIFont(name: "Pretendard-Bold", size: 13)
         cityLabel.sizeToFit()
         conditionLabel.text = weatherAPIModel.current?.condition.change()
         conditionLabel.font = .systemFont(ofSize: 13)
@@ -78,8 +78,10 @@ class CurrentWeatherTableViewCell: UITableViewCell {
 //        weatherImage.image = UIImage(named: "cloud")
         minMaxTempLabel.text = String(Int(weatherAPIModel.forecast.forecastday[0].day.maxtempC)) + "°" + "/" + String(Int(weatherAPIModel.forecast.forecastday[0].day.mintempC)) + "°"
         minMaxTempLabel.textColor = .secondaryLabel
-        minMaxTempLabel.font = .systemFont(ofSize: 12)
+        minMaxTempLabel.font = UIFont(name: "Pretendard-Medium", size: 12)
         minMaxTempLabel.sizeToFit()
+        dustLabel.font = UIFont(name: "Pretendard-Medium", size: 13)
+        temperatureTextLabel.font = UIFont(name: "Pretendard-Medium", size: 13)
         alarmImageView.image = UIImage.bookmarkDefault
         currentLocationImageView.image = UIImage.navigation
         setupWeatherImage()
@@ -93,7 +95,6 @@ class CurrentWeatherTableViewCell: UITableViewCell {
         }else{
             temperatureTextLabel.text = "어제랑 기온이 같음"
         }
-        temperatureTextLabel.font = .systemFont(ofSize: 11)
 //        dustLabel.text = "미세 \(String((weatherAPIModel.current?.airQuality.fine)!))ㆍ초미세 \(String((weatherAPIModel.current?.airQuality.micro)!))"
         let mise = Double((weatherAPIModel.current?.airQuality.fine!)!)
         let chomise = Double((weatherAPIModel.current?.airQuality.micro)!)
