@@ -52,27 +52,37 @@ extension UITabBar {
         shadowImage = UIImage() // no separator
         barTintColor = .clear
         layer.backgroundColor = UIColor.clear.cgColor
-    
+        
         // Apply icon colors
         tintColor = selectedItemColor
         unselectedItemTintColor = unselectedItemColor
-    
+        
         // Add material blur
-//        let blurEffect = UIBlurEffect(style: blurStyle)
+        //        let blurEffect = UIBlurEffect(style: blurStyle)
         let blurView = TSBlurEffectView()
         blurView.intensity = 10
         blurView.frame = bounds
         blurView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         blurView.layer.opacity = 1
-    
+        
         // Add black view to cancel out gray look
-//        let blackView = UIView(frame: bounds)
-//        blackView.backgroundColor = .systemBackground.withAlphaComponent(0.9)
-//        blackView.frame = bounds
-//        blackView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-    
+        //        let blackView = UIView(frame: bounds)
+        //        blackView.backgroundColor = .systemBackground.withAlphaComponent(0.9)
+        //        blackView.frame = bounds
+        //        blackView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        
         insertSubview(blurView, at: 0)
-//        insertSubview(blackView, aboveSubview: blurView)
+        //        insertSubview(blackView, aboveSubview: blurView)
+    }
+}
+    
+extension UILabel {
+    func addCharacterSpacing(_ value: Double = -0.05) {
+        let kernValue = self.font.pointSize * CGFloat(value)
+        guard let text = text, !text.isEmpty else { return }
+        let string = NSMutableAttributedString(string: text)
+        string.addAttribute(NSAttributedString.Key.kern, value: kernValue, range: NSRange(location: 0, length: string.length - 1))
+        attributedText = string
     }
 }
 

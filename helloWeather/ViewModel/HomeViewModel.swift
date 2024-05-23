@@ -161,25 +161,25 @@ class HomeViewModel: NSObject, CLLocationManagerDelegate {
     func updateSunImage() {
         switch now {
         case sunriseNum..<sunriseNum + sunTimeSplit:
-            sunImage = UIImage(named: "SunRise01")!
-        case sunriseNum + sunTimeSplit..<(sunriseNum + sunTimeSplit * 2):
             sunImage = UIImage(named: "SunRise02")!
-        case sunriseNum + sunTimeSplit * 2..<(sunriseNum + sunTimeSplit * 3):
+        case sunriseNum + sunTimeSplit..<(sunriseNum + sunTimeSplit * 2):
             sunImage = UIImage(named: "SunRise03")!
-        case sunriseNum + sunTimeSplit * 3..<(sunriseNum + sunTimeSplit * 4):
+        case sunriseNum + sunTimeSplit * 2..<(sunriseNum + sunTimeSplit * 3):
             sunImage = UIImage(named: "SunRise04")!
-        case sunriseNum + sunTimeSplit * 4..<(sunriseNum + sunTimeSplit * 5):
+        case sunriseNum + sunTimeSplit * 3..<(sunriseNum + sunTimeSplit * 4):
             sunImage = UIImage(named: "SunRise05")!
-        case sunriseNum + sunTimeSplit * 5..<(sunriseNum + sunTimeSplit * 6):
+        case sunriseNum + sunTimeSplit * 4..<(sunriseNum + sunTimeSplit * 5):
             sunImage = UIImage(named: "SunRise06")!
-        case sunriseNum + sunTimeSplit * 6..<(sunriseNum + sunTimeSplit * 7):
+        case sunriseNum + sunTimeSplit * 5..<(sunriseNum + sunTimeSplit * 6):
             sunImage = UIImage(named: "SunRise07")!
-        case sunriseNum + sunTimeSplit * 7..<(sunriseNum + sunTimeSplit * 8):
+        case sunriseNum + sunTimeSplit * 6..<(sunriseNum + sunTimeSplit * 7):
             sunImage = UIImage(named: "SunRise08")!
-        case sunriseNum + sunTimeSplit * 8..<(sunriseNum + sunTimeSplit * 9):
+        case sunriseNum + sunTimeSplit * 7..<(sunriseNum + sunTimeSplit * 8):
             sunImage = UIImage(named: "SunRise09")!
+        case sunriseNum + sunTimeSplit * 8..<(sunriseNum + sunTimeSplit * 9):
+            sunImage = UIImage(named: "SunRise010")!
         default:
-            sunImage = UIImage(named: "SunRise10")!
+            sunImage = UIImage(named: "SunRise01")!
         }
     }
     

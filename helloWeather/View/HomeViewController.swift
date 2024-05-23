@@ -86,16 +86,26 @@ class HomeViewController: UIViewController {
     
     var temperatureLabel: UILabel = {
         let label = UILabel()
-        label.text = ""
-        label.font = UIFont(name: "GmarketSansTTFBold", size: 136)
+        label.text = "23"
+        label.font = UIFont(name: "Nunito-Black", size: 136)
+        label.addCharacterSpacing()
         return label
     }()
     
     var unitLabel: UILabel = {
         let label = UILabel()
         label.text = "°"
-        label.font = UIFont(name: "GmarketSansTTFBold", size: 136)
+        label.font = UIFont(name: "Nunito-Black", size: 136)
         return label
+    }()
+    
+    lazy var tempStackView: UIStackView = {
+        let stview = UIStackView(arrangedSubviews: [temperatureLabel, unitLabel])
+        stview.alignment = .fill
+        stview.axis = .horizontal
+        stview.spacing = 6
+        stview.distribution = .fill
+        return stview
     }()
     
     var scrollAnimation: LottieAnimationView = {
@@ -200,6 +210,7 @@ class HomeViewController: UIViewController {
         let searchVC = SearchViewController()
         searchVC.delegate = self
         self.navigationController?.pushViewController(searchVC, animated: false)
+        (self.navigationController?.parent as? MainViewController)?.scrollView.isScrollEnabled = false
     }
     
     func setupSecondLabel() {
@@ -217,7 +228,8 @@ class HomeViewController: UIViewController {
             compareStr.append(compare)
             compareLabel.attributedText = compareStr
             
-            temperatureLabel.text = String(Int(homeViewModel.todayFeelsLike)) + "°"
+            temperatureLabel.text = String(Int(homeViewModel.todayFeelsLike))
+            temperatureLabel.addCharacterSpacing()
         }
     }
     
@@ -242,7 +254,7 @@ class HomeViewController: UIViewController {
         
         view.addSubview(updateStackView)
         updateStackView.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).offset(55)
+            $0.top.equalTo(view.safeAreaLayoutGuide).offset(26)
             $0.leading.equalToSuperview().offset(32)
         }
         
@@ -260,29 +272,30 @@ class HomeViewController: UIViewController {
             $0.width.height.equalTo(36)
         }
         
-        view.addSubview(temperatureLabel)
-        temperatureLabel.snp.makeConstraints {
-            $0.top.equalTo(stackView.snp.bottom).offset(130)
-            $0.leading.equalToSuperview().offset(124)
+        view.addSubview(tempStackView)
+        tempStackView.snp.makeConstraints {
+            $0.bottom.equalTo(view).offset(-104)
+            $0.trailing.equalToSuperview().offset(-32)
+            
         }
         
         view.addSubview(bookmarkButton)
         bookmarkButton.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).offset(53)
-            $0.trailing.equalToSuperview().inset(32)
+            $0.top.equalTo(view.safeAreaLayoutGuide).offset(24)
+            $0.trailing.equalToSuperview().inset(34)
             $0.width.height.equalTo(24)
         }
         
         view.addSubview(notificationButton)
         notificationButton.snp.makeConstraints {
             $0.top.equalTo(bookmarkButton.snp.bottom).offset(12)
-            $0.trailing.equalToSuperview().inset(32)
+            $0.trailing.equalToSuperview().inset(34)
             $0.width.height.equalTo(24)
         }
         
         view.addSubview(scrollAnimation)
         scrollAnimation.snp.makeConstraints {
-            $0.top.equalTo(temperatureLabel.snp.bottom).offset(50)
+            $0.top.equalTo(temperatureLabel.snp.bottom).offset(42)
             $0.centerX.equalToSuperview()
         }
         
@@ -341,17 +354,18 @@ class HomeViewController: UIViewController {
     func bind(){
         self.homeViewModel.bookMarkDidChanged = { isBookmarked in
             if isBookmarked {
-                self.bookmarkButton.setBackgroundImage(UIImage(systemName: "bookmark.fill"), for: .normal)
-            }else{
-                self.bookmarkButton.setBackgroundImage(UIImage(systemName: "bookmark"), for: .normal)
+                self.bookmarkButton.setBackgroundImage(UIImage(named: "bookmark_S-1"), for: .normal)
+            } else {
+                self.bookmarkButton.setBackgroundImage(UIImage(named: "bookmark_S-0"), for: .normal)
+                self.notificationButton.setBackgroundImage(nil, for: .normal)
             }
             self.bookmarkButton.superview?.layoutIfNeeded()
         }
         self.homeViewModel.notfiedDiDChanged = { isnotified in
             if isnotified {
-                self.notificationButton.setBackgroundImage(UIImage(systemName: "bell.fill"), for: .normal)
-            }else{
-                self.notificationButton.setBackgroundImage(UIImage(systemName: "bell"), for: .normal)
+                self.notificationButton.setBackgroundImage(UIImage(named: "notification_S-1"), for: .normal)
+            } else {
+                self.notificationButton.setBackgroundImage(UIImage(named: "notification_S-0"), for: .normal)
             }
             self.notificationButton.superview?.layoutIfNeeded()
         }
