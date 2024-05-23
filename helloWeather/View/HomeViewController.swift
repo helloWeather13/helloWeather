@@ -320,11 +320,15 @@ class HomeViewController: UIViewController {
             }
             self.bookmarkButton.superview?.layoutIfNeeded()
         }
-        self.homeViewModel.notfiedDiDChanged = { isnotified in
+        self.homeViewModel.notfiedDiDChanged = { isnotified, isBookmarked in
             if isnotified {
                 self.notificationButton.setBackgroundImage(UIImage(named: "notification_S-1"), for: .normal)
             } else {
-                self.notificationButton.setBackgroundImage(UIImage(named: "notification_S-0"), for: .normal)
+                if isBookmarked {
+                    self.notificationButton.setBackgroundImage(UIImage(named: "notification_S-0"), for: .normal)
+                } else {
+                    self.notificationButton.setBackgroundImage(nil, for: .normal)
+                }
             }
             self.notificationButton.superview?.layoutIfNeeded()
         }
@@ -363,15 +367,13 @@ class HomeViewController: UIViewController {
     
     @objc func notificationButtonTapped() {
         self.homeViewModel.changeNotiCurrentBookMark()
+        
         if !homeViewModel.isNotified {
-            
             let alarmImageYellow = UIImageView()
             alarmImageYellow.image = .popupNotification1
             homeViewModel.isNotified = false
             showCustomAlert(image: alarmImageYellow.image!, message: "비소식 알림을 껐어요.")
-        }
-        else {
-            
+        } else {
             let alarmImageYellow = UIImageView()
             alarmImageYellow.image = .popupNotification
             homeViewModel.isNotified = true
@@ -379,7 +381,7 @@ class HomeViewController: UIViewController {
         }
     }
     
-    @objc func dataRecevied(notification: Notification){
+    @objc func dataRecevied(notification: Notification) {
         guard let newSearchModel = notification.object as? SearchModel else{
             return
         }
@@ -389,14 +391,14 @@ class HomeViewController: UIViewController {
         createBackButton()
     }
     
-    @objc func dataReceviedCurrent(notification: Notification){
+    @objc func dataReceviedCurrent(notification: Notification) {
         guard let newSearchModel = notification.object as? SearchModel else{
             return
         }
         self.homeViewModel.isCurrent = true
         self.homeViewModel.currentSearchModel = newSearchModel
     }
-    func createBackButton(){
+    func createBackButton() {
         let backButton = UIView()
         backButton.frame = CGRect(x: 0, y: 0, width: 24, height: 24)
         backButton.isUserInteractionEnabled = true // Enable user interaction
@@ -429,7 +431,7 @@ extension HomeViewController : TransferDataToMainDelegate {
         createBackButton()
     }
     
-    @objc func backButtonTap(){
+    @objc func backButtonTap() {
         self.homeViewModel.isCurrent = true
         self.homeViewModel.getUserLocation()
         self.navigationItem.leftBarButtonItem?.isHidden = true

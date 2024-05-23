@@ -20,7 +20,7 @@ class HomeViewModel: NSObject, CLLocationManagerDelegate {
     }
     var isNotified = false {
         didSet {
-            notfiedDiDChanged(isNotified)
+            notfiedDiDChanged(isNotified, isBookmarked)
         }
     }
     var isNotification = false
@@ -32,7 +32,7 @@ class HomeViewModel: NSObject, CLLocationManagerDelegate {
         }
     }
     
-    var notfiedDiDChanged : ((Bool) -> ()) = { _ in }
+    var notfiedDiDChanged : ((Bool, Bool) -> ()) = { _,_  in }
     var bookMarkDidChanged: ((Bool) -> ()) = { _ in }
     var addressOnCompleted: ((String) -> ()) = { _ in }
     
