@@ -167,6 +167,7 @@ class HomeViewController: UIViewController {
                 let titleView = UIView()
                 
                 let imageView = UIImageView(image: UIImage(named: "navigation"))
+                imageView.tintColor = .label
                 imageView.contentMode = .scaleAspectFit
                 
                 let titleLabel: UILabel = {

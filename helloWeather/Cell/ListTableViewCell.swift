@@ -223,11 +223,10 @@ class ListTableViewCell: UITableViewCell {
         deleteButton.isHidden = true
         deleteView.backgroundColor = .myred
         cityLabel.text = searchModel.city + ","
-        cityLabel.font = UIFont(name: "Pretendard-Medium", size: 13)
+        cityLabel.font = UIFont(name: "Pretendard-Bold", size: 13)
         cityLabel.sizeToFit()
-        //        conditionLabel.text = weatherAPIModel.current?.condition.text
         conditionLabel.text = weatherAPIModel.current?.condition.change()
-        conditionLabel.font = UIFont(name: "Pretendard-Medium", size: 13)
+        conditionLabel.font = UIFont(name: "Pretendard-Regular", size: 13)
         conditionLabel.sizeToFit()
         temperatureLabel.text = String(Int(weatherAPIModel.current?.feelslikeC ?? 0)) + "°"
         temperatureLabel.font = UIFont(name: "GmarketSansTTFBold", size: 42)

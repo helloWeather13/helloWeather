@@ -45,7 +45,7 @@ class TempListViewController: UIViewController {
     
     override func setupAlertViewConstraints(_ customAlertView: UIView, image: UIImage, messageLabel: UILabel) {
         customAlertView.snp.makeConstraints { make in
-          make.bottom.equalTo(view.snp.bottom).inset(20)
+          make.bottom.equalTo(view.snp.bottom).inset(91)
           make.centerX.equalToSuperview()
           make.height.equalTo(max(image.size.height, 40))
           make.width.equalTo(image.size.width + messageLabel.intrinsicContentSize.width + 30)
@@ -390,6 +390,7 @@ extension UIViewController {
         let messageLabel = UILabel()
         messageLabel.text = message
         messageLabel.textColor = .white
+        messageLabel.font = UIFont(name: "Pretendard-Regular", size: 14)
         messageLabel.textAlignment = .center
         messageLabel.numberOfLines = 0
         customAlertView.addSubview(messageLabel)
