@@ -81,7 +81,7 @@ class CurrentWeatherTableViewCell: UITableViewCell {
         minMaxTempLabel.font = .systemFont(ofSize: 12)
         minMaxTempLabel.sizeToFit()
         alarmImageView.image = UIImage.bookmarkDefault
-        currentLocationImageView.image = UIImage.location
+        currentLocationImageView.image = .navigation
         setupWeatherImage()
         
         let yesterdayTemp = historyAPIModel.forecast.forecastday[0].day.avgtempC
