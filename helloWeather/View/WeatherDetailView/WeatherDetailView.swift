@@ -146,10 +146,12 @@ class WeatherDetailView: UIView {
     
     lazy var firstLeftCollectionView: TodayTimeCelsiusCollectionView = {
         let collectionView = TodayTimeCelsiusCollectionView(viewModel: weatherDetailViewModel)
+        collectionView.backgroundColor = UIColor(red: 0.988, green: 0.988, blue: 0.992, alpha: 1)
         return collectionView
     }()
     lazy var firstRightCollectionView: TomorrowTimeCelsiusCollectionView = {
         let collectionView = TomorrowTimeCelsiusCollectionView(viewModel: weatherDetailViewModel, todayCollectionView: firstLeftCollectionView)
+        collectionView.backgroundColor = UIColor(red: 0.988, green: 0.988, blue: 0.992, alpha: 1)
         return collectionView
     }()
     
@@ -166,13 +168,29 @@ class WeatherDetailView: UIView {
         image.image =  UIImage(named: "bottomTomorrow")
         return image
     }()
-    lazy var secondLeftCollectionView = TodayTimeWeatherCollectionView(viewModel: weatherDetailViewModel)
-    lazy var secondRightCollectionView = TomorrowTimeWeatherCollectionView(viewModel: weatherDetailViewModel, todayCollectionView: secondLeftCollectionView)
+    lazy var secondLeftCollectionView: TodayTimeWeatherCollectionView = {
+           let collectionView = TodayTimeWeatherCollectionView(viewModel: weatherDetailViewModel)
+           collectionView.backgroundColor = UIColor(red: 0.988, green: 0.988, blue: 0.992, alpha: 1)
+           return collectionView
+       }()
+       lazy var secondRightCollectionView: TomorrowTimeWeatherCollectionView = {
+           let collectionView = TomorrowTimeWeatherCollectionView(viewModel: weatherDetailViewModel, todayCollectionView: secondLeftCollectionView)
+           collectionView.backgroundColor = UIColor(red: 0.988, green: 0.988, blue: 0.992, alpha: 1)
+           return collectionView
+       }()
     
     // 주간 날씨
-    lazy var weekCollectionView = WeekCollectionView(viewModel: weatherDetailViewModel)
+    lazy var weekCollectionView: WeekCollectionView = {
+            let collectionView = WeekCollectionView(viewModel: weatherDetailViewModel)
+            collectionView.backgroundColor = UIColor(red: 0.988, green: 0.988, blue: 0.992, alpha: 1)
+            return collectionView
+        }()
     // 습도
-    lazy var humidityCollectionView = HumidityCollectionView(viewModel: weatherDetailViewModel)
+    lazy var humidityCollectionView: HumidityCollectionView = {
+            let collectionView = HumidityCollectionView(viewModel: weatherDetailViewModel)
+            collectionView.backgroundColor = UIColor(red: 0.988, green: 0.988, blue: 0.992, alpha: 1)
+            return collectionView
+        }()
     
     // MARK: - C/F ChangeToggle
     let customToggleView: CustomToggleView2

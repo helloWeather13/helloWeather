@@ -411,7 +411,6 @@
 			isa = PBXGroup;
 			children = (
 				146580E52BF1E8740093AA81 /* TabModel.swift */,
-				45D70DCB2BF3344500942DC1 /* WeatherDetailView */,
 				146580FE2BF1F1C30093AA81 /* ApiModel.swift */,
 				146581042BF21EC40093AA81 /* WeatherAPIModel.swift */,
 				146581062BF240AF0093AA81 /* KakaoAddressModel.swift */,
@@ -424,6 +423,7 @@
 		146580E22BF1E83B0093AA81 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				45D70DCB2BF3344500942DC1 /* WeatherDetailView */,
 				146580D52BF1E7EB0093AA81 /* LaunchScreen.storyboard */,
 				B69CA1252BFDA27C0068BFA8 /* LaunchScreen.swift */,
 				146580DE2BF1E8160093AA81 /* TabViewController.swift */,

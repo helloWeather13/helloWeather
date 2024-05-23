@@ -68,7 +68,7 @@ class CurrentWeatherTableViewCell: UITableViewCell {
             $0.translatesAutoresizingMaskIntoConstraints = false
             $0.tintColor = .label
         }
-        
+        viewContainer.backgroundColor = .white
         cityLabel.text = searchModel.city + ","
         cityLabel.font = UIFont(name: "Pretendard-Bold", size: 13)
         cityLabel.sizeToFit()

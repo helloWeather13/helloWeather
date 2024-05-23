@@ -128,7 +128,7 @@ class WeekCollectionView: UICollectionView, UICollectionViewDelegate, UICollecti
             cell.weekLabel.textColor = .myred
             cell.dateLabel.textColor = .myred
         }
-        
+        cell.backgroundColor = UIColor(red: 0.988, green: 0.988, blue: 0.992, alpha: 1)
         return cell
     }
     

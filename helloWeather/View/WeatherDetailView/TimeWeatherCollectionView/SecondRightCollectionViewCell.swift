@@ -1,5 +1,5 @@
 //
-//  FirstRightCollectionViewCell.swift
+//  rightCollectionViewCell.swift
 //  helloWeather
 //
 //  Created by 이유진 on 5/14/24.
@@ -10,33 +10,35 @@ import SnapKit
 import SwiftUI
 import SwiftUICharts
 
-class FirstRightCollectionViewCell: UICollectionViewCell {
+class SecondRightCollectionViewCell: UICollectionViewCell {
     
-    static let identifier = String(describing: FirstRightCollectionViewCell.self)
+    static let identifier = String(describing: SecondRightCollectionViewCell.self)
     
-    var stackView: UIStackView = {
+    var firstStackView: UIStackView = {
         let stack = UIStackView()
         stack.axis = .vertical
-        stack.spacing = 8
+        stack.spacing = 10
         return stack
     }()
-    var stackView2: UIStackView = {
+    var secondStackView: UIStackView = {
         let stack = UIStackView()
         stack.axis = .vertical
-        stack.spacing = 15
+        stack.spacing = 20
         return stack
     }()
     
     var celsiusLabel: UILabel = {
         let label = UILabel()
-        label.text = ""
         label.font = UIFont(name: "Pretendard-Regular", size: 15)
         label.textAlignment = .center
         return label
     }()
+    var weatherIcon: UIImageView = {
+        let image = UIImageView()
+        return image
+    }()
     var timeLabel: UILabel = {
         let label = UILabel()
-        label.text = ""
         label.font = UIFont(name: "Pretendard-Regular", size: 11)
         label.textAlignment = .center
         return label
@@ -50,9 +52,10 @@ class FirstRightCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configureConstraints(data : WeatherDetailViewModel.HourlyWeather) {
+    
+    func configureConstraints(data: WeatherDetailViewModel.HourlyWeather) {
         
-        let barChartCellWrapper = BarChartCellWrapper5(
+        let barChartCellWrapper = BarChartCellWrapper6(
             //높이
             value: changeDataToHeight(data: data),
             index: 0,
@@ -62,16 +65,16 @@ class FirstRightCollectionViewCell: UICollectionViewCell {
             touchLocation: .constant(-1.0)
         )
         
-        contentView.addSubview(stackView2)
-        [celsiusLabel,barChartCellWrapper].forEach {
-            stackView.addArrangedSubview($0)
-        }
         
-        [stackView, timeLabel].forEach {
-            stackView2.addArrangedSubview($0)
+        [celsiusLabel, barChartCellWrapper, weatherIcon].forEach {
+            firstStackView.addArrangedSubview($0)
         }
+        [firstStackView, timeLabel].forEach {
+            secondStackView.addArrangedSubview($0)
+        }
+        contentView.addSubview(secondStackView)
         
-        stackView2.snp.makeConstraints { make in
+        secondStackView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
         
@@ -79,42 +82,43 @@ class FirstRightCollectionViewCell: UICollectionViewCell {
             make.height.equalTo(celsiusLabel.font.pointSize)
         }
         
-        timeLabel.snp.makeConstraints { make in
-            make.height.equalTo(timeLabel.font.pointSize)
+        weatherIcon.snp.makeConstraints { make in
+            make.height.equalTo(24)
         }
-    }
-    
-    func changeDataToHeight(data: WeatherDetailViewModel.HourlyWeather) -> Double{
-        var height: Double = 0.0
-        if let tempC = Double(data.tempC.dropLast()) {
-            switch tempC {
-            case ..<0:
-                height = 0.1
-            case 0..<10:
-                height = 0.2
-            case 10..<15:
-                height = 0.3
-            case 15..<20:
-                height = 0.4
-            case 20..<25:
-                height = 0.5
-            case 25..<30:
-                height = 0.6
-            case 30..<35:
-                height = 0.7
-            case 35..<40:
-                height = 0.8
-            default:
-                height = 0.9
+        
+        func changeDataToHeight(data: WeatherDetailViewModel.HourlyWeather) -> Double{
+            var height: Double = 0.0
+            if let tempC = Double(data.tempC.dropLast()) {
+                switch tempC {
+                case ..<0:
+                    height = 0.1
+                case 0..<10:
+                    height = 0.2
+                case 10..<15:
+                    height = 0.3
+                case 15..<20:
+                    height = 0.4
+                case 20..<25:
+                    height = 0.5
+                case 25..<30:
+                    height = 0.6
+                case 30..<35:
+                    height = 0.7
+                case 35..<40:
+                    height = 0.8
+                default:
+                    height = 0.9
+                }
             }
+            return height
         }
-        return height
+        
     }
     
 }
 
 
-class BarChartCellWrapper5: UIView {
+class BarChartCellWrapper6: UIView {
     private var hostingController: UIHostingController<BarChartCell>?
     
     init(value: Double, index: Int = 0, width: Float, numberOfDataPoints: Int, accentColor: Color, touchLocation: Binding<CGFloat>) {
@@ -129,6 +133,7 @@ class BarChartCellWrapper5: UIView {
     private func setupHostingController(value: Double, index: Int, width: Float, numberOfDataPoints: Int, accentColor: Color, touchLocation: Binding<CGFloat>) {
         let barChartCell = BarChartCell(value: value, index: index, width: width, numberOfDataPoints: numberOfDataPoints, accentColor: accentColor, touchLocation: touchLocation)
         let hostingController = UIHostingController(rootView: barChartCell)
+        hostingController.view.backgroundColor = UIColor(red: 0.988, green: 0.988, blue: 0.992, alpha: 1)
         self.hostingController = hostingController
         addSubview(hostingController.view)
         
@@ -142,8 +147,7 @@ class BarChartCellWrapper5: UIView {
     }
 }
 
-
-public struct BarChartCell5: View {
+public struct BarChartCell6: View {
     public var value: Double
     public var index: Int = 0
     public var width: Float

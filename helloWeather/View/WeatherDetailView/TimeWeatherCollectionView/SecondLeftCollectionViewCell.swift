@@ -1,5 +1,5 @@
 //
-//  bottomCollectionViewCell.swift
+//  leftCollectionViewCell.swift
 //  helloWeather
 //
 //  Created by 이유진 on 5/14/24.
@@ -10,61 +10,36 @@ import SnapKit
 import SwiftUI
 import SwiftUICharts
 
-class WeekCollectionViewCell: UICollectionViewCell {
+class SecondLeftCollectionViewCell: UICollectionViewCell {
     
-    static let identifier = String(describing: WeekCollectionViewCell.self)
+    static let identifier = String(describing: SecondLeftCollectionViewCell.self)
     
-    let outerStackVeiw: UIStackView = {
+    var firstStackView: UIStackView = {
         let stack = UIStackView()
         stack.axis = .vertical
         stack.spacing = 10
         return stack
     }()
-    let innerStackView1: UIStackView = {
+    var secondStackView: UIStackView = {
         let stack = UIStackView()
         stack.axis = .vertical
-        stack.spacing = 3
-        return stack
-    }()
-    let innerStackView2: UIStackView = {
-        let stack = UIStackView()
-        stack.axis = .vertical
-        stack.spacing = 10 //5
-        return stack
-    }()
-    let innerStackView3: UIStackView = {
-        let stack = UIStackView()
-        stack.axis = .vertical
-        stack.spacing = 10 //5
+        stack.spacing = 20
         return stack
     }()
     
-    let weekLabel: UILabel = {
+    var celsiusLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "Pretendard-Regular", size: 11)
+        label.font = UIFont(name: "Pretendard-Regular", size: 15)
         label.textAlignment = .center
         return label
     }()
-    let dateLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont(name: "Pretendard-Regular", size: 11)
-        label.textAlignment = .center
-        return label
-    }()
-    
-    let weatherIcon: UIImageView = {
+    var weatherIcon: UIImageView = {
         let image = UIImageView()
-        image.contentMode = .scaleAspectFit
         return image
     }()
-    let minCelsiusLabel: UILabel = {
+    var timeLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "Pretendard-Regular", size: 11)
-        label.textAlignment = .center
-        return label
-    }()
-    let maxCelsiusLabel: UILabel = {
-        let label = UILabel()
+        label.text = ""
         label.font = UIFont(name: "Pretendard-Regular", size: 11)
         label.textAlignment = .center
         return label
@@ -78,9 +53,10 @@ class WeekCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configureConstraints(data: WeatherDetailViewModel.DailyWeather, isFirstCell: Bool) {
+    func configureConstraints(data: WeatherDetailViewModel.HourlyWeather, isFirstCell: Bool) {
         
-        let barChartCellWrapper = BarChartCellWrapper3 (
+        let barChartCellWrapper = BarChartCellWrapper2(
+            //높이
             value: changeDataToHeight(data: data),
             index: 0,
             width: 60,
@@ -89,46 +65,30 @@ class WeekCollectionViewCell: UICollectionViewCell {
             touchLocation: .constant(-1.0)
         )
         
-        contentView.addSubview(outerStackVeiw)
         
-        outerStackVeiw.addArrangedSubview(innerStackView2)
-        outerStackVeiw.addArrangedSubview(innerStackView3)
+        [celsiusLabel, barChartCellWrapper, weatherIcon].forEach {
+            firstStackView.addArrangedSubview($0)
+        }
+        [firstStackView, timeLabel].forEach {
+            secondStackView.addArrangedSubview($0)
+        }
+        contentView.addSubview(secondStackView)
         
-        innerStackView1.addArrangedSubview(weekLabel)
-        innerStackView1.addArrangedSubview(dateLabel)
-        
-        innerStackView2.addArrangedSubview(innerStackView1)
-        innerStackView2.addArrangedSubview(weatherIcon)
-
-        innerStackView3.addArrangedSubview(minCelsiusLabel)
-        innerStackView3.addArrangedSubview(barChartCellWrapper)
-        innerStackView3.addArrangedSubview(maxCelsiusLabel)
-        
-        outerStackVeiw.snp.makeConstraints { make in
+        secondStackView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
         
-        weekLabel.snp.makeConstraints { make in
-            make.height.equalTo(weekLabel.font.pointSize)
-        }
-        dateLabel.snp.makeConstraints { make in
-            make.height.equalTo(dateLabel.font.pointSize)
-        }
-
-        minCelsiusLabel.snp.makeConstraints { make in
-            make.height.equalTo(minCelsiusLabel.font.pointSize)
-        }
-        maxCelsiusLabel.snp.makeConstraints { make in
-            make.height.equalTo(maxCelsiusLabel.font.pointSize)
+        celsiusLabel.snp.makeConstraints { make in
+            make.height.equalTo(celsiusLabel.font.pointSize)
         }
         
         weatherIcon.snp.makeConstraints { make in
             make.height.equalTo(24)
         }
         
-        func changeDataToHeight(data: WeatherDetailViewModel.DailyWeather) -> Double{
+        func changeDataToHeight(data: WeatherDetailViewModel.HourlyWeather) -> Double{
             var height: Double = 0.0
-            if let tempC = Double(data.maxtempC.dropLast()) {
+            if let tempC = Double(data.tempC.dropLast()) {
                 switch tempC {
                 case ..<0:
                     height = 0.1
@@ -152,13 +112,13 @@ class WeekCollectionViewCell: UICollectionViewCell {
             }
             return height
         }
-    
+        
     }
     
 }
 
 
-class BarChartCellWrapper3: UIView {
+class BarChartCellWrapper2: UIView {
     private var hostingController: UIHostingController<BarChartCell>?
     
     init(value: Double, index: Int = 0, width: Float, numberOfDataPoints: Int, accentColor: Color, touchLocation: Binding<CGFloat>) {
@@ -174,6 +134,7 @@ class BarChartCellWrapper3: UIView {
         let barChartCell = BarChartCell(value: value, index: index, width: width, numberOfDataPoints: numberOfDataPoints, accentColor: accentColor, touchLocation: touchLocation)
         let hostingController = UIHostingController(rootView: barChartCell)
         self.hostingController = hostingController
+        hostingController.view.backgroundColor = UIColor(red: 0.988, green: 0.988, blue: 0.992, alpha: 1)
         addSubview(hostingController.view)
         
         hostingController.view.translatesAutoresizingMaskIntoConstraints = false
@@ -186,7 +147,7 @@ class BarChartCellWrapper3: UIView {
     }
 }
 
-public struct BarChartCell3: View {
+public struct BarChartCell2: View {
     public var value: Double
     public var index: Int = 0
     public var width: Float
@@ -214,9 +175,9 @@ public struct BarChartCell3: View {
                 .fill(accentColor)
         }
         .frame(width: CGFloat(self.cellWidth))
-        .scaleEffect(CGSize(width: 1, height: self.scaleValue), anchor: .bottom)
+        .scaleEffect(CGSize(width: 15, height: self.scaleValue), anchor: .bottom)
         .onAppear {
-            withAnimation(Animation.spring().delay(self.touchLocation < 0 ?  Double(self.index) * 0.02 : 0)) { // 애니메이션 적용
+            withAnimation(Animation.spring().delay(self.touchLocation < 0 ?  Double(self.index) * 0.02 : 0)) {
                 self.scaleValue = self.value
             }
         }
