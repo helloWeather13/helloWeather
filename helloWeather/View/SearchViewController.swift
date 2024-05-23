@@ -67,6 +67,7 @@ class SearchViewController: UIViewController {
     }
 
     @objc func cancelButtonTap() {
+        (self.navigationController?.parent as? MainViewController)?.scrollView.isScrollEnabled = true
         navigationController?.popViewController(animated: false)
     }
     func configureEmptyView(){

@@ -13,7 +13,6 @@ class MainViewController: UIViewController {
     var scrollView: UIScrollView!
     
     var firstVC: UINavigationController!
-    var secondVC: UINavigationController!
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -38,7 +37,7 @@ class MainViewController: UIViewController {
         }
         
         firstVC = UINavigationController(rootViewController: HomeViewController())
-        secondVC = UINavigationController(rootViewController: TabViewController2())
+        let secondVC = TabViewController2()
         
         addChild(firstVC)
         addChild(secondVC)
