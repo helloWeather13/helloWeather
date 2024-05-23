@@ -66,7 +66,7 @@ class TempListViewController: UIViewController {
         
         let emptyView : UIView = {
             let view = UIView()
-            view.backgroundColor = UIColor(red: 0.988, green: 0.988, blue: 0.992, alpha: 1)
+            view.backgroundColor = .clear
             return view
         }()
         
@@ -77,7 +77,7 @@ class TempListViewController: UIViewController {
         
         let titleLabel: UILabel = {
             let label = UILabel()
-            label.text = "경기 광명시 철산동"
+            label.text = "나의 관심 지역"
             label.font = UIFont(name: "Pretendard-SemiBold", size: 18)
             return label
         }()
@@ -88,6 +88,7 @@ class TempListViewController: UIViewController {
             $0.centerY.equalToSuperview().offset(5)
         }
         self.navigationItem.titleView = emptyView
+        self.navigationController?.navigationBar.isTranslucent = false
         let searchButton = UIBarButtonItem(image: UIImage(named: "search-0"), style: .plain, target: self, action: #selector(searchButtonTapped))
         searchButton.tintColor = .black
         navigationItem.rightBarButtonItem = searchButton
