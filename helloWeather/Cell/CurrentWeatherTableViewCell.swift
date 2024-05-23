@@ -73,15 +73,15 @@ class CurrentWeatherTableViewCell: UITableViewCell {
         conditionLabel.sizeToFit()
         let todayTemp = weatherAPIModel.current?.feelslikeC ?? 0
         temperatureLabel.text = String(Int(weatherAPIModel.current?.feelslikeC ?? 0)) + "°"
-        temperatureLabel.font = .boldSystemFont(ofSize: 42)
+        temperatureLabel.font = UIFont(name: "GmarketSansTTFBold", size: 42)
         temperatureLabel.sizeToFit()
 //        weatherImage.image = UIImage(named: "cloud")
-        minMaxTempLabel.text = String(Int(weatherAPIModel.forecast.forecastday[0].day.maxtempC)) + "°" + "/ " + String(Int(weatherAPIModel.forecast.forecastday[0].day.mintempC)) + "°"
+        minMaxTempLabel.text = String(Int(weatherAPIModel.forecast.forecastday[0].day.maxtempC)) + "°" + "/" + String(Int(weatherAPIModel.forecast.forecastday[0].day.mintempC)) + "°"
         minMaxTempLabel.textColor = .secondaryLabel
         minMaxTempLabel.font = .systemFont(ofSize: 12)
         minMaxTempLabel.sizeToFit()
         alarmImageView.image = UIImage.bookmarkDefault
-        currentLocationImageView.image = UIImage.location
+        currentLocationImageView.image = UIImage.navigation
         setupWeatherImage()
         
         let yesterdayTemp = historyAPIModel.forecast.forecastday[0].day.avgtempC

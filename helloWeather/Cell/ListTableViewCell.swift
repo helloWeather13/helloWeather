@@ -161,7 +161,7 @@ class ListTableViewCell: UITableViewCell {
         conditionLabel.font = .systemFont(ofSize: 13)
         conditionLabel.sizeToFit()
         temperatureLabel.text = String(Int(weatherAPIModel.current?.feelslikeC ?? 0)) + "°"
-        temperatureLabel.font = .boldSystemFont(ofSize: 42)
+        temperatureLabel.font = UIFont(name: "GmarketSansTTFBold", size: 42)
         temperatureLabel.sizeToFit()
         weatherImage.image = UIImage(named: "rainy")
         weatherImage.contentMode = .scaleAspectFit

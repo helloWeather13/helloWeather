@@ -17,6 +17,7 @@ class TabViewController: RAMAnimatedTabBarController  {
         super.viewDidLoad()
         configure()
         NotificationCenter.default.addObserver(self, selector: #selector(switchToMainTab), name: NSNotification.Name("SwitchTabNotification"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(switchToMainTab), name: NSNotification.Name("SwitchTabNotificationCurrent"), object: nil)
         //        deleteRecentSearch()
     }
     

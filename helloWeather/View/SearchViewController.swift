@@ -12,7 +12,7 @@ import SnapKit
 import MapKit
 
 protocol TransferDataToMainDelegate {
-    func searchDidTouched(searchModel : SearchModel)
+    func searchDidTouched(searchModel : SearchModel, isCurrent: Bool)
 }
 class SearchViewController: UIViewController {
     var viewModel = SearchViewModel()
@@ -249,10 +249,10 @@ extension SearchViewController : UITableViewDelegate {
         guard let item = self.viewModel.dataSource?.itemIdentifier(for: indexPath) else { return }
         switch item {
         case.recentSearch(let recentSearch):
-            self.delegate?.searchDidTouched(searchModel: recentSearch)
+            self.delegate?.searchDidTouched(searchModel: recentSearch, isCurrent: false)
             navigationController?.popViewController(animated: false)
         case .relatedSearch(let relatedSearch):
-            self.delegate?.searchDidTouched(searchModel: relatedSearch)
+            self.delegate?.searchDidTouched(searchModel: relatedSearch, isCurrent: false)
             self.searchBar.resignFirstResponder()
             self.viewModel.appendRecentSearch(data: relatedSearch)
             navigationController?.popViewController(animated: false)

@@ -23,6 +23,7 @@ class TempListViewController: UIViewController {
         tableViewConfigure()
         configureAlert()
         configurerefreshControl()
+        setupNavbar()
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -36,6 +37,27 @@ class TempListViewController: UIViewController {
         viewModel.bookMarkModel = []
         self.viewModel.loadBookMark()
         self.viewModel.applySnapshot()
+    }
+    
+    func setupNavbar(){
+        let titleLabel: UILabel = {
+            let label = UILabel()
+            label.text = "나의 관심 지역"
+            label.font = UIFont(name: "Pretendard-SemiBold", size: 18)
+            return label
+        }()
+        titleLabel.sizeToFit()
+        self.navigationItem.titleView = titleLabel
+        let searchButton = UIBarButtonItem(image: UIImage(named: "search-0"), style: .plain, target: self, action: #selector(searchButtonTapped))
+        searchButton.tintColor = .black
+        navigationItem.rightBarButtonItem = searchButton
+    }
+    
+    @objc func searchButtonTapped() {
+        let searchVC = SearchViewController()
+        searchVC.delegate = HomeViewController()
+        self.navigationController?.pushViewController(searchVC, animated: false)
+        (self.navigationController?.parent as? MainViewController)?.scrollView.isScrollEnabled = false
     }
     
     func tableViewConfigure(){
@@ -215,7 +237,7 @@ extension TempListViewController: UITableViewDelegate {
                         }
                     }
                 }
-                NotificationCenter.default.post(name: NSNotification.Name("SwitchTabNotification"), object: currentSearchModel, userInfo: nil)
+                NotificationCenter.default.post(name: NSNotification.Name("SwitchTabNotificationCurrent"), object: currentSearchModel, userInfo: nil)
             }
         case .listWeather(let searchModel):
             // 0.2초의 딜레이 후에 탭바 전환
