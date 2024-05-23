@@ -11,6 +11,10 @@ import RxSwift
 import RxCocoa
 import SkeletonView
 
+
+protocol alarmDelegate {
+    func alarmDidTouched()
+}
 class ListTableViewCell: UITableViewCell {
     
     static var identifier = "ListTableViewCell"
@@ -27,6 +31,9 @@ class ListTableViewCell: UITableViewCell {
     var disposeBag = DisposeBag()
     var isAlarm = false
     var isBeingDragged = false
+    var currentSearchModel : SearchModel?
+    var delegete : alarmDelegate?
+    
     //    var weatherAPIModel : WeatherAPIModel?
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -49,7 +56,7 @@ class ListTableViewCell: UITableViewCell {
     }
     override func layoutSubviews() {
         super.layoutSubviews()
-
+        
         contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 0, left: 0, bottom: 16, right: 0))
         contentView.layer.cornerRadius = 15
         contentView.clipsToBounds = true
@@ -69,23 +76,24 @@ class ListTableViewCell: UITableViewCell {
         
         isBeingDragged = true
     }
-
+    
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesEnded(touches, with: event)
         
         isBeingDragged = false
     }
-
+    
     
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesCancelled(touches, with: event)
         
         isBeingDragged = false
     }
-
+    
     
     func configure(searchModel: SearchModel){
         self.makeConstraints()
+        self.currentSearchModel = searchModel
         WebServiceManager.shared.getForecastWeather(searchModel: searchModel, completion: { data in
             self.configureUI(weatherAPIModel: data, searchModel: searchModel)
         })
@@ -127,6 +135,7 @@ class ListTableViewCell: UITableViewCell {
             let alarmImageYellow = UIImageView()
             alarmImageYellow.image = .popupNotification1
             isAlarm = false
+            saveCurrentSearchModel(isAlarm: isAlarm)
             viewController.showCustomAlert(image: alarmImageYellow.image!, message: "비소식 알림을 껐어요.")
         }
         else {
@@ -134,8 +143,33 @@ class ListTableViewCell: UITableViewCell {
             let alarmImageYellow = UIImageView()
             alarmImageYellow.image = .popupNotification
             isAlarm = true
+            saveCurrentSearchModel(isAlarm: isAlarm)
             viewController.showCustomAlert(image: alarmImageYellow.image!, message: "비소식 1시간 전에 알림을 울려요.")
         }
+        self.delegete?.alarmDidTouched()
+    }
+    
+    func saveCurrentSearchModel(isAlarm : Bool){
+        if let savedData = UserDefaults.standard.object(forKey: "bookMark") as? Data {
+            let decoder = JSONDecoder()
+            if let savedObject = try? decoder.decode([SearchModel].self, from: savedData) {
+                if let currentSearchModel {
+                    var tempBookMark = savedObject
+                    if let temp = tempBookMark.firstIndex(where: {
+                        $0.fullAddress == currentSearchModel.fullAddress
+                    }){
+                        tempBookMark[temp].notification = isAlarm
+                        let encoder = JSONEncoder()
+                        if let encoded = try? encoder.encode(tempBookMark){
+                            UserDefaults.standard.setValue(encoded, forKey: "bookMark")
+                        }
+                    }
+                }
+            }
+        }
+        
+        
+        
     }
     
     func configureUI(weatherAPIModel : WeatherAPIModel, searchModel : SearchModel) {
@@ -146,7 +180,7 @@ class ListTableViewCell: UITableViewCell {
         let swipeGestureRight = UISwipeGestureRecognizer(target: self, action: #selector(didSwipeCellRight))
         swipeGestureRight.direction = .right
         self.addGestureRecognizer(swipeGestureRight)
-
+        
         viewContainer.layer.cornerRadius = 15
         viewContainer.clipsToBounds = true
         viewContainer.backgroundColor = .white
@@ -156,7 +190,7 @@ class ListTableViewCell: UITableViewCell {
         cityLabel.text = searchModel.city + ","
         cityLabel.font = .boldSystemFont(ofSize: 13)
         cityLabel.sizeToFit()
-//        conditionLabel.text = weatherAPIModel.current?.condition.text
+        //        conditionLabel.text = weatherAPIModel.current?.condition.text
         conditionLabel.text = weatherAPIModel.current?.condition.change()
         conditionLabel.font = .systemFont(ofSize: 13)
         conditionLabel.sizeToFit()
@@ -230,7 +264,7 @@ class ListTableViewCell: UITableViewCell {
             $0.bottom.top.leading.equalToSuperview()
             $0.trailing.equalToSuperview()
         }
-
+        
         cityLabel.snp.makeConstraints{
             $0.leading.equalToSuperview().offset(16)
             $0.top.equalTo(viewContainer).offset(16)
@@ -268,7 +302,7 @@ class ListTableViewCell: UITableViewCell {
             $0.centerX.centerY.equalToSuperview()
             $0.width.height.equalTo(24)
         }
-       
+        
     }
 }
 

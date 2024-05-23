@@ -15,9 +15,6 @@ class SearchViewModel {
     var searchCompleter: MKLocalSearchCompleter?
     var searchRegion: MKCoordinateRegion = MKCoordinateRegion(MKMapRect.world)
     var completerResults: [MKLocalSearchCompletion]?
-    
-
-    
     var state : SearchState = .beforeSearch
     var relatedSearch : [SearchModel] = []
     var recentSearch : [SearchModel] = []

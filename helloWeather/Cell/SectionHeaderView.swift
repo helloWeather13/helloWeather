@@ -22,6 +22,7 @@ class SectionHeaderView : UITableViewHeaderFooterView{
     }
 
     func configure(section: Int, state: SearchState){ 
+        self.contentView.backgroundColor = UIColor(red: 0.988, green: 0.988, blue: 0.992, alpha: 1)
         [button, titleLabel].forEach{
             contentView.addSubview($0)
         }
@@ -37,6 +38,7 @@ class SectionHeaderView : UITableViewHeaderFooterView{
             button.titleLabel?.font = UIFont(name: "Pretendard-SemiBold", size: 13)
             button.setTitleColor(.secondaryLabel, for: .normal)
             button.tintColor = .systemGray
+            button.backgroundColor = UIColor(red: 0.988, green: 0.988, blue: 0.992, alpha: 1)
             button.snp.makeConstraints{
                 $0.centerY.equalTo(titleLabel)
                 $0.trailing.equalToSuperview().offset(-10)

@@ -422,11 +422,13 @@ class HomeViewController: UIViewController {
 }
 
 extension HomeViewController : TransferDataToMainDelegate {
-    func searchDidTouched(searchModel: SearchModel, isCurrent: Bool) {
-        self.homeViewModel.isCurrent = isCurrent
-        self.homeViewModel.currentSearchModel = searchModel
-        (self.navigationController?.parent as? MainViewController)?.scrollView.isScrollEnabled = true
-        createBackButton()
+    func searchDidTouched(searchModel: SearchModel, isCurrent: Bool, isMain: Bool) {
+        if isMain{
+            self.homeViewModel.isCurrent = isCurrent
+            self.homeViewModel.currentSearchModel = searchModel
+            (self.navigationController?.parent as? MainViewController)?.scrollView.isScrollEnabled = true
+            createBackButton()
+        }
     }
     
     @objc func backButtonTap(){
