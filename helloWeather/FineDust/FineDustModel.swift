@@ -1,9 +1,4 @@
-//
-//  FineDustModel.swift
-//  helloWeather
-//
-//  Created by 김태담 on 5/14/24.
-//
+
 
 import Foundation
 import SwiftUI
@@ -13,8 +8,10 @@ import Charts
 struct LineChartView: View {
     
     let now = Date()
-    var local = "서울시 강남구 역삼동"
+    //var local = "서울시 강남구 역삼동"
     var titleFontSize = 19
+    let homeViewModel = HomeViewModel()
+
     
     @State private var startPosition: CGPoint = .zero
     @State private var scrollOffset: CGFloat = 0.0
@@ -83,7 +80,7 @@ struct LineChartView: View {
             HStack{
                 
                 Text("시간대별 미세먼지")
-                    .font(.system(size: CGFloat(titleFontSize), weight: .medium))
+                    .font(.custom("Pretendard-Regular", size: CGFloat(titleFontSize)))
                 //.font(.custom("Pretendard", size: titleFontSize))
                     .padding(.leading, 22)
                     .padding(.top, 26)
@@ -95,9 +92,11 @@ struct LineChartView: View {
                 // 미세먼지 chat
                 HStack{
                     Text("미세먼지")
+                        .font(.custom("Pretendard-Regular", size: 13))
                         .padding(.leading, 38)
                     Spacer()
                     Text("초미세먼지")
+                        .font(.custom("Pretendard-Regular", size: 13))
                         .padding(.trailing, 38)
                 }
                 HStack{
@@ -124,13 +123,13 @@ struct LineChartView: View {
                                 }
                             }
                         }
-                        .padding(.leading, 33)
+                        .padding(.leading, 44)
                     
                     Spacer()
                     
                     ChatView2(viewModel: fineListViewModel)
                         .scaleEffect(isAnimating2 ? 1.4 : 1.0, anchor: .trailing)
-                        .padding(.trailing, 33)
+                        .padding(.trailing, 44)
                 }
             }.padding(.bottom, 50)
             ZStack{
@@ -175,35 +174,16 @@ struct LineChartView: View {
                 .scrollDisabled(true)
             }
             .padding(.bottom, 45)
-            Rectangle()
-                .frame(width: 400, height: 1)
-                .foregroundColor(Color.gray)
-                .opacity(0.1)
-                .shadow(color: Color.gray, radius: 12, x: 0, y: 6)
-                .blendMode(.multiply)
-                .padding(.top, 5)
+          
             FineListView(viewModel: fineListViewModel)
                 //.opacity(0.5)
                 //.border(color: .gray, width: 1, opacity: opacity(0.5))
                 //.padding(.to)
                 .frame(height : 200)
-            Rectangle()
-                .frame(width: 400, height: 1)
-                .foregroundColor(Color.gray)
-                .opacity(0.1)
-                .shadow(color: Color.gray, radius: 12, x: 0, y: 6)
-                .blendMode(.multiply)
-                .padding(.top, 5)
+        
             ValueList(viewModel: fineListViewModel)
             Spacer()
         }.frame(height: 1100)
-    }
-}
-
-
-#Preview {
-    VStack {
-        LineChartView()
     }
 }
 

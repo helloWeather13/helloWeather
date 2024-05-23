@@ -9,7 +9,8 @@ import UIKit
 import SnapKit
 
 class MainViewController: UIViewController {
-    
+    let homeViewModel = HomeViewModel()
+      
     var scrollView: UIScrollView!
     
     var firstVC: UINavigationController!
@@ -36,7 +37,7 @@ class MainViewController: UIViewController {
             make.edges.equalTo(view.safeAreaLayoutGuide)
         }
         
-        firstVC = UINavigationController(rootViewController: HomeViewController())
+        firstVC = UINavigationController(rootViewController: HomeViewController(homeViewModel: homeViewModel))
         let secondVC = TabViewController2()
         
         addChild(firstVC)

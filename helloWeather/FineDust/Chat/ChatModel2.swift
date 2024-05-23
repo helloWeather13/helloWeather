@@ -19,6 +19,7 @@ struct ChatView2: View {
             VStack(alignment: .leading) {
                 Text(viewModel.chat2)
                     .padding()
+                    .font(.custom("Pretendard-Regular", size: 12))
                     .background(viewModel.chat2Color)
                     .foregroundColor(.white)
                     .cornerRadius(10)

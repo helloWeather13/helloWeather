@@ -71,9 +71,12 @@ public struct ChartView: View {
         GeometryReader{ geometry in
             VStack(alignment: .leading, spacing: 8) {
                 ZStack{
-//                    Text("\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |")
-//                        .foregroundColor(Color.black)
-//                        .padding(.leading, 20)
+                    Text("\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |")
+                        .foregroundColor(Color.black)
+                        .padding(.leading, 50)
+                    Text("\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |\n |")
+                        .foregroundColor(Color.black)
+                        .padding(.leading, 730)
                     GeometryReader{ reader in
                         //배경색까
                         Rectangle()

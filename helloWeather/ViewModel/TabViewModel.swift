@@ -6,6 +6,10 @@ class TabViewModel{
     var firstTab = RAMAnimatedTabBarItem()
     var secondTab = RAMAnimatedTabBarItem()
     
+    let homeViewModel = HomeViewModel()
+      
+      
+    
     var tabs : [TabModel] = [
         TabModel(title: "메인", image: UIImage(named: "tabBar01-0")!,selectedImage:UIImage(named: "tabBar01-1")!, vc: MainViewController()),
         TabModel(title: "알람", image: UIImage(named: "tabBar02-0")!,selectedImage: UIImage(named: "tabBar02-1")!, vc: TempListViewController()),

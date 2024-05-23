@@ -27,11 +27,10 @@ enum Facetype: String {
     
     var color : Color{
         switch self {
-        case .happy: return Color.blue
-        case .smile: return Color.green
-        case .umm: return Color.orange
-        case .bad: return Color.red
-        }
+        case .happy: return Color(red: 85 / 255, green: 196 / 255, blue: 228 / 255, opacity: 1.0)
+             case .smile: return Color(red: 0.373, green: 0.784, blue: 0.412, opacity: 1.0)
+             case .umm: return Color(red: 0.906, green: 0.271, blue: 0.31, opacity: 1.0)
+             case .bad: return Color(red: 0.906, green: 0.271, blue: 0.31, opacity: 1.0)        }
     }
     
     var asValuetype: Valuetype {
@@ -48,10 +47,10 @@ enum Valuetype: String {
     
     var color : Color{
         switch self {
-        case .happy: return .blue
-        case .smile: return .green
-        case .umm: return .orange
-        case .bad: return .red
+        case .happy: return Color(red: 85 / 255, green: 196 / 255, blue: 228 / 255, opacity: 1.0)
+             case .smile: return Color(red: 0.373, green: 0.784, blue: 0.412, opacity: 1.0)
+             case .umm: return Color(red: 0.906, green: 0.271, blue: 0.31, opacity: 1.0)
+             case .bad: return Color(red: 0.906, green: 0.271, blue: 0.31, opacity: 1.0)
         }
     }
 }

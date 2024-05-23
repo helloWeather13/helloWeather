@@ -5,7 +5,15 @@ import Lottie
 
 class HomeViewController: UIViewController {
     
-    let homeViewModel = HomeViewModel()
+    let homeViewModel: HomeViewModel
+      
+      init(homeViewModel: HomeViewModel) {
+          self.homeViewModel = homeViewModel
+          super.init(nibName: nil, bundle: nil)
+      }
+      required init?(coder: NSCoder) {
+          fatalError("init(coder:) has not been implemented")
+      }
     
     var bookmarkButton: UIButton = {
         let button = UIButton()

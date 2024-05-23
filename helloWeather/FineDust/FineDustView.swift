@@ -4,15 +4,10 @@ import Charts
 
 struct ScrollChartView: View {
 
-    let homeViewModel: HomeViewModel
-    
-    init(homeViewModel: HomeViewModel) {
-        self.homeViewModel = homeViewModel
-    }
 
     var body: some View {
         ScrollView {
-            LineChartView(homeViewModel: homeViewModel)
+            LineChartView()
                 .frame(height: 1100)
         }
     }
