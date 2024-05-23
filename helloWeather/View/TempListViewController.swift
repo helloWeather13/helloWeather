@@ -39,6 +39,15 @@ class TempListViewController: UIViewController {
         self.viewModel.applySnapshot()
     }
     
+    override func setupAlertViewConstraints(_ customAlertView: UIView, image: UIImage, messageLabel: UILabel) {
+        customAlertView.snp.makeConstraints { make in
+          make.bottom.equalTo(view.snp.bottom).inset(91)
+          make.centerX.equalToSuperview()
+          make.height.equalTo(max(image.size.height, 40))
+          make.width.equalTo(image.size.width + messageLabel.intrinsicContentSize.width + 30)
+        }
+      }
+    
     func setupNavbar(){
         let titleLabel: UILabel = {
             let label = UILabel()
@@ -345,7 +354,7 @@ extension TempListViewController: UITableViewDropDelegate {
 }
 
 extension UIViewController {
-    func showCustomAlert(image: UIImage, message: String) {
+    @objc func showCustomAlert(image: UIImage, message: String) {
         
         if let existingAlertView = view.subviews.first(where: { $0.tag == 999 }) {
             existingAlertView.removeFromSuperview()
@@ -387,12 +396,13 @@ extension UIViewController {
             make.trailing.equalToSuperview().inset(10)
             make.centerY.equalToSuperview()
         }
-        customAlertView.snp.makeConstraints { make in
-            make.bottom.equalTo(self.view.snp.bottom).inset(91)
-            make.centerX.equalToSuperview()
-            make.height.equalTo(max(image.size.height, 40))
-            make.width.equalTo(image.size.width + messageLabel.intrinsicContentSize.width + 30)
-        }
+//        customAlertView.snp.makeConstraints { make in
+//            make.bottom.equalTo(self.view.snp.bottom).inset(91)
+//            make.centerX.equalToSuperview()
+//            make.height.equalTo(max(image.size.height, 40))
+//            make.width.equalTo(image.size.width + messageLabel.intrinsicContentSize.width + 30)
+//        }
+        setupAlertViewConstraints(customAlertView, image: image, messageLabel: messageLabel)
         // 알럿 크기를 조절합니다.
         customAlertView.transform = CGAffineTransform(scaleX: 0.98, y: 0.98)
         
@@ -405,6 +415,15 @@ extension UIViewController {
             }
         }
     }
+    
+    @objc func setupAlertViewConstraints(_ customAlertView: UIView, image: UIImage, messageLabel: UILabel) {
+        customAlertView.snp.makeConstraints { make in
+          make.bottom.equalTo(view.snp.bottom)
+          make.centerX.equalToSuperview()
+          make.height.equalTo(max(image.size.height, 40))
+          make.width.equalTo(image.size.width + messageLabel.intrinsicContentSize.width + 30)
+        }
+      }
 }
 
 

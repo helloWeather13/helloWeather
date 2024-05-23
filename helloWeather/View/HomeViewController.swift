@@ -135,7 +135,14 @@ class HomeViewController: UIViewController {
         }
         
     }
-    
+    override func setupAlertViewConstraints(_ customAlertView: UIView, image: UIImage, messageLabel: UILabel) {
+          customAlertView.snp.makeConstraints { make in
+              make.bottom.equalTo(view.snp.bottom).inset(5)
+            make.centerX.equalToSuperview()
+            make.height.equalTo(max(image.size.height, 40))
+            make.width.equalTo(image.size.width + messageLabel.intrinsicContentSize.width + 30)
+          }
+        }
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
     }
