@@ -149,7 +149,7 @@ class ListTableViewCell: UITableViewCell {
 
         viewContainer.layer.cornerRadius = 15
         viewContainer.clipsToBounds = true
-        viewContainer.backgroundColor = UIColor(red: 0.93, green: 0.93, blue: 0.93, alpha: 1.00)
+        viewContainer.backgroundColor = .white
         deleteButton.setImage(UIImage(named: "trash"), for: .normal)
         deleteButton.isHidden = true
         deleteView.backgroundColor = .myred

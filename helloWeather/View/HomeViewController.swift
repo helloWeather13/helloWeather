@@ -134,6 +134,7 @@ class HomeViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        self.homeViewModel.loadNotification()
         if let existingAlertView = view.subviews.first(where: { $0.tag == 999 }) {
             existingAlertView.removeFromSuperview()
         }
