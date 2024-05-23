@@ -17,10 +17,11 @@ class TempListViewModel: NSObject, CLLocationManagerDelegate {
     
     override init() {
         super.init()
+        loadBookMark()
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
-        loadBookMark()
+        
         applySnapshot()
     }
     
@@ -29,15 +30,28 @@ class TempListViewModel: NSObject, CLLocationManagerDelegate {
             let decoder = JSONDecoder()
             if let savedObject = try? decoder.decode([SearchModel].self, from: savedData) {
                 self.bookMarkModel = savedObject
+
             }
         }
     }
-    
+    func isCurrentSearchModelMarked(){
+        if self.bookMarkModel.contains(where: {
+            $0.fullAddress == self.currentWeatherModel.fullAddress
+        }){
+            self.currentWeatherModel.currentLocationBookMark = true
+        }else{
+            self.currentWeatherModel.currentLocationBookMark = false
+        }
+    }
     func deleteBookMark() {
         guard let index = bookMarkModel.firstIndex(where: {
             $0.fullAddress == willDeleteSearchModel?.fullAddress
         }) else { return }
         bookMarkModel.remove(at: index)
+        
+        if willDeleteSearchModel?.fullAddress == currentWeatherModel.fullAddress {
+            currentWeatherModel.currentLocationBookMark = false
+        }
         updateBookMark()
         self.applySnapshot()
     }
@@ -90,12 +104,19 @@ class TempListViewModel: NSObject, CLLocationManagerDelegate {
                 placemark.subLocality
             ].compactMap { $0 }.joined(separator: " ")
             
+            var temp : Bool = false
+                if bookMarkModel.contains(where: {
+                    $0.fullAddress == address
+                }){
+                    temp = true
+                }
             self.currentWeatherModel = SearchModel(
                 keyWord: "",
                 fullAddress: address,
                 lat: location.coordinate.latitude,
                 lon: location.coordinate.longitude,
-                city: address
+                city: address,
+                currentLocationBookMark: temp
             )
             
             self.applySnapshot()

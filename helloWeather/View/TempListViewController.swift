@@ -40,6 +40,8 @@ class TempListViewController: UIViewController {
         super.viewDidAppear(animated)
         viewModel.bookMarkModel = []
         self.viewModel.loadBookMark()
+        viewModel.isCurrentSearchModelMarked()
+        
         self.viewModel.applySnapshot()
     }
     
@@ -457,7 +459,8 @@ extension TempListViewController : alarmDelegate {
 }
 
 extension TempListViewController: CurrentBookMarkDelegate {
-    func bookMarkTouched() {
+    func bookMarkTouched(isMarked : Bool) {
+        self.viewModel.currentWeatherModel.currentLocationBookMark = isMarked
         self.viewModel.loadBookMark()
         self.viewModel.applySnapshot()
     }

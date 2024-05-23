@@ -10,7 +10,7 @@ import SnapKit
 import RxSwift
 
 protocol CurrentBookMarkDelegate{
-    func bookMarkTouched()
+    func bookMarkTouched(isMarked: Bool)
 }
 
 class CurrentWeatherTableViewCell: UITableViewCell {
@@ -31,7 +31,6 @@ class CurrentWeatherTableViewCell: UITableViewCell {
     weak var tempListViewController: UIViewController? 
     var currentLocationSearchModel : SearchModel?
     var delegate : CurrentBookMarkDelegate?
-    
     //    var weatherAPIModel : WeatherAPIModel?
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -56,6 +55,14 @@ class CurrentWeatherTableViewCell: UITableViewCell {
     }
     
     func configure(searchModel: SearchModel){
+        var currentBookMark = loadCurrentBookMark()
+        if currentBookMark.contains(where: {
+            $0.fullAddress == searchModel.fullAddress
+        }){
+            isMarked = true
+        }else{
+            isMarked = false
+        }
         currentLocationSearchModel = searchModel
         WebServiceManager.shared.getForecastWeather(searchModel: searchModel, completion: { foreCastdata in
             WebServiceManager.shared.getHistoryWeather(searchModel: searchModel, completion: { historyData in
@@ -292,7 +299,7 @@ class CurrentWeatherTableViewCell: UITableViewCell {
                 UserDefaults.standard.setValue(encoded, forKey: "bookMark")
             }
         }
-        self.delegate?.bookMarkTouched()
+        self.delegate?.bookMarkTouched(isMarked: isMarked)
     }
     func setupBookmarkImageView() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(bookmarkImageViewTapped))

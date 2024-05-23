@@ -7,5 +7,6 @@ struct SearchModel : Hashable, Codable {
     var lon: Double
     var city: String
     var notification : Bool = false
+    var currentLocationBookMark : Bool = false
 }
 

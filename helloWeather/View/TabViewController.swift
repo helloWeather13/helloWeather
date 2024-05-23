@@ -22,6 +22,7 @@ class TabViewController: RAMAnimatedTabBarController  {
     }
     
     func configure(){
+        
         self.setViewControllers(tabViewModel.navs, animated: true)
         
         guard let items = tabBar.items as? [RAMAnimatedTabBarItem] else { return }
@@ -45,7 +46,7 @@ class TabViewController: RAMAnimatedTabBarController  {
     }
     
     func deleteRecentSearch(){
-        UserDefaults.standard.removeObject(forKey: "recentSearch")
+        UserDefaults.standard.removeObject(forKey: "bookMark")
     }
     
 }
