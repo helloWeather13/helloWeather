@@ -15,7 +15,7 @@ class TempListViewController: UIViewController {
     var tableView: UITableView!
     var viewModel = TempListViewModel()
     var disposedBag = DisposeBag()
-    
+    var homeViewModel = HomeViewModel()
     let refreshControl : UIRefreshControl = UIRefreshControl()
     
     override func viewDidLoad() {
@@ -27,7 +27,6 @@ class TempListViewController: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.viewModel.applySnapshot()
         if let existingAlertView = view.subviews.first(where: { $0.tag == 999 }) {
             existingAlertView.removeFromSuperview()
         }
@@ -101,6 +100,7 @@ class TempListViewController: UIViewController {
                     return UITableViewCell()
                 }
                 cell.configure(searchModel: currentWeather)
+                cell.tempListViewController = self
                 cell.selectionStyle = .none
                 return cell
             case .space:

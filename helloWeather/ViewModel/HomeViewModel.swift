@@ -1,10 +1,14 @@
 import UIKit
 import CoreLocation
+import RxSwift
+import RxCocoa
 
 class HomeViewModel: NSObject, CLLocationManagerDelegate {
     
     let webServiceManager = WebServiceManager.shared
     let userLocationManager = CLLocationManager()
+    let notificationStatusChanged = BehaviorRelay<Bool>(value: false)
+
     var currentSearchModel : SearchModel? {
         didSet{
             if currentSearchModel?.city != "" || currentSearchModel?.fullAddress != ""{
@@ -21,6 +25,7 @@ class HomeViewModel: NSObject, CLLocationManagerDelegate {
     var isNotified = false {
         didSet {
             notfiedDiDChanged(isNotified)
+            notificationStatusChanged.accept(isNotified)
         }
     }
     var isNotification = false
@@ -177,7 +182,7 @@ class HomeViewModel: NSObject, CLLocationManagerDelegate {
         case sunriseNum + sunTimeSplit * 7..<(sunriseNum + sunTimeSplit * 8):
             sunImage = UIImage(named: "SunRise09")!
         case sunriseNum + sunTimeSplit * 8..<(sunriseNum + sunTimeSplit * 9):
-            sunImage = UIImage(named: "SunRise010")!
+            sunImage = UIImage(named: "SunRise10")!
         default:
             sunImage = UIImage(named: "SunRise01")!
         }
@@ -363,15 +368,26 @@ class HomeViewModel: NSObject, CLLocationManagerDelegate {
         
     }
     
-    func changeNotiCurrentBookMark(){
-        self.isNotified = !isNotified
-        guard let index = bookMarkSearchModel.firstIndex(where: {
-            $0.fullAddress == currentSearchModel?.fullAddress
-        }) else {return}
-        bookMarkSearchModel[index].notification = isNotified
-        let encoder = JSONEncoder()
-        if let encoded = try? encoder.encode(bookMarkSearchModel){
-            UserDefaults.standard.setValue(encoded, forKey: "bookMark")
+//    func changeNotiCurrentBookMark(){
+//        self.isNotified = !isNotified
+//        guard let index = bookMarkSearchModel.firstIndex(where: {
+//            $0.fullAddress == currentSearchModel?.fullAddress
+//        }) else {return}
+//        bookMarkSearchModel[index].notification = isNotified
+//        let encoder = JSONEncoder()
+//        if let encoded = try? encoder.encode(bookMarkSearchModel){
+//            UserDefaults.standard.setValue(encoded, forKey: "bookMark")
+//        }
+//    }
+    func changeNotiCurrentBookMark() {
+            self.isNotified = !isNotified
+            guard let index = bookMarkSearchModel.firstIndex(where: {
+                $0.fullAddress == currentSearchModel?.fullAddress
+            }) else {return}
+            bookMarkSearchModel[index].notification = isNotified
+            let encoder = JSONEncoder()
+            if let encoded = try? encoder.encode(bookMarkSearchModel) {
+                UserDefaults.standard.setValue(encoded, forKey: "bookMark")
+            }
         }
-    }
 }

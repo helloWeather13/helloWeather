@@ -27,11 +27,13 @@ class ListTableViewCell: UITableViewCell {
     var disposeBag = DisposeBag()
     var isAlarm = false
     var isBeingDragged = false
-    //    var weatherAPIModel : WeatherAPIModel?
+    weak var homeViewModel: HomeViewModel?
+    var bookMarkModel : [SearchModel] = []
+    var searchModel : SearchModel?
+    
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
         setupAlarmImageView()
     }
     
@@ -90,6 +92,23 @@ class ListTableViewCell: UITableViewCell {
             self.configureUI(weatherAPIModel: data, searchModel: searchModel)
         })
     }
+//    func configure(searchModel: SearchModel, viewModel: HomeViewModel) {
+//            self.searchModel = searchModel
+//            self.homeViewModel = viewModel
+//            self.makeConstraints()
+//            
+//            WebServiceManager.shared.getForecastWeather(searchModel: searchModel, completion: { data in
+//                self.configureUI(weatherAPIModel: data, searchModel: searchModel)
+//            })
+//            
+//        homeViewModel?.notificationStatusChanged
+//                .asObservable()
+//                .subscribe(onNext: { [weak self] isNotified in
+//                    self?.isAlarm = isNotified
+//                    self?.alarmImageView.image = isNotified ? .alarm1 : .alarm0
+//                })
+//                .disposed(by: disposeBag)
+//        }
     
     @objc func didSwipeCellLeft(){
         UIView.animate(withDuration: 0.3) {
@@ -136,9 +155,31 @@ class ListTableViewCell: UITableViewCell {
             isAlarm = true
             viewController.showCustomAlert(image: alarmImageYellow.image!, message: "비소식 1시간 전에 알림을 울려요.")
         }
+       
     }
-    
+//    @objc func alarmImageViewTapped() {
+//        guard let viewController = tempListViewController as? HomeViewController else { return }
+//        let homeViewModel = viewController.homeViewModel
+//        
+//        if isAlarm {
+//            alarmImageView.image = .alarm0
+//            let alarmImageYellow = UIImageView()
+//            alarmImageYellow.image = .popupNotification1
+//            isAlarm = false
+//            viewController.showCustomAlert(image: alarmImageYellow.image!, message: "비소식 알림을 껐어요.")
+//            homeViewModel.changeNotiCurrentBookMark()
+//        } else {
+//            alarmImageView.image = .alarm1
+//            let alarmImageYellow = UIImageView()
+//            alarmImageYellow.image = .popupNotification
+//            isAlarm = true
+//            viewController.showCustomAlert(image: alarmImageYellow.image!, message: "비소식 1시간 전에 알림을 울려요.")
+//            homeViewModel.changeNotiCurrentBookMark()
+//        }
+//    }
+
     func configureUI(weatherAPIModel : WeatherAPIModel, searchModel : SearchModel) {
+        self.searchModel = searchModel
         let swipeGestureLeft = UISwipeGestureRecognizer(target: self, action: #selector(didSwipeCellLeft))
         swipeGestureLeft.direction = .left
         self.addGestureRecognizer(swipeGestureLeft)
@@ -283,43 +324,4 @@ extension Reactive where Base: ListTableViewCell {
 
 extension Reactive where Base: ListTableViewCell {
     var buttonTapped: ControlEvent<Void> { base.deleteButton.rx.tap }
-}
-
-class CustomAlertView: UIView {
-    private let imageView = UIImageView()
-    private let messageLabel = UILabel()
-    
-    init(image: UIImage, message: String) {
-        super.init(frame: .zero)
-        
-        // 이미지 뷰 설정
-        imageView.image = image
-        imageView.contentMode = .scaleAspectFit
-        addSubview(imageView)
-        
-        // 메시지 라벨 설정
-        messageLabel.text = message
-        messageLabel.textAlignment = .center
-        addSubview(messageLabel)
-        
-        // 오토레이아웃 설정
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        messageLabel.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            imageView.topAnchor.constraint(equalTo: self.topAnchor, constant: 20),
-            imageView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            imageView.widthAnchor.constraint(equalToConstant: 40),
-            imageView.heightAnchor.constraint(equalToConstant: 40),
-            
-            messageLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 10),
-            messageLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
-            messageLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
-            messageLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -20)
-        ])
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
 }
