@@ -144,3 +144,17 @@ TodayTimeCelsiusCollectionView, TomorrowTimeCelsiusCollectionView, TodayTimeWeat
 
 - **TodayTimeCelsiusCollectionView** </br>
 `func bindViewModel()` 내부에서 `subscribe(onNext:)`를 사용해 WeatherDetailViewModel의 Observable과 BehaviorSubject를 구독해 데이터를 수신할 수 있도록 했습니다.
+
+
+#### ListView
+---
+- **FrameWork** </br>
+UIKit, CoreLocation
+- **Library** </br>
+SnapKit, RxSwift, RxCocoa
+- **기능** </br>
+1. 홈 화면 <-> 북마크화면 간 북마크 기능 및 알람 기능 on/off 기능이 홈 화면과 동기화. on/off시 토스트 메세지가 일정 시간 유지된 후 사라짐!
+2. 북마크화면의 Cell을 누를 경우 해당 지역 날씨 페이지로 이동 가능 (현재 위치에 대한 날씨정보를 눌러도 현재위치의 날씨 정보를 가져와서 표시함)
+3. 홈 화면 좌측 상단 뒤로가기를 누를 경우 현재 위치에 대한 날씨 다시 보여줌 (현재위치 날씨 정보를 리로드합니다)
+4. 북마크화면 셀을 길게 눌러서 저장된 셀 간 Switching 가능 (드래그 하는 순간 UserDefaults에서 해당 내용을 삭제하고 맞는 순번에 다시 입력하는 방식으로 구현)
+5. 셀을 우측으로 밀어 나타난 삭제 버튼을 눌러 저장된 셀 삭제 가능 (UserDefaults 삭제)
