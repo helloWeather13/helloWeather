@@ -44,10 +44,76 @@
 - 정확한 주소 검색: 카카오 주소 검색 API를 사용하여 정확한 주소명과 좌표를 가져옵니다.
 - 연관 검색: 카카오 주소 검색 API를 사용하여 쿼리에 해당하는 주소명들을 가져옵니다. 
 - 최근 검색 기록: UserDefaults를 활용하여 최근 검색 기록을 저장하고, 사용자에게 표시합니다.
+- 
+#### FineDustView
+---
+- `@ObservedObject var data: ChartData: ChartData` 객체의 변화를 감시합니다.
+- `title, legend, style, darkModeStyle, valueSpecifier, legendSpecifier`: 차트를 커스터마이징하기 위한 속성들입니다.
+- `@Binding public var ...`: 다른 뷰와 상태를 공유하기 위한 바인딩입니다.
+- `@Environment(\.colorScheme) var colorScheme`: 현재 컬러 스킴(라이트/다크 모드)을 추적합니다.
+- `@State private var ...`: 내부 상태 속성입니다
 
+```swift
+public struct ChartView2: View {
+    @ObservedObject var data: ChartData
+    public var title: String?
+    public var legend: String?
+    public var style: ChartStyle2
+    public var darkModeStyle: ChartStyle2
+    public var valueSpecifier: String
+    public var legendSpecifier: String
+    @Binding public var move: CGFloat
+    @Binding public var widthmove: CGPoint
+    @Binding public var currentDataNumber: Double
+    @Binding public var dragLocation: CGPoint
+    @Binding public var colorline: Gradient
 
-
-
-
-
+    @Environment(\.colorScheme) var colorScheme: ColorScheme
+    @State private var showLegend = false
+    @State public var indicatorLocation: CGPoint = .zero
+    @State public var closestPoint: CGPoint = .zero
+    @State public var opacity: Double = 0
+    @State public var hideHorizontalLines: Bool = false
+```
+- 다양한 속성을 통해 차트를 커스터마이징할 수 있으며, 바인딩을 통해 다른 뷰와 상태를 공유합니다.
+- updateDragLocationY 함수는 사용자 상호작용에 따라 드래그 위치를 조정하고 표시되는 데이터를 업데이트합니다.
+```swift
+public var body: some View {
+    GeometryReader { geometry in
+        VStack(alignment: .leading, spacing: 8) {
+            ZStack {
+                GeometryReader { reader in
+                    MagnifierRect(currentNumber: self.$currentDataNumber, valueSpecifier: self.valueSpecifier)
+                        .opacity(self.opacity)
+                        .offset(x: self.dragLocation.x - geometry.frame(in: .local).size.width/2, y: 36)
+                    Rectangle()
+                        .foregroundColor(self.colorScheme == .dark ? self.darkModeStyle.backgroundColor : self.style.backgroundColor)
+                    if self.showLegend { /* legend view */ }
+                    Line3(data: self.data,
+                          frame: .constant(CGRect(x: 0, y: 0, width: reader.frame(in: .local).width - 30, height: reader.frame(in: .local).height + 25)),
+                          currentNumber: self.$currentDataNumber,
+                          touchLocation: self.$indicatorLocation,
+                          dragLocation: self.$dragLocation,
+                          showIndicator: self.$hideHorizontalLines,
+                          minDataValue: .constant(nil),
+                          maxDataValue: .constant(nil),
+                          showBackground: false,
+                          gradient: self.style.gradientColor,
+                          colorline: self.$colorline
+                    )
+                    .offset(x: 30, y: 0)
+                    .onAppear { self.showLegend = true }
+                    .onDisappear { self.showLegend = false }
+                    .onChange(of: dragLocation) { newLocation in
+                        self.updateDragLocationY(geometry: reader.frame(in: .local))
+                    }
+                }
+                .frame(width: geometry.frame(in: .local).size.width, height: 180)
+                .offset(x: 0, y: 40)
+            }
+            .frame(width: geometry.frame(in: .local).size.width, height: 240)
+        }
+    }
+}
+```
 
