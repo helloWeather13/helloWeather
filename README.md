@@ -117,3 +117,30 @@ public var body: some View {
 }
 ```
 
+#### WeatherDetailView
+---
+
+**클로저와 RxSwift 사용한 뷰모델과 컬렉션뷰 연결**
+API 호출을 담당하는 WebServiceManager에서 클로저를 사용해 비동기 작업을 처리하고 있는데, 이 작업 결과를 WeatherDetailViewModel에서 RXSwift를 활용해 사용했습니다.
+
+</br>
+
+- **RxSwift** </br>
+Observable과 Observer를 활용해 데이터를 전달하고 바인딩해주었습니다.
+Observable과 동시에 Observer의 역할을 수행하는 BehaviorSubject를 활용해 데이터를 전달하고 바인딩해주었습니다.
+- **클로저** </br>
+WebServiceManager에서 API 호출 시 클로저를 사용하여 비동기 작업의 결과를 처리하고, 이를 뷰모델의 함수에서 Observable로 변환했습니다.
+
+</br>
+
+- **WeatherDetailViewModel** </br>
+날씨 데이터를 가져오고 온도 단위를 변경하는 로직을 만들었습니다. </br>
+Observable.create로 Observable을 생성해 구독자(subscribe)에게 데이터를 전달해줄 수 있도록 했습니다. </br>
+BehaviorSubject를 생성해 구독자(subscribe)에게 데이터를 전달해줄 수 있도록 했습니다.
+
+- **WeatherDetailViewModel 사용 뷰** </br>
+날씨 상세 정보 데이터가 필요한 다양한 뷰에서 뷰모델을 바인딩해 사용해주었습니다. </br>
+TodayTimeCelsiusCollectionView, TomorrowTimeCelsiusCollectionView, TodayTimeWeatherCollectionView, TomorrowTimeWeatherCollectionView, WeekCollectionView, HumidityCollectionView
+
+- **TodayTimeCelsiusCollectionView** </br>
+`func bindViewModel()` 내부에서 `subscribe(onNext:)`를 사용해 WeatherDetailViewModel의 Observable과 BehaviorSubject를 구독해 데이터를 수신할 수 있도록 했습니다.
