@@ -120,7 +120,7 @@ public var body: some View {
 #### WeatherDetailView
 ---
 
-**클로저와 RxSwift 사용한 뷰모델과 컬렉션뷰 연결**
+**클로저와 RxSwift 사용한 뷰모델과 컬렉션뷰 연결**  </br>
 API 호출을 담당하는 WebServiceManager에서 클로저를 사용해 비동기 작업을 처리하고 있는데, 이 작업 결과를 WeatherDetailViewModel에서 RXSwift를 활용해 사용했습니다.
 
 </br>
