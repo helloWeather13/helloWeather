@@ -1,36 +1,50 @@
-//
-//  AppDelegate.swift
-//  helloWeather
-//
-//  Created by Sam.Lee on 5/13/24.
-//
-
 import UIKit
+import CoreLocation
+import WidgetKit
 
-@main
+@UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
+    var window: UIWindow?
+    var locationManager: CLLocationManager!
 
-
-
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+    func application(_ application: UIApplication,
+                     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        locationManager = CLLocationManager()
+        locationManager.delegate = self
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
         return true
     }
-
-    // MARK: UISceneSession Lifecycle
-
-    func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
-        // Called when a new scene session is being created.
-        // Use this method to select a configuration to create the new scene with.
-        return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
-    }
-
-    func application(_ application: UIApplication, didDiscardSceneSessions sceneSessions: Set<UISceneSession>) {
-        // Called when the user discards a scene session.
-        // If any sessions were discarded while the application was not running, this will be called shortly after application:didFinishLaunchingWithOptions.
-        // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
-    }
-
-
 }
 
+extension AppDelegate: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let location = locations.last else { return }
+        let lat = location.coordinate.latitude
+        let lon = location.coordinate.longitude
+
+        let geocoder = CLGeocoder()
+        geocoder.reverseGeocodeLocation(location) { placemarks, error in
+            if let placemark = placemarks?.first, error == nil {
+                var address = ""
+                
+                if let subLocality = placemark.subLocality {
+                    address = "\(subLocality)"
+                }else{
+                    if let subAdministrativeArea = placemark.subAdministrativeArea {
+                        address = "\(subAdministrativeArea) "
+                    }
+                }
+
+                let searchModel = SearchModel(keyWord: "", fullAddress: address, lat: lat, lon: lon, city: address)
+                let userDefaults = UserDefaults(suiteName: "group.com.seungwon.helloWeather")
+                userDefaults?.set(try? PropertyListEncoder().encode(searchModel), forKey: "currentSearchModel")
+                WidgetCenter.shared.reloadTimelines(ofKind: "HelloWeatherWidget")
+            }
+        }
+    }
+
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print("Failed to get user location: \(error.localizedDescription)")
+    }
+}

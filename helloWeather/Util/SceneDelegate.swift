@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -14,9 +15,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let  windowScene = (scene as? UIWindowScene) else {return}
-        
         window = UIWindow(windowScene: windowScene)
-        window?.rootViewController = TabViewController()
+        window?.backgroundColor =  UIColor(red: 0.988, green: 0.988, blue: 0.992, alpha: 1)
+        window?.rootViewController = LaunchViewController()
         window?.makeKeyAndVisible()
     }
 
