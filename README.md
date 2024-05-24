@@ -37,6 +37,15 @@
 - WeatherDetailViewController
 - FineDustView
 
+#### HomeViewController
+----
+HomeViewController는 사용자 위치 정보를 받아와 위치 기반 날씨 정보를 보여줍니다. 또한 검색 및 즐겨찾기 기능을 제공합니다.
+#### 기능
+사용자 위치 정보: CoreLocation을 이용하여 사용자의 현재 위치정보(위도, 경도, 지역명)를 가져옵니다.
+날씨 정보: Weather API를 사용하여 사용자 위치 혹은 검색 위치의 현재 날씨 정보를 가져옵니다.
+새로고침: 화면을 아래로 당겨 현재 시간의 날씨 정보로 업데이트 할 수 있습니다.
+즐겨찾기: 해당 지역을 즐겨찾기 하면 UserDefaults에 저장되어 나의 관심 지역 목록에 추가됩니다.
+
 #### SearchViewController
 ----
  SearchViewController는 사용자가 정확한 주소를 손쉽게 검색할 수 있도록 설계되었습니다. 카카오 주소 검색 API를 활용하여 정확한 이름과 좌표를 받아옵니다. 또한, 최근 검색 기록을 UserDefaults에 저장하여 사용자에게 이전 검색 기록을 보여줍니다. 검색 결과를 클릭하면 해당 주소의 날씨 정보를 MainViewController에서 확인할 수 있습니다.
